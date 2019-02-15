@@ -21,3 +21,7 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 
 **Checkstyle**:  
 Run `maven site`
+
+## MEMBERS:
+
+Álvaro Buj ![alvaroPicture](https://imgur.com/a/2gyRLLX)
