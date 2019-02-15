@@ -24,14 +24,26 @@ Run `maven site`
 
 ## MEMBERS:
 
-Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
+Álvaro Buj 
+#TODO: insert your netid here
+![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
 
-Lachezar Lesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
+Lachezar Lesichkov 
+#TODO: insert your netid here
+![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
 
-Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
+Bejruz (Berry) Domínguez
+#TODO: insert your netid here
+![berryPicture](https://i.imgur.com/IRx163B.jpg)
 
-Omar Hussein ![OmarPic](https://i.imgur.com/VCIymOO.jpg)
+Omar Hussein
+#TODO: insert your netid here
+![OmarPic](https://i.imgur.com/VCIymOO.jpg)
 
-Jonathan Garack ![jonathanPicture](https://imgur.com/tZuEfhp.jpg)
+Jonathan Garack
+#TODO: insert your netid here
+![jonathanPicture](https://imgur.com/tZuEfhp.jpg)
 
-Alexander van Vugt ![alexanderPicture]()
+Alexander van Vugt
+awjvanvugt
+![alexanderPicture](https://i.imgur.com/LDipGCX.jpg)
