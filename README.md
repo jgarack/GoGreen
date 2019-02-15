@@ -1,4 +1,4 @@
-# CSE1105 Template Repository
+﻿# CSE1105 Template Repository
 
 This a template repository to help you get started on making the best project possible!
 
@@ -29,3 +29,5 @@ Run `maven site`
 Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
 
 LachezarLesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
+
+Omar Hussein ![OmarPic](blob:https://web.whatsapp.com/737e27ce-2233-4691-b8fb-43c76aa07eae)
