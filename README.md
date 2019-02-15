@@ -24,7 +24,7 @@ Run `maven site`
 
 ## MEMBERS:
 
-Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg)
+Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
 
 Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
 
