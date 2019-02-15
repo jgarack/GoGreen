@@ -27,3 +27,6 @@ Run `maven site`
 Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
 
 Lachezar Lesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
+
+Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
+
