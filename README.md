@@ -34,3 +34,4 @@ Omar Hussein ![OmarPic](https://i.imgur.com/VCIymOO.jpg)
 
 Jonathan Garack ![jonathanPicture](https://imgur.com/tZuEfhp.jpg)
 
+Alexander van Vugt ![alexanderPicture]()
