@@ -28,4 +28,4 @@ Run `maven site`
 
 Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
 
-LachezarLesichkov ![LesiPic](https://imgur.com/a/LxSFswe)
+LachezarLesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
