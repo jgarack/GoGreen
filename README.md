@@ -1,4 +1,4 @@
-# CSE1105 Template Repository
+﻿# CSE1105 Template Repository
 
 This a template repository to help you get started on making the best project possible!
 
@@ -25,3 +25,5 @@ Run `maven site`
 ## MEMBERS:
 
 Álvaro Buj ![alvaroPicture](https://imgur.com/a/2gyRLLX)
+
+LachezarLesichkov ![LesiPic](https://imgur.com/a/LxSFswe)
