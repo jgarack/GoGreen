@@ -1,8 +1,9 @@
-﻿# CSE1105 Template Repository
+﻿# #GoGreen: *Team 98*
 
-This a template repository to help you get started on making the best project possible!
+## Our rules:
+[//]: # (TODO: insert the list of rules here)
 
-You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
+## How to clone the repository
 
 http://stackoverflow.com/a/6466993
 
@@ -26,36 +27,39 @@ Run `maven site`
 
 **Álvaro Buj**
 
-#TODO: insert your netid here
+[//]: # (TODO: insert your netid here)
 
 ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
-##
+---
 **Lachezar Lesichkov**
 
-#TODO: insert your netid here
+[//]: # (TODO: insert your netid here)
 
 ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
-##
+---
 **Bejruz (Berry) Domínguez**
 
-#TODO: insert your netid here
+[//]: # (TODO: insert your netid here)
 
 ![berryPicture](https://i.imgur.com/IRx163B.jpg)
-##
+---
 **Omar Hussein**
 
-#TODO: insert your netid here
+[//]: # (TODO: insert your netid here)
 
 ![OmarPic](https://i.imgur.com/VCIymOO.jpg)
-##
+---
 **Jonathan Garack**
 
-#TODO: insert your netid here
+[//]: # (TODO: insert your netid here)
 
 ![jonathanPicture](https://imgur.com/tZuEfhp.jpg)
-##
+---
 **Alexander van Vugt**
 
 awjvanvugt
 
 ![alexanderPicture](https://i.imgur.com/LDipGCX.jpg)
+
+## Template backup
+You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
