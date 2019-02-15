@@ -24,4 +24,4 @@ Run `maven site`
 
 ## MEMBERS:
 
-Álvaro Buj ![alvaroPicture](https://imgur.com/a/2gyRLLX)
+Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
