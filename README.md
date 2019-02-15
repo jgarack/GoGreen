@@ -29,7 +29,7 @@ Run `maven site`
 #TODO: insert your netid here
 
 ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
-
+##
 **Lachezar Lesichkov**
 
 #TODO: insert your netid here
