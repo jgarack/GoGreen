@@ -24,8 +24,8 @@ Run `maven site`
 
 ## MEMBERS:
 
-LachezarLesichkov ![LesiPic](https://imgur.com/a/LxSFswe)
-
 Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg)
 
 Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
+
+LachezarLesichkov ![LesiPic](https://imgur.com/a/LxSFswe)
