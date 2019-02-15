@@ -26,4 +26,4 @@ Run `maven site`
 
 Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
 
-LachezarLesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
+Lachezar Lesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
