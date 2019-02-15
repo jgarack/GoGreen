@@ -8,7 +8,7 @@
 * A merge request into the master branch requires 4 approvals, including yourself.
 * Nobody leaves before 12 o'clock.
 
-[//]: # (TODO: insert the list of rules here)
+[//]: # (TODO: finish the list of rules)
 
 ## How to clone the repository
 
