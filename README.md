@@ -31,3 +31,6 @@ Lachezar Lesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
 Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
 
 Omar Hussein ![OmarPic](blob:https://web.whatsapp.com/737e27ce-2233-4691-b8fb-43c76aa07eae)
+
+Jonathan Garack ![jonathanPicture](https://imgur.com/tZuEfhp.jpg)
+
