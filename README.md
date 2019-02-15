@@ -1,6 +1,13 @@
 ﻿# #GoGreen: *Team 98*
 
 ## Our rules:
+* To come into the session past 9 o'clock is to buy everyone a coffee (the second person who comes in late gets everyone a kitkat)
+* If you are going to be exceptionally late or not able to come at all, notify us the day before.
+* If you are stuck or lacking behind, ask help! That's what a team is for :-)
+* Do not ever commit to master. Ever.
+* A merge request into the master branch requires 4 approvals, including yourself.
+* Nobody leaves before 12 o'clock.
+
 [//]: # (TODO: insert the list of rules here)
 
 ## How to clone the repository
