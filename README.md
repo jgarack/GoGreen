@@ -22,3 +22,10 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
+## MEMBERS:
+
+Álvaro Buj ![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
+
+Bejruz (Berry) Domínguez ![berryPicture](https://i.imgur.com/IRx163B.jpg)
+
+LachezarLesichkov ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
