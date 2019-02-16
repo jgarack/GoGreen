@@ -52,7 +52,7 @@ Run `maven site`
 ---
 **Omar Hussein**
 
-[//]: # (TODO: insert your netid here)
+ohussein
 
 ![OmarPic](https://i.imgur.com/VCIymOO.jpg)
 ---
