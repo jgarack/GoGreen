@@ -2,7 +2,7 @@ Core Quality: Speaker -> Pitfall: Blabber Mouth -> Challenge: Concise speaking -
 
 Core Quality: Team Player -> Pitfall: Too dependant on team/work less/procrastinate -> Allergy: work effectively alone and as team member -> Pitfall: Try to do all on my own
 
-Examples of these skills: used to be a student ambassodor for the University Of Sheffield in Egypt where.
+Examples of these skills: used to be a student ambassodor for the University Of Sheffield in Egypt where i worked on my public speaking skills.
 I Played BasketBall for a long time where I was taught how to be part of a team
 and ive worked on several school projects where working as a team was necessary
 
