@@ -66,6 +66,12 @@ ohussein
 awjvanvugt
 
 ![alexanderPicture](https://i.imgur.com/LDipGCX.jpg)
+---
+**Vidas Bacevičius**
+
+[//]: # (TODO: insert your netid here)
+
+![vidasPicture]()
 
 ## Template backup
 You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
