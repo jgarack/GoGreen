@@ -39,7 +39,7 @@ Run `maven site`
 ---
 **Lachezar Lesichkov**
 
-[//]: # (TODO: insert your netid here)
+[//]: #4867734
 
 ![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
 ---
