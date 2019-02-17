@@ -1,4 +1,4 @@
-#Meeting February 18th 2019
+# Meeting February 18th 2019
 >* Chair: Alexander van Vugt
 >* Secretary: Lachezar Lesichkov
 ## Opening
