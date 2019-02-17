@@ -7,8 +7,7 @@
 * Do not ever commit to master. Ever.
 * A merge request into the master branch requires 4 approvals, including yourself.
 * Nobody leaves before 12 o'clock.
-
-[//]: # (TODO: finish the list of rules)
+* Be as descriptive as possible both within your code and in your commits.
 
 ## How to clone the repository
 
@@ -46,7 +45,7 @@ Run `maven site`
 ---
 **Bejruz (Berry) Domínguez**
 
-[//]: # (TODO: insert your netid here)
+bdominguezadil
 
 ![berryPicture](https://i.imgur.com/IRx163B.jpg)
 ---
