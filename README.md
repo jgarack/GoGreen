@@ -69,9 +69,9 @@ awjvanvugt
 ---
 **Vidas Bacevičius**
 
-[//]: # (TODO: insert your netid here)
+[//]: #4913175
 
-![vidasPicture]()
+![vidasPicture](https://i.imgur.com/6edenKu.jpg)
 
 ## Template backup
 You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
