@@ -1,8 +1,15 @@
-# CSE1105 Template Repository
+﻿# #GoGreen: *Team 98*
 
-This a template repository to help you get started on making the best project possible!
+## Our rules:
+* To come into the session past 9 o'clock is to buy everyone a coffee (the second person who comes in late gets everyone a kitkat)
+* If you are going to be exceptionally late or not able to come at all, notify us the day before.
+* If you are stuck or lacking behind, ask help! That's what a team is for :-)
+* Do not ever commit to master. Ever.
+* A merge request into the master branch requires 4 approvals, including yourself.
+* Nobody leaves before 12 o'clock.
+* Be as descriptive as possible both within your code and in your commits.
 
-You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
+## How to clone the repository
 
 http://stackoverflow.com/a/6466993
 
@@ -22,3 +29,49 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
+## MEMBERS:
+
+**Álvaro Buj**
+
+[//]: #4918010
+
+![alvaroPicture](https://i.imgur.com/zXimhPy.jpg?1)
+---
+**Lachezar Lesichkov**
+
+[//]: #4867734
+
+![LesiPic](https://i.imgur.com/SGwzPSj.jpg)
+---
+**Bejruz (Berry) Domínguez**
+
+bdominguezadil
+
+![berryPicture](https://i.imgur.com/IRx163B.jpg)
+---
+**Omar Hussein**
+
+ohussein
+
+![OmarPic](https://i.imgur.com/VCIymOO.jpg)
+---
+**Jonathan Garack**
+
+[//]: # (TODO: insert your netid here)
+
+![jonathanPicture](https://imgur.com/tZuEfhp.jpg)
+---
+**Alexander van Vugt**
+
+awjvanvugt
+
+![alexanderPicture](https://i.imgur.com/LDipGCX.jpg)
+---
+**Vidas Bacevičius**
+
+[//]: #4913175
+
+![vidasPicture](https://i.imgur.com/6edenKu.jpg)
+
+## Template backup
+You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
