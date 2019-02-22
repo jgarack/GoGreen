@@ -1,0 +1,40 @@
+.root{
+    -fx-background-image: url("landscape.png");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-opacity: 0.8;
+}
+#actionTarget{
+    -fx-font-family: SansSerif;
+    -fx-font-size: 18;
+    -fx-font-style: italic;
+    -fx-fill: #FF0033;
+
+}
+.GridPane{
+    -fx-max-height: 20%;
+    -fx-max-width: 30%;
+    -fx-background-position: center;
+}
+.button{
+    -fx-text-fill: white;
+    -fx-font-family: SansSerif;
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#2779bd,#6cb2eb);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.button:hover {
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+#login{
+    -fx-font-size: 32;
+    -fx-font-family: "Arial Black";
+    -fx-font-weight: bold;
+    -fx-effect: innershadow( three-pass-box, rgb(184,184,184) , 0 , 0 , 0 , 1);
+}
+.label{
+    -fx-font-weight: bold;
+    -fx-font-size: 18;
+    -fx-text-alignment: right;
+
+}
