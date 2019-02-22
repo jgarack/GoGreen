@@ -1,8 +1,11 @@
 package gui;
 
+import client.AccountMessage;
+import client.HttpRequestHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -19,16 +22,18 @@ public class LoginController {
     @FXML
     private TextField username;
     @FXML
-    private TextField pass;
+    private PasswordField pass;
     @FXML
     private Button submitLogin;
+
+    private String domain = "http://localhost:8080";
 
     @FXML
     protected void initialize(){
 
     }
     @FXML
-    protected void handleSubmitButtonAction(ActionEvent event){
+    protected void handleSubmitButtonAction(ActionEvent event) throws Exception{
         if(username.getText().trim().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Username not filled");
@@ -42,7 +47,8 @@ public class LoginController {
             alert.showAndWait();
         }
         else {
-            //Send request to server
+            AccountMessage loginMess = new AccountMessage(username.getText(),pass.getText());
+            HttpRequestHandler.reqPost(domain+"/login", loginMess, "" );
 
         }
 
