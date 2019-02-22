@@ -1,4 +1,4 @@
-package client;
+package utility;
 
 public class AccountMessage {
     private String fusername;
