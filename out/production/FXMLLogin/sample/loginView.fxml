@@ -15,8 +15,8 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<GridPane fx:id="grid" fx:controller="sample.Controller"  xmlns:fx="http://javafx.com/fxml"
-         alignment="center" hgap="10" vgap="10">
+<GridPane fx:id="grid" fx:controller="sample.LoginController" xmlns:fx="http://javafx.com/fxml"
+          alignment="center" hgap="10" vgap="10">
 
     <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
     <Text fx:id="loginText" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
