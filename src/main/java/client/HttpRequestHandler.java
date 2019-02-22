@@ -9,8 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public abstract class HttpRequestHandler {
-    private final static String defUserAgent = "";
-    private final static String home = "";
+    private final static String defUserAgent = "Mozilla/5.0";
+    private final static String home = "http://localhost:8080";
 
     public static BufferedReader reqGetHome() throws Exception{
         return reqGet(home, defUserAgent);
@@ -25,11 +25,8 @@ public abstract class HttpRequestHandler {
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
-        int responsecode = con.getResponseCode();
-        if(responsecode == HttpURLConnection.HTTP_OK){
-            return new BufferedReader(new InputStreamReader(con.getInputStream()));
-        }
-        throw new Exception(""+responsecode);
+
+        return readRes(con);
     }
 
     public static BufferedReader reqPost(String url, Object message, String userAgent) throws Exception{
@@ -44,6 +41,14 @@ public abstract class HttpRequestHandler {
         out.flush();
         out.close();
 
-        
+        return readRes(con);
+    }
+
+    private static BufferedReader readRes(HttpURLConnection con) throws Exception{
+        int responsecode = con.getResponseCode();
+        if(responsecode == HttpURLConnection.HTTP_OK){
+            return new BufferedReader(new InputStreamReader(con.getInputStream()));
+        }
+        throw new Exception(""+responsecode);
     }
 }
