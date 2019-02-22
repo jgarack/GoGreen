@@ -1,4 +1,4 @@
-package main.JavaFX.gui;
+package gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
+import java.net.HttpURLConnection;
 
 import javafx.event.ActionEvent;
 
@@ -33,9 +35,15 @@ public class LoginController {
             alert.setContentText("You need to fill in your username");
             alert.showAndWait();
         }
+        else if(pass.getText().trim().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Password not filled");
+            alert.setContentText("You need to fill in your password");
+            alert.showAndWait();
+        }
         else {
-            String user = username.getText();
-            actionTarget.setText("Welcome, " + user + "!");
+            //Send request to server
+
         }
 
     }
