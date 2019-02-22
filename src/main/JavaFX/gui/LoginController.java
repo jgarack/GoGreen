@@ -10,6 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 
 import javafx.event.ActionEvent;
@@ -32,6 +33,12 @@ public class LoginController {
     protected void initialize(){
 
     }
+
+    /** Activated when the User presses the submit button, sends a POST request to the server with login credentials
+     * @author Lassie, Jonathan, awjvanvugt
+     * @param event the button press
+     * @throws Exception if the requesthandler does
+     */
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event) throws Exception{
         if(username.getText().trim().isEmpty()){
@@ -48,7 +55,7 @@ public class LoginController {
         }
         else {
             AccountMessage loginMess = new AccountMessage(username.getText(),pass.getText());
-            HttpRequestHandler.reqPost(domain+"/login", loginMess, "" );
+            BufferedReader response = HttpRequestHandler.reqPost(domain+"/login", loginMess);
 
         }
 
