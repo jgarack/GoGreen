@@ -1,4 +1,4 @@
-package sample;
+package hello;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,7 +11,7 @@ import javafx.event.ActionEvent;
 
 import javafx.scene.control.TextField;
 
-public class Controller {
+public class LoginController {
     @FXML
     private Text actionTarget;
     @FXML
