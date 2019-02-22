@@ -2,6 +2,7 @@ package sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -17,8 +18,13 @@ public class Controller {
     private TextField username;
     @FXML
     private TextField pass;
+    @FXML
+    private Button submitLogin;
 
+    @FXML
+    protected void initialize(){
 
+    }
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event){
         if(username.getText().trim().isEmpty()){

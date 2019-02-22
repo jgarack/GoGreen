@@ -26,7 +26,7 @@
 .button:hover {
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }
-#login{
+#loginText{
     -fx-font-size: 32;
     -fx-font-family: "Arial Black";
     -fx-font-weight: bold;
