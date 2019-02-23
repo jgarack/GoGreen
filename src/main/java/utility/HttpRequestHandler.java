@@ -2,9 +2,7 @@ package client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.Buffer;
@@ -95,7 +93,7 @@ public abstract class HttpRequestHandler {
         return readRes(con);
     }
 
-    /**
+    /** Private helper method to read the response from the server.
      * @author awjvanvugt
      * @param con connection to the server
      * @return BufferedReader containing the response from the server
@@ -107,5 +105,25 @@ public abstract class HttpRequestHandler {
             return new BufferedReader(new InputStreamReader(con.getInputStream()));
         }
         throw new Exception("Unexpected response from server: "+responsecode);
+    }
+
+    /** Creates or replaces a .txt file at the specified path with the text in the BufferedReader
+     * @author awjvanvugt
+     * @param message the BufferedReader of which the content should be logged
+     * @param filepath the path to the file
+     */
+    public static void resLog(BufferedReader message, String filepath){
+        try {
+            FileWriter log = new FileWriter(new File(filepath));
+            String line;
+            StringBuilder logtxt = new StringBuilder();
+            while((line = message.readLine()) != null){
+                logtxt.append(line);
+            }
+            log.write(logtxt.toString());
+        }catch(IOException ioe){
+            System.out.println("IOException occured, check filepath\n"+ioe.getMessage());
+            ioe.printStackTrace();
+        }
     }
 }
