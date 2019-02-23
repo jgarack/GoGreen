@@ -9,6 +9,10 @@
 * Nobody leaves before 12 o'clock.
 * Be as descriptive as possible both within your code and in your commits.
 
+## For developers
+*Branch structure graph[1]:*
+![graph](https://nvie.com/img/git-model@2x.png)
+
 ## How to clone the repository
 
 http://stackoverflow.com/a/6466993
@@ -75,3 +79,6 @@ awjvanvugt
 
 ## Template backup
 You can download the latest version [here](https://github.com/SERG-Delft/TI1216/releases)
+
+## Referentials:
+* [1]: "A succesful Git branching model" by *Vincent Driessen*, first published on 05-01-2010, visited on 23-02-2019 at https://nvie.com/posts/a-successful-git-branching-model/
