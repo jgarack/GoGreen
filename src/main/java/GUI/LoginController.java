@@ -36,8 +36,48 @@ public class LoginController {
     protected void initialize(){
 
     }
+
+    @FXML
+    protected void handleRegisterButtonAction(ActionEvent event){
+        checkForm();
+        try{
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
+            BufferedReader httpBody = HttpRequestHandler.reqPost(domain+"/register", new AccountMessage(username.getText().trim(), md5Pass));
+            String contentText = HttpRequestHandler.resLog(httpBody, logfolder+"register_response");
+            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
+            displayResponse.setTitle("Registration complete");
+            displayResponse.setContentText("You can now log in.");
+            displayResponse.showAndWait();
+        }catch(NoSuchAlgorithmException md5Error) {
+            encryptionExceptionHandler(md5Error);
+        }catch(Exception e) {
+            //TODO cleanup exception throw
+            displayStatusCodeError(e);
+        }
+    }
+
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event){
+        checkForm();
+        try {
+                MessageDigest md5 = MessageDigest.getInstance("MD5");
+                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
+                BufferedReader httpBody = HttpRequestHandler.reqPost(domain+"/login", new AccountMessage(username.getText().trim(), md5Pass));
+                String contentText = HttpRequestHandler.resLog(httpBody, logfolder+"login_response");
+                Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
+                displayResponse.setTitle("Logged in");
+                displayResponse.setContentText(contentText);
+                displayResponse.showAndWait();
+        }catch(NoSuchAlgorithmException md5Error){
+                encryptionExceptionHandler(md5Error);
+        }catch(Exception e) {
+            //TODO cleanup exception throw
+            displayStatusCodeError(e);
+        }
+    }
+
+    protected void checkForm(){
         if(username.getText().trim().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Username not filled");
@@ -50,28 +90,21 @@ public class LoginController {
             alert.setContentText("You need to fill in your username");
             alert.showAndWait();
         }
-        else{
-            try {
-                MessageDigest md5 = MessageDigest.getInstance("MD5");
-                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
-                BufferedReader httpBody = HttpRequestHandler.reqPost(domain+"/login", new AccountMessage(username.getText().trim(), md5Pass));
-                String contentText = HttpRequestHandler.resLog(httpBody, logfolder+"login_response");
-                Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-                displayResponse.setTitle("Logged in");
-                displayResponse.setContentText(contentText);
-                displayResponse.showAndWait();
-            }catch(NoSuchAlgorithmException md5Error){
-                Alert encryptionError = new Alert(Alert.AlertType.ERROR);
-                encryptionError.setTitle("Encryption failure:");
-                encryptionError.setContentText("The client failed to encrypt your login credentials, and your login attempt was aborted." +
-                        "\nPlease try again and contact an administrator if this issue persists.\nException found:\n"+md5Error.getMessage()+
-                        "\n"+md5Error.fillInStackTrace());
-            }catch(Exception e){
-                //TODO cleanup exception throw
-                System.out.println(e.getMessage());
-                e.printStackTrace();
-            }
-        }
+    }
+
+    protected void encryptionExceptionHandler(Exception e){
+        Alert encryptionError = new Alert(Alert.AlertType.ERROR);
+        encryptionError.setTitle("Encryption failure:");
+        encryptionError.setContentText("The client failed to encrypt your login credentials, and your login attempt was aborted." +
+                "\nPlease try again and contact an administrator if this issue persists.\nException found:\n"+e.getMessage()+
+                "\n"+e.fillInStackTrace());
+    }
+
+    protected void displayStatusCodeError(Exception e){
+        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
+        statusCodeError.setTitle(e.getMessage());
+        statusCodeError.setContentText("See terminal for stacktrace.");
+        statusCodeError.showAndWait();
     }
 
 
