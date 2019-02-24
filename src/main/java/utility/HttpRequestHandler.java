@@ -1,13 +1,19 @@
 package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import sun.util.logging.PlatformLogger;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.Buffer;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public abstract class HttpRequestHandler {
+    //private final static Logger LOGGER = Logger.getLogger(HttpRequestHandler.class.getName());
     private final static String defUserAgent = "Mozilla/5.0";
     private final static String home = "http://localhost:8080";
 
@@ -115,20 +121,25 @@ public abstract class HttpRequestHandler {
      */
     public static String resLog(BufferedReader message, String filepath){
         try {
-            FileWriter log = new FileWriter(new File(filepath));
+            //TODO: Implement logging to file
+            /*
+            File log = new File(filepath);
+            log.mkdirs();
+            FileHandler handler = new FileHandler(filepath);
+            */
             String line;
             StringBuilder logtxt = new StringBuilder();
             while((line = message.readLine()) != null){
                 logtxt.append(line);
             }
             String result = logtxt.toString();
-            log.write(result);
-            log.close();
+            System.out.println(result);
+            /*handler.publish(new LogRecord(Level.FINE, result));*/
             return result;
         }catch(IOException ioe){
             System.out.println("IOException occured, check filepath\n"+ioe.getMessage());
             ioe.printStackTrace();
-            return null;
+            return "Failed to create log.";
         }
     }
 }

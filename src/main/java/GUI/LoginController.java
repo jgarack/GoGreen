@@ -22,7 +22,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class LoginController {
     private final String domain = "http://localhost:8080";
-    private final String logfolder = "./../../logs/login/";
+    private final String logfolder = "src/logs/login/";
     @FXML
     private Text actionTarget;
     @FXML
