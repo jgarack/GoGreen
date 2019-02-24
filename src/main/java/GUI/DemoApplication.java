@@ -8,12 +8,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import server.GreetingController;
 
 import java.io.File;
 import java.net.URL;
 
 
 @SpringBootApplication
+@ComponentScan(basePackageClasses = GreetingController.class)
 public class DemoApplication extends Application {
 
     private Parent root;

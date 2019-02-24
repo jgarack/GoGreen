@@ -104,7 +104,7 @@ public abstract class HttpRequestHandler {
         if(responsecode == HttpURLConnection.HTTP_OK){
             return new BufferedReader(new InputStreamReader(con.getInputStream()));
         }
-        throw new Exception("Unexpected response from server: "+responsecode);
+        throw new Exception("Unexpected response from server: "+responsecode+"\n"+con.getURL());
     }
 
     /** Creates or replaces a .txt file at the specified path with the text in the BufferedReader
