@@ -17,7 +17,7 @@ public class GreetingController {
 
     @PostMapping("/login")
     public ResponseEntity postController(
-            @RequestBody AccountMessage account) {
+            @RequestBody utility.AccountMessage account) {
 
         if(account.getPassword().equals("Admin")){
             return new ResponseEntity("Hello" + account.getUsername() + "Authenticated", HttpStatus.OK);
