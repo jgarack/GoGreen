@@ -84,6 +84,7 @@ public abstract class HttpRequestHandler {
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", userAgent);
         con.setDoOutput(true);
+        con.setRequestProperty("Content-Type", "application/json");
         OutputStream out = con.getOutputStream();
         ObjectMapper parser = new ObjectMapper();
         out.write(parser.writeValueAsString(message).getBytes());
