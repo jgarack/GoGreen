@@ -1,4 +1,4 @@
-package client;
+package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -112,7 +112,7 @@ public abstract class HttpRequestHandler {
      * @param message the BufferedReader of which the content should be logged
      * @param filepath the path to the file
      */
-    public static void resLog(BufferedReader message, String filepath){
+    public static String resLog(BufferedReader message, String filepath){
         try {
             FileWriter log = new FileWriter(new File(filepath));
             String line;
@@ -120,10 +120,14 @@ public abstract class HttpRequestHandler {
             while((line = message.readLine()) != null){
                 logtxt.append(line);
             }
-            log.write(logtxt.toString());
+            String result = logtxt.toString();
+            log.write(result);
+            log.close();
+            return result;
         }catch(IOException ioe){
             System.out.println("IOException occured, check filepath\n"+ioe.getMessage());
             ioe.printStackTrace();
+            return null;
         }
     }
 }
