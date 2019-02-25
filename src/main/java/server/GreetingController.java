@@ -42,7 +42,6 @@ public class GreetingController {
             users.add(account.getUsername());
             passes.add(account.getPassword());
             return new ResponseEntity("Account created for user: " + account.getUsername(), HttpStatus.OK);
-
         }else if(users.contains(account.getUsername())){
             return new ResponseEntity("Chosen username is already taken.", HttpStatus.CONFLICT);
         }
