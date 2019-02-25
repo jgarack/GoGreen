@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<GridPane fx:id="grid" fx:controller="hello.LoginController" xmlns:fx="http://javafx.com/fxml"
+<GridPane fx:id="grid" fx:controller="GUI.LoginController" xmlns:fx="http://javafx.com/fxml"
           alignment="center" hgap="10" vgap="10">
 
     <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
@@ -27,6 +27,9 @@
     <PasswordField fx:id="pass" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
     <HBox spacing="10" alignment="BOTTOM_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="3">
         <Button fx:id="submitLogin" text="Sign in" onAction="#handleSubmitButtonAction" />
+    </HBox>
+    <HBox spacing="10" alignment="BOTTOM_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="4">
+        <Button fx:id="submitRegistration" text="Register" onAction="#handleRegisterButtonAction" />
     </HBox>
 
     <Text fx:id="actionTarget" GridPane.rowIndex="4" GridPane.columnIndex="2"/>
