@@ -78,7 +78,7 @@ public abstract class HttpRequestHandler {
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqPost(String url, Object message) throws Exception {
+    public static BufferedReader reqPost(final String url, final Object message) throws Exception {
         return reqPost(url, message, USER_AGENT_MOZILLA);
     }
 

@@ -1,18 +1,14 @@
 package GUI;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import utility.HttpRequestHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.TextField;
-import sun.plugin2.message.Message;
 import utility.AccountMessage;
 
 import javax.xml.bind.DatatypeConverter;
