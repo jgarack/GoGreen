@@ -29,7 +29,7 @@ public class GreetingController {
         boolean userExists = users.contains(account.getUsername());
         boolean passAccepted = passes.get(users.indexOf(account.getUsername())).equals(account.getPassword());
         if(userExists && passAccepted){
-            return new ResponseEntity("Hello" + account.getUsername() + "Authenticated", HttpStatus.OK);
+            return new ResponseEntity("Hello " + account.getUsername() + " Authenticated!", HttpStatus.OK);
         }else{
             return new ResponseEntity("Unknown user-password combination.", HttpStatus.UNAUTHORIZED);
         }

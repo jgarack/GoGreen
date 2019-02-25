@@ -20,13 +20,10 @@ public class LoginController {
     private final String domain = "http://localhost:8080";
     private final String logfolder = "src/logs/login/";
     @FXML
-    private Text actionTarget;
-    @FXML
     private TextField username;
     @FXML
     private TextField pass;
-    @FXML
-    private Button submitLogin;
+
 
     @FXML
     protected void initialize(){
@@ -83,6 +80,7 @@ public class LoginController {
             alert.showAndWait();
             return false;
         }
+
         else if(pass.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Password not filled");
