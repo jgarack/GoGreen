@@ -1,6 +1,6 @@
 package utility;
 
-import Exceptions.DataConflictException;
+import exceptions.DataConflictException;
 
 import java.util.ArrayList;
 import java.util.List;
