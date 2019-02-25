@@ -85,8 +85,8 @@ public class LoginController {
         }
         else if(pass.getText().isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Username not filled");
-            alert.setContentText("You need to fill in your username");
+            alert.setTitle("Password not filled");
+            alert.setContentText("You need to fill in your password");
             alert.showAndWait();
             return false;
         }
