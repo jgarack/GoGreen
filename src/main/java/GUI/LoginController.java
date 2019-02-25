@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 
 import javafx.scene.control.TextField;
-import sun.plugin2.message.Message;
+
 import utility.AccountMessage;
 
 import javax.xml.bind.DatatypeConverter;
