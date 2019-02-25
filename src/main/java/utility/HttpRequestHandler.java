@@ -1,57 +1,67 @@
-package client;
+package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.Buffer;
 
+/** Handler for HTTP requests.
+ * Returns a BufferedReader with the response from the server
+ * @author awjvanvugt
+ */
 public abstract class HttpRequestHandler {
-    private final static String defUserAgent = "Mozilla/5.0";
-    private final static String home = "http://localhost:8080";
+    //private final static Logger LOGGER = Logger
+    // .getLogger(HttpRequestHandler.class.getName());
+    /** The default User-Agent to use in HTTP requests.**/
+    private static final String USER_AGENT_MOZILLA = "Mozilla/5.0";
+    /** The default url to use in HTTP requests. **/
+    private static final String DOMAIN_INDEX = "http://localhost:8080";
 
-    /**Sends an HTTP GET request to the server which requests the home page of the default domain
+    /**Sends an HTTP GET request to the server which requests the home
+     * page of the default domain.
      * Default User-Agent
      * @author awjvanvugt
      * @return BufferedReader containing the HTTP response from the server
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGetHome() throws Exception{
-        return reqGet(home, defUserAgent);
+    public static BufferedReader reqGetHome() throws Exception {
+        return reqGet(DOMAIN_INDEX, USER_AGENT_MOZILLA);
     }
 
-    /**Sends an HTTP GET request to the server which requests the home page of the default domain
+    /**Sends an HTTP GET request to the server which requests the home page
+     * of the default domain.
      * @author awjvanvugt
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response from the server
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGetHome(String userAgent) throws Exception{
-        return reqGet(home, userAgent);
+    public static BufferedReader reqGetHome(final String userAgent) throws Exception {
+        return reqGet(DOMAIN_INDEX, userAgent);
     }
 
-    /**Sends an HTTP GET request to the server which requests the specified page
+    /**Sends an HTTP GET request to the server which requests the specified page.
      * Default User-Agent
      * @author awjvanvugt
      * @param url URL for the GET request
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGet(String url) throws Exception{
-        return reqGet(url, defUserAgent);
+    public static BufferedReader reqGet(final String url) throws Exception {
+        return reqGet(url, USER_AGENT_MOZILLA);
     }
 
-    /**Sends an HTTP GET request to the server which requests the specified page
+    /**Sends an HTTP GET request to the server which requests the specified page.
      * @author awjvanvugt
      * @param url URL for the GET request
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGet(String url, String userAgent) throws Exception {
+    public static BufferedReader reqGet(final String url, final String userAgent) throws Exception {
         URL inputUrl = new URL(url);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
@@ -60,7 +70,7 @@ public abstract class HttpRequestHandler {
         return readRes(con);
     }
 
-    /**Sends an HTTP POST request to the server on the specified page
+    /**Sends an HTTP POST request to the server on the specified page.
      * Default User-Agent
      * @author awjvanvugt
      * @param url URL for the GET request
@@ -69,10 +79,10 @@ public abstract class HttpRequestHandler {
      * @throws Exception at readRes
      */
     public static BufferedReader reqPost(String url, Object message) throws Exception {
-        return reqPost(url, message, defUserAgent);
+        return reqPost(url, message, USER_AGENT_MOZILLA);
     }
 
-    /**Sends an HTTP POST request to the server on the specified page
+    /**Sends an HTTP POST request to the server on the specified page.
      * @author awjvanvugt
      * @param url URL for the GET request
      * @param message the Object to POST
@@ -86,6 +96,7 @@ public abstract class HttpRequestHandler {
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", userAgent);
         con.setDoOutput(true);
+        con.setRequestProperty("Content-Type", "application/json");
         OutputStream out = con.getOutputStream();
         ObjectMapper parser = new ObjectMapper();
         out.write(parser.writeValueAsString(message).getBytes());
@@ -95,7 +106,7 @@ public abstract class HttpRequestHandler {
         return readRes(con);
     }
 
-    /**
+    /** Private helper method to read the response from the server.
      * @author awjvanvugt
      * @param con connection to the server
      * @return BufferedReader containing the response from the server
@@ -106,6 +117,37 @@ public abstract class HttpRequestHandler {
         if(responsecode == HttpURLConnection.HTTP_OK){
             return new BufferedReader(new InputStreamReader(con.getInputStream()));
         }
-        throw new Exception("Unexpected response from server: "+responsecode);
+        throw new Exception("Unexpected response from server: "+responsecode+"\n"+con.getURL());
+    }
+
+    /** Creates or replaces a .txt file at the specified path with the text
+     * in the BufferedReader.
+     * @author awjvanvugt
+     * @param message the BufferedReader of which the content should be logged
+     * @param filepath the path to the file
+     */
+    public static String resLog(final BufferedReader message, final String filepath) {
+        try {
+            //TODO: Implement logging to file
+            /*
+            File log = new File(filepath);
+            log.mkdirs();
+            FileHandler handler = new FileHandler(filepath);
+            */
+            String line;
+            StringBuilder logtxt = new StringBuilder();
+            while ((line = message.readLine()) != null) {
+                logtxt.append(line);
+            }
+            String result = logtxt.toString();
+            System.out.println(result);
+            /*handler.publish(new LogRecord(Level.FINE, result));*/
+            return result;
+        } catch (IOException ioe) {
+            System.out.println("IOException occured, check filepath\n" +
+                    ioe.getMessage());
+            ioe.printStackTrace();
+            return "Failed to create log.";
+        }
     }
 }
