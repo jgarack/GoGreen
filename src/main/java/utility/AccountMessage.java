@@ -51,7 +51,7 @@ public class AccountMessage {
             AccountMessage that = (AccountMessage) obj;
             return that.getPassword().equals(this.fpassword)&&that.getUsername().equals(this.fusername);
         }
-        return true;
+        return false;
     }
 
 }
