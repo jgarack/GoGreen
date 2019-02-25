@@ -35,57 +35,62 @@ public class LoginController {
 
     @FXML
     protected void handleRegisterButtonAction(ActionEvent event){
-        checkForm();
-        try{
-            MessageDigest md5 = MessageDigest.getInstance("MD5");
-            String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
-            BufferedReader httpBody = HttpRequestHandler.reqPost(domain+"/register", new AccountMessage(username.getText().trim(), md5Pass));
-            String contentText = HttpRequestHandler.resLog(httpBody, logfolder+"register_response");
-            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-            displayResponse.setTitle("Registration complete");
-            displayResponse.setContentText("You can now log in.");
-            displayResponse.showAndWait();
-        }catch(NoSuchAlgorithmException md5Error) {
-            encryptionExceptionHandler(md5Error);
-        }catch(Exception e) {
-            //TODO cleanup exception throw
-            displayStatusCodeError(e);
+        if (checkForm()) {
+            try {
+                MessageDigest md5 = MessageDigest.getInstance("MD5");
+                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
+                BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/register", new AccountMessage(username.getText().trim(), md5Pass));
+                String contentText = HttpRequestHandler.resLog(httpBody, logfolder + "register_response");
+                Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
+                displayResponse.setTitle("Registration complete");
+                displayResponse.setContentText("You can now log in.");
+                displayResponse.showAndWait();
+            } catch (NoSuchAlgorithmException md5Error) {
+                encryptionExceptionHandler(md5Error);
+            } catch (Exception e) {
+                //TODO cleanup exception throw
+                displayStatusCodeError(e);
+            }
         }
     }
 
     @FXML
     protected void handleSubmitButtonAction(ActionEvent event){
-        checkForm();
-        try {
+        if (checkForm()) {
+            try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
-                BufferedReader httpBody = HttpRequestHandler.reqPost(domain+"/login", new AccountMessage(username.getText().trim(), md5Pass));
-                String contentText = HttpRequestHandler.resLog(httpBody, logfolder+"login_response");
+                BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/login", new AccountMessage(username.getText().trim(), md5Pass));
+                String contentText = HttpRequestHandler.resLog(httpBody, logfolder + "login_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Logged in");
                 displayResponse.setContentText(contentText);
                 displayResponse.showAndWait();
-        }catch(NoSuchAlgorithmException md5Error){
+            } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
-        }catch(Exception e) {
-            //TODO cleanup exception throw
-            displayStatusCodeError(e);
+            } catch (Exception e) {
+                //TODO cleanup exception throw
+                displayStatusCodeError(e);
+            }
         }
     }
 
-    protected void checkForm(){
+    protected boolean checkForm(){
         if(username.getText().trim().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Username not filled");
             alert.setContentText("You need to fill in your username");
             alert.showAndWait();
+            return false;
         }
         else if(pass.getText().isEmpty()){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Username not filled");
             alert.setContentText("You need to fill in your username");
             alert.showAndWait();
+            return false;
         }
+        return true;
     }
 
     protected void encryptionExceptionHandler(Exception e){
