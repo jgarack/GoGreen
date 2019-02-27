@@ -1,49 +1,26 @@
-package GUI;
+package utility;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import utility.HttpRequestHandler;
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
-
-import javafx.event.ActionEvent;
-
-import javafx.scene.control.TextField;
-import utility.AccountMessage;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class LoginController {
-    private final String domain = "http://localhost:8080";
-    private final String logfolder = "src/logs/login/";
-    @FXML
-    private TextField username;
-    @FXML
-    private TextField pass;
+public abstract class LoginHandler {
+    private static String domain = "http://localhost:8080";
+    private static String logfolder = null;
 
-
-    @FXML
-    protected void initialize(){
-
-    }
-
-    @FXML
-    protected void handleRegisterButtonAction(ActionEvent event){
-        if (checkForm()) {
+    public static void registerSubmit(String username, String pass) {
+        if (checkForm(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
-                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
-                BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/register", new AccountMessage(username.getText().trim(), md5Pass));
+                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getBytes())).toUpperCase();
+                BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/register", new AccountMessage(username, md5Pass));
                 String contentText = HttpRequestHandler.resLog(httpBody, logfolder + "register_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Registration complete");
-                displayResponse.setContentText("You can now log in.");
+                displayResponse.setContentText("You can now log in.\n" + contentText);
                 displayResponse.showAndWait();
             } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
@@ -54,13 +31,12 @@ public class LoginController {
         }
     }
 
-    @FXML
-    protected void handleSubmitButtonAction(ActionEvent event){
-        if (checkForm()) {
+    public static void loginSubmit(String username, String pass) {
+        if (checkForm(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
-                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getText().getBytes())).toUpperCase();
-                BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/login", new AccountMessage(username.getText().trim(), md5Pass));
+                String md5Pass = DatatypeConverter.printHexBinary(md5.digest(pass.getBytes())).toUpperCase();
+                BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/login", new AccountMessage(username, md5Pass));
                 String contentText = HttpRequestHandler.resLog(httpBody, logfolder + "login_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Logged in");
@@ -75,8 +51,8 @@ public class LoginController {
         }
     }
 
-    protected boolean checkForm(){
-        if(username.getText().trim().isEmpty()){
+    private static boolean checkForm(String userFieldEntry, String passFieldEntry) {
+        if(userFieldEntry.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Username not filled");
             alert.setContentText("You need to fill in your username");
@@ -84,7 +60,7 @@ public class LoginController {
             return false;
         }
 
-        else if(pass.getText().isEmpty()){
+        else if(passFieldEntry.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Password not filled");
             alert.setContentText("You need to fill in your password");
@@ -95,7 +71,7 @@ public class LoginController {
         return true;
     }
 
-    protected void encryptionExceptionHandler(Exception e){
+    private static void encryptionExceptionHandler(Exception e) {
         Alert encryptionError = new Alert(Alert.AlertType.ERROR);
         encryptionError.setTitle("Encryption failure:");
         encryptionError.setContentText("The client failed to encrypt your login credentials, and your login attempt was aborted." +
@@ -103,13 +79,10 @@ public class LoginController {
                 "\n"+e.fillInStackTrace());
     }
 
-    protected void displayStatusCodeError(Exception e){
+    private static void displayStatusCodeError(Exception e) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
         statusCodeError.setTitle(e.getMessage());
         statusCodeError.setContentText("See terminal for stacktrace.");
         statusCodeError.showAndWait();
     }
-
-
-
 }
