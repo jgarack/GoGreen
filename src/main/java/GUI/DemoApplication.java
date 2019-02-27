@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import server.GreetingController;
+import javafx.scene.image.Image;
 
 import java.io.File;
 import java.net.URL;
@@ -36,8 +37,8 @@ public class DemoApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        primaryStage.setTitle("FXML Tryout");
-        Scene scene = new Scene(root, 800, 600);
+        primaryStage.setTitle("Placeholder");
+        Scene scene = new Scene(root, 1920, 1080);
         URL url = new File("src/main/java/GUI/indexPage.css").toURL();
         scene.getStylesheets().add(url.toExternalForm());
         primaryStage.setScene(scene);
