@@ -7,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import utility.Activity;
 import utility.HttpRequestHandler;
-
 import java.io.BufferedReader;
 
 /**Performs a http post request to server to calculate points for vegetarian meal.
@@ -17,20 +16,24 @@ import java.io.BufferedReader;
 public class VegetarianMeal {
 
     private final String domain = "http://localhost:8080";
+    private int value;
+//    @FXML
+//    private TextField test;
 
-    @FXML
-    private TextField userValue;
-
+    public VegetarianMeal(TextField userValue){
+        this.value = Integer.parseInt(userValue.getText().trim());
+    }
     /** Handles request for Vegetarian meal points from server
      *@param event Clicking on calculate point button
      *@author ohussein
      */
-    protected void handleCalculatePoints(ActionEvent event){
+    public void calculatePoints(ActionEvent event){
 
-        checkForm();
+//        checkForm();
         try {
-            BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/points", new Activity(1,Integer.parseInt(userValue.getText().trim())));
+            BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/points", new Activity(1,value));
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
+            HttpRequestHandler.resLog(httpBody, null);
             displayResponse.setTitle("Good Job!");
             displayResponse.setContentText("Go Green!");
             displayResponse.showAndWait();
@@ -46,14 +49,14 @@ public class VegetarianMeal {
     /**Helper method checks if field is empty and alerts user if so
      * @author ohussein
      */
-    protected void checkForm() {
-        if (userValue.getText().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Please Fill In Points");
-            alert.setContentText("No Points Were Entered!");
-            alert.showAndWait();
-        }
-    }
+//    protected void checkForm() {
+//        if (Test.getText().trim().isEmpty()) {
+//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+//            alert.setTitle("Please Fill In Points");
+//            alert.setContentText("No Points Were Entered!");
+//            alert.showAndWait();
+//        }
+//    }
 
     /**Helper method that handles exceptions
      *
@@ -62,7 +65,15 @@ public class VegetarianMeal {
     protected void exceptionHandler(Exception e){
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
         statusCodeError.setTitle(e.getMessage());
-        statusCodeError.setContentText("See terminal for stacktrace.");
+//        statusCodeError.setContentText("See terminal for stacktrace.");
+        statusCodeError.setContentText(e.toString());
         statusCodeError.showAndWait();
+    }
+
+    @Override
+    public String toString() {
+        return "VegetarianMeal{" +
+                "value=" + value +
+                '}';
     }
 }

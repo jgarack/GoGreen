@@ -1,6 +1,7 @@
 package GUI;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import features.VegetarianMeal;
 import utility.HttpRequestHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -27,6 +28,8 @@ public class LoginController {
     private TextField username;
     @FXML
     private TextField pass;
+    @FXML
+    private TextField test;
 
 
     @FXML
@@ -67,6 +70,12 @@ public class LoginController {
                 displayResponse.setTitle("Logged in");
                 displayResponse.setContentText(contentText);
                 displayResponse.showAndWait();
+
+//                test for api
+                VegetarianMeal testMeal = new VegetarianMeal(test);
+                System.out.println(testMeal.toString());
+                testMeal.calculatePoints(event);
+
             } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
             } catch (Exception e) {

@@ -25,6 +25,10 @@
     <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
     <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
     <PasswordField fx:id="pass" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+    <!--Test box for vegetarian meal-->
+    <Label text="Test" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+    <TextField fx:id="test" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
     <HBox spacing="10" alignment="BOTTOM_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="3">
         <Button fx:id="submitLogin" text="Sign in" onAction="#handleSubmitButtonAction" />
     </HBox>

@@ -1,5 +1,6 @@
 package server;
 
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
@@ -7,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import utility.AccountMessage;
+import utility.Activity;
+import utility.HttpRequestHandler;
 
 @RestController
 public class GreetingController {
@@ -46,5 +49,15 @@ public class GreetingController {
             return new ResponseEntity("Chosen username is already taken.", HttpStatus.CONFLICT);
         }
         return new ResponseEntity("Your account could not be created", HttpStatus.BAD_REQUEST);
+    }
+    @PostMapping("/points")
+    public ResponseEntity pointsResponse(
+            @RequestBody Activity activity)throws Exception{
+        if(activity.getId()==1){
+
+            BufferedReader httpBody = HttpRequestHandler.reqGet("https://api.carbonintensity.org.uk/intensity");
+            return new ResponseEntity("Your Carbon emissions are:"+ HttpRequestHandler.resLog(httpBody,null), HttpStatus.OK);
+        }
+        return new ResponseEntity("Not an Activity", HttpStatus.OK);
     }
 }

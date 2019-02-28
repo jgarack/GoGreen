@@ -20,7 +20,6 @@ public abstract class HttpRequestHandler {
     private static final String USER_AGENT_MOZILLA = "Mozilla/5.0";
     /** The default url to use in HTTP requests. **/
     private static final String DOMAIN_INDEX = "http://localhost:8080";
-
     /**Sends an HTTP GET request to the server which requests the home
      * page of the default domain.
      * Default User-Agent
