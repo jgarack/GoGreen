@@ -2,6 +2,7 @@ package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.ServerStatusException;
+import javafx.scene.control.Alert;
 
 import java.io.BufferedReader;
 import java.io.OutputStream;
@@ -28,7 +29,8 @@ public abstract class HttpRequestHandler {
      * @return BufferedReader containing the HTTP response from the server
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGetHome() throws Exception {
+    public static BufferedReader reqGetHome() throws ServerStatusException,
+            IOException {
         return reqGet(DOMAIN_INDEX, USER_AGENT_MOZILLA);
     }
 
@@ -40,7 +42,7 @@ public abstract class HttpRequestHandler {
      * @throws Exception at readRes
      */
     public static BufferedReader reqGetHome(final String userAgent)
-            throws Exception {
+            throws ServerStatusException, IOException {
         return reqGet(DOMAIN_INDEX, userAgent);
     }
 
@@ -52,7 +54,8 @@ public abstract class HttpRequestHandler {
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGet(final String url) throws Exception {
+    public static BufferedReader reqGet(final String url) throws
+            ServerStatusException, IOException {
         return reqGet(url, USER_AGENT_MOZILLA);
     }
 
@@ -65,7 +68,8 @@ public abstract class HttpRequestHandler {
      * @throws Exception at readRes
      */
     public static BufferedReader reqGet(final String url,
-                                      final String userAgent) throws Exception {
+                                final String userAgent)
+                                throws ServerStatusException, IOException {
         URL inputUrl = new URL(url);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
@@ -83,7 +87,7 @@ public abstract class HttpRequestHandler {
      * @throws Exception at readRes
      */
     public static BufferedReader reqPost(final String url, final Object message)
-            throws Exception {
+            throws ServerStatusException, IOException {
         return reqPost(url, message, USER_AGENT_MOZILLA);
     }
 
@@ -96,7 +100,8 @@ public abstract class HttpRequestHandler {
      * @throws Exception at readRes
      */
     public static BufferedReader reqPost(final String url, final Object message,
-                                      final String userAgent) throws Exception {
+             final String userAgent) throws ServerStatusException, IOException {
+
         URL inputUrl = new URL(url);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("POST");
@@ -120,14 +125,13 @@ public abstract class HttpRequestHandler {
      * @throws Exception If the status code is other than HTTP OK (200)
      */
     private static BufferedReader readRes(final HttpURLConnection con)
-            throws Exception {
+            throws ServerStatusException, IOException {
         int responsecode = con.getResponseCode();
         if (responsecode == HttpURLConnection.HTTP_OK) {
             return new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
         }
         throw new ServerStatusException(con.getURL().toString(), responsecode);
-        //TODO: clean up exceptions
     }
 
     /** Creates or replaces a .txt file at the specified path with the text
