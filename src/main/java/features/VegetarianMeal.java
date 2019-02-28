@@ -2,43 +2,50 @@ package features;
 
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import utility.Activity;
 import utility.HttpRequestHandler;
 import java.io.BufferedReader;
 
-/**Performs a http post request to server to calculate points for vegetarian meal.
- *
+/**Performs a http post request to server to
+ * calculate points for vegetarian meal.
  */
-
 public class VegetarianMeal {
-
+    /**
+     * Server Domain.
+     */
     private final String domain = "http://localhost:8080";
+    /**
+     * value to be calculated.
+     */
     private int value;
-//    @FXML
-//    private TextField test;
 
-    public VegetarianMeal(TextField userValue){
-        this.value = Integer.parseInt(userValue.getText().trim());
+    /**
+     * Constructor for VegetarianMeal.
+     * @param userValue Text field value
+     */
+    public VegetarianMeal(final TextField userValue) {
+        this.value =
+                Integer.parseInt(userValue.getText().trim());
     }
-    /** Handles request for Vegetarian meal points from server
+    /** Handles request for Vegetarian meal points from server.
      *@param event Clicking on calculate point button
      *@author ohussein
      */
-    public void calculatePoints(ActionEvent event){
+    public void calculatePoints(final ActionEvent event) {
 
 //        checkForm();
         try {
-            BufferedReader httpBody = HttpRequestHandler.reqPost(domain + "/points", new Activity(1,value));
+            BufferedReader httpBody =
+                    HttpRequestHandler.reqPost(domain
+                            + "/points", new Activity(1, value));
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
             HttpRequestHandler.resLog(httpBody, null);
             displayResponse.setTitle("Good Job!");
             displayResponse.setContentText("Go Green!");
             displayResponse.showAndWait();
-        }
-        catch (Exception e){
+            } catch (Exception e) {
 
             exceptionHandler(e);
 
@@ -46,7 +53,7 @@ public class VegetarianMeal {
 
     }
 
-    /**Helper method checks if field is empty and alerts user if so
+    /**Helper method checks if field is empty and alerts user if so.
      * @author ohussein
      */
 //    protected void checkForm() {
@@ -58,11 +65,10 @@ public class VegetarianMeal {
 //        }
 //    }
 
-    /**Helper method that handles exceptions
-     *
-     * @param e exception that was thrown
+    /**Helper method that handles exceptions.
+     *@param e exception that was thrown
      */
-    protected void exceptionHandler(Exception e){
+    protected void exceptionHandler(final Exception e) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
         statusCodeError.setTitle(e.getMessage());
 //        statusCodeError.setContentText("See terminal for stacktrace.");
@@ -70,10 +76,14 @@ public class VegetarianMeal {
         statusCodeError.showAndWait();
     }
 
+    /**
+     *Converts object to a String representation.
+     * @return String representation of object
+     */
     @Override
     public String toString() {
-        return "VegetarianMeal{" +
-                "value=" + value +
-                '}';
+        return "VegetarianMeal{"
+                + "value=" + value
+                + '}';
     }
 }

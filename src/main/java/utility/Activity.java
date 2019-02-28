@@ -1,24 +1,29 @@
 package utility;
 
-/**Activity object to be communicated to the server
+/**Activity object to be communicated to the server.
  *with id specific to each activity
  */
 public class Activity {
-
+    /**
+     * Id to identify type of activity ex: 1 = Vegetarian meal.
+     */
     private int id;
+    /**
+     * amount of activity performed.
+     */
     private int value;
 
-    /**Activity constructor
-     * @param id activity identifier
-     * @param value amount of activity performed
+    /**Activity constructor.
+     * @param num activity identifier
+     * @param weight amount of activity performed
      * @author ohussein
      */
-    public Activity(int id, int value){
-        this.id = id;
-        this.value = value;
+    public Activity(final int num, final int weight) {
+        this.id = num;
+        this.value = weight;
     }
 
-    /**Getter for Id
+    /**Getter for Id.
      *
      * @return id
      */
@@ -26,7 +31,7 @@ public class Activity {
         return id;
     }
 
-    /**Getter for Value
+    /**Getter for Value.
      *
      * @return value
      */
@@ -34,18 +39,18 @@ public class Activity {
         return value;
     }
 
-    /**Setter for Value
+    /**Setter for Value.
      *
-     * @param value
+     * @param weight amount of activity performed
      */
-    public void setValue(int value) {
-        this.value = value;
+    public void setValue(final int weight) {
+        this.value = weight;
     }
-    /**Setter for id
+    /**Setter for id.
      *
-     * @param id
+     * @param num id of activity
      */
-    public void setId(int id) {
-        this.id = id;
+    public void setId(final int num) {
+        this.id = num;
     }
 }

@@ -1,8 +1,6 @@
 package server;
 
 import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.List;
 //java library imports
 //import java.util.concurrent.atomic.AtomicLong;
 //spring imports
@@ -29,11 +27,7 @@ public class GreetingController {
      * {@value}
      */
     private static final String TEMPLATE = "Hello, %s!";
-    /*
-    /**
-     * A counter.
-     */
-    //private final AtomicLong counter = new AtomicLong();
+
     /**
      * Authenticator Object that can be used to authenticate a user.
      * State of the Authenticator can not be preserved yet.
@@ -73,7 +67,7 @@ public class GreetingController {
         @RequestBody final AccountMessage account) {
         try {
             if (authenticator.registerNewUser(account)) {
-                return new ResponseEntity("Registration succesfull. "
+                return new ResponseEntity("Registration successful. "
                         + "You can now log in", HttpStatus.CONFLICT);
             }
             return new ResponseEntity("Your account could not be created",
@@ -83,13 +77,23 @@ public class GreetingController {
                     HttpStatus.CONFLICT);
         }
     }
+
+    /**
+     * Mapping for post request to calculate points.
+     * @param activity Activity to be calculated
+     * @return ResponseEntity with http response body and status code
+     * @throws Exception UrlNotFound
+     */
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
-            @RequestBody Activity activity)throws Exception{
-        if(activity.getId()==1){
-
-            BufferedReader httpBody = HttpRequestHandler.reqGet("https://api.carbonintensity.org.uk/intensity");
-            return new ResponseEntity("Your Carbon emissions are:"+ HttpRequestHandler.resLog(httpBody,null), HttpStatus.OK);
+            @RequestBody final Activity activity)throws Exception {
+        if (activity.getId() == 1) {
+            BufferedReader httpBody =
+                    HttpRequestHandler.reqGet("https://api."
+                            + "carbonintensity.org.uk/intensity");
+            return new ResponseEntity("Your Carbon emissions are:"
+                    + HttpRequestHandler.resLog(httpBody, null),
+                    HttpStatus.OK);
         }
         return new ResponseEntity("Not an Activity", HttpStatus.OK);
     }

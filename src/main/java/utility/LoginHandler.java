@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Class that handles the actions made by the user.
- * @see gui.LoginController
+ * @see GUI.LoginController
  * @author awjvanvugt
  */
 public abstract class LoginHandler {

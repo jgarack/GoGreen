@@ -20,7 +20,9 @@ public final class LoginController {
      */
     @FXML
     private TextField pass;
-
+    /**
+     * Bound to the text field where the user enters value of activity.
+     */
     @FXML
     private TextField test;
 
