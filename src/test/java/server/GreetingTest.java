@@ -1,6 +1,7 @@
 package server;
 
 import org.junit.Test;
+import utility.Greeting;
 
 import static org.junit.Assert.*;
 
