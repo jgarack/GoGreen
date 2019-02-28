@@ -1,6 +1,7 @@
 package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exceptions.ServerStatusException;
 
 import java.io.BufferedReader;
 import java.io.OutputStream;
@@ -38,11 +39,13 @@ public abstract class HttpRequestHandler {
      * @return BufferedReader containing the HTTP response from the server
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGetHome(final String userAgent) throws Exception {
+    public static BufferedReader reqGetHome(final String userAgent)
+            throws Exception {
         return reqGet(DOMAIN_INDEX, userAgent);
     }
 
-    /**Sends an HTTP GET request to the server which requests the specified page.
+    /**Sends an HTTP GET request to the server which requests the specified
+     * page.
      * Default User-Agent
      * @author awjvanvugt
      * @param url URL for the GET request
@@ -53,14 +56,16 @@ public abstract class HttpRequestHandler {
         return reqGet(url, USER_AGENT_MOZILLA);
     }
 
-    /**Sends an HTTP GET request to the server which requests the specified page.
+    /**Sends an HTTP GET request to the server which requests the specified
+     * page.
      * @author awjvanvugt
      * @param url URL for the GET request
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqGet(final String url, final String userAgent) throws Exception {
+    public static BufferedReader reqGet(final String url,
+                                      final String userAgent) throws Exception {
         URL inputUrl = new URL(url);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
@@ -77,7 +82,8 @@ public abstract class HttpRequestHandler {
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqPost(String url, Object message) throws Exception {
+    public static BufferedReader reqPost(final String url, final Object message)
+            throws Exception {
         return reqPost(url, message, USER_AGENT_MOZILLA);
     }
 
@@ -85,11 +91,12 @@ public abstract class HttpRequestHandler {
      * @author awjvanvugt
      * @param url URL for the GET request
      * @param message the Object to POST
-     * @param userAgent
+     * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
      * @throws Exception at readRes
      */
-    public static BufferedReader reqPost(String url, Object message, String userAgent) throws Exception{
+    public static BufferedReader reqPost(final String url, final Object message,
+                                      final String userAgent) throws Exception {
         URL inputUrl = new URL(url);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("POST");
@@ -103,6 +110,7 @@ public abstract class HttpRequestHandler {
         out.close();
 
         return readRes(con);
+        //TODO: clean up exceptions
     }
 
     /** Private helper method to read the response from the server.
@@ -111,12 +119,15 @@ public abstract class HttpRequestHandler {
      * @return BufferedReader containing the response from the server
      * @throws Exception If the status code is other than HTTP OK (200)
      */
-    private static BufferedReader readRes(HttpURLConnection con) throws Exception{
+    private static BufferedReader readRes(final HttpURLConnection con)
+            throws Exception {
         int responsecode = con.getResponseCode();
-        if(responsecode == HttpURLConnection.HTTP_OK){
-            return new BufferedReader(new InputStreamReader(con.getInputStream()));
+        if (responsecode == HttpURLConnection.HTTP_OK) {
+            return new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
         }
-        throw new Exception("Unexpected response from server: "+responsecode+"\n"+con.getURL());
+        throw new ServerStatusException(con.getURL().toString(), responsecode);
+        //TODO: clean up exceptions
     }
 
     /** Creates or replaces a .txt file at the specified path with the text
@@ -124,8 +135,10 @@ public abstract class HttpRequestHandler {
      * @author awjvanvugt
      * @param message the BufferedReader of which the content should be logged
      * @param filepath the path to the file
+     * @return a String object containing the response
      */
-    public static String resLog(final BufferedReader message, final String filepath) {
+    public static String resLog(final BufferedReader message,
+                                final String filepath) {
         try {
             //TODO: Implement logging to file
             /*
@@ -143,8 +156,8 @@ public abstract class HttpRequestHandler {
             /*handler.publish(new LogRecord(Level.FINE, result));*/
             return result;
         } catch (IOException ioe) {
-            System.out.println("IOException occured, check filepath\n" +
-                    ioe.getMessage());
+            System.out.println("IOException occured, check filepath\n"
+                    + ioe.getMessage());
             ioe.printStackTrace();
             return "Failed to create log.";
         }
