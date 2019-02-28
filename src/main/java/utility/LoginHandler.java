@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -50,11 +51,9 @@ public abstract class LoginHandler {
             } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
             } catch (ServerStatusException e) {
-                displayStatusCodeError(e);
-            } catch (Exception e) {
-                //TODO: clean up exceptions
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+                displayException(e);
+            } catch (IOException e) {
+                displayException(e);
             }
         }
     }
@@ -82,11 +81,9 @@ public abstract class LoginHandler {
             } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
             } catch (ServerStatusException e) {
-                displayStatusCodeError(e);
-            } catch (Exception e) {
-                //TODO: clean up exceptions
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+                displayException(e);
+            } catch (IOException e) {
+                displayException(e);
             }
         }
     }
@@ -138,7 +135,7 @@ public abstract class LoginHandler {
      * Displays an error message for a thrown exception.
      * @param e the thrown exception to display
      */
-    private static void displayStatusCodeError(final ServerStatusException e) {
+    private static void displayException(final Exception e) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
         statusCodeError.setTitle(e.getMessage());
         statusCodeError.setContentText("See terminal for stacktrace.");

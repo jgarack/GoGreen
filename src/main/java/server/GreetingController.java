@@ -74,7 +74,7 @@ public class GreetingController {
         try {
             if (authenticator.registerNewUser(account)) {
                 return new ResponseEntity("Registration succesfull. "
-                        + "You can now log in", HttpStatus.CONFLICT);
+                        + "You can now log in", HttpStatus.OK);
             }
             return new ResponseEntity("Your account could not be created",
                     HttpStatus.INTERNAL_SERVER_ERROR);
