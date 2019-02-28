@@ -44,5 +44,8 @@ public final class LoginController {
     @FXML
     protected void handleSubmitButtonAction(final ActionEvent event) {
         LoginHandler.loginSubmit(username.getText().trim(), pass.getText());
+        VegetarianMeal testMeal = new VegetarianMeal(test);
+        System.out.println(testMeal.toString());
+        testMeal.calculatePoints(event);
     }
 }
