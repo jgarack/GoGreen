@@ -2,7 +2,7 @@ package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.ServerStatusException;
-import javafx.scene.control.Alert;
+
 
 import java.io.BufferedReader;
 import java.io.OutputStream;
@@ -27,7 +27,8 @@ public abstract class HttpRequestHandler {
      * Default User-Agent
      * @author awjvanvugt
      * @return BufferedReader containing the HTTP response from the server
-     * @throws Exception at readRes
+     * @throws ServerStatusException readRes
+     * @throws IOException readRes
      */
     public static BufferedReader reqGetHome() throws ServerStatusException,
             IOException {
@@ -39,7 +40,8 @@ public abstract class HttpRequestHandler {
      * @author awjvanvugt
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response from the server
-     * @throws Exception at readRes
+     * @throws ServerStatusException at readRes
+     * @throws IOException readRes
      */
     public static BufferedReader reqGetHome(final String userAgent)
             throws ServerStatusException, IOException {
@@ -52,7 +54,8 @@ public abstract class HttpRequestHandler {
      * @author awjvanvugt
      * @param url URL for the GET request
      * @return BufferedReader containing the HTTP response
-     * @throws Exception at readRes
+     * @throws ServerStatusException at readRes
+     * @throws IOException readRes
      */
     public static BufferedReader reqGet(final String url) throws
             ServerStatusException, IOException {
@@ -65,7 +68,8 @@ public abstract class HttpRequestHandler {
      * @param url URL for the GET request
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
-     * @throws Exception at readRes
+     * @throws ServerStatusException at readRes
+     * @throws IOException readRes
      */
     public static BufferedReader reqGet(final String url,
                                 final String userAgent)
@@ -84,7 +88,8 @@ public abstract class HttpRequestHandler {
      * @param url URL for the GET request
      * @param message the Object to POST
      * @return BufferedReader containing the HTTP response
-     * @throws Exception at readRes
+     * @throws ServerStatusException at readRes
+     * @throws IOException readRes
      */
     public static BufferedReader reqPost(final String url, final Object message)
             throws ServerStatusException, IOException {
@@ -97,7 +102,8 @@ public abstract class HttpRequestHandler {
      * @param message the Object to POST
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
-     * @throws Exception at readRes
+     * @throws ServerStatusException at readRes
+     * @throws IOException readRes
      */
     public static BufferedReader reqPost(final String url, final Object message,
              final String userAgent) throws ServerStatusException, IOException {
@@ -115,14 +121,16 @@ public abstract class HttpRequestHandler {
         out.close();
 
         return readRes(con);
-        //TODO: clean up exceptions
+
     }
 
     /** Private helper method to read the response from the server.
      * @author awjvanvugt
      * @param con connection to the server
      * @return BufferedReader containing the response from the server
-     * @throws Exception If the status code is other than HTTP OK (200)
+     * @throws ServerStatusException If the status code
+     * is other than HTTP OK (200)
+     * @throws IOException at readRes
      */
     private static BufferedReader readRes(final HttpURLConnection con)
             throws ServerStatusException, IOException {
