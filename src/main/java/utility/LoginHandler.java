@@ -52,6 +52,7 @@ public abstract class LoginHandler {
             } catch (ServerStatusException e) {
                 displayStatusCodeError(e);
             } catch (Exception e) {
+                //TODO: clean up exceptions
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }
@@ -83,6 +84,7 @@ public abstract class LoginHandler {
             } catch (ServerStatusException e) {
                 displayStatusCodeError(e);
             } catch (Exception e) {
+                //TODO: clean up exceptions
                 System.out.println(e.getMessage());
                 e.printStackTrace();
             }

@@ -1,6 +1,7 @@
 package utility;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exceptions.ServerStatusException;
 
 import java.io.BufferedReader;
 import java.io.OutputStream;
@@ -110,6 +111,7 @@ public abstract class HttpRequestHandler {
         out.close();
 
         return readRes(con);
+        //TODO: clean up exceptions
     }
 
     /** Private helper method to read the response from the server.
@@ -125,8 +127,8 @@ public abstract class HttpRequestHandler {
             return new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
         }
-        throw new Exception("Unexpected response from server: " + responsecode
-                + "\n" + con.getURL());
+        throw new ServerStatusException(con.getURL().toString(), responsecode);
+        //TODO: clean up exceptions
     }
 
     /** Creates or replaces a .txt file at the specified path with the text

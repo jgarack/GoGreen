@@ -6,19 +6,17 @@ import utility.Greeting;
 import static org.junit.Assert.*;
 
 public class GreetingTest {
-
-    long id = 5000;
-    String content = "content";
-
-    Greeting testGreeting = new Greeting(id, content);
+    private static final long FIVETHOUSAND = 5000;
+    private static final String CONTENT = "content";
+    private static final Greeting TESTGREETING = new Greeting(FIVETHOUSAND, CONTENT);
 
     @Test
     public void getId() {
-        assertEquals(5000, testGreeting.getId() );
+        assertEquals(FIVETHOUSAND, TESTGREETING.getId() );
     }
 
     @Test
     public void getContent() {
-        assertEquals("content", testGreeting.getContent());
+        assertEquals(CONTENT, TESTGREETING.getContent());
     }
 }

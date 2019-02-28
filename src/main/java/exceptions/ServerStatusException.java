@@ -10,8 +10,8 @@ public class ServerStatusException extends Exception {
      * Message for the unchecked exception thrown in a constructor.
      * {@value}
      */
-    private final String unsupported = "ServerStatusException should have a "
-            + "status code attached";
+    private static final String UNSUPPORTED = "ServerStatusException should"
+            + "have a status code attached";
 
     /**
      * Template for the message to use when instantiating this exception type.
@@ -34,7 +34,7 @@ public class ServerStatusException extends Exception {
      */
     public ServerStatusException() {
         super();
-        throw new UnsupportedOperationException(unsupported, this);
+        throw new UnsupportedOperationException(UNSUPPORTED, this);
     }
 
     /**
@@ -45,7 +45,7 @@ public class ServerStatusException extends Exception {
      */
     public ServerStatusException(final String message) {
         super(message);
-        throw new UnsupportedOperationException(unsupported, this);
+        throw new UnsupportedOperationException(UNSUPPORTED, this);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ServerStatusException extends Exception {
      */
     public ServerStatusException(final String message, final Throwable cause) {
         super(message, cause);
-        throw new UnsupportedOperationException(unsupported, this);
+        throw new UnsupportedOperationException(UNSUPPORTED, this);
     }
 
     /**
@@ -68,7 +68,7 @@ public class ServerStatusException extends Exception {
      */
     public ServerStatusException(final Throwable cause) {
         super(cause);
-        throw new UnsupportedOperationException(unsupported, this);
+        throw new UnsupportedOperationException(UNSUPPORTED, this);
     }
 
     //constructors to construct a proper instance of this object
