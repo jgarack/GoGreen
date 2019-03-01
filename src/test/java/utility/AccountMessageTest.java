@@ -50,4 +50,16 @@ public class AccountMessageTest {
         String test = "test";
         assertNotEquals(testAccountMessage, test);
     }
+
+    @Test
+    public void equalsSameObject() {
+        assertEquals(testAccountMessage,testAccountMessage);
+    }
+
+    @Test
+    public void hashCodeTest()
+    {
+        int hashcode = testAccountMessage.hashCode();
+        assertTrue(testAccountMessage.hashCode()!=0);
+    }
 }
