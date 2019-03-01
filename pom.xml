@@ -17,6 +17,7 @@
     </parent>
 
     <dependencies>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -76,12 +77,6 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.24.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>RELEASE</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
