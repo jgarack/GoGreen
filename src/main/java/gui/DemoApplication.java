@@ -37,12 +37,12 @@ public class DemoApplication extends Application {
      * Login page fxml file.
      * {@value}
      */
-    private final String loginFXML = "src/main/java/GUI/loginView.fxml";
+    private final String loginFXML = "src/main/java/gui/loginView.fxml";
     /**
      * Index page css file.
      * {@value}
      */
-    private final String indexCSS = "src/main/java/GUI/indexPage.css";
+    private final String indexCSS = "src/main/java/gui/indexPage.css";
 
     /**
      * The width dimension of the application window: {@value}.

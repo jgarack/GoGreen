@@ -1,11 +1,11 @@
 # Sprint plan
 ## 4. Week 4
-	> 4.1. We should already have a more detailed GUI
+	> 4.1. We should already have a more detailed gui
 	> 4.2. Finish the food features
 		
 ## 5. Week 5:
 	> 5.1. Polish the app
-	> 5.2. Have a more user-friendly GUI
+	> 5.2. Have a more user-friendly gui
 
 ## 6. week 6:
 	> 6.1. Finish the remaining features
