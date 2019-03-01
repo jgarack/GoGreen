@@ -1,9 +1,7 @@
 package utility;
 
-import org.junit.Test;
-import utility.Greeting;
-
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GreetingTest {
     private static final long FIVETHOUSAND = 5000;
