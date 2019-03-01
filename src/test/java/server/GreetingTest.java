@@ -1,4 +1,4 @@
-package utility;
+package server;
 
 import org.junit.Test;
 import utility.Greeting;
