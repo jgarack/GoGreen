@@ -40,6 +40,11 @@ public class AccountMessageTest {
     }
 
     @Test
+    public void equalsSameObject() {
+        assertEquals(testAccountMessage,testAccountMessage);
+    }
+
+    @Test
     public void equalsDifferent() {
         AccountMessage testAccountMessageDifferent = new AccountMessage("usergdname", "passdfsword");
         assertNotEquals(testAccountMessage, testAccountMessageDifferent);
@@ -49,5 +54,13 @@ public class AccountMessageTest {
     public void equalsDifferent2() {
         String test = "test";
         assertNotEquals(testAccountMessage, test);
+    }
+
+
+    @Test
+    public void hashCodeTest()
+    {
+        int hashcode = testAccountMessage.hashCode();
+        assertTrue(testAccountMessage.hashCode()!=0);
     }
 }
