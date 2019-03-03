@@ -59,7 +59,7 @@ public class AuthenticatorTest {
                     authenticator.registerNewUser(mockedArg),
                     "the username user is already taken");
             verify(mockedArg).getUsername();
-            verify(listedMock.getUsername());
+            verify(listedMock).getUsername();
         } catch(DataConflictException exception) {
             exception.printStackTrace();
             fail(exception.getMessage());
