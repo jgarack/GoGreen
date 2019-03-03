@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class AuthenticatorTest {
@@ -30,8 +31,19 @@ public class AuthenticatorTest {
     }
 
     @Test
-    public void registerSucceed() {
+    public void registerSucceedEmpty() {
         try {
+            assertTrue("Authenticator should register user",
+                    authenticator.registerNewUser(mockedArg));
+        } catch(DataConflictException exception) {
+            exception.printStackTrace();
+            fail(exception.getMessage());
+        }
+    }
+    @Test
+    public void registerSucceed(){
+        try {
+            when(listedMock.getUsername()).thenReturn("overridden stub");
             assertTrue("Authenticator should register user",
                     authenticator.registerNewUser(mockedArg));
         } catch(DataConflictException exception) {
@@ -46,6 +58,8 @@ public class AuthenticatorTest {
             assertThrows(DataConflictException.class, () ->
                     authenticator.registerNewUser(mockedArg),
                     "the username user is already taken");
+            verify(mockedArg).getUsername();
+            verify(listedMock).getUsername();
         } catch(DataConflictException exception) {
             exception.printStackTrace();
             fail(exception.getMessage());
@@ -97,7 +111,8 @@ public class AuthenticatorTest {
             assertFalse(authenticator.authenticate(unknownUser),
                     "Unknown account was authenticated.");
         } catch(DataConflictException exception) {
-
+            exception.printStackTrace();
+            fail(exception.getMessage());
         }
     }
 }
