@@ -164,7 +164,7 @@ public abstract class HttpRequestHandler {
                 logtxt.append(line);
             }
             String result = logtxt.toString();
-            System.out.println(result);
+//            System.out.println(result);
             /*handler.publish(new LogRecord(Level.FINE, result));*/
             return result;
         } catch (IOException ioe) {

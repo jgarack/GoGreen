@@ -1,5 +1,6 @@
 package gui;
 
+import features.VegetarianMeal;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -72,8 +73,15 @@ public class MainController {
     @FXML
     protected void increaseVegetarianMeals(ActionEvent event) {
         if (tryParseInt(VegMeals.getText())) {
-            this.vegetarianMeals += Integer.parseInt(VegMeals.getText());
-            Veg_Meals_eaten.setText("Vegetarian meals eaten:" + this.vegetarianMeals);
+
+            VegetarianMeal meal = new VegetarianMeal(VegMeals);
+            System.out.println(meal.toString());
+
+            this.vegetarianMeals += meal.calculatePoints(event);
+
+            Veg_Meals_eaten.setText("Vegetarian meals eaten:"
+                    + this.vegetarianMeals);
+
         } else {
             generateAlert("You need to fill in a number!");
         }

@@ -2,8 +2,13 @@ package server;
 
 import java.io.BufferedReader;
 //java library imports
+import java.util.*;
+import java.text.*;
 //import java.util.concurrent.atomic.AtomicLong;
 //spring imports
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 //native imports
 import exceptions.DataConflictException;
-import utility.AccountMessage;
-import utility.Activity;
-import utility.HttpRequestHandler;
-import utility.Authenticator;
+import utility.*;
 
 /**
  * Class that maps route requests made to the server.
@@ -68,7 +70,7 @@ public class GreetingController {
         try {
             if (authenticator.registerNewUser(account)) {
                 return new ResponseEntity("Registration successful. "
-                        + "You can now log in", HttpStatus.CONFLICT);
+                        + "You can now log in", HttpStatus.OK);
             }
             return new ResponseEntity("Your account could not be created",
                     HttpStatus.INTERNAL_SERVER_ERROR);
@@ -88,11 +90,20 @@ public class GreetingController {
     public ResponseEntity pointsResponse(
             @RequestBody final Activity activity)throws Exception {
         if (activity.getId() == 1) {
+
             BufferedReader httpBody =
-                    HttpRequestHandler.reqGet("https://api."
-                            + "carbonintensity.org.uk/intensity");
-            return new ResponseEntity("Your Carbon emissions are:"
-                    + HttpRequestHandler.resLog(httpBody, null),
+                    HttpRequestHandler.reqGet("http://impact.brighter"
+                            + "planet.com/diets.json?size="
+                            + activity.getValue()
+                            + "&timeframe=2019-01-01%2F2020-01-01"
+                            +"&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd");
+//
+//            ObjectMapper mapper = new ObjectMapper();
+//            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
+//                    null), JsonNode.class);
+
+            return new ResponseEntity(HttpRequestHandler.resLog(httpBody,null),
                     HttpStatus.OK);
         }
         return new ResponseEntity("Not an Activity", HttpStatus.OK);

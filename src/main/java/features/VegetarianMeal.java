@@ -1,6 +1,9 @@
 package features;
 
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
@@ -31,9 +34,10 @@ public class VegetarianMeal {
     }
     /** Handles request for Vegetarian meal points from server.
      *@param event Clicking on calculate point button
+     *@return returns points
      *@author ohussein
      */
-    public void calculatePoints(final ActionEvent event) {
+    public int calculatePoints(final ActionEvent event) {
 
 //        checkForm();
         try {
@@ -41,30 +45,31 @@ public class VegetarianMeal {
                     HttpRequestHandler.reqPost(domain
                             + "/points", new Activity(1, value));
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-            HttpRequestHandler.resLog(httpBody, null);
             displayResponse.setTitle("Good Job!");
             displayResponse.setContentText("Go Green!");
             displayResponse.showAndWait();
+            String con = HttpRequestHandler.resLog(httpBody, null);
+            System.out.println(con);
+            return this.jsonCon(con);
             } catch (Exception e) {
 
             exceptionHandler(e);
 
         }
-
+        return 0;
     }
 
-    /**Helper method checks if field is empty and alerts user if so.
-     * @author ohussein
-     */
-//    protected void checkForm() {
-//        if (Test.getText().trim().isEmpty()) {
-//            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-//            alert.setTitle("Please Fill In Points");
-//            alert.setContentText("No Points Were Entered!");
-//            alert.showAndWait();
-//        }
-//    }
-
+ public int jsonCon(final String con) throws Exception {
+     ObjectMapper mapper = new ObjectMapper();
+     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
+             false);
+     JsonNode em = mapper.readValue(con, JsonNode.class);
+     int ret = (int)Math.ceil(Double.parseDouble(em.get("decisions").
+             get("carbon").
+             get("description").textValue().
+             replace("kg", "").trim()));
+     return ret;
+    }
     /**Helper method that handles exceptions.
      *@param e exception that was thrown
      */
