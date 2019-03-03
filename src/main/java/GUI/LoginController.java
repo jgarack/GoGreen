@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import utility.LoginHandler;
+import features.VegetarianMeal;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,11 @@ public final class LoginController {
      */
     @FXML
     private TextField pass;
+    /**
+     * Bound to the text field where the user enters value of activity.
+     */
+    @FXML
+    private TextField test;
 
     /**
      * Initialize method.
@@ -79,5 +85,10 @@ public final class LoginController {
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
         }
+
+        VegetarianMeal testMeal = new VegetarianMeal(test);
+        System.out.println(testMeal.toString());
+        testMeal.calculatePoints(event);
+
     }
 }
