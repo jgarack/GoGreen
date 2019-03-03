@@ -1,0 +1,169 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: LoginController</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">gui</a> ]
+</div>
+
+<h1>Coverage Summary for Class: LoginController (gui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LoginController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package gui;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import javafx.fxml.FXML;
+<i>4</i>&nbsp;import javafx.event.ActionEvent;
+<i>5</i>&nbsp;import javafx.fxml.FXMLLoader;
+<i>6</i>&nbsp;import javafx.scene.Node;
+<i>7</i>&nbsp;import javafx.scene.Parent;
+<i>8</i>&nbsp;import javafx.scene.Scene;
+<i>9</i>&nbsp;import javafx.scene.control.TextField;
+<i>10</i>&nbsp;import javafx.scene.layout.AnchorPane;
+<i>11</i>&nbsp;import javafx.scene.layout.BorderPane;
+<i>12</i>&nbsp;import javafx.stage.Stage;
+<i>13</i>&nbsp;import utility.LoginHandler;
+<i>14</i>&nbsp;import features.VegetarianMeal;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;import java.io.File;
+<i>17</i>&nbsp;import java.io.IOException;
+<i>18</i>&nbsp;import java.net.URL;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;/**
+<i>21</i>&nbsp; * Controller for the login window.
+<i>22</i>&nbsp; */
+<b class="nc"><i>23</i>&nbsp;public final class LoginController {</b>
+<i>24</i>&nbsp;    /**
+<i>25</i>&nbsp;     * Bound to the text field where the user enters his username.
+<i>26</i>&nbsp;     */
+<i>27</i>&nbsp;    @FXML
+<i>28</i>&nbsp;    private TextField username;
+<i>29</i>&nbsp;    /**
+<i>30</i>&nbsp;     * Bound to the text field where the user enters his password.
+<i>31</i>&nbsp;     */
+<i>32</i>&nbsp;    @FXML
+<i>33</i>&nbsp;    private TextField pass;
+<i>34</i>&nbsp;
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    /**
+<i>37</i>&nbsp;     * Initialize method.
+<i>38</i>&nbsp;     */
+<i>39</i>&nbsp;    @FXML
+<i>40</i>&nbsp;    protected void initialize() {
+<b class="nc"><i>41</i>&nbsp;    }</b>
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    /**
+<i>46</i>&nbsp;     * Triggered when the user clicks &quot;Register&quot;.
+<i>47</i>&nbsp;     *
+<i>48</i>&nbsp;     * @param event The event fired when the user clicks the button.
+<i>49</i>&nbsp;     * @see utility.LoginHandler#registerSubmit(String, String)
+<i>50</i>&nbsp;     */
+<i>51</i>&nbsp;    @FXML
+<i>52</i>&nbsp;    protected void handleRegisterButtonAction(final ActionEvent event) {
+<b class="nc"><i>53</i>&nbsp;        LoginHandler.registerSubmit(username.getText().trim(), pass.getText());</b>
+<b class="nc"><i>54</i>&nbsp;    }</b>
+<i>55</i>&nbsp;
+<i>56</i>&nbsp;    /**
+<i>57</i>&nbsp;     * Triggered when the user clicks &quot;Sign in&quot;.
+<i>58</i>&nbsp;     *
+<i>59</i>&nbsp;     * @param event The event fired when the user clicks the button.
+<i>60</i>&nbsp;     * @see utility.LoginHandler#loginSubmit(String, String)
+<i>61</i>&nbsp;     */
+<i>62</i>&nbsp;    @FXML
+<i>63</i>&nbsp;    protected void handleSubmitButtonAction(final ActionEvent event) {
+<b class="nc"><i>64</i>&nbsp;        LoginHandler.loginSubmit(username.getText().trim(), pass.getText());</b>
+<b class="nc"><i>65</i>&nbsp;        redirectToMain(event);</b>
+<b class="nc"><i>66</i>&nbsp;    }</b>
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    /**
+<i>69</i>&nbsp;     * Redirects the user from login screen to main screen by setting up a new scene.
+<i>70</i>&nbsp;     *
+<i>71</i>&nbsp;     * @param event The event fired when the user clicks the button from the login button.
+<i>72</i>&nbsp;     */
+<i>73</i>&nbsp;    private void redirectToMain(ActionEvent event) {
+<b class="nc"><i>74</i>&nbsp;        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();</b>
+<i>75</i>&nbsp;        try {
+<b class="nc"><i>76</i>&nbsp;            FXMLLoader fxmlLoader = new FXMLLoader();</b>
+<b class="nc"><i>77</i>&nbsp;            Parent root = fxmlLoader.load(getClass().getResource(&quot;/mainView.fxml&quot;));</b>
+<b class="nc"><i>78</i>&nbsp;            Scene scene = new Scene(root,800,600);</b>
+<b class="nc"><i>79</i>&nbsp;            stage.setScene(scene);</b>
+<b class="nc"><i>80</i>&nbsp;            stage.setFullScreen(true);</b>
+<b class="nc"><i>81</i>&nbsp;        } catch (IOException e) {</b>
+<b class="nc"><i>82</i>&nbsp;            System.out.println(e.getLocalizedMessage());</b>
+<b class="nc"><i>83</i>&nbsp;        }</b>
+<i>84</i>&nbsp;
+<b class="nc"><i>85</i>&nbsp;    }</b>
+<i>86</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-03-03 21:06</div>
+</div>
+</body>
+</html>

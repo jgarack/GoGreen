@@ -2,6 +2,7 @@ package utility;
 
 import exceptions.DataConflictException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -19,7 +20,7 @@ public class AuthenticatorTest {
     AccountMessage mockedArg = Mockito.mock(AccountMessage.class);
     AccountMessage unknownMock = Mockito.mock(AccountMessage.class);
 
-    @BeforeAll
+    @BeforeEach
     public void setUpMock(){
         //stubbing
         when(listedMock1.getUsername()).thenReturn("user1");

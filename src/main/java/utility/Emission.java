@@ -10,8 +10,6 @@ public class Emission {
      */
     private String desisions;
 
-    public Emission() {
-    }
     /**
      * Class constructor.
      * @param gas emissions
@@ -38,9 +36,25 @@ public class Emission {
      * @return Integer value of emissions
      */
     public int getNum() {
-        desisions.replace("kg", "");
+        desisions = desisions.replace("kg", "");
         return Integer.parseInt(desisions.trim());
     }
 
+    /**
+     * Equals method that checks whether this and another object are the same
+     * @param other The object that is compared to this one.
+     * @return Returns true iff the two object are emissions and they have the same gas desisions.
+     */
+    @Override
+    public boolean equals(Object other){
+        if(this == other){
+            return true;
+        }
+        else if(other instanceof Emission){
+            Emission that = (Emission) other;
+            return this.getEmission().equals(that.getEmission());
+        }
+        return false;
+    }
 
 }
