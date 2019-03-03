@@ -63,6 +63,11 @@ public final class LoginController {
         redirectToMain(event);
     }
 
+    /**
+     * Redirects the user from login screen to main screen by setting up a new scene.
+     *
+     * @param event The event fired when the user clicks the button from the login button.
+     */
     private void redirectToMain(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         try {
