@@ -1,0 +1,129 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Greeting</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">utility</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Greeting (utility)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Greeting</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package utility;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;/**
+<i>4</i>&nbsp; * Object to contain a message, and an id for identification.
+<i>5</i>&nbsp; */
+<i>6</i>&nbsp;public class Greeting {
+<i>7</i>&nbsp;    /**
+<i>8</i>&nbsp;     * The unique id of this message.
+<i>9</i>&nbsp;     */
+<i>10</i>&nbsp;    private final long id;
+<i>11</i>&nbsp;
+<i>12</i>&nbsp;    /**
+<i>13</i>&nbsp;     * The message contained by this Object.
+<i>14</i>&nbsp;     */
+<i>15</i>&nbsp;    private final String content;
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    /**
+<i>18</i>&nbsp;     * Constructs a Greeting.
+<i>19</i>&nbsp;     * @param uniqueId the unique id for this Object.
+<i>20</i>&nbsp;     * @param message the message to contain.
+<i>21</i>&nbsp;     */
+<b class="fc"><i>22</i>&nbsp;    public Greeting(final long uniqueId, final String message) {</b>
+<b class="fc"><i>23</i>&nbsp;        this.id = uniqueId;</b>
+<i>24</i>&nbsp;
+<b class="fc"><i>25</i>&nbsp;        this.content = message;</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;    /**
+<i>29</i>&nbsp;     * Getter method for id.
+<i>30</i>&nbsp;     * @return id
+<i>31</i>&nbsp;     * @see #id
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    public long getId() {
+<b class="fc"><i>34</i>&nbsp;        return id;</b>
+<i>35</i>&nbsp;    }
+<i>36</i>&nbsp;
+<i>37</i>&nbsp;    /**
+<i>38</i>&nbsp;     * Getter method for the message contained.
+<i>39</i>&nbsp;     * @return content
+<i>40</i>&nbsp;     * @see #content
+<i>41</i>&nbsp;     */
+<i>42</i>&nbsp;    public String getContent() {
+<b class="fc"><i>43</i>&nbsp;        return content;</b>
+<i>44</i>&nbsp;    }
+<i>45</i>&nbsp;}
+<i>46</i>&nbsp;
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-03-03 21:06</div>
+</div>
+</body>
+</html>

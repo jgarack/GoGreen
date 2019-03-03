@@ -10,8 +10,7 @@ import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import server.GreetingController;
-import java.io.File;
-import java.net.URL;
+
 
 /**
  * Deprecated methods in this class are still supported.
@@ -37,12 +36,14 @@ public class DemoApplication extends Application {
      * Login page fxml file.
      * {@value}
      */
-    private final String loginFXML = "src/main/java/GUI/loginView.fxml";
+
+    //private final String loginFXML = "src/main/java/gui/loginView.fxml";
+
     /**
      * Index page css file.
      * {@value}
      */
-    private final String indexCSS = "src/main/java/GUI/indexPage.css";
+    private final String indexCSS = "src/main/java/gui/indexPage.css";
 
     /**
      * The width dimension of the application window: {@value}.
@@ -79,11 +80,11 @@ public class DemoApplication extends Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(DemoApplication.class);
-        URL url = new File(loginFXML).toURL();
+
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
 
-        root = FXMLLoader.load(url);
+        root = fxmlLoader.load(getClass().getResource("/loginView.fxml"));
 
 
     }
@@ -95,14 +96,15 @@ public class DemoApplication extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-
         primaryStage.setTitle("FXML Tryout");
         Scene scene = new Scene(root, width, height);
-        URL url = new File(indexCSS).toURL();
-        scene.getStylesheets().add(url.toExternalForm());
+        scene.getStylesheets().add((getClass().getResource("/indexPage.css")).toExternalForm());
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+
 
     /**
      * Stops the server.
