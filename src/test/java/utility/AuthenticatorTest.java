@@ -1,49 +1,103 @@
 package utility;
 
 import exceptions.DataConflictException;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 public class AuthenticatorTest {
+
+
     Authenticator authenticator =  new Authenticator();
 
-    AccountMessage listedMock1 = Mockito.mock(AccountMessage.class);
-    AccountMessage listedMock2 = Mockito.mock(AccountMessage.class);
-    AccountMessage listedMock3 = Mockito.mock(AccountMessage.class);
+    AccountMessage listedMock = Mockito.mock(AccountMessage.class);
     AccountMessage mockedArg = Mockito.mock(AccountMessage.class);
-    AccountMessage unknownMock = Mockito.mock(AccountMessage.class);
 
-    @BeforeAll
+    AccountMessage sameAccount1 = new AccountMessage("user", "pass");
+    AccountMessage sameAccount2 = new AccountMessage("user", "pass");
+    AccountMessage otherPass = new AccountMessage("user", "nopass");
+    AccountMessage unknownUser = new AccountMessage("notuser", "pass");
+
+    @BeforeEach
     public void setUpMock(){
         //stubbing
-        when(listedMock1.getUsername()).thenReturn("user1");
-        when(listedMock2.getUsername()).thenReturn("user2");
-        when(listedMock3.getUsername()).thenReturn("user3");
-        when(mockedArg.getUsername()).thenReturn("user3");
+        when(listedMock.getUsername()).thenReturn("user");
+        when(mockedArg.getUsername()).thenReturn("user");
     }
 
     @Test
     public void registerSucceed() {
         try {
-            assertTrue("Authenticator should register user3", authenticator.registerNewUser(mockedArg));
+            assertTrue("Authenticator should register user",
+                    authenticator.registerNewUser(mockedArg));
         } catch(DataConflictException exception) {
+            exception.printStackTrace();
             fail(exception.getMessage());
         }
     }
     @Test
     public void registerFail() {
-        try{
-            authenticator.registerNewUser(listedMock3);
-            System.out.println(mockedArg.getUsername());
-            assertThrows(DataConflictException.class, () -> authenticator.registerNewUser(mockedArg), "the username user3 is already taken");
+        try {
+            authenticator.registerNewUser(listedMock);
+            assertThrows(DataConflictException.class, () ->
+                    authenticator.registerNewUser(mockedArg),
+                    "the username user is already taken");
         } catch(DataConflictException exception) {
+            exception.printStackTrace();
             fail(exception.getMessage());
+        }
+    }
+    @Test
+    public void authenticateEmptyList() {
+        assertFalse(authenticator.authenticate(sameAccount1),
+                "No accounts registered but user was authenticated");
+    }
+    @Test
+    public void authenticateSame() {
+        try {
+            authenticator.registerNewUser(sameAccount1);
+            assertTrue("Registered account was not authenticated.",
+                    authenticator.authenticate(sameAccount1));
+        } catch(DataConflictException exception) {
+            exception.printStackTrace();
+            fail(exception.getMessage());
+        }
+    }
+    @Test
+    public void authenticateTrue() {
+        try {
+            authenticator.registerNewUser(unknownUser);
+            authenticator.registerNewUser(sameAccount1);
+            assertTrue("Registered account was not authenticated.",
+                    authenticator.authenticate(sameAccount2));
+        } catch(DataConflictException exception) {
+            exception.printStackTrace();
+            fail(exception.getMessage());
+        }
+    }
+    @Test
+    public void authenticateWrongPass(){
+        try {
+            authenticator.registerNewUser(sameAccount1);
+            assertFalse(authenticator.authenticate(otherPass),
+                    "Wrong password was accepted.");
+        } catch(DataConflictException exception) {
+            exception.printStackTrace();
+            fail(exception.getMessage());
+        }
+    }
+    @Test
+    public void authenticateUnknownAccount() {
+        try {
+            authenticator.registerNewUser(sameAccount1);
+            assertFalse(authenticator.authenticate(unknownUser),
+                    "Unknown account was authenticated.");
+        } catch(DataConflictException exception) {
+
         }
     }
 }

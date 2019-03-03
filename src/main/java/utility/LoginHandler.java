@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * Class that handles the actions made by the user.
- * @see GUI.LoginController
+ * @see gui.LoginController
  * @author awjvanvugt
  */
 public abstract class LoginHandler {
