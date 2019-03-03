@@ -10,8 +10,7 @@ import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import server.GreetingController;
-import java.io.File;
-import java.net.URL;
+
 
 /**
  * Deprecated methods in this class are still supported.

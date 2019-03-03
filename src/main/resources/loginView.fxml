@@ -18,20 +18,7 @@
 <GridPane fx:id="grid" fx:controller="gui.LoginController" xmlns:fx="http://javafx.com/fxml"
           alignment="center" hgap="10" vgap="10">
 
-<<<<<<< HEAD:src/main/java/gui/loginView.fxml
-    <padding><Insets top="25" right="25" bottom="10" left="25"/></padding>
-    <Text fx:id="loginText" text="Login" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
-    />
-    <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <PasswordField fx:id="pass" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-    <!--Test box for vegetarian meal-->
-    <Label text="Test" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <TextField fx:id="test" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-    <HBox spacing="10" alignment="BOTTOM_RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="3">
-=======
     <padding><Insets top="10" right="25" bottom="10" left="25"/></padding>
     <!-- <Text fx:id="loginText" text="Login" GridPane.rowIndex="0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/> -->
     <Label text="Username" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
@@ -39,7 +26,6 @@
     <Label text="Password" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <PasswordField fx:id="pass" GridPane.rowIndex="4"/>
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="6">
->>>>>>> eb24829c1ec2ba903b78488a88dc0cd9ff3bd02d:src/main/resources/loginView.fxml
         <Button fx:id="submitLogin" text="Sign in" onAction="#handleSubmitButtonAction" />
     </HBox>
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="7">

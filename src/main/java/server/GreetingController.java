@@ -95,15 +95,15 @@ public class GreetingController {
                     HttpRequestHandler.reqGet("http://impact.brighter"
                             + "planet.com/diets.json?size="
                             + activity.getValue()
-                            + "timeframe=2019-01-01%2F2020-01-01");
+                            + "&timeframe=2019-01-01%2F2020-01-01"
+                            +"&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd");
+//
+//            ObjectMapper mapper = new ObjectMapper();
+//            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
+//                    null), JsonNode.class);
 
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
-                    null), JsonNode.class);
-
-            return new ResponseEntity("Your Carbon emissions are:"
-                    + em.get("decisions").get("carbon").get("description"),
+            return new ResponseEntity(HttpRequestHandler.resLog(httpBody,null),
                     HttpStatus.OK);
         }
         return new ResponseEntity("Not an Activity", HttpStatus.OK);

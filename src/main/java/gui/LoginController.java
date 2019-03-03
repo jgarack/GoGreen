@@ -31,11 +31,7 @@ public final class LoginController {
      */
     @FXML
     private TextField pass;
-    /**
-     * Bound to the text field where the user enters value of activity.
-     */
-    @FXML
-    private TextField test;
+
 
     /**
      * Initialize method.
@@ -66,10 +62,6 @@ public final class LoginController {
     @FXML
     protected void handleSubmitButtonAction(final ActionEvent event) {
         LoginHandler.loginSubmit(username.getText().trim(), pass.getText());
-
-        VegetarianMeal testMeal = new VegetarianMeal(test);
-        System.out.println(testMeal.toString());
-        testMeal.calculatePoints(event);
 
         redirectToMain(event);
     }
