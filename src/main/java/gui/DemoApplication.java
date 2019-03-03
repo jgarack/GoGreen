@@ -98,7 +98,9 @@ public class DemoApplication extends Application {
     public void start(final Stage primaryStage) throws Exception {
         primaryStage.setTitle("FXML Tryout");
         Scene scene = new Scene(root, width, height);
-        scene.getStylesheets().add((getClass().getResource("/indexPage.css")).toExternalForm());
+        scene.getStylesheets().add(
+                (getClass().getResource("/indexPage.css"))
+                        .toExternalForm());
 
         primaryStage.setScene(scene);
         primaryStage.show();

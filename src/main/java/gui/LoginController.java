@@ -7,20 +7,22 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import utility.LoginHandler;
-import features.VegetarianMeal;
-
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * Controller for the login window.
  */
 public final class LoginController {
+    /**
+     * The width of the stage.
+     */
+    private final int width = 800;
+    /**
+     * The height of the stage.
+     */
+    private final int height = 600;
     /**
      * Bound to the text field where the user enters his username.
      */
@@ -61,21 +63,25 @@ public final class LoginController {
      */
     @FXML
     protected void handleSubmitButtonAction(final ActionEvent event) {
-        LoginHandler.loginSubmit(username.getText().trim(), pass.getText());
+        LoginHandler.loginSubmit(username.getText().trim(),
+                pass.getText());
         redirectToMain(event);
     }
 
     /**
-     * Redirects the user from login screen to main screen by setting up a new scene.
-     *
-     * @param event The event fired when the user clicks the button from the login button.
+     * Redirects the user from login screen
+     * to main screen by setting up a new scene.
+     * @param event The event fired
+     * when the user clicks the button from the login button.
      */
-    private void redirectToMain(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    private void redirectToMain(final ActionEvent event) {
+        Stage stage = (Stage) ((Node) event.getSource())
+                .getScene().getWindow();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass().getResource("/mainView.fxml"));
-            Scene scene = new Scene(root,800,600);
+            Parent root = fxmlLoader.load(getClass()
+                    .getResource("/mainView.fxml"));
+            Scene scene = new Scene(root, width, height);
             stage.setScene(scene);
             stage.setFullScreen(true);
         } catch (IOException e) {

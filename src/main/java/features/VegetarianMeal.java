@@ -4,12 +4,10 @@ package features;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import utility.Activity;
-import utility.HttpRequestHandler;
-import java.io.BufferedReader;
+
+import java.io.IOException;
 
 /**Performs a http post request to server to
  * calculate points for vegetarian meal.
@@ -32,39 +30,44 @@ public class VegetarianMeal {
         this.value =
                 Integer.parseInt(userValue.getText().trim());
     }
-    /** Handles request for Vegetarian meal points from server.
-     *@param event Clicking on calculate point button
-     *@return returns points
-     *@author ohussein
+//    /** Handles request for Vegetarian meal points from server.
+//     *@param event Clicking on calculate point button
+//     *@return returns points
+//     *@author ohussein
+//     */
+//    public int calculatePoints(final ActionEvent event) {
+//
+////        checkForm();
+//        try {
+//            BufferedReader httpBody =
+//                    HttpRequestHandler.reqPost(domain
+//                            + "/points", new Activity(1, value));
+//            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
+//            displayResponse.setTitle("Good Job!");
+//            displayResponse.setContentText("Go Green!");
+//            displayResponse.showAndWait();
+//            String con = HttpRequestHandler.resLog(httpBody, null);
+//            System.out.println(con);
+//            return this.jsonCon(con);
+//            } catch (Exception e) {
+//
+//            exceptionHandler(e);
+//
+//        }
+//        return 0;
+//    }
+
+    /**
+     * Helper method that parses con to a desired integer.
+     * @param con The given String
+     * @return An integer that is derived from the string.
+     * @throws IOException Throws an exception if the Mapping is not succesful.
      */
-    public int calculatePoints(final ActionEvent event) {
-
-//        checkForm();
-        try {
-            BufferedReader httpBody =
-                    HttpRequestHandler.reqPost(domain
-                            + "/points", new Activity(1, value));
-            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-            displayResponse.setTitle("Good Job!");
-            displayResponse.setContentText("Go Green!");
-            displayResponse.showAndWait();
-            String con = HttpRequestHandler.resLog(httpBody, null);
-            System.out.println(con);
-            return this.jsonCon(con);
-            } catch (Exception e) {
-
-            exceptionHandler(e);
-
-        }
-        return 0;
-    }
-
- public int jsonCon(final String con) throws Exception {
+ public int jsonCon(final String con) throws IOException {
      ObjectMapper mapper = new ObjectMapper();
-     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-             false);
+     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
      JsonNode em = mapper.readValue(con, JsonNode.class);
-     int ret = (int)Math.ceil(Double.parseDouble(em.get("decisions").
+     int ret = (int) Math.ceil(Double.parseDouble(em.get("decisions").
              get("carbon").
              get("description").textValue().
              replace("kg", "").trim()));
