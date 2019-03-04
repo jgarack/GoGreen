@@ -41,7 +41,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGetHome() throws ServerStatusException,
             IOException {
-        return reqGet(domain, USER_AGENT_MOZILLA);
+        return reqGet("/", USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP GET request to the server which requests the home page
@@ -54,7 +54,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGetHome(final String userAgent)
             throws ServerStatusException, IOException {
-        return reqGet(domain, userAgent);
+        return reqGet("/", userAgent);
     }
 
     /**Sends an HTTP GET request to the server which requests the specified
@@ -68,7 +68,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGet(final String route) throws
             ServerStatusException, IOException {
-        return reqGet(domain + route, USER_AGENT_MOZILLA);
+        return reqGet(route, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP GET request to the server which requests the specified
@@ -83,7 +83,7 @@ public class HttpRequestHandler {
     public BufferedReader reqGet(final String route,
                                 final String userAgent)
                                 throws ServerStatusException, IOException {
-        URL inputUrl = new URL(domain + route);
+        URL inputUrl = new URL(route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
@@ -102,7 +102,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqPost(final String route, final Object message)
             throws ServerStatusException, IOException {
-        return reqPost(domain + route, message, USER_AGENT_MOZILLA);
+        return reqPost(route, message, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP POST request to the server on the specified page.
@@ -116,7 +116,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqPost(final String route, final Object message,
              final String userAgent) throws ServerStatusException, IOException {
-
+        System.out.println(route);
         URL inputUrl = new URL(domain + route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("POST");
