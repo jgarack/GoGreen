@@ -28,11 +28,18 @@ public class GreetingController {
      * {@value}
      */
     private static final String TEMPLATE = "Hello, %s!";
-
+    /**
+     * Login page routing.
+     */
     private static final String LOGIN_PAGE = "./login";
-
+    /**
+     * api path.
+     */
     private static final String BP_API = "http://impact.brighter"
             + "planet.com";
+    /**
+     * api key.
+     */
     private static final String BP_KEY =
             "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
 
@@ -41,12 +48,18 @@ public class GreetingController {
      * State of the Authenticator can not be preserved yet.
      */
     private static final Authenticator authenticator = new Authenticator();
-
+    /**
+     * HttpRequestHandler object that can be used for contacting the api.
+     */
     private static final HttpRequestHandler httpHandlerAPI =
             new HttpRequestHandler(BP_API);
 
+    /**
+     * Default mapping for index.
+     * @return ResponseEntity with status code and head
+     */
     @GetMapping("/")
-    public ResponseEntity indexRedirect(){
+    public ResponseEntity indexRedirect() {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(LOGIN_PAGE));
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
@@ -112,12 +125,6 @@ public class GreetingController {
                             + activity.getValue()
                             //+ "&timeframe=2019-01-01%2F2020-01-01"
                             + BP_KEY);
-//
-//            ObjectMapper mapper = new ObjectMapper();
-//            mapper.configure(DeserializationFeature
-//            .FAIL_ON_UNKNOWN_PROPERTIES, false);
-//            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
-//                    null), JsonNode.class);
 
             return new ResponseEntity(httpHandlerAPI
                     .resLog(httpBody, null),

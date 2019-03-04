@@ -23,7 +23,11 @@ public class HttpRequestHandler {
     /** The default url to use in HTTP requests. **/
     private static String domain;
 
-    public HttpRequestHandler(String host){
+    /**
+     * Class Constructor for domain.
+     * @param host domain to contact
+     */
+    public HttpRequestHandler(final String host) {
         domain = host;
     }
 
@@ -64,7 +68,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGet(final String route) throws
             ServerStatusException, IOException {
-        return reqGet(domain+route, USER_AGENT_MOZILLA);
+        return reqGet(domain + route, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP GET request to the server which requests the specified
@@ -79,7 +83,7 @@ public class HttpRequestHandler {
     public BufferedReader reqGet(final String route,
                                 final String userAgent)
                                 throws ServerStatusException, IOException {
-        URL inputUrl = new URL(domain+route);
+        URL inputUrl = new URL(domain + route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
@@ -98,7 +102,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqPost(final String route, final Object message)
             throws ServerStatusException, IOException {
-        return reqPost(domain+route, message, USER_AGENT_MOZILLA);
+        return reqPost(domain + route, message, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP POST request to the server on the specified page.
@@ -113,7 +117,7 @@ public class HttpRequestHandler {
     public BufferedReader reqPost(final String route, final Object message,
              final String userAgent) throws ServerStatusException, IOException {
 
-        URL inputUrl = new URL(domain+route);
+        URL inputUrl = new URL(domain + route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", userAgent);

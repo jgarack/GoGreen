@@ -2,7 +2,6 @@ package utility;
 
 import exceptions.ServerStatusException;
 import javafx.scene.control.Alert;
-import org.mockito.Mock;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
@@ -79,7 +78,8 @@ public abstract class LoginHandler {
      * @param pass The password.
      * @return true iff logged in
      */
-    public static boolean loginSubmit(final String username, final String pass) {
+    public static boolean loginSubmit(final String username,
+                                      final String pass) {
         if (checkForm(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");

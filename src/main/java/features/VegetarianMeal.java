@@ -58,7 +58,8 @@ public class VegetarianMeal {
 
 //        checkForm();
         try {
-            BufferedReader httpBody = new HttpRequestHandler(domain).reqPost("/points", new Activity(1, this.getValue()));
+            BufferedReader httpBody = new HttpRequestHandler(domain).reqPost(
+                    "/points", new Activity(1, this.getValue()));
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
             displayResponse.setTitle("Good Job!");
             displayResponse.setContentText("Go Green!");
