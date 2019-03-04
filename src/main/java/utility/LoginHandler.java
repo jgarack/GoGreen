@@ -40,8 +40,9 @@ public abstract class LoginHandler {
      * @return true iff registered
      */
     public static boolean registerSubmit(final String username,
-                                      final String pass) {
-        if (checkForm(username, pass)) {
+                                      final String pass,
+                                         final String confirmPass) {
+        if (checkForm(username, pass,confirmPass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
@@ -133,6 +134,23 @@ public abstract class LoginHandler {
             return false;
         }
         return true;
+    }
+
+    private static boolean checkForm(final String userFieldEntry,
+                                     final String passFieldEntry,
+                                     final String confirmPassFieldEntry) {
+        if(checkForm(userFieldEntry,passFieldEntry)) {
+            if (confirmPassFieldEntry.equals(passFieldEntry)) {
+                return true;
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Password do not match!");
+                alert.setContentText("You need to type in matching passwords!");
+                alert.showAndWait();
+            }
+        }
+        return false;
     }
 
     /**

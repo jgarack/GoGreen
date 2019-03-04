@@ -7,6 +7,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -33,12 +35,16 @@ public class RegisterController {
      * Bound to the text field where the user enters his password.
      */
     @FXML
-    private TextField pass;
+    private PasswordField pass;
+
+    @FXML
+    private PasswordField confirmPass;
 
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event){
-        if(LoginHandler.registerSubmit(username.getText().trim(), pass.getText())){
-            redirectToView(event);
+        if(LoginHandler.registerSubmit(username.getText().trim(), pass.getText().trim(),confirmPass.getText().trim()))
+        {
+                redirectToView(event);
         }
     }
 
