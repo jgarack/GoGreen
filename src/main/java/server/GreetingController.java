@@ -1,8 +1,12 @@
 package server;
 
 import java.io.BufferedReader;
+import java.net.URI;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,11 +29,20 @@ public class GreetingController {
      */
     private static final String TEMPLATE = "Hello, %s!";
 
+    private static final String LOGIN_PAGE = "./login";
+
     /**
      * Authenticator Object that can be used to authenticate a user.
      * State of the Authenticator can not be preserved yet.
      */
     private Authenticator authenticator = new Authenticator();
+
+    @GetMapping("/")
+    public ResponseEntity indexRedirect(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(LOGIN_PAGE));
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
 
     /**
      * Mapping for route /login. Takes an account object from the client and
