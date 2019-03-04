@@ -58,14 +58,12 @@ public class VegetarianMeal {
 
 //        checkForm();
         try {
-            BufferedReader httpBody =
-                    HttpRequestHandler.reqPost(domain
-                            + "/points", new Activity(1, this.getValue()));
+            BufferedReader httpBody = new HttpRequestHandler(domain).reqPost("/points", new Activity(1, this.getValue()));
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
             displayResponse.setTitle("Good Job!");
             displayResponse.setContentText("Go Green!");
             displayResponse.showAndWait();
-            String con = HttpRequestHandler.resLog(httpBody, null);
+            String con = new HttpRequestHandler(domain).resLog(httpBody, null);
             System.out.println(con);
             return jsonCon(con);
             } catch (Exception e) {
