@@ -28,29 +28,47 @@ public class VegetarianMeal {
      * Constructor for VegetarianMeal.
      * @param userValue Text field value
      */
-    public VegetarianMeal(final TextField userValue) {
+    public VegetarianMeal(final String userValue) {
         this.value =
-                Integer.parseInt(userValue.getText().trim());
+                Integer.parseInt(userValue.trim());
     }
+
+    /**
+     * Getter for value.
+     * @return raw value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * Setter for value.
+     * @param raw value without calculation
+     */
+    public void setValue(final int  raw) {
+        this.value = raw;
+    }
+
+
     /** Handles request for Vegetarian meal points from server.
-     *@param event Clicking on calculate point button
+//     *@param event Clicking on calculate point button
      *@return returns points
      *@author ohussein
      */
-    public int calculatePoints(final ActionEvent event) {
+    public int calculatePoints() {
 
 //        checkForm();
         try {
             BufferedReader httpBody =
                     HttpRequestHandler.reqPost(domain
-                            + "/points", new Activity(1, value));
+                            + "/points", new Activity(1, this.getValue()));
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
             displayResponse.setTitle("Good Job!");
             displayResponse.setContentText("Go Green!");
             displayResponse.showAndWait();
             String con = HttpRequestHandler.resLog(httpBody, null);
             System.out.println(con);
-            return this.jsonCon(con);
+            return jsonCon(con);
             } catch (Exception e) {
 
             exceptionHandler(e);
@@ -59,7 +77,7 @@ public class VegetarianMeal {
         return 0;
     }
 
- public int jsonCon(final String con) throws Exception {
+ public static int jsonCon(final String con) throws Exception {
      ObjectMapper mapper = new ObjectMapper();
      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
              false);
