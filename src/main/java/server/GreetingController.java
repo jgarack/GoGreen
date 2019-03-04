@@ -52,7 +52,7 @@ public class GreetingController {
     /**
      * Mapping for route /login. Takes an account object from the client and
      * stores it in the Authenticator Object associated to this instance.
-     * Sends a conflict error response to the clietn if the username is already
+     * Sends a conflict error response to the client if the username is already
      * taken. Sends an internal server error response if the Authenticator
      * fails to create a new account.
      * @param account The login credentials of the account to create.
