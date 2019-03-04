@@ -24,7 +24,7 @@ public class Authenticator {
      * Constructs an Authenticator Object with an empty list of accounts.
      */
     public Authenticator() {
-        accounts = new ArrayList<AccountMessage>();
+        accounts = new ArrayList<>();
     }
 
     /**
