@@ -8,25 +8,31 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
-<BorderPane xmlns="http://javafx.com/javafx"
+<?import java.net.URL?>
+<BorderPane fx:id="root"
+            xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="gui.MainController"
             prefHeight="800.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@mainStylesheet.css"/>
+    </stylesheets>
     <top>
-        <HBox alignment="BOTTOM_LEFT" fillHeight="true">
+        <HBox spacing="5" alignment="TOP_LEFT" fillHeight="true" fx:id="redirectHBox">
             <BorderPane.margin>
                 <Insets bottom="0" left="0" top="25.0" right="25.0"/>
             </BorderPane.margin>
-            <TabPane>
-                <Tab text="Home" />
-                <Tab text="How to play" />
-                <Tab text="Personal info" />
-                <Tab text="Achievements"/>
-            </TabPane>
+            <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
+            <Button fx:id="howToPlay" text="How to play" onAction="#loadHowToPlayScene"/>
+            <Button fx:id="aboutUs" text="About Us"/>
+            <Button fx:id="review" text="Review Us"/>
         </HBox>
     </top>
     <left>
         <VBox>
+            <BorderPane.margin>
+                <Insets bottom="25.0" left="0.0" top="25.0" right="0.0"/>
+            </BorderPane.margin>
             <MenuBar>
                 <Menu text="Friends">
                     <items>
@@ -45,6 +51,9 @@
 
         <ListView>
             <BorderPane.margin><Insets top="25.0" left="50" /></BorderPane.margin>
+                <HBox>
+                    <ProgressBar fx:id="progressBarGreen" prefWidth="1600" prefHeight="50" progress="0.0"/>
+                </HBox>
                 <HBox spacing="5">
                     <Label fx:id="vegMealsEaten" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
                         Vegetarian Meals eaten:

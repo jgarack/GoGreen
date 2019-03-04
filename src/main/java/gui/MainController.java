@@ -3,9 +3,16 @@ package gui;
 import features.VegetarianMeal;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Controller for the main window.
@@ -28,6 +35,19 @@ public class MainController {
     private static final String YOU_NEED_TO_FILL_A_NUMBER
             = "You need to fill a number!";
 
+    @FXML
+    private BorderPane root;
+    @FXML
+    private Button home;
+    @FXML
+    private Button howToPlay;
+
+    /**
+     * Bound to the Progress bar
+     * indicating the progress of the user.
+     */
+    @FXML
+    private ProgressBar progressBarGreen;
     /**
      * Bound to the text field linked with vegetarian meals.
      */
@@ -51,6 +71,25 @@ public class MainController {
     @FXML
     private Label bicycleUsedLabel;
 
+
+    @FXML
+    public void initialize(){
+        progressBarGreen.setProgress(0.7);
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        progressBarGreen.setPrefWidth(bounds.getWidth()-250);
+    }
+    @FXML
+    protected void loadHowToPlayScene(final ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        VBox newScene = loader.load(getClass().getResource("/howToPlay.fxml"));
+        root.setCenter(newScene);
+    }
+    @FXML
+    protected  void loadHomeScene(final ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader();
+        ListView newScene = loader.load(getClass().getResource("/home.fxml"));
+        root.setCenter(newScene);
+    }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
      * @param event The fired event when the decrease button is pressed.
@@ -102,7 +141,6 @@ public class MainController {
             generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
-
     /**
      * Used to increase the amount of times a bicycle
      * that has been used filled in the text field.

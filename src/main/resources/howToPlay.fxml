@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      prefHeight="400.0" prefWidth="600.0">
+<Text>How To play</Text>
+    <Text> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ullamcorper enim semper leo facilisis sollicitudin. Donec quis sapien eu mauris laoreet consectetur. Ut quis porta libero. In hac habitasse platea dictumst. Etiam malesuada orci in nibh condimentum, elementum ultricies neque euismod. Curabitur malesuada fringilla mollis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis iaculis justo nec turpis pretium suscipit eu vitae urna. Nulla facilisi. Pellentesque odio enim, tempus in feugiat in, mattis eget diam. Donec ut commodo tortor.
+
+        Pellentesque pellentesque velit eu mauris ultricies, ac elementum ante interdum. Proin eget dolor auctor quam laoreet ullamcorper scelerisque in neque. Curabitur lorem dui, vulputate sit amet est a, suscipit laoreet enim. Pellentesque egestas nunc turpis, ac auctor metus bibendum a. Sed facilisis nunc sed felis bibendum fringilla. Fusce cursus vulputate lectus quis mollis. Quisque dignissim risus sed maximus dignissim. Morbi ultricies nisl non hendrerit posuere. Aliquam ullamcorper augue quis laoreet luctus. Duis ullamcorper ex a mauris posuere scelerisque. Cras sit amet scelerisque odio. </Text>
+</VBox>
