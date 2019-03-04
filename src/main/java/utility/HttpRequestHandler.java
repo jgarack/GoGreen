@@ -15,13 +15,18 @@ import java.net.URL;
  * Returns a BufferedReader with the response from the server
  * @author awjvanvugt
  */
-public abstract class HttpRequestHandler {
+public class HttpRequestHandler {
     //private final static Logger LOGGER = Logger
     // .getLogger(HttpRequestHandler.class.getName());
     /** The default User-Agent to use in HTTP requests.**/
     private static final String USER_AGENT_MOZILLA = "Mozilla/5.0";
     /** The default url to use in HTTP requests. **/
-    private static final String DOMAIN_INDEX = "http://localhost:8080";
+    private static String domain;
+
+    public HttpRequestHandler(String host){
+        domain = host;
+    }
+
     /**Sends an HTTP GET request to the server which requests the home
      * page of the default domain.
      * Default User-Agent
@@ -30,9 +35,9 @@ public abstract class HttpRequestHandler {
      * @throws ServerStatusException readRes
      * @throws IOException readRes
      */
-    public static BufferedReader reqGetHome() throws ServerStatusException,
+    public BufferedReader reqGetHome() throws ServerStatusException,
             IOException {
-        return reqGet(DOMAIN_INDEX, USER_AGENT_MOZILLA);
+        return reqGet(domain, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP GET request to the server which requests the home page
@@ -43,38 +48,38 @@ public abstract class HttpRequestHandler {
      * @throws ServerStatusException at readRes
      * @throws IOException readRes
      */
-    public static BufferedReader reqGetHome(final String userAgent)
+    public BufferedReader reqGetHome(final String userAgent)
             throws ServerStatusException, IOException {
-        return reqGet(DOMAIN_INDEX, userAgent);
+        return reqGet(domain, userAgent);
     }
 
     /**Sends an HTTP GET request to the server which requests the specified
      * page.
      * Default User-Agent
      * @author awjvanvugt
-     * @param url URL for the GET request
+     * @param route URL addition for the GET request
      * @return BufferedReader containing the HTTP response
      * @throws ServerStatusException at readRes
      * @throws IOException readRes
      */
-    public static BufferedReader reqGet(final String url) throws
+    public BufferedReader reqGet(final String route) throws
             ServerStatusException, IOException {
-        return reqGet(url, USER_AGENT_MOZILLA);
+        return reqGet(domain+route, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP GET request to the server which requests the specified
      * page.
      * @author awjvanvugt
-     * @param url URL for the GET request
+     * @param route URL addition for the GET request
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
      * @throws ServerStatusException at readRes
      * @throws IOException readRes
      */
-    public static BufferedReader reqGet(final String url,
+    public BufferedReader reqGet(final String route,
                                 final String userAgent)
                                 throws ServerStatusException, IOException {
-        URL inputUrl = new URL(url);
+        URL inputUrl = new URL(domain+route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
@@ -85,30 +90,30 @@ public abstract class HttpRequestHandler {
     /**Sends an HTTP POST request to the server on the specified page.
      * Default User-Agent
      * @author awjvanvugt
-     * @param url URL for the GET request
+     * @param route URL addition for the GET request
      * @param message the Object to POST
      * @return BufferedReader containing the HTTP response
      * @throws ServerStatusException at readRes
      * @throws IOException readRes
      */
-    public static BufferedReader reqPost(final String url, final Object message)
+    public BufferedReader reqPost(final String route, final Object message)
             throws ServerStatusException, IOException {
-        return reqPost(url, message, USER_AGENT_MOZILLA);
+        return reqPost(domain+route, message, USER_AGENT_MOZILLA);
     }
 
     /**Sends an HTTP POST request to the server on the specified page.
      * @author awjvanvugt
-     * @param url URL for the GET request
+     * @param route URL addition for the GET request
      * @param message the Object to POST
      * @param userAgent the User-Agent to use
      * @return BufferedReader containing the HTTP response
      * @throws ServerStatusException at readRes
      * @throws IOException readRes
      */
-    public static BufferedReader reqPost(final String url, final Object message,
+    public BufferedReader reqPost(final String route, final Object message,
              final String userAgent) throws ServerStatusException, IOException {
 
-        URL inputUrl = new URL(url);
+        URL inputUrl = new URL(domain+route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("User-Agent", userAgent);
@@ -132,7 +137,7 @@ public abstract class HttpRequestHandler {
      * is other than HTTP OK (200)
      * @throws IOException at readRes
      */
-    private static BufferedReader readRes(final HttpURLConnection con)
+    private BufferedReader readRes(final HttpURLConnection con)
             throws ServerStatusException, IOException {
         int responsecode = con.getResponseCode();
         if (responsecode == HttpURLConnection.HTTP_OK) {
@@ -149,7 +154,7 @@ public abstract class HttpRequestHandler {
      * @param filepath the path to the file
      * @return a String object containing the response
      */
-    public static String resLog(final BufferedReader message,
+    public String resLog(final BufferedReader message,
                                 final String filepath) {
         try {
             //TODO: Implement logging to file

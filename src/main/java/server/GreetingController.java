@@ -25,11 +25,28 @@ public class GreetingController {
      */
     private static final String TEMPLATE = "Hello, %s!";
 
+    private static final String LOGIN_PAGE = "./login";
+
+    private static final String BP_API = "http://impact.brighter"
+            + "planet.com";
+    private static final String BP_KEY =
+            "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
+
     /**
      * Authenticator Object that can be used to authenticate a user.
      * State of the Authenticator can not be preserved yet.
      */
-    private Authenticator authenticator = new Authenticator();
+    private static final Authenticator authenticator = new Authenticator();
+
+    private static final HttpRequestHandler httpHandlerAPI =
+            new HttpRequestHandler(BP_API);
+
+    @GetMapping("/")
+    public ResponseEntity indexRedirect(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(LOGIN_PAGE));
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
 
     /**
      * Mapping for route /login. Takes an account object from the client and
@@ -87,11 +104,10 @@ public class GreetingController {
         if (activity.getId() == 1) {
 
             BufferedReader httpBody =
-                    HttpRequestHandler.reqGet("http://impact.brighter"
-                            + "planet.com/diets.json?size="
+                    httpHandlerAPI.reqGet("/diets.json?size="
                             + activity.getValue()
-                            + "&timeframe=2019-01-01%2F2020-01-01"
-                            + "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd");
+                            //+ "&timeframe=2019-01-01%2F2020-01-01"
+                            + BP_KEY);
 //
 //            ObjectMapper mapper = new ObjectMapper();
 //            mapper.configure(DeserializationFeature
@@ -99,7 +115,7 @@ public class GreetingController {
 //            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
 //                    null), JsonNode.class);
 
-            return new ResponseEntity(HttpRequestHandler
+            return new ResponseEntity(httpHandlerAPI
                     .resLog(httpBody, null),
                     HttpStatus.OK);
         }
