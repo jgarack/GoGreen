@@ -37,8 +37,9 @@ public class RegisterController {
 
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event){
-        LoginHandler.registerSubmit(username.getText().trim(), pass.getText());
-        redirectToView(event);
+        if(LoginHandler.registerSubmit(username.getText().trim(), pass.getText())){
+            redirectToView(event);
+        }
     }
 
     @FXML

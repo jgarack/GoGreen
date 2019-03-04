@@ -65,9 +65,10 @@ public final class LoginController {
      */
     @FXML
     protected void handleSubmitButtonAction(final ActionEvent event) {
-        LoginHandler.loginSubmit(username.getText().trim(),
-                pass.getText());
-        redirectToView(event,"main");
+        if(LoginHandler.loginSubmit(username.getText().trim(),
+                pass.getText())) {
+            redirectToView(event, "main");
+        }
     }
 
     /**
