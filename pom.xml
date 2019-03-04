@@ -85,19 +85,18 @@
             <version>2.24.5</version>
         </dependency>
 
-<<<<<<< Updated upstream
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-agroal</artifactId>
             <version>5.3.9.Final</version>
             <type>pom</type>
-=======
+        </dependency>
         <!--dependency for testing rest-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
->>>>>>> Stashed changes
         </dependency>
     </dependencies>
 

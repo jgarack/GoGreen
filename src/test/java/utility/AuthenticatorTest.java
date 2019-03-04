@@ -10,11 +10,16 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
+/**
+ *The class for testing Authenticator class.
+ * @author awjvanvugt
+ */
 public class AuthenticatorTest {
 
     Authenticator authenticator;
     AccountMessage listedMock, mockedArg, sameAccount1, sameAccount2, otherPass,
                     unknownUser;
+
 
     @BeforeEach
     public void setUpMock(){
@@ -31,6 +36,7 @@ public class AuthenticatorTest {
         when(listedMock.getUsername()).thenReturn("user");
         when(mockedArg.getUsername()).thenReturn("user");
     }
+
 
     @Test
     public void registerSucceedEmpty() {

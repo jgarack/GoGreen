@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The class for testing AccountMessage class.
+ *
  * @author Vidas
  */
 public class AccountMessageTest {
@@ -19,7 +20,7 @@ public class AccountMessageTest {
      */
     @Test
     public void getUsername() {
-        assertEquals(username,testAccountMessage.getUsername());
+        assertEquals(username, testAccountMessage.getUsername());
     }
 
     /**
@@ -27,7 +28,7 @@ public class AccountMessageTest {
      */
     @Test
     public void getPassword() {
-        assertEquals(password,testAccountMessage.getPassword());
+        assertEquals(password, testAccountMessage.getPassword());
 
     }
 
@@ -37,7 +38,7 @@ public class AccountMessageTest {
     @Test
     public void setPassword() {
         testAccountMessage.setPassword("newPassword");
-        assertEquals("newPassword",testAccountMessage.getPassword());
+        assertEquals("newPassword", testAccountMessage.getPassword());
 
     }
 
@@ -47,7 +48,7 @@ public class AccountMessageTest {
     @Test
     public void setUsername() {
         testAccountMessage.setUsername("newUsername");
-        assertEquals("newUsername",testAccountMessage.getUsername());
+        assertEquals("newUsername", testAccountMessage.getUsername());
     }
 
     /**
@@ -55,15 +56,15 @@ public class AccountMessageTest {
      */
     @Test
     public void equalsTrue() {
-        AccountMessage testAccountMessageSame = new AccountMessage(username, password );
-        assertEquals(testAccountMessage,testAccountMessageSame);
+        AccountMessage testAccountMessageSame = new AccountMessage(username, password);
+        assertEquals(testAccountMessage, testAccountMessageSame);
     }
 
     /**
      * Equals method test when the object is compared to itself.
      */
     @Test
-    public void equalsSelf(){
+    public void equalsSelf() {
         assertEquals(testAccountMessage, testAccountMessage);
     }
 
@@ -89,9 +90,8 @@ public class AccountMessageTest {
      * Hashcode test.
      */
     @Test
-    public void hashCodeTest()
-    {
+    public void hashCodeTest() {
         int hashcode = testAccountMessage.hashCode();
-        assertTrue(testAccountMessage.hashCode()!=0);
+        assertTrue(testAccountMessage.hashCode() != 0);
     }
 }
