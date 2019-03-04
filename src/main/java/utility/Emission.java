@@ -8,27 +8,27 @@ public class Emission {
     /**
      * String containing CO2 emission.
      */
-    private String desisions;
+    private String decisions;
 
     /**
      * Class constructor.
      * @param gas emissions
      */
     public Emission(final String gas) {
-        this.desisions = gas;
+        this.decisions = gas;
     }
     /**
      * Getter method.
      * @return emission co2 value
      */
     public String getEmission() {
-        return desisions;
+        return decisions;
     }
     /**Setter method.
      * @param gas emission co2 value
      */
     public void setEmission(final String gas) {
-        this.desisions = gas;
+        this.decisions = gas;
     }
 
     /**
@@ -36,15 +36,15 @@ public class Emission {
      * @return Integer value of emissions
      */
     public int getNum() {
-        desisions = desisions.replace("kg", "");
-        return Integer.parseInt(desisions.trim());
+        decisions = decisions.replace("kg", "");
+        return Integer.parseInt(decisions.trim());
     }
 
     /**
      * Equals method that checks whether this and another object are the same.
      * @param other The object that is compared to this one.
      * @return Returns true iff the two object are emissions
-     * and they have the same gas desisions.
+     * and they have the same gas decisions.
      */
     @Override
     public boolean equals(final Object other) {
@@ -57,4 +57,12 @@ public class Emission {
         return false;
     }
 
+    /**
+     * HashCode mock for checkstyle.
+     * @return 0
+     */
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }

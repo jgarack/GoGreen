@@ -113,10 +113,11 @@ public class MainController {
     protected void increaseVegetarianMeals(final ActionEvent event) {
         if (tryParseInt(vegMeals.getText())) {
 
-            VegetarianMeal meal = new VegetarianMeal(vegMeals);
+
+            VegetarianMeal meal = new VegetarianMeal(vegMeals.getText());
             System.out.println(meal.toString());
 
-            //this.vegetarianMeals += meal.calculatePoints(event);
+            this.vegetarianMeals += meal.calculatePoints();
 
             vegMealsEaten.setText("Points earned:"
                     + this.vegetarianMeals);

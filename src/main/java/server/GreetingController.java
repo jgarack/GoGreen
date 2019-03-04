@@ -1,8 +1,12 @@
 package server;
 
 import java.io.BufferedReader;
+import java.net.URI;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,12 +28,42 @@ public class GreetingController {
      * {@value}
      */
     private static final String TEMPLATE = "Hello, %s!";
+    /**
+     * Login page routing.
+     */
+    private static final String LOGIN_PAGE = "./login";
+    /**
+     * api path.
+     */
+    private static final String BP_API = "http://impact.brighter"
+            + "planet.com";
+    /**
+     * api key.
+     */
+    private static final String BP_KEY =
+            "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
 
     /**
      * Authenticator Object that can be used to authenticate a user.
      * State of the Authenticator can not be preserved yet.
      */
-    private Authenticator authenticator = new Authenticator();
+    private static final Authenticator authenticator = new Authenticator();
+    /**
+     * HttpRequestHandler object that can be used for contacting the api.
+     */
+    private static final HttpRequestHandler httpHandlerAPI =
+            new HttpRequestHandler(BP_API);
+
+    /**
+     * Default mapping for index.
+     * @return ResponseEntity with status code and head
+     */
+    @GetMapping("/")
+    public ResponseEntity indexRedirect() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(LOGIN_PAGE));
+        return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+    }
 
     /**
      * Mapping for route /login. Takes an account object from the client and
@@ -52,7 +86,7 @@ public class GreetingController {
     /**
      * Mapping for route /login. Takes an account object from the client and
      * stores it in the Authenticator Object associated to this instance.
-     * Sends a conflict error response to the clietn if the username is already
+     * Sends a conflict error response to the client if the username is already
      * taken. Sends an internal server error response if the Authenticator
      * fails to create a new account.
      * @param account The login credentials of the account to create.
@@ -87,19 +121,12 @@ public class GreetingController {
         if (activity.getId() == 1) {
 
             BufferedReader httpBody =
-                    HttpRequestHandler.reqGet("http://impact.brighter"
-                            + "planet.com/diets.json?size="
+                    httpHandlerAPI.reqGet("/diets.json?size="
                             + activity.getValue()
-                            + "&timeframe=2019-01-01%2F2020-01-01"
-                            + "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd");
-//
-//            ObjectMapper mapper = new ObjectMapper();
-//            mapper.configure(DeserializationFeature
-//            .FAIL_ON_UNKNOWN_PROPERTIES, false);
-//            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
-//                    null), JsonNode.class);
+                            //+ "&timeframe=2019-01-01%2F2020-01-01"
+                            + BP_KEY);
 
-            return new ResponseEntity(HttpRequestHandler
+            return new ResponseEntity(httpHandlerAPI
                     .resLog(httpBody, null),
                     HttpStatus.OK);
         }

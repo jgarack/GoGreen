@@ -10,25 +10,33 @@ import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
+/**
+ *The class for testing Authenticator class.
+ * @author awjvanvugt
+ */
 public class AuthenticatorTest {
 
+    Authenticator authenticator;
+    AccountMessage listedMock, mockedArg, sameAccount1, sameAccount2, otherPass,
+                    unknownUser;
 
-    Authenticator authenticator =  new Authenticator();
-
-    AccountMessage listedMock = Mockito.mock(AccountMessage.class);
-    AccountMessage mockedArg = Mockito.mock(AccountMessage.class);
-
-    AccountMessage sameAccount1 = new AccountMessage("user", "pass");
-    AccountMessage sameAccount2 = new AccountMessage("user", "pass");
-    AccountMessage otherPass = new AccountMessage("user", "nopass");
-    AccountMessage unknownUser = new AccountMessage("notuser", "pass");
 
     @BeforeEach
     public void setUpMock(){
+        //instantiations
+        authenticator =  new Authenticator();
+        sameAccount1 = new AccountMessage("user", "pass");
+        sameAccount2 = new AccountMessage("user", "pass");
+        otherPass = new AccountMessage("user", "nopass");
+        unknownUser = new AccountMessage("notuser", "pass");
+        //mocking
+        listedMock = Mockito.mock(AccountMessage.class);
+        mockedArg = Mockito.mock(AccountMessage.class);
         //stubbing
         when(listedMock.getUsername()).thenReturn("user");
         when(mockedArg.getUsername()).thenReturn("user");
     }
+
 
     @Test
     public void registerSucceedEmpty() {

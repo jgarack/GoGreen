@@ -27,34 +27,47 @@ public abstract class LoginHandler {
     private static final String LOGFOLDER = null;
 
     /**
+     * The HttpRequestHandler used for this class.
+     */
+    private static final HttpRequestHandler httpHandler =
+            new HttpRequestHandler(DOMAIN);
+
+    /**
      * Sends a registration request to the server with the input username and
      * password combination. Encrypts the password.
      * @param username The username for the account to register.
      * @param pass The password for the acccount to register.
+     * @return true iff registered
      */
-    public static void registerSubmit(final String username,
+    public static boolean registerSubmit(final String username,
                                       final String pass) {
         if (checkForm(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
-                BufferedReader httpBody = HttpRequestHandler.reqPost(DOMAIN
-                        + "/register", new AccountMessage(username, md5Pass));
-                String contentText = HttpRequestHandler.resLog(
+                BufferedReader httpBody = httpHandler.reqPost("/register",
+                        new AccountMessage(username, md5Pass));
+                String contentText = httpHandler.resLog(
                         httpBody, LOGFOLDER + "register_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Registration complete");
                 displayResponse.setContentText("You can now log in.\n"
                         + contentText);
                 displayResponse.showAndWait();
+                return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
+                return false;
             } catch (ServerStatusException e) {
                 displayException(e);
+                return false;
             } catch (IOException e) {
                 displayException(e);
+                return false;
             }
+        } else {
+            return false;
         }
     }
 
@@ -63,28 +76,36 @@ public abstract class LoginHandler {
      * combination. Encrypts the password.
      * @param username The username.
      * @param pass The password.
+     * @return true iff logged in
      */
-    public static void loginSubmit(final String username, final String pass) {
+    public static boolean loginSubmit(final String username,
+                                      final String pass) {
         if (checkForm(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
-                BufferedReader httpBody = HttpRequestHandler.reqPost(DOMAIN
-                        + "/login", new AccountMessage(username, md5Pass));
-                String contentText = HttpRequestHandler.resLog(
+                BufferedReader httpBody = httpHandler.reqPost("/login",
+                        new AccountMessage(username, md5Pass));
+                String contentText = httpHandler.resLog(
                         httpBody, LOGFOLDER + "login_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Logged in");
                 displayResponse.setContentText(contentText);
                 displayResponse.showAndWait();
+                return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 encryptionExceptionHandler(md5Error);
+                return false;
             } catch (ServerStatusException e) {
                 displayException(e);
+                return false;
             } catch (IOException e) {
                 displayException(e);
+                return false;
             }
+        } else {
+            return false;
         }
     }
 

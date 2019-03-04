@@ -5,8 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
-
+import utility.Activity;
+import utility.HttpRequestHandler;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 /**Performs a http post request to server to
@@ -26,36 +27,54 @@ public class VegetarianMeal {
      * Constructor for VegetarianMeal.
      * @param userValue Text field value
      */
-    public VegetarianMeal(final TextField userValue) {
+    public VegetarianMeal(final String userValue) {
         this.value =
-                Integer.parseInt(userValue.getText().trim());
+                Integer.parseInt(userValue.trim());
     }
-//    /** Handles request for Vegetarian meal points from server.
-//     *@param event Clicking on calculate point button
-//     *@return returns points
-//     *@author ohussein
-//     */
-//    public int calculatePoints(final ActionEvent event) {
-//
-////        checkForm();
-//        try {
-//            BufferedReader httpBody =
-//                    HttpRequestHandler.reqPost(domain
-//                            + "/points", new Activity(1, value));
-//            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-//            displayResponse.setTitle("Good Job!");
-//            displayResponse.setContentText("Go Green!");
-//            displayResponse.showAndWait();
-//            String con = HttpRequestHandler.resLog(httpBody, null);
-//            System.out.println(con);
-//            return this.jsonCon(con);
-//            } catch (Exception e) {
-//
-//            exceptionHandler(e);
-//
-//        }
-//        return 0;
-//    }
+
+
+    /**
+     * Getter for value.
+     * @return raw value
+     */
+    public int getValue() {
+        return value;
+    }
+
+    /**
+     * Setter for value.
+     * @param raw value without calculation
+     */
+    public void setValue(final int  raw) {
+        this.value = raw;
+    }
+
+
+    /** Handles request for Vegetarian meal points from server.
+     *@return returns points
+     *@author ohussein
+     */
+    public int calculatePoints() {
+
+//        checkForm();
+        try {
+            BufferedReader httpBody = new HttpRequestHandler(domain).reqPost(
+                    "/points", new Activity(1, this.getValue()));
+            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
+            displayResponse.setTitle("Good Job!");
+            displayResponse.setContentText("Go Green!");
+            displayResponse.showAndWait();
+            String con = new HttpRequestHandler(domain).resLog(httpBody, null);
+            System.out.println(con);
+            return jsonCon(con);
+            } catch (Exception e) {
+
+            exceptionHandler(e);
+
+        }
+        return 0;
+    }
+
 
     /**
      * Helper method that parses con to a desired integer.
@@ -64,6 +83,7 @@ public class VegetarianMeal {
      * @throws IOException Throws an exception if the Mapping is not succesful.
      */
  public int jsonCon(final String con) throws IOException {
+
      ObjectMapper mapper = new ObjectMapper();
      mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
      JsonNode em = mapper.readValue(con, JsonNode.class);
