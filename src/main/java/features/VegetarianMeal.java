@@ -4,12 +4,11 @@ package features;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import utility.Activity;
 import utility.HttpRequestHandler;
 import java.io.BufferedReader;
+import java.io.IOException;
 
 /**Performs a http post request to server to
  * calculate points for vegetarian meal.
@@ -33,6 +32,7 @@ public class VegetarianMeal {
                 Integer.parseInt(userValue.trim());
     }
 
+
     /**
      * Getter for value.
      * @return raw value
@@ -51,7 +51,6 @@ public class VegetarianMeal {
 
 
     /** Handles request for Vegetarian meal points from server.
-//     *@param event Clicking on calculate point button
      *@return returns points
      *@author ohussein
      */
@@ -77,12 +76,19 @@ public class VegetarianMeal {
         return 0;
     }
 
- public static int jsonCon(final String con) throws Exception {
+
+    /**
+     * Helper method that parses con to a desired integer.
+     * @param con The given String
+     * @return An integer that is derived from the string.
+     * @throws IOException Throws an exception if the Mapping is not succesful.
+     */
+ public int jsonCon(final String con) throws IOException {
+
      ObjectMapper mapper = new ObjectMapper();
-     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,
-             false);
+     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
      JsonNode em = mapper.readValue(con, JsonNode.class);
-     int ret = (int)Math.ceil(Double.parseDouble(em.get("decisions").
+     int ret = (int) Math.ceil(Double.parseDouble(em.get("decisions").
              get("carbon").
              get("description").textValue().
              replace("kg", "").trim()));

@@ -1,14 +1,6 @@
 package server;
 
 import java.io.BufferedReader;
-//java library imports
-import java.util.*;
-import java.text.*;
-//import java.util.concurrent.atomic.AtomicLong;
-//spring imports
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 //native imports
 import exceptions.DataConflictException;
-import utility.*;
+import utility.Authenticator;
+import utility.AccountMessage;
+import utility.HttpRequestHandler;
+import utility.Activity;
 
 /**
  * Class that maps route requests made to the server.
@@ -96,14 +91,16 @@ public class GreetingController {
                             + "planet.com/diets.json?size="
                             + activity.getValue()
                             + "&timeframe=2019-01-01%2F2020-01-01"
-                            +"&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd");
+                            + "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd");
 //
 //            ObjectMapper mapper = new ObjectMapper();
-//            mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+//            mapper.configure(DeserializationFeature
+//            .FAIL_ON_UNKNOWN_PROPERTIES, false);
 //            JsonNode em = mapper.readValue(HttpRequestHandler.resLog(httpBody,
 //                    null), JsonNode.class);
 
-            return new ResponseEntity(HttpRequestHandler.resLog(httpBody,null),
+            return new ResponseEntity(HttpRequestHandler
+                    .resLog(httpBody, null),
                     HttpStatus.OK);
         }
         return new ResponseEntity("Not an Activity", HttpStatus.OK);

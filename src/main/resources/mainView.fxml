@@ -46,23 +46,23 @@
         <ListView>
             <BorderPane.margin><Insets top="25.0" left="50" /></BorderPane.margin>
                 <HBox spacing="5">
-                    <Label fx:id="Veg_Meals_eaten" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
+                    <Label fx:id="vegMealsEaten" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
                         Vegetarian Meals eaten:
                     </Label>
                 </HBox>
                 <HBox spacing="5">
                     <Button fx:id="decreaseVegetarianMealsBtn" text="-" onAction="#decreaseVegetarianMeals"/>
-                    <TextField alignment="CENTER" prefWidth="1600" fx:id="VegMeals"/>
+                    <TextField alignment="CENTER" prefWidth="1600" fx:id="vegMeals"/>
                     <Button fx:id="increaseVegetarianMealsBtn" text="+" onAction="#increaseVegetarianMeals"/>
                 </HBox>
                 <HBox spacing="5">
-                    <Label fx:id="Bicycle_Used" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
+                    <Label fx:id="bicycleUsedLabel" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
                         Times you have used bicycle instead of a car:
                     </Label>
                 </HBox>
                 <HBox prefWidth="Infinity" prefHeight="500">
                     <Button fx:id="decreaseBicycleUsageBtn" text="-" onAction="#decreaseBicycleUsage"/>
-                    <TextField alignment="CENTER" fx:id="BicycleUsage" prefWidth="1600"/>
+                    <TextField alignment="CENTER" fx:id="bicycleUsage" prefWidth="1600"/>
                     <Button fx:id="increaseBicycleUsageBtn" text="+" onAction="#increaseBicycleUsage"/>
                 </HBox>
 
