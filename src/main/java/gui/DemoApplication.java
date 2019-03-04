@@ -1,6 +1,8 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
+import javafx.stage.Screen;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javafx.fxml.FXMLLoader;
@@ -101,7 +103,12 @@ public class DemoApplication extends Application {
         scene.getStylesheets().add(
                 (getClass().getResource("/indexPage.css"))
                         .toExternalForm());
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
+        primaryStage.setX(bounds.getMinX());
+        primaryStage.setY(bounds.getMinY());
+        primaryStage.setWidth(bounds.getWidth());
+        primaryStage.setHeight(bounds.getHeight());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
