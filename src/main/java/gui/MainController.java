@@ -80,7 +80,7 @@ public class MainController {
 
             this.vegetarianMeals += meal.calculatePoints();
 
-            vegMealsEaten.setText("Vegetarian meals eaten:"
+            vegMealsEaten.setText("Points earned:"
                     + this.vegetarianMeals);
 
         } else {

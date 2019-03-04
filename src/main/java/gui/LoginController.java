@@ -3,10 +3,12 @@ package gui;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
 import java.io.IOException;
@@ -81,9 +83,15 @@ public final class LoginController {
             FXMLLoader fxmlLoader = new FXMLLoader();
             Parent root = fxmlLoader.load(getClass()
                     .getResource("/mainView.fxml"));
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+
+            stage.setX(bounds.getMinX());
+            stage.setY(bounds.getMinY());
+            stage.setWidth(bounds.getWidth());
+            stage.setHeight(bounds.getHeight());
             Scene scene = new Scene(root, width, height);
             stage.setScene(scene);
-            stage.setFullScreen(true);
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
         }
