@@ -5,13 +5,14 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 
 /**
@@ -30,17 +31,24 @@ public class MainController {
      */
     private int bicycleUsed = 0;
     /**
-     *
+     * Alert text.
      */
     private static final String YOU_NEED_TO_FILL_A_NUMBER
             = "You need to fill a number!";
+    /**
+     * Magic number 250.
+     */
+    private static final int TWO_HUNDRED_FIFTY = 250;
 
+    /**
+     * Magic number 0.7.
+     */
+    private static final double PROGRESS_BAR_INIT_VAL = 0.7;
+    /**
+     * The root of the FXML page.
+     */
     @FXML
     private BorderPane root;
-    @FXML
-    private Button home;
-    @FXML
-    private Button howToPlay;
 
     /**
      * Bound to the Progress bar
@@ -71,21 +79,36 @@ public class MainController {
     @FXML
     private Label bicycleUsedLabel;
 
-
+    /**
+     * Method that is executed upon initializing of the corresponding FXML file.
+     */
     @FXML
-    public void initialize(){
-        progressBarGreen.setProgress(0.7);
+    public void initialize() {
+        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        progressBarGreen.setPrefWidth(bounds.getWidth()-250);
+        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
     }
+
+    /**
+     * Loads how to play screen.
+     * @param event The event that is fired when the button is clicked.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
     @FXML
-    protected void loadHowToPlayScene(final ActionEvent event) throws IOException {
+    protected void loadHowToPlayScene(final ActionEvent event)
+            throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        VBox newScene = loader.load(getClass().getResource("/howToPlay.fxml"));
+        VBox newScene = loader.load(getClass()
+                .getResource("/howToPlay.fxml"));
         root.setCenter(newScene);
     }
+    /**
+     * Loads home screen.
+     * @param event The event that is fired when the button is clicked.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
     @FXML
-    protected  void loadHomeScene(final ActionEvent event) throws IOException{
+    protected  void loadHomeScene(final ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         ListView newScene = loader.load(getClass().getResource("/home.fxml"));
         root.setCenter(newScene);

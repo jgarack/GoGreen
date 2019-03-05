@@ -7,7 +7,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
@@ -16,7 +15,9 @@ import utility.LoginHandler;
 
 import java.io.IOException;
 
-
+/**
+ * The controller for the Register page.
+ */
 public class RegisterController {
     /**
      * The width of the stage.
@@ -32,27 +33,42 @@ public class RegisterController {
     @FXML
     private TextField username;
     /**
-     * Bound to the text field where the user enters his password.
+     * Bound to the password field where the user enters his password.
      */
     @FXML
     private PasswordField pass;
 
+    /**
+     * Bound to the password field where the user confirms his password.
+     */
     @FXML
     private PasswordField confirmPass;
 
+    /**
+     * Handles registration attempt based on the input.
+     * @param event The event fired when the button is clicked.
+     */
     @FXML
-    protected void handleRegisterButtonAction(final ActionEvent event){
-        if(LoginHandler.registerSubmit(username.getText().trim(), pass.getText().trim(),confirmPass.getText().trim()))
-        {
+    protected void handleRegisterButtonAction(final ActionEvent event) {
+        if (LoginHandler.registerSubmit(username.getText().trim(),
+                pass.getText().trim(), confirmPass.getText().trim())) {
                 redirectToView(event);
         }
     }
 
+    /**
+     * Redirects to the login screen when the button is clicked.
+     * @param event The event fired when the button is clicked.
+     */
     @FXML
-    protected void handleBackButtonAction(final ActionEvent event){
+    protected void handleBackButtonAction(final ActionEvent event) {
         redirectToView(event);
     }
 
+    /**
+     * Redirects to the login screen.
+     * @param event The event that is fired from the previous method.
+     */
     private void redirectToView(final ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();

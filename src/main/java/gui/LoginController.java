@@ -54,7 +54,7 @@ public final class LoginController {
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
-        redirectToView(event,"register");
+        redirectToView(event, "register");
     }
 
     /**
@@ -65,7 +65,7 @@ public final class LoginController {
      */
     @FXML
     protected void handleSubmitButtonAction(final ActionEvent event) {
-        if(LoginHandler.loginSubmit(username.getText().trim(),
+        if (LoginHandler.loginSubmit(username.getText().trim(),
                 pass.getText())) {
             redirectToView(event, "main");
         }
@@ -75,9 +75,10 @@ public final class LoginController {
      * Redirects the user from login screen
      * to main screen by setting up a new scene.
      * @param event The event fired
+     * @param view The view to where the user should be redirected.
      * when the user clicks the button from the login button.
      */
-    private void redirectToView(final ActionEvent event,String view) {
+    private void redirectToView(final ActionEvent event, final String view) {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();
         try {

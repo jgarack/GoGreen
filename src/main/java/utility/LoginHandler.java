@@ -29,7 +29,7 @@ public abstract class LoginHandler {
     /**
      * The HttpRequestHandler used for this class.
      */
-    private static final HttpRequestHandler httpHandler =
+    private static final HttpRequestHandler HTTP_HANDLER =
             new HttpRequestHandler(DOMAIN);
 
     /**
@@ -37,19 +37,20 @@ public abstract class LoginHandler {
      * password combination. Encrypts the password.
      * @param username The username for the account to register.
      * @param pass The password for the acccount to register.
+     * @param confirmPass The password to be confirmed.
      * @return true iff registered
      */
     public static boolean registerSubmit(final String username,
                                       final String pass,
                                          final String confirmPass) {
-        if (checkForm(username, pass,confirmPass)) {
+        if (checkForm(username, pass, confirmPass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
-                BufferedReader httpBody = httpHandler.reqPost("/register",
+                BufferedReader httpBody = HTTP_HANDLER.reqPost("/register",
                         new AccountMessage(username, md5Pass));
-                String contentText = httpHandler.resLog(
+                String contentText = HTTP_HANDLER.resLog(
                         httpBody, LOGFOLDER + "register_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Registration complete");
@@ -86,9 +87,9 @@ public abstract class LoginHandler {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
-                BufferedReader httpBody = httpHandler.reqPost("/login",
+                BufferedReader httpBody = HTTP_HANDLER.reqPost("/login",
                         new AccountMessage(username, md5Pass));
-                String contentText = httpHandler.resLog(
+                String contentText = HTTP_HANDLER.resLog(
                         httpBody, LOGFOLDER + "login_response");
                 Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
                 displayResponse.setTitle("Logged in");
@@ -136,14 +137,22 @@ public abstract class LoginHandler {
         return true;
     }
 
+    /**
+     * Extends the check to be applied
+     * for the registration of the user.
+     * @param userFieldEntry The received input for the username.
+     * @param passFieldEntry The received input for the password.
+     * @param confirmPassFieldEntry The received
+     *                              input for the confirmed password.
+     * @return true iff the input is in the correct format.
+     */
     private static boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
                                      final String confirmPassFieldEntry) {
-        if(checkForm(userFieldEntry,passFieldEntry)) {
+        if (checkForm(userFieldEntry, passFieldEntry)) {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
-            }
-            else {
+            } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Password do not match!");
                 alert.setContentText("You need to type in matching passwords!");

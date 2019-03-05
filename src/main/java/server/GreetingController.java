@@ -47,11 +47,11 @@ public class GreetingController {
      * Authenticator Object that can be used to authenticate a user.
      * State of the Authenticator can not be preserved yet.
      */
-    private static final Authenticator authenticator = new Authenticator();
+    private static final Authenticator AUTHENTICATOR = new Authenticator();
     /**
      * HttpRequestHandler object that can be used for contacting the api.
      */
-    private static final HttpRequestHandler httpHandlerAPI =
+    private static final HttpRequestHandler HTTP_HANDLER_API =
             new HttpRequestHandler(BP_API);
 
     /**
@@ -74,7 +74,7 @@ public class GreetingController {
     @PostMapping("/login")
     public ResponseEntity loginResponse(
             @RequestBody final AccountMessage account) {
-        if (authenticator.authenticate(account)) {
+        if (AUTHENTICATOR.authenticate(account)) {
             return new ResponseEntity("Hello " + account.getUsername()
                     + " Authenticated!", HttpStatus.OK);
         } else {
@@ -97,7 +97,7 @@ public class GreetingController {
     public ResponseEntity registerResponse(
         @RequestBody final AccountMessage account) {
         try {
-            if (authenticator.registerNewUser(account)) {
+            if (AUTHENTICATOR.registerNewUser(account)) {
                 return new ResponseEntity("Registration successful. "
                         + "You can now log in", HttpStatus.OK);
             }
@@ -121,12 +121,12 @@ public class GreetingController {
         if (activity.getId() == 1) {
 
             BufferedReader httpBody =
-                    httpHandlerAPI.reqGet("/diets.json?size="
+                    HTTP_HANDLER_API.reqGet("/diets.json?size="
                             + activity.getValue()
                             //+ "&timeframe=2019-01-01%2F2020-01-01"
                             + BP_KEY);
 
-            return new ResponseEntity(httpHandlerAPI
+            return new ResponseEntity(HTTP_HANDLER_API
                     .resLog(httpBody, null),
                     HttpStatus.OK);
         }
