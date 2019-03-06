@@ -33,29 +33,29 @@ public class LoginHandlerTest extends SpringBootServletInitializer {
 
     @Test
     public void registerUserNull() {
-        assertFalse(LoginHandler.registerSubmit(NULL, PASS),
+        assertFalse(LoginHandler.registerSubmit(NULL, PASS, PASS),
                 "Handler allowed register without username.");
     }
     @Test
     public void registerPassNull() {
-        assertFalse(LoginHandler.registerSubmit(USER, NULL),
+        assertFalse(LoginHandler.registerSubmit(USER, NULL, NULL),
                 "Handler allowed register without password.");
     }
     @Test
     public void registerEmptySucceed() {
-        assertTrue(LoginHandler.registerSubmit(USER, PASS),
+        assertTrue(LoginHandler.registerSubmit(USER, PASS, PASS),
                 "Handler rejected valid registration.");
     }
     @Test
     public void registerSucceed() {
-        LoginHandler.registerSubmit(USER, PASS);
-        assertFalse(LoginHandler.registerSubmit(USER+ADDITION, PASS),
+        LoginHandler.registerSubmit(USER, PASS, PASS);
+        assertFalse(LoginHandler.registerSubmit(USER+ADDITION, PASS, PASS),
                 "Handler rejected unique registration.");
     }
     @Test
     public void registerFailure(){
-        LoginHandler.registerSubmit(USER, PASS);
-        assertFalse(LoginHandler.registerSubmit(USER, PASS),
+        LoginHandler.registerSubmit(USER, PASS, PASS);
+        assertFalse(LoginHandler.registerSubmit(USER, PASS, PASS),
                 "Handler accepted duplicate registration.");
     }
     @Test
@@ -75,18 +75,18 @@ public class LoginHandlerTest extends SpringBootServletInitializer {
     }
     @Test
     public void loginUserFailure() {
-        LoginHandler.registerSubmit(USER, PASS);
+        LoginHandler.registerSubmit(USER, PASS, PASS);
         assertFalse(LoginHandler.loginSubmit(USER+ADDITION, PASS),
                 "Handler allowed non-existing user to log in.");
     }
     @Test
     public void loginPassFailure(){
-        LoginHandler.registerSubmit(USER, PASS);
+        LoginHandler.registerSubmit(USER, PASS, PASS);
         assertFalse(LoginHandler.loginSubmit(USER, PASS+ADDITION));
     }
     @Test
     public void loginSucceed() {
-        LoginHandler.registerSubmit(USER, PASS);
+        LoginHandler.registerSubmit(USER, PASS, PASS);
         assertTrue(LoginHandler.loginSubmit(USER, PASS),
                 "Valid login credentials were rejected.");
     }

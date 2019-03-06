@@ -5,13 +5,12 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ListView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import java.io.IOException;
 
@@ -97,10 +96,7 @@ public class MainController {
     @FXML
     protected void loadHowToPlayScene(final ActionEvent event)
             throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        VBox newScene = loader.load(getClass()
-                .getResource("/howToPlay.fxml"));
-        root.setCenter(newScene);
+        loadScene("howToPlay");
     }
     /**
      * Loads home screen.
@@ -109,9 +105,27 @@ public class MainController {
      */
     @FXML
     protected  void loadHomeScene(final ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        ListView newScene = loader.load(getClass().getResource("/home.fxml"));
-        root.setCenter(newScene);
+        loadScene("home");
+    }
+
+    /**
+     * Loads home screen.
+     * @param event The event that is fired when the button is clicked.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    @FXML
+    protected void loadAboutScene(final ActionEvent event) throws IOException {
+        loadScene("about");
+    }
+
+    /**
+     * Loads home screen.
+     * @param event The event that is fired when the button is clicked.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    @FXML
+    protected void loadReviewScene(final ActionEvent event) throws IOException {
+        loadScene("review");
     }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
@@ -207,6 +221,20 @@ public class MainController {
         alert.setContentText(msg);
 
         alert.showAndWait();
+    }
+
+    /**
+     * Loads a scene based on the given string.
+     * @param scene The scene that needs to be loaded.
+     * @throws IOException Thrown if
+     * the FXMLLoader encounters an error
+     */
+    private void loadScene(final String scene)
+            throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        Parent newScene = loader.load(getClass()
+                .getResource("/" + scene + "Scene.fxml"));
+        root.setCenter(newScene);
     }
 
 }

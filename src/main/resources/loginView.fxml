@@ -29,7 +29,7 @@
 
     <Text fx:id="actionTarget" GridPane.rowIndex="8" />
     <stylesheets>
-        <URL value="@indexPage.css"/>
+        <URL value="@loginStylesheet.css"/>
     </stylesheets>
 
 </GridPane>

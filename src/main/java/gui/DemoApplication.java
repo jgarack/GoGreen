@@ -45,7 +45,7 @@ public class DemoApplication extends Application {
      * Index page css file.
      * {@value}
      */
-    private final String indexCSS = "src/main/java/gui/indexPage.css";
+    private final String indexCSS = "src/main/java/gui/loginStylesheet.css";
 
     /**
      * The width dimension of the application window: {@value}.
@@ -101,7 +101,7 @@ public class DemoApplication extends Application {
         primaryStage.setTitle("FXML Tryout");
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(
-                (getClass().getResource("/indexPage.css"))
+                (getClass().getResource("/loginStylesheet.css"))
                         .toExternalForm());
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 

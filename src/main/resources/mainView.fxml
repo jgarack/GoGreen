@@ -24,8 +24,8 @@
             </BorderPane.margin>
             <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
             <Button fx:id="howToPlay" text="How to play" onAction="#loadHowToPlayScene"/>
-            <Button fx:id="aboutUs" text="About Us"/>
-            <Button fx:id="review" text="Review Us"/>
+            <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>
+            <Button fx:id="review" text="Review Us" onAction="#loadReviewScene"/>
         </HBox>
     </top>
     <left>
