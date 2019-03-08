@@ -83,7 +83,7 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics </artifactId>
             <version>11.0.2</version>
-            <classifier>win</classifier> 
+            <classifier>win</classifier>
         </dependency>
 
         <dependency>
@@ -242,6 +242,13 @@
                     </execution>
                   </executions>
               </plugin>
+
+              <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-surefire-plugin</artifactId>
+                  <version>3.0.0-M3</version>
+              </plugin>
+
         </plugins>
 
 
