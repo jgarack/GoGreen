@@ -5,10 +5,10 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.text.Text?>
+
 <?import java.net.URL?>
+
 <BorderPane fx:id="root"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -18,15 +18,24 @@
         <URL value="@mainStylesheet.css"/>
     </stylesheets>
     <top>
-        <HBox spacing="5" alignment="TOP_LEFT" fillHeight="true" fx:id="redirectHBox">
-            <BorderPane.margin>
-                <Insets bottom="0" left="0" top="25.0" right="25.0"/>
-            </BorderPane.margin>
-            <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
-            <Button fx:id="howToPlay" text="How to play" onAction="#loadHowToPlayScene"/>
-            <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>
-            <Button fx:id="review" text="Review Us" onAction="#loadReviewScene"/>
-        </HBox>
+        <SplitPane orientation="HORIZONTAL">
+            <HBox spacing="5" alignment="TOP_LEFT" fillHeight="true" fx:id="redirectHBox">
+                    <BorderPane.margin>
+                        <Insets bottom="0" left="0" top="25.0" right="25.0"/>
+                    </BorderPane.margin>
+                    <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
+                    <Button fx:id="howToPlay" text="How to play" onAction="#loadHowToPlayScene"/>
+                    <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>
+                    <Button fx:id="review" text="Review Us" onAction="#loadReviewScene"/>
+
+            </HBox>
+            <!-- AVATAR -->
+            <!-- PERSONAL INFO -->
+            <HBox alignment="TOP_RIGHT" fillHeight="true">
+
+            </HBox>
+        </SplitPane>
+
     </top>
     <left>
         <VBox>
@@ -48,40 +57,39 @@
         </VBox>
     </left>
     <center>
-
-        <ListView>
-            <BorderPane.margin><Insets top="25.0" left="50" /></BorderPane.margin>
-                <HBox>
-                    <ProgressBar fx:id="progressBarGreen" prefWidth="1600" prefHeight="50" progress="0.0"/>
-                </HBox>
-                <HBox spacing="5">
-                    <Label fx:id="vegMealsEaten" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
-                        Vegetarian Meals eaten:
-                    </Label>
-                </HBox>
-                <HBox spacing="5">
-                    <Button fx:id="decreaseVegetarianMealsBtn" text="-" onAction="#decreaseVegetarianMeals"/>
-                    <TextField alignment="CENTER" prefWidth="1600" fx:id="vegMeals"/>
-                    <Button fx:id="increaseVegetarianMealsBtn" text="+" onAction="#increaseVegetarianMeals"/>
-                </HBox>
-                <HBox spacing="5">
-                    <Label fx:id="bicycleUsedLabel" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
-                        Times you have used bicycle instead of a car:
-                    </Label>
-                </HBox>
-                <HBox prefWidth="Infinity" prefHeight="500">
-                    <Button fx:id="decreaseBicycleUsageBtn" text="-" onAction="#decreaseBicycleUsage"/>
-                    <TextField alignment="CENTER" fx:id="bicycleUsage" prefWidth="1600"/>
-                    <Button fx:id="increaseBicycleUsageBtn" text="+" onAction="#increaseBicycleUsage"/>
-                </HBox>
-
+            <ListView fx:id="featuresList">
+                <BorderPane.margin><Insets top="25.0" left="50" /></BorderPane.margin>
+                    <HBox>
+                        <ProgressBar fx:id="progressBarGreen"/>
+                    </HBox>
+                    <HBox spacing="5">
+                        <Label fx:id="vegMealsEaten" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
+                            Vegetarian Meals eaten:
+                        </Label>
+                    </HBox>
+                    <HBox spacing="5">
+                        <Button fx:id="decreaseVegetarianMealsBtn" text="-" onAction="#decreaseVegetarianMeals"/>
+                        <TextField alignment="CENTER" fx:id="vegMeals" prefWidth="1400"/>
+                        <Button fx:id="increaseVegetarianMealsBtn" text="+" onAction="#increaseVegetarianMeals"/>
+                    </HBox>
+                    <HBox spacing="5">
+                        <Label fx:id="bicycleUsedLabel" alignment="CENTER" HBox.hgrow="ALWAYS">
+                            Times you have used bicycle instead of a car:
+                        </Label>
+                    </HBox>
+                    <HBox prefWidth="Infinity" prefHeight="500">
+                        <Button fx:id="decreaseBicycleUsageBtn" text="-" onAction="#decreaseBicycleUsage"/>
+                        <TextField alignment="CENTER" fx:id="bicycleUsage" prefWidth="1400"/>
+                        <Button fx:id="increaseBicycleUsageBtn" text="+" onAction="#increaseBicycleUsage"/>
+                    </HBox>
 
 
 
-        </ListView>
+
+            </ListView>
     </center>
     <right>
-
+        <!-- TODO: LEADERBOARD CHART-->
     </right>
     <bottom>
 

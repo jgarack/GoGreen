@@ -1,5 +1,7 @@
 package gui;
 
+import animatefx.animation.Pulse;
+import animatefx.animation.ZoomInLeft;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -41,8 +43,7 @@ public final class LoginController {
      * Initialize method.
      */
     @FXML
-    protected void initialize() {
-    }
+    protected void initialize() { }
 
 
 
@@ -50,7 +51,7 @@ public final class LoginController {
      * Triggered when the user clicks "Register".
      *
      * @param event The event fired when the user clicks the button.
-     * @see utility.LoginHandler#registerSubmit(String, String)
+     * @see utility.LoginHandler#registerSubmit(String, String, String)
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
@@ -88,10 +89,15 @@ public final class LoginController {
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
 
+            if (view.equals("register")) {
+                new Pulse(root).play();
+            } else {
+                new ZoomInLeft(root).play();
+            }
             stage.setX(bounds.getMinX());
             stage.setY(bounds.getMinY());
-            stage.setWidth(bounds.getWidth());
             stage.setHeight(bounds.getHeight());
+            stage.setWidth(bounds.getWidth());
             Scene scene = new Scene(root, width, height);
             stage.setScene(scene);
         } catch (IOException e) {

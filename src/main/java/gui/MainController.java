@@ -1,18 +1,25 @@
 package gui;
 
+import animatefx.animation.ZoomIn;
+import animatefx.animation.JackInTheBox;
 import features.VegetarianMeal;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import java.io.IOException;
+
 
 /**
  * Controller for the main window.
@@ -38,6 +45,16 @@ public class MainController {
      * Magic number 250.
      */
     private static final int TWO_HUNDRED_FIFTY = 250;
+    /**
+     * Magic number 300.
+     */
+    private static final int THREE_HUNDRED = 300;
+    /**
+     * Magic number 0.8.
+     */
+    private static final double POINT_EIGHT = 0.8;
+
+
 
     /**
      * Magic number 0.7.
@@ -79,6 +96,18 @@ public class MainController {
     private Label bicycleUsedLabel;
 
     /**
+     * Bound to the home button on top.
+     */
+    @FXML
+    private Button home;
+
+    /**
+     * Bound to the list of goGreen features.
+     */
+    @FXML
+    private ListView featuresList;
+
+    /**
      * Method that is executed upon initializing of the corresponding FXML file.
      */
     @FXML
@@ -86,6 +115,9 @@ public class MainController {
         progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
         progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
+
+        featuresList.setPrefSize(bounds.getWidth() - THREE_HUNDRED,
+                bounds.getHeight());
     }
 
     /**
@@ -105,6 +137,12 @@ public class MainController {
      */
     @FXML
     protected  void loadHomeScene(final ActionEvent event) throws IOException {
+        home.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(final MouseEvent event) {
+                new JackInTheBox(home).setResetOnFinished(true).play();
+            }
+        });
         loadScene("home");
     }
 
@@ -234,6 +272,16 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader();
         Parent newScene = loader.load(getClass()
                 .getResource("/" + scene + "Scene.fxml"));
+        switch (scene) {
+            case"home": {
+                System.out.println("here");
+                new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
         root.setCenter(newScene);
     }
 
