@@ -1,11 +1,13 @@
 package utility;
 
 import javafx.application.Application;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
@@ -17,8 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-@SpringBootApplication
-@ComponentScan(basePackageClasses = GreetingController.class)
+
 public class LoginHandlerTest extends SpringBootServletInitializer {
     private static final String NULL = "";
     private static final String USER = "user";
@@ -26,9 +27,17 @@ public class LoginHandlerTest extends SpringBootServletInitializer {
     private static final String ADDITION = "123";
     private static final String PASS_TOMD5 = "1a1dc91c907325c69271ddf0c944bc72";
 
+    @Mock
+    private HttpRequestHandler httpHandler;
+    static LoginHandler mock;
+    @BeforeAll
+    public static void initMock(){
+        mock = Mockito.mock(LoginHandler.class);
+        MockitoAnnotations.initMocks(mock);
+    }
     @BeforeEach
-    public void testServer(){
-        SpringApplication.run(Application.class, new String[] {});
+    public void clearMock(){
+
     }
 
     @Test
