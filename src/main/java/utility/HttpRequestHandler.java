@@ -83,7 +83,7 @@ public class HttpRequestHandler {
     public BufferedReader reqGet(final String route,
                                 final String userAgent)
                                 throws ServerStatusException, IOException {
-        URL inputUrl = new URL(route);
+        URL inputUrl = new URL(domain + route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
