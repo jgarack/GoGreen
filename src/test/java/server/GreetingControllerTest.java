@@ -120,19 +120,19 @@ public class GreetingControllerTest extends AbstractTest {
      *
      * @throws Exception
      */
-//    @Test
-//    public void pointsTest() throws Exception {
-//
-//        uri = "/points";
-//        activity = new Activity(1, 5);
-//
-//        inputJson = super.mapToJson(activity);
-//        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
-//                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-//
-//        status = mvcResult.getResponse().getStatus();
-//        assertEquals(200, status);
-//    }
+    @Test
+    public void pointsTest() throws Exception {
+
+        uri = "/points";
+        activity = new Activity(1, 5);
+
+        inputJson = super.mapToJson(activity);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+    }
 
     /**
      * Tests an activity with an ID of 3 ("Not an activity").
@@ -153,5 +153,20 @@ public class GreetingControllerTest extends AbstractTest {
         assertEquals(200, status);
     }
 
+    /**
+     * Tests the default Get mapping.
+     * @throws Exception
+     */
+    @Test
+    public void defaultMappingTest() throws Exception {
+
+        uri = "/";
+
+        mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(301, status);
+    }
 
 }
