@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ServerStatusExceptionTest {
     private static final int STATUS = 404;
     private static final String MSG = "hello";
+    private static final String PROCESSED_MSG = String
+            .format("Server returned status code: %d%n%s", STATUS, MSG);
     private static final Throwable CAUSE = new Exception();
 
     @Test
@@ -47,7 +49,7 @@ public class ServerStatusExceptionTest {
                 new ServerStatusException(MSG, STATUS);
         assertTrue(exception.getHttpStatusCode() == STATUS,
                 "Initialisation failed.");
-        assertTrue(exception.getMessage().equals(MSG),
+        assertTrue(exception.getMessage().equals(PROCESSED_MSG),
                 "Initialisation failed.");
     }
     @Test
@@ -56,7 +58,7 @@ public class ServerStatusExceptionTest {
                 new ServerStatusException(MSG, STATUS, CAUSE);
         assertTrue(exception.getHttpStatusCode() == STATUS,
                 "Initialisation failed.");
-        assertTrue(exception.getMessage().equals(MSG),
+        assertTrue(exception.getMessage().equals(PROCESSED_MSG),
                 "Initialisation failed.");
         assertTrue(exception.getCause().equals(CAUSE),
                 "Initialisation failed.");

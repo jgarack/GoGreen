@@ -78,7 +78,7 @@ public class ServerStatusException extends Exception {
      * @param statusCode The status code returned by the server.
      */
     public ServerStatusException(final int statusCode) {
-        super(String.format(TEMPLATE, statusCode));
+        super(String.format(TEMPLATE, statusCode, ""));
         httpStatusCode = statusCode;
     }
 
@@ -110,7 +110,7 @@ public class ServerStatusException extends Exception {
      * @param cause The cause of the exception.
      */
     public ServerStatusException(final int statusCode, final Throwable cause) {
-        super(String.format(TEMPLATE, statusCode), cause);
+        super(String.format(TEMPLATE, statusCode, ""), cause);
         httpStatusCode = statusCode;
     }
 
