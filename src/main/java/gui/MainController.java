@@ -272,16 +272,11 @@ public class MainController {
         FXMLLoader loader = new FXMLLoader();
         Parent newScene = loader.load(getClass()
                 .getResource("/" + scene + "Scene.fxml"));
-        switch (scene) {
-            case"home": {
+        if(scene.equals("home")) {
                 System.out.println("here");
                 new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
-                break;
             }
-            default: {
-                break;
-            }
-        }
+
         root.setCenter(newScene);
     }
 
