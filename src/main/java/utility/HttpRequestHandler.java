@@ -87,7 +87,7 @@ public class HttpRequestHandler {
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
-
+        System.out.println(inputUrl);
         return readRes(con);
     }
 
@@ -173,7 +173,7 @@ public class HttpRequestHandler {
                 logtxt.append(line);
             }
             String result = logtxt.toString();
-//            System.out.println(result);
+            System.out.println(result);
             /*handler.publish(new LogRecord(Level.FINE, result));*/
             return result;
         } catch (IOException ioe) {

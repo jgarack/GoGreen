@@ -2,7 +2,7 @@ package gui;
 
 import animatefx.animation.ZoomIn;
 import animatefx.animation.JackInTheBox;
-import features.VegetarianMeal;
+import features.Feature;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -172,8 +172,13 @@ public class MainController {
     @FXML
     protected void decreaseVegetarianMeals(final ActionEvent event) {
             if (tryParseInt(vegMeals.getText())) {
-                this.vegetarianMeals -= Integer.parseInt(vegMeals.getText());
-                vegMealsEaten.setText("Vegetarian meals eaten:"
+
+                Feature meal = new Feature(vegMeals.getText());
+                System.out.println(meal.toString());
+
+                this.vegetarianMeals -= meal.calculatePoints(1);
+
+                vegMealsEaten.setText("CO2/kg Extra Emissions:"
                         + this.vegetarianMeals);
             } else {
                 generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
@@ -189,12 +194,12 @@ public class MainController {
         if (tryParseInt(vegMeals.getText())) {
 
 
-            VegetarianMeal meal = new VegetarianMeal(vegMeals.getText());
+            Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals += meal.calculatePoints();
+            this.vegetarianMeals += meal.calculatePoints(1);
 
-            vegMealsEaten.setText("Points earned:"
+            vegMealsEaten.setText("CO2/kg saved:"
                     + this.vegetarianMeals);
 
         } else {
@@ -209,8 +214,10 @@ public class MainController {
      */
     @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
-        if (tryParseInt(vegMeals.getText())) {
-            this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
+        if (tryParseInt(bicycleUsage.getText())) {
+            Feature bike = new Feature(bicycleUsage.getText());
+            System.out.println(bike.toString());
+            this.bicycleUsed -= bike.calculatePoints(2);
             bicycleUsedLabel.setText("I have used a bicycle today:"
                     + this.bicycleUsed);
         } else {
@@ -224,8 +231,10 @@ public class MainController {
      */
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
-        if (tryParseInt(vegMeals.getText())) {
-            this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
+        if (tryParseInt(bicycleUsage.getText())) {
+            Feature bike = new Feature(bicycleUsage.getText());
+            System.out.println(bike.toString());
+            this.bicycleUsed += bike.calculatePoints(2);
             bicycleUsedLabel.setText("I have used a bicycle today:"
                     + this.bicycleUsed);
         } else {

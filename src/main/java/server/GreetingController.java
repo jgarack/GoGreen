@@ -122,11 +122,20 @@ public class GreetingController {
         if (activity.getId() == 1) {
 
             BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/diets.json?size="
+                    new HttpRequestHandler(BP_API).reqGet("/diets."
+                            + "json?size="
                             + activity.getValue()
-                            //+ "&timeframe=2019-01-01%2F2020-01-01"
+                            + "&timeframe=2019-03-01%2F2019-03-02"
                             + BP_KEY);
-
+            return new ResponseEntity(HTTP_HANDLER_API
+                    .resLog(httpBody, null),
+                    HttpStatus.OK);
+        }
+        if (activity.getId() == 2) {
+            BufferedReader httpBody =
+                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
+                            + "trips.json?duration=" + activity.getValue()
+                            + BP_KEY);
             return new ResponseEntity(HTTP_HANDLER_API
                     .resLog(httpBody, null),
                     HttpStatus.OK);
