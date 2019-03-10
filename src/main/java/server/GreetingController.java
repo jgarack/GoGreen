@@ -60,7 +60,7 @@ public class GreetingController {
      */
 
     @GetMapping("/")
-    public ResponseEntity indexRedirect(){
+    public ResponseEntity indexRedirect() {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(LOGIN_PAGE));
         return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
