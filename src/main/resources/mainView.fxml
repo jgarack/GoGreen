@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
+
 <?import java.net.URL?>
 
 <BorderPane fx:id="root"
@@ -18,15 +19,14 @@
         <URL value="@mainStylesheet.css"/>
     </stylesheets>
     <top>
-        <SplitPane orientation="HORIZONTAL">
+        <SplitPane orientation="VERTICAL">
             <HBox spacing="5" alignment="TOP_LEFT" fillHeight="true" fx:id="redirectHBox">
                     <BorderPane.margin>
                         <Insets bottom="0" left="0" top="25.0" right="25.0"/>
                     </BorderPane.margin>
                     <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
-                    <Button fx:id="howToPlay" text="How to play" onAction="#loadHowToPlayScene"/>
+                    <Button fx:id="howToPlay" text="How to Play" onAction="#loadHowToPlayScene"/>
                     <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>
-                    <Button fx:id="review" text="Review Us" onAction="#loadReviewScene"/>
 
             </HBox>
             <!-- AVATAR -->
