@@ -13,6 +13,7 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
+          fx:controller="gui.aboutController"
           prefHeight="400.0" prefWidth="600.0"
           alignment="center" hgap="10" vgap="10">
 
@@ -36,7 +37,7 @@
     <TextArea fx:id="reviewArea" GridPane.rowIndex="11" GridPane.columnSpan="3" GridPane.rowSpan="2"/>
 
     <HBox GridPane.rowIndex="15">
-        <Rating orientation="HORIZONTAL" partialRating="true" updateOnHover="true" GridPane.halignment="LEFT"/>
+        <Rating fx:id="ratingBar" orientation="HORIZONTAL" partialRating="true" GridPane.halignment="LEFT" updateOnHover="true"/>
         <Button fx:id="submitReview" text="Submit the review" alignment="BOTTOM_LEFT" GridPane.halignment="LEFT"/>
     </HBox>
 

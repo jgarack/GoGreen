@@ -18,7 +18,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
+import utility.MainHandler;
 import java.io.IOException;
+import static utility.MainHandler.tryParseInt;
 
 
 /**
@@ -118,6 +120,7 @@ public class MainController {
 
         featuresList.setPrefSize(bounds.getWidth() - THREE_HUNDRED,
                 bounds.getHeight());
+
     }
 
     /**
@@ -147,7 +150,7 @@ public class MainController {
     }
 
     /**
-     * Loads home screen.
+     * Loads about screen.
      * @param event The event that is fired when the button is clicked.
      * @throws IOException when FXMLLoader cannot load properly.
      */
@@ -156,27 +159,19 @@ public class MainController {
         loadScene("about");
     }
 
-    /**
-     * Loads home screen.
-     * @param event The event that is fired when the button is clicked.
-     * @throws IOException when FXMLLoader cannot load properly.
-     */
-    @FXML
-    protected void loadReviewScene(final ActionEvent event) throws IOException {
-        loadScene("review");
-    }
+
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
      * @param event The fired event when the decrease button is pressed.
      */
     @FXML
     protected void decreaseVegetarianMeals(final ActionEvent event) {
-            if (tryParseInt(vegMeals.getText())) {
+            if (MainHandler.tryParseInt(vegMeals.getText())) {
                 this.vegetarianMeals -= Integer.parseInt(vegMeals.getText());
                 vegMealsEaten.setText("Vegetarian meals eaten:"
                         + this.vegetarianMeals);
             } else {
-                generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+                MainHandler.generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
             }
     }
 
@@ -186,7 +181,7 @@ public class MainController {
      */
     @FXML
     protected void increaseVegetarianMeals(final ActionEvent event) {
-        if (tryParseInt(vegMeals.getText())) {
+        if (MainHandler.tryParseInt(vegMeals.getText())) {
 
 
             VegetarianMeal meal = new VegetarianMeal(vegMeals.getText());
@@ -198,7 +193,7 @@ public class MainController {
                     + this.vegetarianMeals);
 
         } else {
-            generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+            MainHandler.generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 
@@ -209,12 +204,13 @@ public class MainController {
      */
     @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
-        if (tryParseInt(vegMeals.getText())) {
+        if (MainHandler.tryParseInt(vegMeals.getText())) {
+
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
             bicycleUsedLabel.setText("I have used a bicycle today:"
                     + this.bicycleUsed);
         } else {
-            generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+            MainHandler.generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
     /**
@@ -224,42 +220,16 @@ public class MainController {
      */
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
-        if (tryParseInt(vegMeals.getText())) {
+        if (MainHandler.tryParseInt(vegMeals.getText())) {
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
             bicycleUsedLabel.setText("I have used a bicycle today:"
                     + this.bicycleUsed);
         } else {
-            generateAlert("Wrong format!");
+            MainHandler.generateAlert("Wrong format!");
         }
     }
 
-    /**
-     * Tries to parse integer.
-     *
-     * @param value String that is to be parsed.
-     * @return true iff the value provided is actual representation of integer.
-     */
-    private boolean tryParseInt(final String value) {
-        try {
-            Integer.parseInt(value);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 
-    /**
-     * Generates dialog alert box with the message provided.
-     *
-     * @param msg the message that should alert the user
-     */
-    private void generateAlert(final String msg) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Wrongly filled in info");
-        alert.setContentText(msg);
-
-        alert.showAndWait();
-    }
 
     /**
      * Loads a scene based on the given string.
@@ -269,8 +239,7 @@ public class MainController {
      */
     private void loadScene(final String scene)
             throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        Parent newScene = loader.load(getClass()
+        Parent newScene = FXMLLoader.load(getClass()
                 .getResource("/" + scene + "Scene.fxml"));
         if (scene.equals("home")) {
             new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();

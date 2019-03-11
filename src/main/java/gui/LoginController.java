@@ -51,7 +51,7 @@ public final class LoginController {
      * Triggered when the user clicks "Register".
      *
      * @param event The event fired when the user clicks the button.
-     * @see utility.LoginHandler#registerSubmit(String, String, String)
+     * @see utility.RegisterHandler#registerSubmit(String, String, String)
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
@@ -83,8 +83,8 @@ public final class LoginController {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass()
+
+            Parent root = FXMLLoader.load(getClass()
                     .getResource("/" + view + "View.fxml"));
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();

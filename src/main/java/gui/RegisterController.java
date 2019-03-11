@@ -11,7 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import utility.LoginHandler;
+import utility.RegisterHandler;
 
 import java.io.IOException;
 
@@ -50,7 +50,7 @@ public class RegisterController {
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
-        if (LoginHandler.registerSubmit(username.getText().trim(),
+        if (RegisterHandler.registerSubmit(username.getText().trim(),
                 pass.getText().trim(), confirmPass.getText().trim())) {
                 redirectToView(event);
         }
@@ -73,8 +73,7 @@ public class RegisterController {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            Parent root = fxmlLoader.load(getClass()
+            Parent root = FXMLLoader.load(getClass()
                     .getResource("/loginView.fxml"));
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
