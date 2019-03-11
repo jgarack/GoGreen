@@ -59,12 +59,7 @@ public class LoginHandler {
                         md5.digest(pass.getBytes())).toUpperCase();
                 BufferedReader httpBody = HTTP_HANDLER.reqPost("/login",
                         new AccountMessage(username, md5Pass));
-                String contentText = HTTP_HANDLER.resLog(
-                        httpBody, LOGFOLDER + "login_response");
-                Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-                displayResponse.setTitle("Logged in");
-                displayResponse.setContentText(contentText);
-                displayResponse.showAndWait();
+                alert.formNotificationPane("Logged in successfully!").show();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 alert.encryptionExceptionHandler(md5Error);

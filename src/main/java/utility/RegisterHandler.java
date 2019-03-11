@@ -3,11 +3,9 @@ package utility;
 import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 import javafx.scene.control.Alert;
-import org.controlsfx.control.NotificationPane;
-import utility.AccountMessage;
-import utility.HttpRequestHandler;
-import utility.LoginHandler;
-
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
+import utility.MainHandler;
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +31,10 @@ public class RegisterHandler {
      */
     private static final HttpRequestHandler HTTP_HANDLER =
             new HttpRequestHandler(DOMAIN);
+    /**
+     * The builder used to build alerts for this handler.
+     */
+    private static final AlertBuilder alert = new AlertBuilder();
 
     /**
      * Sends a registration request to the server with the input username and
@@ -54,15 +56,17 @@ public class RegisterHandler {
                         new AccountMessage(username, md5Pass));
                 String contentText = HTTP_HANDLER.resLog(
                         httpBody, LOGFOLDER + "register_response");
+                Notifications notifications = alert.formNotificationPane("You have registered successfully!");
+                notifications.show();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                LoginHandler.encryptionExceptionHandler(md5Error);
+                alert.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                LoginHandler.displayException(e);
+                alert.displayException(e);
                 return false;
             } catch (IOException e) {
-                LoginHandler.displayException(e);
+                alert.displayException(e);
                 return false;
             }
         } else {

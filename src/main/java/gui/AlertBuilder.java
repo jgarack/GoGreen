@@ -2,8 +2,12 @@ package gui;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.controlsfx.control.NotificationPane;
+import org.controlsfx.control.Notifications;
 
 import java.security.NoSuchAlgorithmException;
 
@@ -61,17 +65,14 @@ public class AlertBuilder {
     /**
      * Forms a notification popup with a message.
      * @param notificationMsg The message of the popup.
-     * @param stage The stage where it should pop up.
+     *
      * @return Returns a notfication pane that should popup.
      */
-    final NotificationPane formNotificationPane(final String notificationMsg,
-                                          final Stage stage) {
-        Parent root = stage.getScene().getRoot();
-        NotificationPane notificationPane = new NotificationPane(root);
-        notificationPane.setText(notificationMsg);
-        notificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
-        notificationPane.setShowFromTop(false);
-        notificationPane.show();
-        return notificationPane;
+    public final Notifications formNotificationPane(final String notificationMsg) {
+
+        return Notifications.create()
+                .text(notificationMsg)
+                .graphic(new Rectangle(200, 100, Color.TRANSPARENT))
+                .hideAfter(Duration.seconds(2)); // sets node to display
     }
 }

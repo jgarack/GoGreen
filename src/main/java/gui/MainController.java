@@ -107,6 +107,10 @@ public class MainController {
      */
     @FXML
     private ListView featuresList;
+    /**
+     * The builder used to build alerts for this handler.
+     */
+    private static final AlertBuilder alert = new AlertBuilder();
 
     /**
      * Method that is executed upon initializing of the corresponding FXML file.
@@ -170,7 +174,7 @@ public class MainController {
                 vegMealsEaten.setText("Vegetarian meals eaten:"
                         + this.vegetarianMeals);
             } else {
-                MainHandler.generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+                alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
             }
     }
 
@@ -192,7 +196,7 @@ public class MainController {
                     + this.vegetarianMeals);
 
         } else {
-            MainHandler.generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+            alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
 
@@ -203,13 +207,13 @@ public class MainController {
      */
     @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(vegMeals.getText())) {
+        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
 
-            this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("I have used a bicycle today:"
+            this.bicycleUsed -= Integer.parseInt(bicycleUsage.getText());
+            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
                     + this.bicycleUsed);
         } else {
-            MainHandler.generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
     /**
@@ -219,12 +223,12 @@ public class MainController {
      */
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(vegMeals.getText())) {
+        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("I have used a bicycle today:"
+            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
                     + this.bicycleUsed);
         } else {
-            MainHandler.generateAlert("Wrong format!");
+            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
 
