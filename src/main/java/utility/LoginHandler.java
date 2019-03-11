@@ -2,6 +2,7 @@ package utility;
 
 import exceptions.ServerStatusException;
 import javafx.scene.control.Alert;
+import gui.AlertBuilder;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedReader;
@@ -33,6 +34,10 @@ public abstract class LoginHandler {
             new HttpRequestHandler(DOMAIN);
 
     /**
+     * The builder used to build alerts for this handler.
+     */
+    private static final AlertBuilder alert = new AlertBuilder();
+    /**
      * Sends a registration request to the server with the input username and
      * password combination. Encrypts the password.
      * @param username The username for the account to register.
@@ -59,13 +64,13 @@ public abstract class LoginHandler {
                 displayResponse.showAndWait();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                encryptionExceptionHandler(md5Error);
+                alert.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                displayException(e);
+                alert.displayException(e);
                 return false;
             } catch (IOException e) {
-                displayException(e);
+                alert.displayException(e);
                 return false;
             }
         } else {
@@ -82,7 +87,7 @@ public abstract class LoginHandler {
      */
     public static boolean loginSubmit(final String username,
                                       final String pass) {
-        if (checkForm(username, pass)) {
+        if (emptyFields(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
@@ -97,13 +102,13 @@ public abstract class LoginHandler {
                 displayResponse.showAndWait();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                encryptionExceptionHandler(md5Error);
+                alert.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                displayException(e);
+                alert.displayException(e);
                 return false;
             } catch (IOException e) {
-                displayException(e);
+                alert.displayException(e);
                 return false;
             }
         } else {
@@ -118,20 +123,15 @@ public abstract class LoginHandler {
      * @param passFieldEntry The received input for the password.
      * @return true iff the input is in the correct format.
      */
-    private static boolean checkForm(final String userFieldEntry,
+    private static boolean emptyFields(final String userFieldEntry,
                                      final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Username not filled");
-            alert.setContentText("You need to fill in your username");
-            alert.showAndWait();
+            alert.formEntryWarning("Username",
+                    "You need to fill in your username");
             return false;
         } else if (passFieldEntry.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Password not filled");
-            alert.setContentText("You need to fill in your password");
-
-            alert.showAndWait();
+            alert.formEntryWarning("Password",
+                    "You need to fill in your password");
             return false;
         }
         return true;
@@ -149,45 +149,14 @@ public abstract class LoginHandler {
     private static boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
                                      final String confirmPassFieldEntry) {
-        if (checkForm(userFieldEntry, passFieldEntry)) {
+        if (emptyFields(userFieldEntry, passFieldEntry)) {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Password do not match!");
-                alert.setContentText("You need to type in matching passwords!");
-                alert.showAndWait();
+                alert.formEntryWarning("Password",
+                        "Passwords do not match!");
             }
         }
         return false;
-    }
-
-    /**
-     * Displays an error message for a thrown exception.
-     * @param e the thrown exception to display
-     */
-    private static void encryptionExceptionHandler(
-            final NoSuchAlgorithmException e) {
-        Alert encryptionError = new Alert(Alert.AlertType.ERROR);
-        encryptionError.setTitle("Encryption failure:");
-        encryptionError.setContentText("The client failed to encrypt your "
-                + "login credentials, and your login attempt was aborted."
-                + "\nPlease try again and contact an administrator if this"
-                + "issue persists.\nException found:\n" + e.getMessage()
-                + "\n see terminal for stacktrace");
-        e.printStackTrace();
-        encryptionError.showAndWait();
-    }
-
-    /**
-     * Displays an error message for a thrown exception.
-     * @param e the thrown exception to display
-     */
-    private static void displayException(final Exception e) {
-        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
-        statusCodeError.setTitle(e.getMessage());
-        statusCodeError.setContentText("See terminal for stacktrace.");
-        e.printStackTrace();
-        statusCodeError.showAndWait();
     }
 }
