@@ -1,4 +1,4 @@
-package utility;
+package exceptions;
 
 import exceptions.ServerStatusException;
 import org.junit.jupiter.api.Test;
