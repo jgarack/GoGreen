@@ -3,6 +3,10 @@ package utility;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Class used to test the User class.
+ * @author Jonathan
+ */
 public class UserTest {
 
     int userId = 1;
@@ -17,7 +21,7 @@ public class UserTest {
     User user = new User(userId, username, encPassword, gender, questionId, answer, totalScore, dateOfBirth);
 
     /**
-     * getUserId test.
+     * UserID getter test.
      */
     @Test
     void getUserIdTest() {
@@ -25,7 +29,7 @@ public class UserTest {
     }
 
     /**
-     * setUserId test.
+     * UserID setter test.
      */
     @Test
     void setUserIdTest() {
@@ -34,7 +38,7 @@ public class UserTest {
     }
 
     /**
-     * getUsername test.
+     * Username getter test.
      */
     @Test
     void getUsernameTest() {
@@ -42,7 +46,7 @@ public class UserTest {
     }
 
     /**
-     * setUsername test.
+     * Username setter test.
      */
     @Test
     void setUsernameTest() {
@@ -51,7 +55,7 @@ public class UserTest {
     }
 
     /**
-     * getEncPassword test.
+     * Encoded password getter test.
      */
     @Test
     void getEncPasswordTest() {
@@ -59,7 +63,7 @@ public class UserTest {
     }
 
     /**
-     * setEncPassword test.
+     * Encoded password setter test.
      */
     @Test
     void setEncPasswordTest() {
@@ -68,7 +72,7 @@ public class UserTest {
     }
 
     /**
-     * getGender test.
+     * Gender getter test.
      */
     @Test
     void getGenderTest() {
@@ -76,7 +80,7 @@ public class UserTest {
     }
 
     /**
-     * setGender test.
+     * Gender setter test.
      */
     @Test
     void setGenderTest() {
@@ -85,7 +89,7 @@ public class UserTest {
     }
 
     /**
-     * getQuestionId test.
+     * QuestionID getter test.
      */
     @Test
     void getQuestionIdTest() {
@@ -93,7 +97,7 @@ public class UserTest {
     }
 
     /**
-     * setQuestionId test.
+     * QuestionID setter test.
      */
     @Test
     void setQuestionIdTest() {
@@ -103,7 +107,7 @@ public class UserTest {
     }
 
     /**
-     * getAnswer test.
+     * Answer getter test.
      */
     @Test
     void getAnswerTest() {
@@ -111,7 +115,7 @@ public class UserTest {
     }
 
     /**
-     * setAnswer test.
+     * Answer setter test.
      */
     @Test
     void setAnswerTest() {
@@ -120,7 +124,7 @@ public class UserTest {
     }
 
     /**
-     * getTotalScore test.
+     * TotalScore getter test.
      */
     @Test
     void getTotalScoreTest() {
@@ -128,7 +132,7 @@ public class UserTest {
     }
 
     /**
-     * setTotalScore test.
+     * TotalScore setter test.
      */
     @Test
     void setTotalScoreTest() {
@@ -137,7 +141,7 @@ public class UserTest {
     }
 
     /**
-     * getDateOfBirth test.
+     * DateOfBirth getter test.
      */
     @Test
     void getDateOfBirthTest() {
@@ -145,7 +149,7 @@ public class UserTest {
     }
 
     /**
-     * setDateOfBirth test.
+     * DateOfBirth setter test.
      */
     @Test
     void setDateOfBirthTest() {
@@ -153,6 +157,9 @@ public class UserTest {
         assertEquals("dd.mm.rr", user.getDateOfBirth());
     }
 
+    /**
+     * ToString method test.
+     */
     @Test
     void toStringEmptyTest() {
         String expected = "User{"

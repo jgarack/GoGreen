@@ -18,7 +18,9 @@ import java.io.IOException;
 /**
  * The controller for the Register page.
  */
-public class RegisterController {
+public class
+
+RegisterController {
     /**
      * The width of the stage.
      */

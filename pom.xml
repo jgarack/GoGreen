@@ -169,11 +169,6 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco-maven-plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/gui</exclude>
-                    </excludes>
-                </configuration>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
@@ -195,6 +190,13 @@
                         </goals>
                         <configuration>
                             <rules>
+                                <rule implementation="org.jacoco.maven.RuleConfiguration">
+                                    <excludes>
+                                        <exclude>com.mypackage1</exclude>
+                                        <exclude>com.mypackage2</exclude>
+                                    </excludes>
+                                    <element>PACKAGE</element>
+                                </rule>
                             </rules>
                         </configuration>
                     </execution>

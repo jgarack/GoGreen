@@ -145,7 +145,7 @@ public class HttpRequestHandlerTest {
                 new StringReader("hello"));
         assertEquals("hello", httpHandler.resLog(testReader, null));
     }
-    //@Test
+    @Test
     public void resLogException() throws IOException {
         BufferedReader testReader = new BufferedReader(
                 new StringReader("hello"));
