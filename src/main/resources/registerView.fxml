@@ -17,11 +17,11 @@
     <PasswordField fx:id="pass" GridPane.rowIndex="4"/>
     <Label text="Confirm password" GridPane.rowIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <PasswordField fx:id="confirmPass" GridPane.rowIndex="6"/>
-    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="8">
-        <Button fx:id="submitRegistration" text="Back" onAction="#handleBackButtonAction" />
+    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="11">
+        <Button text="Back" onAction="#handleBackButtonAction" />
     </HBox>
-    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="7">
-        <Button fx:id="submitLogin" text="Register" onAction="#handleRegisterButtonAction" />
+    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="10">
+        <Button text="Register" onAction="#handleRegisterButtonAction" />
     </HBox>
     <Text fx:id="actionTarget" GridPane.rowIndex="8" />
     <stylesheets>
