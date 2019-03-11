@@ -20,13 +20,13 @@ import java.io.IOException;
  */
 public final class LoginController {
     /**
-     * The width of the stage.
+     * The WIDTH of the stage.
      */
-    private final int width = 800;
+    private static final int WIDTH = 800;
     /**
-     * The height of the stage.
+     * The HEIGHT of the stage.
      */
-    private final int height = 600;
+    private static final int HEIGHT = 600;
     /**
      * Bound to the text field where the user enters his username.
      */
@@ -98,7 +98,7 @@ public final class LoginController {
             stage.setY(bounds.getMinY());
             stage.setHeight(bounds.getHeight());
             stage.setWidth(bounds.getWidth());
-            Scene scene = new Scene(root, width, height);
+            Scene scene = new Scene(root, WIDTH, HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());

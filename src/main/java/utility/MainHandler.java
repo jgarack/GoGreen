@@ -1,25 +1,13 @@
 package utility;
 
-import animatefx.animation.ZoomIn;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-
-import java.io.IOException;
-
-public class MainHandler {
+/**
+ * Handler for the main controller.
+ */
+public final class MainHandler {
     /**
-     * Generates dialog alert box with the message provided.
-     * @param msg the message that should alert the user
+     * Literally does nothing.
      */
-    public static void generateAlert(final String msg) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Wrongly filled in info");
-        alert.setContentText(msg);
-
-        alert.showAndWait();
-    }
-
+    private MainHandler() { }
     /**
      * Tries to parse integer.
      *

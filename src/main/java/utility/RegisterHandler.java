@@ -1,7 +1,9 @@
 package utility;
 
 import exceptions.ServerStatusException;
+import gui.AlertBuilder;
 import javafx.scene.control.Alert;
+import org.controlsfx.control.NotificationPane;
 import utility.AccountMessage;
 import utility.HttpRequestHandler;
 import utility.LoginHandler;
@@ -11,6 +13,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import static utility.LoginHandler.emptyFields;
 
 public class RegisterHandler {
     /**
@@ -30,6 +34,14 @@ public class RegisterHandler {
     private static final HttpRequestHandler HTTP_HANDLER =
             new HttpRequestHandler(DOMAIN);
 
+    /**
+     * Sends a registration request to the server with the input username and
+     * password combination. Encrypts the password.
+     * @param username The username for the account to register.
+     * @param pass The password for the acccount to register.
+     * @param confirmPass The password to be confirmed.
+     * @return true iff registered
+     */
     public static boolean registerSubmit(final String username,
                                          final String pass,
                                          final String confirmPass) {
@@ -42,12 +54,6 @@ public class RegisterHandler {
                         new AccountMessage(username, md5Pass));
                 String contentText = HTTP_HANDLER.resLog(
                         httpBody, LOGFOLDER + "register_response");
-                Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-                displayResponse.setTitle("Registration complete");
-                displayResponse.setContentText("You can now log in.\n"
-                        + contentText);
-                displayResponse.showAndWait();
-                displayResponse.close();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 LoginHandler.encryptionExceptionHandler(md5Error);
@@ -63,16 +69,24 @@ public class RegisterHandler {
             return false;
         }
     }
+    /**
+     * Checks whether the filled form
+     * has been filled with valid input.
+     * @param userFieldEntry The received input for the username.
+     * @param passFieldEntry The received input for the password.
+     * @param confirmPassFieldEntry The received
+     *                              input for the confirmed password.
+     * @return true iff the input is in the correct format.
+     */
     private static boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
                                      final String confirmPassFieldEntry) {
-        if (LoginHandler.checkForm(userFieldEntry, passFieldEntry)) {
+        if (emptyFields(userFieldEntry, passFieldEntry)) {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
             } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Password do not match!");
-                alert.setContentText("You need to type in matching passwords!");
+                AlertBuilder alertBuilder = new AlertBuilder();
+                Alert alert = alertBuilder.formEntryWarning("Password/Confirm Password","Passwords do not match!");
                 alert.showAndWait();
             }
         }

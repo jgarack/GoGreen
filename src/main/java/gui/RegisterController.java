@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.controlsfx.control.NotificationPane;
 import utility.RegisterHandler;
 
 import java.io.IOException;
@@ -54,6 +55,10 @@ RegisterController {
     protected void handleRegisterButtonAction(final ActionEvent event) {
         if (RegisterHandler.registerSubmit(username.getText().trim(),
                 pass.getText().trim(), confirmPass.getText().trim())) {
+                AlertBuilder alertBuilder = new AlertBuilder();
+                Parent root = ((Node) event.getSource()).getScene().getRoot();
+                //NotificationPane notificationPane = alertBuilder.formNotificationPane("You have registered.\nNow you can log in.",root);
+
                 redirectToView(event);
         }
     }

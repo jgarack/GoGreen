@@ -1,9 +1,15 @@
 package gui;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
+import org.controlsfx.control.NotificationPane;
 
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Class that builds different kinds of alerts.
+ */
 public class AlertBuilder {
     /**
      * Default constructor.
@@ -42,11 +48,30 @@ public class AlertBuilder {
      * Displays a warning message.
      * @param fieldName the field that was not filled in correctly.
      * @param description a description of what went wrong.
+     * @return returns an alert with the message.
      */
-    public void formEntryWarning(String fieldName, String description) {
+    public Alert formEntryWarning(final String fieldName,
+                                  final String description) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Illegal entry in field " + fieldName + ":");
-        alert.setContentText("You need to type in matching passwords!");
-        alert.showAndWait();
+        alert.setContentText(description);
+        return alert;
+    }
+
+    /**
+     * Forms a notification popup with a message.
+     * @param notificationMsg The message of the popup.
+     * @param stage The stage where it should pop up.
+     * @return Returns a notfication pane that should popup.
+     */
+    final NotificationPane formNotificationPane(final String notificationMsg,
+                                          final Stage stage) {
+        Parent root = stage.getScene().getRoot();
+        NotificationPane notificationPane = new NotificationPane(root);
+        notificationPane.setText(notificationMsg);
+        notificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
+        notificationPane.setShowFromTop(false);
+        notificationPane.show();
+        return notificationPane;
     }
 }
