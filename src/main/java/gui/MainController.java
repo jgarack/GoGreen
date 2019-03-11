@@ -275,6 +275,7 @@ public class MainController {
         if (scene.equals("home")) {
             new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
         }
+
         root.setCenter(newScene);
     }
 

@@ -18,8 +18,10 @@ import java.net.URL;
 public class HttpRequestHandler {
     //private final static Logger LOGGER = Logger
     // .getLogger(HttpRequestHandler.class.getName());
-    /** The default User-Agent to use in HTTP requests.**/
-    private static final String USER_AGENT_MOZILLA = "Mozilla/5.0";
+    /** The default User-Agent to use in HTTP requests. (Chrome 60)**/
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT "
+        + "10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+        + "Chrome/60.0.3112.113 Safari/537.36";
     /** The default url to use in HTTP requests. **/
     private static String domain;
 
@@ -41,7 +43,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGetHome() throws ServerStatusException,
             IOException {
-        return reqGet("/", USER_AGENT_MOZILLA);
+        return reqGet("/", USER_AGENT);
     }
 
     /**Sends an HTTP GET request to the server which requests the home page
@@ -68,7 +70,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGet(final String route) throws
             ServerStatusException, IOException {
-        return reqGet(route, USER_AGENT_MOZILLA);
+        return reqGet(route, USER_AGENT);
     }
 
     /**Sends an HTTP GET request to the server which requests the specified
@@ -102,7 +104,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqPost(final String route, final Object message)
             throws ServerStatusException, IOException {
-        return reqPost(route, message, USER_AGENT_MOZILLA);
+        return reqPost(route, message, USER_AGENT);
     }
 
     /**Sends an HTTP POST request to the server on the specified page.

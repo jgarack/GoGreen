@@ -6,12 +6,43 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import javafx.scene.text.Text?>
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      prefHeight="400.0" prefWidth="600.0">
-<Text>How To play</Text>
-    <Text> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ullamcorper enim semper leo facilisis sollicitudin. Donec quis sapien eu mauris laoreet consectetur. Ut quis porta libero. In hac habitasse platea dictumst. Etiam malesuada orci in nibh condimentum, elementum ultricies neque euismod. Curabitur malesuada fringilla mollis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis iaculis justo nec turpis pretium suscipit eu vitae urna. Nulla facilisi. Pellentesque odio enim, tempus in feugiat in, mattis eget diam. Donec ut commodo tortor.
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 
-        Pellentesque pellentesque velit eu mauris ultricies, ac elementum ante interdum. Proin eget dolor auctor quam laoreet ullamcorper scelerisque in neque. Curabitur lorem dui, vulputate sit amet est a, suscipit laoreet enim. Pellentesque egestas nunc turpis, ac auctor metus bibendum a. Sed facilisis nunc sed felis bibendum fringilla. Fusce cursus vulputate lectus quis mollis. Quisque dignissim risus sed maximus dignissim. Morbi ultricies nisl non hendrerit posuere. Aliquam ullamcorper augue quis laoreet luctus. Duis ullamcorper ex a mauris posuere scelerisque. Cras sit amet scelerisque odio. </Text>
-</VBox>
+<?import javafx.scene.text.Text?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          prefHeight="400.0" prefWidth="600.0"
+          alignment="center" hgap="10" vgap="10">
+
+
+<Label text="How to Play" alignment="CENTER" fx:id="howToTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+
+
+    <Label text="In order to play GoGreen, you need to log your transportation, food, and energy consumption habits on a regular basis." fx:id="howToText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    <Label text="Each time you make a 'green-friendly' decision, such as getting to your destination using a bicycle instead of a car," fx:id="howToText" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    <Label text="you can log it in your account, and we will estimate the impact of your actions on the environment in terms of emissions." fx:id="howToText" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+
+    <HBox fx:id="howToImage" GridPane.rowIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+    <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="howToPlayItems.png"/>
+        </image>
+    </ImageView>
+    </HBox>
+
+    <Label text="To make the experience more engaging, we encourage you to add your friends to the game." fx:id="howToText" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    <Label text="This will allow you to compare your results and emissions figures with theirs." fx:id="howToText" GridPane.rowIndex="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    <Label text="All stats and data from your emission savings can be tracked through the right side panel." fx:id="howToText" GridPane.rowIndex="9" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+
+    <HBox fx:id="howToImage" GridPane.rowIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="howToPlayPeople.png"/>
+            </image>
+        </ImageView>
+    </HBox>
+
+
+</GridPane>

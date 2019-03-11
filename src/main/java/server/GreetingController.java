@@ -122,7 +122,8 @@ public class GreetingController {
         if (activity.getId() == 1) {
 
             BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/diets.json?size="
+                    new HttpRequestHandler(BP_API).reqGet("/diets.json?"
+                            + "size="
                             + activity.getValue()
                             //+ "&timeframe=2019-01-01%2F2020-01-01"
                             + BP_KEY);
