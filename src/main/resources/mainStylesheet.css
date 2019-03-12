@@ -3,6 +3,8 @@
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-opacity: 1;
+    -fx-border-color: FIREBRICK;
+    -fx-border-width: 0 0;
 
 }
 .HBox{
@@ -64,4 +66,11 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
 }
+
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+    -fx-background-color: transparent;
+}
+
+
 

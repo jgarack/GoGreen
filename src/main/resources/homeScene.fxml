@@ -10,7 +10,7 @@
 <?import javafx.geometry.Insets?>
 <ListView xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="gui.MainController"
+          fx:controller="gui.HomeController"
           prefHeight="400.0" prefWidth="600.0"
             fx:id="featuresList">
 
@@ -30,7 +30,7 @@
             <Button fx:id="increaseVegetarianMealsBtn" text="+" onAction="#increaseVegetarianMeals"/>
         </HBox>
         <HBox spacing="5">
-            <Label fx:id="bicycleUsedLabel" alignment="CENTER" HBox.hgrow="ALWAYS" prefWidth="1600">
+            <Label fx:id="bicycleUsedLabel" alignment="CENTER" HBox.hgrow="ALWAYS"  prefWidth="1600">
                 Times you have used bicycle instead of a car:
             </Label>
         </HBox>

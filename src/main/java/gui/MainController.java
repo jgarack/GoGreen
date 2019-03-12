@@ -9,14 +9,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.GlyphFont;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 import utility.MainHandler;
 import java.io.IOException;
 
@@ -27,21 +37,6 @@ import java.io.IOException;
  */
 public class MainController {
 
-    /**
-     * Data about vegetarian meals consumed
-     * that is to be retrieved from database.
-     */
-    private int vegetarianMeals = 0;
-    /**
-     * Data about the times that a bicycle
-     * has been used that is to be retrieved from database.
-     */
-    private int bicycleUsed = 0;
-    /**
-     * Alert text.
-     */
-    private static final String YOU_NEED_TO_FILL_A_NUMBER
-            = "You need to fill a number!";
     /**
      * Magic number 250.
      */
@@ -73,76 +68,68 @@ public class MainController {
      */
     @FXML
     private ProgressBar progressBarGreen;
-    /**
-     * Bound to the text field linked with vegetarian meals.
-     */
-    @FXML
-    private TextField vegMeals;
-    /**
-     * Bound to the label about the vegetarian meals
-     * (used to show progress).
-     */
-    @FXML
-    private Label vegMealsEaten;
 
-    /**
-     * Bound to the text field about the usage of bicycle.
-     */
-    @FXML
-    private TextField bicycleUsage;
-    /**
-     * Bound to the bicycle label - used to show progress.
-     */
-    @FXML
-    private Label bicycleUsedLabel;
 
     /**
      * Bound to the home button on top.
      */
     @FXML
     private Button home;
+    /**
+     * Bound to the home button on top.
+     */
+    @FXML
+    private Button personalInfo;
 
     /**
      * Bound to the list of goGreen features.
      */
     @FXML
     private ListView featuresList;
-    /**
-     * The builder used to build alerts for this handler.
-     */
-    private static final AlertBuilder alert = new AlertBuilder();
+
+
 
     /**
      * Method that is executed upon initializing of the corresponding FXML file.
      */
     @FXML
     public void initialize() {
-        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
+//        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
+//        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+//        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
 
-        featuresList.setPrefSize(bounds.getWidth() - THREE_HUNDRED,
-                bounds.getHeight());
+
+        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
+        //CREATES ERRORS WHEN LOADING FROM OTHER TO HOME PAGE -> MIGHT HAVE TO SPLIT HOME AND MAIN CONTROLLER
+        personalInfo.setGraphic(font.create(FontAwesome.Glyph.PENCIL));
+
+        try{
+            loadHomeScene();
+        } catch (IOException err) {
+            err.printStackTrace();
+        }
+
+
 
     }
 
+
+
     /**
      * Loads how to play screen.
-     * @param event The event that is fired when the button is clicked.
      * @throws IOException when FXMLLoader cannot load properly.
      */
     @FXML
-    protected void loadHowToPlayScene(final ActionEvent event)
+    protected void loadHowToPlayScene()
             throws IOException {
         loadScene("howToPlay");
     }
     /**
      * Loads home screen.
-     * @param event The event that is fired when the button is clicked.
      * @throws IOException when FXMLLoader cannot load properly.
      */
     @FXML
-    protected  void loadHomeScene(final ActionEvent event) throws IOException {
+    protected  void loadHomeScene() throws IOException {
         home.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
@@ -154,83 +141,15 @@ public class MainController {
 
     /**
      * Loads about screen.
-     * @param event The event that is fired when the button is clicked.
      * @throws IOException when FXMLLoader cannot load properly.
      */
     @FXML
-    protected void loadAboutScene(final ActionEvent event) throws IOException {
+    protected void loadAboutScene() throws IOException {
         loadScene("about");
     }
 
 
-    /**
-     * Used to decrease the amount of vegetarian meals filled in the text field.
-     * @param event The fired event when the decrease button is pressed.
-     */
-    @FXML
-    protected void decreaseVegetarianMeals(final ActionEvent event) {
-            if (MainHandler.tryParseInt(vegMeals.getText())) {
-                this.vegetarianMeals -= Integer.parseInt(vegMeals.getText());
-                vegMealsEaten.setText("Vegetarian meals eaten:"
-                        + this.vegetarianMeals);
-            } else {
-                alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
-            }
-    }
 
-    /**
-     * Used to increase the amount of vegetarian meals filled in the text field.
-     * @param event The fired event when the increase button is pressed.
-     */
-    @FXML
-    protected void increaseVegetarianMeals(final ActionEvent event) {
-        if (MainHandler.tryParseInt(vegMeals.getText())) {
-
-
-            VegetarianMeal meal = new VegetarianMeal(vegMeals.getText());
-            System.out.println(meal.toString());
-
-            this.vegetarianMeals += meal.calculatePoints();
-
-            vegMealsEaten.setText("Points earned:"
-                    + this.vegetarianMeals);
-
-        } else {
-            alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
-        }
-    }
-
-    /**
-     * Used to decrease the amount of times a bicycle
-     * that has been used filled in the text field.
-     * @param event The fired event when the decrease button is pressed.
-     */
-    @FXML
-    protected void decreaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
-
-            this.bicycleUsed -= Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
-                    + this.bicycleUsed);
-        } else {
-            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
-        }
-    }
-    /**
-     * Used to increase the amount of times a bicycle
-     * that has been used filled in the text field.
-     * @param event The fired event when the increase button is pressed.
-     */
-    @FXML
-    protected void increaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
-            this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
-                    + this.bicycleUsed);
-        } else {
-            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
-        }
-    }
 
 
 

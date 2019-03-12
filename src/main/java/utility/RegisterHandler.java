@@ -52,12 +52,10 @@ public class RegisterHandler {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
-                BufferedReader httpBody = HTTP_HANDLER.reqPost("/register",
+                HTTP_HANDLER.reqPost("/register",
                         new AccountMessage(username, md5Pass));
-                String contentText = HTTP_HANDLER.resLog(
-                        httpBody, LOGFOLDER + "register_response");
                 Notifications notifications = alert.formNotificationPane("You have registered successfully!");
-                notifications.show();
+                notifications.showInformation();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 alert.encryptionExceptionHandler(md5Error);
