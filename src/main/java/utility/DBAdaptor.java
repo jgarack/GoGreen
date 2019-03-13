@@ -1,17 +1,22 @@
 package utility;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Adapter class for the database.
  */
-public class DBAdaptor {
+public class DbAdaptor {
 
     /**
      * Magic number 1.
@@ -76,7 +81,8 @@ public class DBAdaptor {
     /**
      * Constructor assigns values to username, password, and connection string.
      */
-    public DBAdaptor() {
+    public DbAdaptor() {
+
         try {
             URI dbUri = new URI("postgres://ruyhsamtzksdvj:"
                     + "6361f4ca393416fc4786d99876594abeec8f"
@@ -87,7 +93,7 @@ public class DBAdaptor {
             this.password = dbUri.getUserInfo().split(":")[1];
             this.jdbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
                     + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
-        } catch (Exception e) {
+        } catch (URISyntaxException e) {
             e.printStackTrace();
         }
 
@@ -131,33 +137,22 @@ public class DBAdaptor {
 
     /**
      * Inserts user into the DB.
-     * @param userName userName of the user.
-     * @param encPassword encrypted pass of the user.
-     * @param dateOfBirth birth date of the user.
-     * @param gender gender of the user.
-     * @param questionId id of secret question of the user.
-     * @param answer answer to the secret question
-     * @param totalScore total score of the user.
+     * @param user object of the user.
      */
-    public void insertUser(final String userName, final String encPassword,
-                           final String dateOfBirth, final String gender,
-                           final int questionId, final String answer,
-                           final int totalScore) {
+    public void insertUser(User user) {
         System.out.println("Inserting...");
 
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
-                            + " enc_password, date_of_birth,"
-                            + " gender, question_id,"
-                            + " answer, total_score) VALUES(?,?,?,?,?,?,?)");
-            st.setString(one, userName);
-            st.setString(two, encPassword);
-            st.setString(three, dateOfBirth);
-            st.setString(four, gender);
-            st.setInt(five, questionId);
-            st.setString(six, answer);
-            st.setInt(seven, totalScore);
+                                        + " gender,total_score,"
+                                        + " date_of_birth)"
+                                        + " VALUES(?,?,?,?)");
+            st.setString(one, user.getUsername());
+            st.setString(two, user.getGender());
+            st.setInt(three, user.getTotalScore());
+            st.setString(four, user.getDateOfBirth());
+            System.out.println(st.toString());
             st.executeUpdate();
             st.close();
             System.out.println("Inserted");
@@ -185,42 +180,6 @@ public class DBAdaptor {
             e.printStackTrace();
         }
 
-    }
-
-    /**
-     * Inserts Question into the DB.
-     * @param question the question to be inserted.
-     */
-    public void insertQuestion(final String question) {
-        try {
-            PreparedStatement st = conn
-                    .prepareStatement("INSERT INTO question"
-                            + "(question) VALUES (?)");
-            st.setString(1, question);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Adds friends to users friend list.
-     * @param friend1 Friend to be added.
-     * @param friend2 Friend to be added.
-     */
-    public void makeFriends(final int friend1, final int friend2) {
-        try {
-            PreparedStatement st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "friends(friend_1, friend_2) VALUES (?,?)");
-            st.setInt(1, friend1);
-            st.setInt(2, friend2);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -252,36 +211,35 @@ public class DBAdaptor {
      * Gets user from the DB.
      * @param userName username upon which a user is searched.
      */
-    public void getUser(final String userName) {
+    public List getUser(final String userName) {
         try {
-            PreparedStatement st = conn
-                    .prepareStatement("SELECT * "
-                            + "FROM users WHERE username = ?");
-                 st.setString(1, userName);
-                 rs = st.executeQuery();
+            List userList = new ArrayList<User>();
 
-                 while (rs.next()) {
-                    User tempUser = new User(-1, null,
-                            null, null, -1,
-                            null, -1, null);
-                    tempUser.setUserId(rs.getInt(1));
-                    tempUser.setUsername(rs.getString(2));
-                    tempUser.setEncPassword(rs.getString(three));
-                    tempUser.setGender(rs.getString(four));
-                    tempUser.setQuestionId(rs.getInt(five));
-                    tempUser.setAnswer(rs.getString(six));
-                    tempUser.setTotalScore(rs.getInt(seven));
-                    tempUser.setDateOfBirth(rs.getString(eight));
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT * FROM users WHERE username = ?");
 
-                    System.out.println(tempUser.toString());
+            st.setString(1, userName);
+            rs = st.executeQuery();
 
+            DateFormat inputDateFormat = new SimpleDateFormat("dd-mm-yyyy");
+            while (rs.next()) {
+                User tempUser = new User( null,
+                        null, 0, null);
+                tempUser.setUsername(rs.getString(one));
+                tempUser.setGender(rs.getString(two));
+                tempUser.setTotalScore(rs.getInt(three));
+                tempUser.setDateOfBirth(rs.getString(four));
 
-                }
-
+                userList.add(tempUser);
+                System.out.println(tempUser.toString());
+            }
+            return userList;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return null;
     }
 
 
