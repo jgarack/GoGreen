@@ -37,14 +37,8 @@ import java.io.IOException;
  */
 public class MainController {
 
-    /**
-     * Magic number 250.
-     */
-    private static final int TWO_HUNDRED_FIFTY = 250;
-    /**
-     * Magic number 300.
-     */
-    private static final int THREE_HUNDRED = 300;
+
+
     /**
      * Magic number 0.8.
      */
@@ -52,22 +46,13 @@ public class MainController {
 
 
 
-    /**
-     * Magic number 0.7.
-     */
-    private static final double PROGRESS_BAR_INIT_VAL = 0.7;
+
     /**
      * The root of the FXML page.
      */
     @FXML
     private BorderPane root;
 
-    /**
-     * Bound to the Progress bar
-     * indicating the progress of the user.
-     */
-    @FXML
-    private ProgressBar progressBarGreen;
 
 
     /**
@@ -81,11 +66,6 @@ public class MainController {
     @FXML
     private Button personalInfo;
 
-    /**
-     * Bound to the list of goGreen features.
-     */
-    @FXML
-    private ListView featuresList;
 
 
 
@@ -94,16 +74,11 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-//        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
-//        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-//        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
-
-
         GlyphFont font = GlyphFontRegistry.font("FontAwesome");
         //CREATES ERRORS WHEN LOADING FROM OTHER TO HOME PAGE -> MIGHT HAVE TO SPLIT HOME AND MAIN CONTROLLER
         personalInfo.setGraphic(font.create(FontAwesome.Glyph.PENCIL));
 
-        try{
+        try {
             loadHomeScene();
         } catch (IOException err) {
             err.printStackTrace();

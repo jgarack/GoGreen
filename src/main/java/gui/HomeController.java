@@ -3,8 +3,12 @@ package gui;
 import features.VegetarianMeal;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import utility.MainHandler;
 
 /**
@@ -16,6 +20,18 @@ public class HomeController {
      */
     private static final String YOU_NEED_TO_FILL_A_NUMBER
             = "You need to fill a number!";
+    /**
+     * Magic number 0.7.
+     */
+    private static final double PROGRESS_BAR_INIT_VAL = 0.7;
+    /**
+     * Magic number 300.
+     */
+    private static final int THREE_HUNDRED = 300;
+    /**
+     * Magic number 250.
+     */
+    private static final int TWO_HUNDRED_FIFTY = 250;
     /**
      * Data about vegetarian meals consumed
      * that is to be retrieved from database.
@@ -49,9 +65,37 @@ public class HomeController {
     @FXML
     private Label bicycleUsedLabel;
     /**
+     * Bound to the Progress bar
+     * indicating the progress of the user.
+     */
+    @FXML
+    private ProgressBar progressBarGreen;
+
+    /**
      * The builder used to build alerts for this handler.
      */
     private static final AlertBuilder alert = new AlertBuilder();
+    /**
+     * Bound to the list of goGreen features.
+     */
+    @FXML
+    private ListView featuresList;
+
+
+    /**
+     *
+     */
+    @FXML
+    public void initialize() {
+        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
+        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
+
+        featuresList.setPrefSize(bounds.getHeight() - THREE_HUNDRED, bounds.getWidth() - THREE_HUNDRED);
+
+
+
+    }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
      * @param event The fired event when the decrease button is pressed.
