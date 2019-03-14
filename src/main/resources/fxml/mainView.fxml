@@ -19,7 +19,7 @@
             fx:controller="gui.MainController"
             prefHeight="800.0" prefWidth="600.0">
     <stylesheets>
-        <URL value="@mainStylesheet.css"/>
+        <URL value="@../stylesheets/mainStylesheet.css"/>
     </stylesheets>
     <top>
         <SplitPane orientation="HORIZONTAL" fx:id="navBar">

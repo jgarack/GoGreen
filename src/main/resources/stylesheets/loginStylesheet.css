@@ -1,5 +1,5 @@
 .root{
-    -fx-background-image: url("first_background.png");
+    -fx-background-image: url("../icons/first_background.png");
     -fx-background-size: cover;
     -fx-background-repeat: no-repeat;
     -fx-opacity: 1;

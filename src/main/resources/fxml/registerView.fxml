@@ -25,6 +25,6 @@
     </HBox>
     <Text fx:id="actionTarget" GridPane.rowIndex="8" />
     <stylesheets>
-        <URL value="@loginStylesheet.css"/>
+        <URL value="@../stylesheets/loginStylesheet.css"/>
     </stylesheets>
 </GridPane>

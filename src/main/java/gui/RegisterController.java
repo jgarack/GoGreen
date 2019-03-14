@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.controlsfx.control.NotificationPane;
 import utility.RegisterHandler;
 
 import java.io.IOException;
@@ -81,7 +80,7 @@ RegisterController {
                 .getScene().getWindow();
         try {
             Parent root = FXMLLoader.load(getClass()
-                    .getResource("/loginView.fxml"));
+                    .getResource("/fxml/loginView.fxml"));
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
 

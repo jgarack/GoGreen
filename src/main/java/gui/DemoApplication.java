@@ -86,7 +86,7 @@ public class DemoApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
 
-        root = fxmlLoader.load(getClass().getResource("/loginView.fxml"));
+        root = fxmlLoader.load(getClass().getResource("/fxml/loginView.fxml"));
 
 
     }
@@ -101,7 +101,7 @@ public class DemoApplication extends Application {
         primaryStage.setTitle("FXML Tryout");
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(
-                (getClass().getResource("/loginStylesheet.css"))
+                (getClass().getResource("/stylesheets/loginStylesheet.css"))
                         .toExternalForm());
         Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
