@@ -24,9 +24,7 @@
 
     <HBox fx:id="howToImage" GridPane.rowIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
     <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
-        <image>
-            <Image url="../icons/howToPlayItems.png"/>
-        </image>
+            <Image url="/icons/howToPlayItems.png"/>
     </ImageView>
     </HBox>
 
@@ -36,9 +34,9 @@
 
     <HBox fx:id="howToImage" GridPane.rowIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
         <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="../icons/howToPlayPeople.png"/>
-            </image>
+
+                <Image url="/icons/howToPlayPeople.png"/>
+
         </ImageView>
     </HBox>
 

@@ -137,7 +137,7 @@ public class MainController {
     private void loadScene(final String scene)
             throws IOException {
         Parent newScene = FXMLLoader.load(getClass()
-                .getResource("/" + scene + "Scene.fxml"));
+                .getResource("/fxml/" + scene + "Scene.fxml"));
         if (scene.equals("home")) {
             new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
         }

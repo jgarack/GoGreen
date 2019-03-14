@@ -85,7 +85,7 @@ public final class LoginController {
         try {
 
             Parent root = FXMLLoader.load(getClass()
-                    .getResource("/" + view + "View.fxml"));
+                    .getResource("/fxml/" + view + "View.fxml"));
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
 

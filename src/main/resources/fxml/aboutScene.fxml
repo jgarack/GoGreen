@@ -28,7 +28,7 @@
     <HBox fx:id="howToImage" GridPane.rowIndex="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
     <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="../icons/aboutUsDesk.png"/>
+            <Image url="/icons/aboutUsDesk.png"/>
         </image>
     </ImageView>
     </HBox>
