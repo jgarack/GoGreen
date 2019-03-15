@@ -1,7 +1,6 @@
 package utility;
 
 import exceptions.ServerStatusException;
-import javafx.scene.control.Alert;
 import gui.AlertBuilder;
 
 import javax.xml.bind.DatatypeConverter;
@@ -15,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * @see gui.LoginController
  * @author awjvanvugt
  */
-public class LoginHandler {
+public final class LoginHandler {
     /**
      * The domain on which the server is running.
      * {@value}
@@ -67,13 +66,13 @@ public class LoginHandler {
                 alert.formNotificationPane("Logged in successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                alert.encryptionExceptionHandler(md5Error);
+                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                alert.displayException(e);
+                ALERT_BUILDER.displayException(e);
                 return false;
             } catch (IOException e) {
-                alert.displayException(e);
+                ALERT_BUILDER.displayException(e);
                 return false;
             }
         } else {
@@ -93,11 +92,11 @@ public class LoginHandler {
     public boolean emptyFields(final String userFieldEntry,
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
-            alert.formEntryWarning("Username",
+            ALERT_BUILDER.formEntryWarning("Username",
                     "You need to fill in your username");
             return false;
         } else if (passFieldEntry.isEmpty()) {
-            alert.formEntryWarning("Password",
+            ALERT_BUILDER.formEntryWarning("Password",
                     "You need to fill in your password");
             return false;
         }

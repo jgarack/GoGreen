@@ -2,17 +2,19 @@ package utility;
 
 import exceptions.ServerStatusException;
 import gui.AlertBuilder;
-import javafx.scene.control.Alert;
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
-import utility.MainHandler;
 import javax.xml.bind.DatatypeConverter;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Class for handling register forms.
+ */
 public class RegisterHandler {
+    /**
+     * Private constructor just because.
+     */
+    private RegisterHandler() { }
     /**
      * The domain on which the server is running.
      * {@value}
@@ -32,7 +34,7 @@ public class RegisterHandler {
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder alert = new AlertBuilder();
+    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
 
     /**
      * Sends a registration request to the server with the input username and
@@ -55,13 +57,13 @@ public class RegisterHandler {
                 alert.formNotificationPane("You have registered successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                alert.encryptionExceptionHandler(md5Error);
+                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                alert.displayException(e);
+                ALERT_BUILDER.displayException(e);
                 return false;
             } catch (IOException e) {
-                alert.displayException(e);
+                ALERT_BUILDER.displayException(e);
                 return false;
             }
         } else {
@@ -85,8 +87,10 @@ public class RegisterHandler {
                 return true;
             } else {
                 AlertBuilder alertBuilder = new AlertBuilder();
-                Alert alert = alertBuilder.formEntryWarning("Password/Confirm Password","Passwords do not match!");
-                alert.showAndWait();
+                alertBuilder
+                        .formEntryWarning("Password/Confirm Password",
+                                "Passwords do not match!")
+                        .showAndWait();
             }
         }
         return false;

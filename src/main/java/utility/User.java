@@ -122,7 +122,7 @@ public class User {
      * Adds a username to the list.
      * @param friendUsername username of the friend to add.
      */
-    public void addFriend(String friendUsername) {
+    public void addFriend(final String friendUsername) {
         this.friends.add(friendUsername);
     }
 

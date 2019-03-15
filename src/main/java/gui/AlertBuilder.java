@@ -1,12 +1,7 @@
 package gui;
 
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.Notifications;
 
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +10,10 @@ import java.security.NoSuchAlgorithmException;
  * Class that builds different kinds of alerts.
  */
 public class AlertBuilder {
+    /**
+     * Duration of the defaultNotification.
+     */
+    private final double durationNotification = 1.5;
     /**
      * Default constructor.
      */
@@ -72,7 +71,8 @@ public class AlertBuilder {
         Notifications.create()
                 .darkStyle()
                 .text(notificationMsg)
-                .hideAfter(Duration.seconds(1.5))
+                .hideAfter(Duration
+                        .seconds(durationNotification));
                 .show(); // sets node to display
     }
 }

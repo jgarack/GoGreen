@@ -4,6 +4,7 @@ package features;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import gui.AlertBuilder;
 import javafx.scene.control.Alert;
 import utility.Activity;
 import utility.HttpRequestHandler;
@@ -24,6 +25,11 @@ public class Feature {
      * value to be calculated.
      */
     private int value;
+
+    /**
+     * Magic number 60.
+     */
+    private final int sixty = 60;
 
     /**
      * Constructor for Feature.
@@ -53,12 +59,17 @@ public class Feature {
     public void setValue(final int raw) {
         this.value = raw;
     }
+    /**
+     * The builder used to build alerts for this handler.
+     */
+    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
 
 
     /**
      * Handles request for Vegetarian meal points from server.
      * Feature 1 VeggieMeal
      * Feature 2 BikeRide
+     * @param choice the id of the feature that is chosen.
      * @return returns points
      * @author ohussein
      */
@@ -67,20 +78,19 @@ public class Feature {
 //        checkForm();
         try {
             BufferedReader httpBody;
-            if(choice ==2){
+            if (choice == 2) {
                 httpBody = new HttpRequestHandler(
                     domain).reqPost(
                     "/points", new Activity(choice, this.getValue()
-                            *60));
+                            * sixty));
             } else {
                 httpBody = new HttpRequestHandler(
                         domain).reqPost(
                         "/points", new Activity(choice, this.getValue()));
             }
-            Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-            displayResponse.setTitle("Save The Earth!");
-            displayResponse.setContentText("Go Greener!");
-            displayResponse.showAndWait();
+            ALERT_BUILDER
+                    .formNotification("Good job! Keep on going greener!")
+                    .showInformation();
             String con = new HttpRequestHandler(domain).resLog(
                     httpBody, null);
             System.out.println(con);

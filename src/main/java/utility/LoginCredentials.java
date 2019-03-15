@@ -1,5 +1,8 @@
 package utility;
 
+/**
+ * Class for the login credentials.
+ */
 public class LoginCredentials {
 
     /**
@@ -14,12 +17,12 @@ public class LoginCredentials {
 
     /**
      * Constructor of the object.
-     * @param username the username.
-     * @param password the password.
+     * @param userName the username.
+     * @param pass the password.
      */
-    public LoginCredentials(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public LoginCredentials(final String userName, final String pass) {
+        this.username = userName;
+        this.password = pass;
     }
 
     /**
