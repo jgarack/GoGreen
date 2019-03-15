@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import static utility.LoginHandler.emptyFields;
-
 public class RegisterHandler {
     /**
      * The domain on which the server is running.
@@ -54,8 +52,7 @@ public class RegisterHandler {
                         md5.digest(pass.getBytes())).toUpperCase();
                 HTTP_HANDLER.reqPost("/register",
                         new AccountMessage(username, md5Pass));
-                Notifications notifications = alert.formNotificationPane("You have registered successfully!");
-                notifications.showInformation();
+                alert.formNotificationPane("You have registered successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 alert.encryptionExceptionHandler(md5Error);
@@ -83,7 +80,7 @@ public class RegisterHandler {
     private static boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
                                      final String confirmPassFieldEntry) {
-        if (emptyFields(userFieldEntry, passFieldEntry)) {
+        if (new LoginHandler(null).emptyFields(userFieldEntry, passFieldEntry)) {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
             } else {

@@ -20,27 +20,32 @@ public class LoginHandler {
      * The domain on which the server is running.
      * {@value}
      */
-    private static final String DOMAIN = "http://localhost:8080";
+    private String domain;
     /**
      * The folder that contains the log files for this class.
      * {@value}
      */
-    private static final String LOGFOLDER = null;
+    private String logfolder = null;
 
     /**
      * The HttpRequestHandler used for this class.
      */
-    private static final HttpRequestHandler HTTP_HANDLER =
-            new HttpRequestHandler(DOMAIN);
+    public HttpRequestHandler httpHandler;
 
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder alert = new AlertBuilder();
+    public AlertBuilder alert;
 
+    public AccountMessage account;
 
-
-
+    /**
+     * Default constructor.
+     * @param host
+     */
+    public LoginHandler(final String host) {
+        domain = host;
+    }
 
     /**
      * Sends a login request to the server with the input username and password
@@ -50,16 +55,16 @@ public class LoginHandler {
      * @param pass     The password.
      * @return true iff logged in
      */
-    public static boolean loginSubmit(final String username,
+    public boolean loginSubmit(final String username,
                                       final String pass) {
         if (emptyFields(username, pass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
-                        md5.digest(pass.getBytes())).toUpperCase();
-                BufferedReader httpBody = HTTP_HANDLER.reqPost("/login",
-                        new AccountMessage(username, md5Pass));
-                alert.formNotificationPane("Logged in successfully!").show();
+                        md5.digest(pass.getBytes()));
+                httpHandler.reqPost("/login",
+                        (account = new AccountMessage(username, md5Pass)));
+                alert.formNotificationPane("Logged in successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 alert.encryptionExceptionHandler(md5Error);
@@ -85,7 +90,7 @@ public class LoginHandler {
      * @return true iff the input is in the correct format.
      */
 
-    public static boolean emptyFields(final String userFieldEntry,
+    public boolean emptyFields(final String userFieldEntry,
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
             alert.formEntryWarning("Username",

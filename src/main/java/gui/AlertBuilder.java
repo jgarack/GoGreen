@@ -67,11 +67,12 @@ public class AlertBuilder {
      * @param notificationMsg The message of the popup.
      * @return Returns a notfication pane that should popup.
      */
-    public final Notifications formNotificationPane(final String notificationMsg) {
+    public void formNotificationPane(final String notificationMsg) {
 
-        return Notifications.create()
+        Notifications.create()
                 .darkStyle()
                 .text(notificationMsg)
-                .hideAfter(Duration.seconds(1.5)); // sets node to display
+                .hideAfter(Duration.seconds(1.5))
+                .show(); // sets node to display
     }
 }
