@@ -1,5 +1,6 @@
 package utility;
 
+import java.util.List;
 
 /**
  * Class for User.
@@ -22,6 +23,10 @@ public class User {
      * Date of birth of the user.
      */
     private String dateOfBirth;
+    /**
+     * Friend list of the user.
+     */
+    private List<String> friends;
 
     /**
      * Default constructor of the User class.
@@ -36,6 +41,8 @@ public class User {
         this.gender = sex;
         this.totalScore = userTotalScore;
         this.dateOfBirth = birthDate;
+
+        //TODO implement friends querry;
     }
 
 
@@ -101,6 +108,22 @@ public class User {
      */
     public void setDateOfBirth(final String birthDate) {
         this.dateOfBirth = birthDate;
+    }
+
+    /**
+     * returns list of friends.
+     * @return list of friends: String.
+     */
+    public List<String> getFriends() {
+        return this.friends;
+    }
+
+    /**
+     * Adds a username to the list.
+     * @param friendUsername username of the friend to add.
+     */
+    public void addFriend(String friendUsername) {
+        this.friends.add(friendUsername);
     }
 
     /**
