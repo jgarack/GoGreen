@@ -44,6 +44,8 @@ public final class LoginHandler {
      */
     public LoginHandler(final String host) {
         domain = host;
+        alert = new AlertBuilder();
+        httpHandler = new HttpRequestHandler(domain);
     }
 
     /**
@@ -66,13 +68,13 @@ public final class LoginHandler {
                 alert.formNotificationPane("Logged in successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
+                alert.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                ALERT_BUILDER.displayException(e);
+                alert.displayException(e);
                 return false;
             } catch (IOException e) {
-                ALERT_BUILDER.displayException(e);
+                alert.displayException(e);
                 return false;
             }
         } else {
@@ -92,11 +94,11 @@ public final class LoginHandler {
     public boolean emptyFields(final String userFieldEntry,
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
-            ALERT_BUILDER.formEntryWarning("Username",
+            alert.formEntryWarning("Username",
                     "You need to fill in your username");
             return false;
         } else if (passFieldEntry.isEmpty()) {
-            ALERT_BUILDER.formEntryWarning("Password",
+            alert.formEntryWarning("Password",
                     "You need to fill in your password");
             return false;
         }
