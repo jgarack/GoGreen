@@ -2,7 +2,7 @@ package gui;
 
 import animatefx.animation.ZoomIn;
 import animatefx.animation.JackInTheBox;
-import features.VegetarianMeal;
+import features.Feature;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -123,10 +123,99 @@ public class MainController {
         loadScene("about");
     }
 
+    /**
+     * Loads home screen.
+     * @param event The event that is fired when the button is clicked.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    @FXML
+    protected void loadReviewScene(final ActionEvent event) throws IOException {
+        loadScene("review");
+    }
+    /**
+     * Used to decrease the amount of vegetarian meals filled in the text field.
+     * @param event The fired event when the decrease button is pressed.
+     */
+    @FXML
+    protected void decreaseVegetarianMeals(final ActionEvent event) {
+            if (tryParseInt(vegMeals.getText())) {
+
+                Feature meal = new Feature(vegMeals.getText());
+                System.out.println(meal.toString());
+
+                this.vegetarianMeals -= meal.calculatePoints(1);
+
+                vegMealsEaten.setText("CO2/kg Extra Emissions:"
+                        + this.vegetarianMeals);
+            } else {
+                generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+            }
+    }
 
 
 
+            Feature meal = new Feature(vegMeals.getText());
+            System.out.println(meal.toString());
 
+            this.vegetarianMeals += meal.calculatePoints(1);
+
+            vegMealsEaten.setText("CO2/kg saved:"
+                    + this.vegetarianMeals);
+
+        } else {
+            generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+        }
+    }
+
+    /**
+     * Used to decrease the amount of times a bicycle
+     * that has been used filled in the text field.
+     * @param event The fired event when the decrease button is pressed.
+     */
+    @FXML
+    protected void decreaseBicycleUsage(final ActionEvent event) {
+        if (tryParseInt(bicycleUsage.getText())) {
+            Feature bike = new Feature(bicycleUsage.getText());
+            System.out.println(bike.toString());
+            this.bicycleUsed -= bike.calculatePoints(2);
+            bicycleUsedLabel.setText("I have used a bicycle today:"
+                    + this.bicycleUsed);
+        } else {
+            generateAlert(YOU_NEED_TO_FILL_A_NUMBER);
+        }
+    }
+    /**
+     * Used to increase the amount of times a bicycle
+     * that has been used filled in the text field.
+     * @param event The fired event when the increase button is pressed.
+     */
+    @FXML
+    protected void increaseBicycleUsage(final ActionEvent event) {
+        if (tryParseInt(bicycleUsage.getText())) {
+            Feature bike = new Feature(bicycleUsage.getText());
+            System.out.println(bike.toString());
+            this.bicycleUsed += bike.calculatePoints(2);
+            bicycleUsedLabel.setText("I have used a bicycle today:"
+                    + this.bicycleUsed);
+        } else {
+            generateAlert("Wrong format!");
+        }
+    }
+
+    /**
+     * Tries to parse integer.
+     *
+     * @param value String that is to be parsed.
+     * @return true iff the value provided is actual representation of integer.
+     */
+    private boolean tryParseInt(final String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
     /**
      * Loads a scene based on the given string.

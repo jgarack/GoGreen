@@ -17,7 +17,7 @@
 //class VegetarianMealTest {
 //
 //    int value = 1000;
-//    VegetarianMeal veg = new VegetarianMeal("1000");
+//    Feature veg = new Feature("1000");
 ////    String js = new String({"compliance":[],"decisions":{"carbon":{"description"
 ////    :"1588.9 kg","object":{"value":1588.8815000000002,"units":"kilograms"});
 //    @BeforeEach
@@ -49,7 +49,7 @@
 //    @Test
 //    void jsonConTest() {
 //        try {
-//            assertEquals("1588.9 kg", VegetarianMeal.jsonCon(js));
+//            assertEquals("1588.9 kg", Feature.jsonCon(js));
 //        }catch(Exception e){
 //            fail();
 //        }
