@@ -1,14 +1,13 @@
 package gui;
 
+import animatefx.animation.Pulse;
 import features.Feature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.stage.Screen;
 import utility.MainHandler;
 
 /**
@@ -74,7 +73,7 @@ public class HomeController {
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder alert = new AlertBuilder();
+    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
     /**
      * Bound to the list of goGreen features.
      */
@@ -88,13 +87,6 @@ public class HomeController {
     @FXML
     public void initialize() {
         progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
-
-        featuresList.setPrefSize(bounds.getHeight() - THREE_HUNDRED, bounds.getWidth() - THREE_HUNDRED);
-
-
-
     }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
@@ -107,7 +99,9 @@ public class HomeController {
             vegMealsEaten.setText("Vegetarian meals eaten:"
                     + this.vegetarianMeals);
         } else {
-            alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(vegMealsEaten.getText(),
+                    YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
 
@@ -128,8 +122,12 @@ public class HomeController {
             vegMealsEaten.setText("Points earned:"
                     + this.vegetarianMeals);
 
+            new Pulse(this.vegMealsEaten).play();
+
         } else {
-            alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(vegMealsEaten.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
 
@@ -143,10 +141,13 @@ public class HomeController {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
 
             this.bicycleUsed -= Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
+            bicycleUsedLabel
+                    .setText("Times you have used bicycle instead of a car:"
                     + this.bicycleUsed);
         } else {
-            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(bicycleUsedLabel.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
     /**
@@ -158,10 +159,15 @@ public class HomeController {
     protected void increaseBicycleUsage(final ActionEvent event) {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
+            bicycleUsedLabel
+                    .setText("Times you have used bicycle instead of a car:"
                     + this.bicycleUsed);
+
+            new Pulse(this.bicycleUsedLabel).play();
         } else {
-            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(bicycleUsedLabel.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER).show();
         }
     }
 

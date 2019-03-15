@@ -1,7 +1,6 @@
 package utility;
 
 import exceptions.ServerStatusException;
-import javafx.scene.control.Alert;
 import gui.AlertBuilder;
 
 import javax.xml.bind.DatatypeConverter;
@@ -15,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
  * @see gui.LoginController
  * @author awjvanvugt
  */
-public class LoginHandler {
+public final class LoginHandler {
     /**
      * The domain on which the server is running.
      * {@value}
@@ -36,9 +35,12 @@ public class LoginHandler {
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder alert = new AlertBuilder();
+    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
 
-
+    /**
+     * Checkstyle made me do it.
+     */
+    private LoginHandler() { }
 
 
 
@@ -59,16 +61,18 @@ public class LoginHandler {
                         md5.digest(pass.getBytes())).toUpperCase();
                 BufferedReader httpBody = HTTP_HANDLER.reqPost("/login",
                         new AccountMessage(username, md5Pass));
-                alert.formNotificationPane("Logged in successfully!").show();
+                ALERT_BUILDER
+                        .formNotification("Logged in successfully!")
+                        .show();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                alert.encryptionExceptionHandler(md5Error);
+                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                alert.displayException(e);
+                ALERT_BUILDER.displayException(e);
                 return false;
             } catch (IOException e) {
-                alert.displayException(e);
+                ALERT_BUILDER.displayException(e);
                 return false;
             }
         } else {
@@ -88,11 +92,11 @@ public class LoginHandler {
     public static boolean emptyFields(final String userFieldEntry,
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
-            alert.formEntryWarning("Username",
+            ALERT_BUILDER.formEntryWarning("Username",
                     "You need to fill in your username");
             return false;
         } else if (passFieldEntry.isEmpty()) {
-            alert.formEntryWarning("Password",
+            ALERT_BUILDER.formEntryWarning("Password",
                     "You need to fill in your password");
             return false;
         }

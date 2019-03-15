@@ -63,6 +63,19 @@
     -fx-padding: 0 1 0 1;
     -fx-background-color: transparent;
 }
+#featuresList{
+    -fx-background-color: transparent;
+}
 
+.list-cell{
+    -fx-background-color: transparent;
+}
+.label{
+    -fx-font-weight: bold;
+    -fx-font-size: 30;
+    -fx-text-alignment: right;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box, rgb(41, 41, 41) , 0 , 0 , 0 , 1);
+}
 
 

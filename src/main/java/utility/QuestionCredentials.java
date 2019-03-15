@@ -1,5 +1,8 @@
 package utility;
 
+/**
+ * Credentials for the secret question.
+ */
 public class QuestionCredentials {
 
     /**
@@ -14,12 +17,13 @@ public class QuestionCredentials {
 
     /**
      * Constructor.
-     * @param question set by user.
-     * @param answer set by user.
+     * @param secretQuestion set by user.
+     * @param secretAnswer set by user.
      */
-    public QuestionCredentials(String question, String answer) {
-        this.question = question;
-        this.answer = answer;
+    public QuestionCredentials(final String secretQuestion,
+                               final String secretAnswer) {
+        this.question = secretQuestion;
+        this.answer = secretAnswer;
     }
 
     /**
