@@ -72,7 +72,7 @@ public class AlertBuilder {
                 .darkStyle()
                 .text(notificationMsg)
                 .hideAfter(Duration
-                        .seconds(durationNotification));
+                        .seconds(durationNotification))
                 .show(); // sets node to display
     }
 }

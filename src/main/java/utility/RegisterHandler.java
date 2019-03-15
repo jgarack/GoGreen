@@ -54,7 +54,7 @@ public class RegisterHandler {
                         md5.digest(pass.getBytes())).toUpperCase();
                 HTTP_HANDLER.reqPost("/register",
                         new AccountMessage(username, md5Pass));
-                alert.formNotificationPane("You have registered successfully!");
+                ALERT_BUILDER.formNotificationPane("You have registered successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
                 ALERT_BUILDER.encryptionExceptionHandler(md5Error);

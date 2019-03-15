@@ -36,8 +36,6 @@ public final class LoginHandler {
      */
     public AlertBuilder alert;
 
-    public AccountMessage account;
-
     /**
      * Default constructor.
      * @param host
@@ -64,7 +62,7 @@ public final class LoginHandler {
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes()));
                 httpHandler.reqPost("/login",
-                        (account = new AccountMessage(username, md5Pass)));
+                        new AccountMessage(username, md5Pass));
                 alert.formNotificationPane("Logged in successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {

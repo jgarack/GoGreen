@@ -47,7 +47,7 @@ public class LoginHandlerTest {
     public void loginFailure() throws Exception{
         try {
             when(testObject.httpHandler.reqPost("/login",
-                    (testObject.account = new AccountMessage(USER, PASS_TOMD5)))).thenThrow(
+                    new AccountMessage(USER, PASS_TOMD5))).thenThrow(
                             new ServerStatusException(401));
         } catch(Exception e) {
             //Never occurs
@@ -55,9 +55,8 @@ public class LoginHandlerTest {
         /*assertThrows(ServerStatusException.class, () -> testObject.httpHandler.reqPost("/login",
                 new AccountMessage(USER, PASS_TOMD5)));*/
         boolean result = testObject.loginSubmit(USER, PASS);
-        verify(testObject.httpHandler).reqPost("/login", testObject.account);
-        assertTrue(testObject.account.equals(new AccountMessage(USER, PASS_TOMD5)));
-        assertThrows(ServerStatusException.class, () -> testObject.httpHandler.reqPost("/login", testObject.account));
+        verify(testObject.httpHandler).reqPost("/login", new AccountMessage(USER, PASS_TOMD5));
+        assertThrows(ServerStatusException.class, () -> testObject.httpHandler.reqPost("/login", new AccountMessage(USER, PASS_TOMD5)));
         assertFalse(result);
     }
     @Test
