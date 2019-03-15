@@ -11,7 +11,10 @@
     -fx-max-width: 100%;
     -fx-max-height: 20%;
 }
-#home,#howToPlay,#aboutUs,#submitReview{
+#navBar{
+    -fx-background-color:  	#4B0082;
+}
+#home,#howToPlay,#aboutUs,#personalInfo{
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
@@ -23,19 +26,8 @@
     -fx-background-color: #78c292;
 }
 
-#aboutUs:hover {
-    -fx-background-color: #78c292;
-}
 
-#howToPlay:hover {
-    -fx-background-color: #78c292;
-}
-
-#home:hover {
-    -fx-background-color: #78c292;
-}
-
-#submitReview:hover {
+#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover {
     -fx-background-color: #78c292;
 }
 

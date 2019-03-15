@@ -123,6 +123,11 @@ public class MainController {
         loadScene("about");
     }
 
+    @FXML
+    protected void loadPersonalInfoScene() throws IOException {
+        loadScene("personalInfo");
+    }
+
 
 
 
