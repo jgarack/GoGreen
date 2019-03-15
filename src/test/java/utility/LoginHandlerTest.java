@@ -12,8 +12,10 @@ import gui.AlertBuilder;
 
 import java.io.BufferedReader;
 import java.rmi.ServerException;
+import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 
@@ -21,7 +23,6 @@ public class LoginHandlerTest {
     private static final String NULL = "";
     private static final String USER = "user";
     private static final String PASS = "pass";
-    private static final String ADDITION = "123";
     private static final String PASS_TOMD5 = "1A1DC91C907325C69271DDF0C944BC72";
     private static final String DOMAIN = "http://localhost:8080";
 
@@ -63,5 +64,12 @@ public class LoginHandlerTest {
     public void loginSucceed() {
         assertTrue(testObject.loginSubmit(USER, PASS),
                 "Valid login credentials were rejected.");
+    }
+    @Test
+    public void simulateEncError() throws Exception {
+        given(testObject.httpHandler.reqPost("/login",
+                new AccountMessage(USER, PASS_TOMD5))).willAnswer(
+                invocation -> { throw new NoSuchAlgorithmException(); });
+        assertFalse(testObject.loginSubmit(USER, PASS));
     }
 }

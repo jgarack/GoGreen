@@ -46,13 +46,15 @@ RegisterController {
     @FXML
     private PasswordField confirmPass;
 
+    private static final String DOMAIN = "http://localhost:8080";
+
     /**
      * Handles registration attempt based on the input.
      * @param event The event fired when the button is clicked.
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
-        if (RegisterHandler.registerSubmit(username.getText().trim(),
+        if (new RegisterHandler(DOMAIN).registerSubmit(username.getText().trim(),
                 pass.getText().trim(), confirmPass.getText().trim())) {
                 redirectToView(event);
         }

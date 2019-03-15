@@ -68,10 +68,7 @@ public final class LoginHandler {
             } catch (NoSuchAlgorithmException md5Error) {
                 alert.encryptionExceptionHandler(md5Error);
                 return false;
-            } catch (ServerStatusException e) {
-                alert.displayException(e);
-                return false;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 alert.displayException(e);
                 return false;
             }
@@ -89,7 +86,7 @@ public final class LoginHandler {
      * @return true iff the input is in the correct format.
      */
 
-    public boolean emptyFields(final String userFieldEntry,
+    private boolean emptyFields(final String userFieldEntry,
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
             alert.formEntryWarning("Username",

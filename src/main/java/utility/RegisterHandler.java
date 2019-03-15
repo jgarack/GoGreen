@@ -17,9 +17,8 @@ public class RegisterHandler {
     private RegisterHandler() { }
     /**
      * The domain on which the server is running.
-     * {@value}
      */
-    private static final String DOMAIN = "http://localhost:8080";
+    private String domain;
     /**
      * The folder that contains the log files for this class.
      * {@value}
@@ -29,12 +28,21 @@ public class RegisterHandler {
     /**
      * The HttpRequestHandler used for this class.
      */
-    private static final HttpRequestHandler HTTP_HANDLER =
-            new HttpRequestHandler(DOMAIN);
+    public HttpRequestHandler httpHandler;
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
+    public AlertBuilder alert;
+
+    /**
+     * Constructor.
+     * @param host the domain to operate on
+     */
+    public RegisterHandler(String host) {
+        domain = host;
+        alert = new AlertBuilder();
+        httpHandler = new HttpRequestHandler(domain);
+    }
 
     /**
      * Sends a registration request to the server with the input username and
@@ -44,26 +52,23 @@ public class RegisterHandler {
      * @param confirmPass The password to be confirmed.
      * @return true iff registered
      */
-    public static boolean registerSubmit(final String username,
+    public boolean registerSubmit(final String username,
                                          final String pass,
                                          final String confirmPass) {
         if (checkForm(username, pass, confirmPass)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
-                        md5.digest(pass.getBytes())).toUpperCase();
-                HTTP_HANDLER.reqPost("/register",
+                        md5.digest(pass.getBytes()));
+                httpHandler.reqPost("/register",
                         new AccountMessage(username, md5Pass));
-                ALERT_BUILDER.formNotificationPane("You have registered successfully!");
+                alert.formNotificationPane("You have registered successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
+                alert.encryptionExceptionHandler(md5Error);
                 return false;
-            } catch (ServerStatusException e) {
-                ALERT_BUILDER.displayException(e);
-                return false;
-            } catch (IOException e) {
-                ALERT_BUILDER.displayException(e);
+            } catch (Exception e) {
+                alert.displayException(e);
                 return false;
             }
         } else {
@@ -79,20 +84,27 @@ public class RegisterHandler {
      *                              input for the confirmed password.
      * @return true iff the input is in the correct format.
      */
-    private static boolean checkForm(final String userFieldEntry,
+    private boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
                                      final String confirmPassFieldEntry) {
-        if (new LoginHandler(null).emptyFields(userFieldEntry, passFieldEntry)) {
-            if (confirmPassFieldEntry.equals(passFieldEntry)) {
-                return true;
-            } else {
-                AlertBuilder alertBuilder = new AlertBuilder();
-                alertBuilder
-                        .formEntryWarning("Password/Confirm Password",
-                                "Passwords do not match!")
-                        .showAndWait();
-            }
+        final String empty = "field was empty";
+        if(userFieldEntry.isEmpty()) {
+            alert.formEntryWarning("username", empty);
+            return false;
         }
-        return false;
+        if(passFieldEntry.isEmpty()) {
+            alert.formEntryWarning("password", empty);
+            return false;
+        }
+        if(confirmPassFieldEntry.isEmpty()) {
+            alert.formEntryWarning("confirm password", empty);
+            return false;
+        }
+        if(!(passFieldEntry.equals(confirmPassFieldEntry))) {
+            alert.formEntryWarning("password fields",
+                    "passwords don't match");
+            return false;
+        }
+        return true;
     }
 }
