@@ -1,5 +1,7 @@
 package utility;
 
+import sun.rmi.runtime.Log;
+
 public class LoginCredentials {
 
     /**
@@ -37,4 +39,32 @@ public class LoginCredentials {
     public String getPassword() {
         return password;
     }
+
+    /**
+     * sets username.
+     * @param username to be set.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * sets password.
+     * @param password to be set.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean equals(Object Obj){
+        if(this == Obj) {return true;}
+
+        if(Obj instanceof LoginCredentials){
+            LoginCredentials that = (LoginCredentials) Obj;
+
+            return that.getPassword().equals(this.getPassword()) && that.getUsername().equals(this.getUsername());
+        }
+        return false;
+    }
+
 }

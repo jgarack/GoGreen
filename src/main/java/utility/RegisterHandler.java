@@ -53,7 +53,7 @@ public class RegisterHandler {
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
                 HTTP_HANDLER.reqPost("/register",
-                        new AccountMessage(username, md5Pass));
+                        new LoginCredentials(username, md5Pass));
                 Notifications notifications = alert.formNotificationPane("You have registered successfully!");
                 notifications.showInformation();
                 return true;

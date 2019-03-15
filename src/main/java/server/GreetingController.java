@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 //native imports
 import exceptions.DataConflictException;
-import utility.Authenticator;
-import utility.AccountMessage;
-import utility.HttpRequestHandler;
-import utility.Activity;
+import utility.*;
 
 /**
  * Class that maps route requests made to the server.
@@ -42,12 +39,10 @@ public class GreetingController {
      */
     private static final String BP_KEY =
             "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
-
     /**
-     * Authenticator Object that can be used to authenticate a user.
-     * State of the Authenticator can not be preserved yet.
+     * db connections/ disconnection/ authentication.
      */
-    private static final Authenticator AUTHENTICATOR = new Authenticator();
+    private static final DbAdaptor db = new DbAdaptor();
     /**
      * HttpRequestHandler object that can be used for contacting the api.
      */
@@ -74,14 +69,18 @@ public class GreetingController {
      */
     @PostMapping("/login")
     public ResponseEntity loginResponse(
-            @RequestBody final AccountMessage account) {
-        if (AUTHENTICATOR.authenticate(account)) {
+            @RequestBody final LoginCredentials account) {
+        db.connect();
+        if (db.comparecredentials(account)) {
+            db.disconnect();
             return new ResponseEntity("Hello " + account.getUsername()
                     + " Authenticated!", HttpStatus.OK);
         } else {
+            db.disconnect();
             return new ResponseEntity("Unknown user-password combination.",
                     HttpStatus.UNAUTHORIZED);
         }
+
     }
 
     /**
@@ -96,18 +95,17 @@ public class GreetingController {
      */
     @PostMapping("/register")
     public ResponseEntity registerResponse(
-        @RequestBody final AccountMessage account) {
-        try {
-            if (AUTHENTICATOR.registerNewUser(account)) {
+        @RequestBody final LoginCredentials account) {
+            db.connect();
+            if (db.addNewUser(account)) {
+                db.disconnect();
                 return new ResponseEntity("Registration successful. "
                         + "You can now log in", HttpStatus.OK);
             }
+            db.disconnect();
             return new ResponseEntity("Your account could not be created",
                     HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (DataConflictException taken) {
-            return new ResponseEntity("Chosen username is already taken.",
-                    HttpStatus.CONFLICT);
-        }
+
     }
 
     /**

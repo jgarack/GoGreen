@@ -58,7 +58,7 @@ public class LoginHandler {
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes())).toUpperCase();
                 BufferedReader httpBody = HTTP_HANDLER.reqPost("/login",
-                        new AccountMessage(username, md5Pass));
+                        new LoginCredentials(username, md5Pass));
                 alert.formNotificationPane("Logged in successfully!").show();
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {

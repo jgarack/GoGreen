@@ -207,6 +207,64 @@ public class DbAdaptor {
         }
     }
 
+    public boolean comparecredentials(LoginCredentials LC){
+
+
+        try {
+
+
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT username, password FROM credentials WHERE username = ?");
+
+
+            st.setString(1, LC.getUsername());
+            rs = st.executeQuery();
+
+            LoginCredentials tempLC = new LoginCredentials( null, null);
+
+
+           while(rs.next()) {
+
+               tempLC.setUsername(rs.getString(one));
+               tempLC.setPassword(rs.getString(two));
+           }
+
+            if(LC.equals(tempLC)){
+                return true;
+            }
+
+            return false;
+
+
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+        return false;
+    }
+
+    public boolean addNewUser(LoginCredentials LC){
+
+        try {
+            PreparedStatement st = conn
+                    .prepareStatement("INSERT INTO "
+                            + "credentials(username, password,"
+                            + " question, answer) VALUES (?,?,?,?)");
+            st.setString(one, LC.getUsername());
+            st.setString(two, LC.getPassword());
+            st.setString(three, null);
+            st.setString(four, null);
+            st.executeUpdate();
+            st.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
     /**
      * Gets user from the DB.
      * @param userName username upon which a user is searched.
@@ -229,7 +287,6 @@ public class DbAdaptor {
             tempUser.setTotalScore(rs.getInt(three));
             tempUser.setDateOfBirth(rs.getString(four));
 
-            System.out.println(tempUser.toString());
 
             return tempUser;
 
