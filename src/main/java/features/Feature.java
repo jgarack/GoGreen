@@ -7,13 +7,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
 import utility.Activity;
 import utility.HttpRequestHandler;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 
-/**Performs a http post request to server to
+/**
+ * Performs a http post request to server to
  * calculate points for vegetarian meal.
  */
-public class VegetarianMeal {
+public class Feature {
     /**
      * Server Domain.
      */
@@ -24,10 +26,11 @@ public class VegetarianMeal {
     private int value;
 
     /**
-     * Constructor for VegetarianMeal.
+     * Constructor for Feature.
+     *
      * @param userValue Text field value
      */
-    public VegetarianMeal(final String userValue) {
+    public Feature(final String userValue) {
         this.value =
                 Integer.parseInt(userValue.trim());
     }
@@ -35,6 +38,7 @@ public class VegetarianMeal {
 
     /**
      * Getter for value.
+     *
      * @return raw value
      */
     public int getValue() {
@@ -43,31 +47,46 @@ public class VegetarianMeal {
 
     /**
      * Setter for value.
+     *
      * @param raw value without calculation
      */
-    public void setValue(final int  raw) {
+    public void setValue(final int raw) {
         this.value = raw;
     }
 
 
-    /** Handles request for Vegetarian meal points from server.
-     *@return returns points
-     *@author ohussein
+    /**
+     * Handles request for Vegetarian meal points from server.
+     * Feature 1 VeggieMeal
+     * Feature 2 BikeRide
+     * @return returns points
+     * @author ohussein
      */
-    public int calculatePoints() {
+    public int calculatePoints(final int choice) {
 
 //        checkForm();
         try {
-            BufferedReader httpBody = new HttpRequestHandler(domain).reqPost(
-                    "/points", new Activity(1, this.getValue()));
+            BufferedReader httpBody;
+            if(choice ==2){
+                httpBody = new HttpRequestHandler(
+                    domain).reqPost(
+                    "/points", new Activity(choice, this.getValue()
+                            *60));
+            } else {
+                httpBody = new HttpRequestHandler(
+                        domain).reqPost(
+                        "/points", new Activity(choice, this.getValue()));
+            }
             Alert displayResponse = new Alert(Alert.AlertType.CONFIRMATION);
-            displayResponse.setTitle("Good Job!");
-            displayResponse.setContentText("Go Green!");
+            displayResponse.setTitle("Save The Earth!");
+            displayResponse.setContentText("Go Greener!");
             displayResponse.showAndWait();
-            String con = new HttpRequestHandler(domain).resLog(httpBody, null);
+            String con = new HttpRequestHandler(domain).resLog(
+                    httpBody, null);
             System.out.println(con);
             return jsonCon(con);
-            } catch (Exception e) {
+
+        } catch (Exception e) {
 
             exceptionHandler(e);
 
@@ -78,23 +97,28 @@ public class VegetarianMeal {
 
     /**
      * Helper method that parses con to a desired integer.
+     *
      * @param con The given String
      * @return An integer that is derived from the string.
      * @throws IOException Throws an exception if the Mapping is not succesful.
      */
- public int jsonCon(final String con) throws IOException {
+    public int jsonCon(final String con) throws IOException {
 
-     ObjectMapper mapper = new ObjectMapper();
-     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-     JsonNode em = mapper.readValue(con, JsonNode.class);
-     int ret = (int) Math.ceil(Double.parseDouble(em.get("decisions").
-             get("carbon").
-             get("description").textValue().
-             replace("kg", "").trim()));
-     return ret;
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(
+                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        JsonNode em = mapper.readValue(con, JsonNode.class);
+        int ret = (int) Math.ceil(Double.parseDouble(em.get("decisions").
+                get("carbon").
+                get("description").textValue().
+                replace("kg", "").trim()));
+        return ret;
     }
-    /**Helper method that handles exceptions.
-     *@param e exception that was thrown
+
+    /**
+     * Helper method that handles exceptions.
+     *
+     * @param e exception that was thrown
      */
     protected void exceptionHandler(final Exception e) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
@@ -105,12 +129,13 @@ public class VegetarianMeal {
     }
 
     /**
-     *Converts object to a String representation.
+     * Converts object to a String representation.
+     *
      * @return String representation of object
      */
     @Override
     public String toString() {
-        return "VegetarianMeal{"
+        return "Feature{"
                 + "value=" + value
                 + '}';
     }

@@ -2,7 +2,7 @@ package gui;
 
 import animatefx.animation.ZoomIn;
 import animatefx.animation.JackInTheBox;
-import features.VegetarianMeal;
+import features.Feature;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
@@ -123,14 +123,11 @@ public class MainController {
         loadScene("about");
     }
 
+
     @FXML
     protected void loadPersonalInfoScene() throws IOException {
         loadScene("personalInfo");
     }
-
-
-
-
 
 
     /**

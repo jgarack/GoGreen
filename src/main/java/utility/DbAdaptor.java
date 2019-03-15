@@ -211,9 +211,9 @@ public class DbAdaptor {
      * Gets user from the DB.
      * @param userName username upon which a user is searched.
      */
-    public List getUser(final String userName) {
+    public User getUser(final String userName) {
         try {
-            List userList = new ArrayList<User>();
+
 
             PreparedStatement st = conn.prepareStatement(
                     "SELECT * FROM users WHERE username = ?");
@@ -221,19 +221,17 @@ public class DbAdaptor {
             st.setString(1, userName);
             rs = st.executeQuery();
 
-            DateFormat inputDateFormat = new SimpleDateFormat("dd-mm-yyyy");
-            while (rs.next()) {
-                User tempUser = new User( null,
+            User tempUser = new User( null,
                         null, 0, null);
-                tempUser.setUsername(rs.getString(one));
-                tempUser.setGender(rs.getString(two));
-                tempUser.setTotalScore(rs.getInt(three));
-                tempUser.setDateOfBirth(rs.getString(four));
 
-                userList.add(tempUser);
-                System.out.println(tempUser.toString());
-            }
-            return userList;
+            tempUser.setUsername(rs.getString(one));
+            tempUser.setGender(rs.getString(two));
+            tempUser.setTotalScore(rs.getInt(three));
+            tempUser.setDateOfBirth(rs.getString(four));
+
+            System.out.println(tempUser.toString());
+
+            return tempUser;
 
         } catch (SQLException e) {
             e.printStackTrace();

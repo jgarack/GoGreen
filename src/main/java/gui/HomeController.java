@@ -1,6 +1,6 @@
 package gui;
 
-import features.VegetarianMeal;
+import features.Feature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
@@ -120,10 +120,10 @@ public class HomeController {
         if (MainHandler.tryParseInt(vegMeals.getText())) {
 
 
-            VegetarianMeal meal = new VegetarianMeal(vegMeals.getText());
+            Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals += meal.calculatePoints();
+            this.vegetarianMeals += meal.calculatePoints(2);
 
             vegMealsEaten.setText("Points earned:"
                     + this.vegetarianMeals);
