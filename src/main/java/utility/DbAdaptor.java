@@ -180,22 +180,18 @@ public class DbAdaptor {
 
     /**
      * Adds activity to a user.
-     * @param playerId the user to which activity is added.
-     * @param activityId the activity to be added.
-     * @param dateOfActivity date of the activity.
-     * @param score score of the activity.
+     * @param activity object that holds all needed fields for activity relation.
      */
-    public void addActivity(final int playerId, final int activityId,
-                            final String dateOfActivity, final int score) {
+    public void addActivity(final ActivityDb activity) {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
-                            + "Activities(pleye_id, activity_id,"
+                            + "Activities(pleyer_id, activity_id,"
                             + " date_of_activity, score) VALUES (?,?,?,?)");
-            st.setInt(one, playerId);
-            st.setInt(two, activityId);
-            st.setString(three, dateOfActivity);
-            st.setInt(four, score);
+            st.setString(one, activity.getUsernameAct().getUsername());
+            st.setInt(two, activity.getActivityId());
+            st.setDate(three, activity.getDateOfActivity());
+            st.setInt(four, activity.getScore());
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
