@@ -1,17 +1,11 @@
 package utility;
 
 import exceptions.ServerStatusException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import gui.AlertBuilder;
 
-import java.io.BufferedReader;
-import java.rmi.ServerException;
 import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +25,7 @@ public class LoginHandlerTest {
     @BeforeEach
     public void initMocks() {
         testObject.httpHandler = Mockito.mock(HttpRequestHandler.class);
-        testObject.ALERT_BUILDER = Mockito.mock(AlertBuilder.class);
+        testObject.alertBuilder = Mockito.mock(AlertBuilder.class);
     }
 
     @Test

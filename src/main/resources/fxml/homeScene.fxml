@@ -13,9 +13,9 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="gui.HomeController"
           fx:id="featuresList">
-        <HBox alignment="CENTER">
-            <ProgressBar fx:id="progressBarGreen" prefWidth="1400" prefHeight="50" progress="0.0"/>
-        </HBox>
+        <!--<HBox alignment="CENTER">-->
+            <!--<ProgressBar fx:id="progressBarGreen" prefWidth="1400" prefHeight="50" progress="0.0"/>-->
+        <!--</HBox>-->
         <HBox alignment="CENTER">
             <Label fx:id="vegMealsEaten" alignment="CENTER" HBox.hgrow="ALWAYS">
                 Vegetarian Meals eaten:

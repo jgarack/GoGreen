@@ -74,8 +74,6 @@ public class Feature {
      * @author ohussein
      */
     public int calculatePoints(final int choice) {
-
-//        checkForm();
         try {
             BufferedReader httpBody;
             if (choice == 2) {

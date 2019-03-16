@@ -96,7 +96,7 @@ public class HomeController {
      */
     @FXML
     public void initialize() {
-        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
+        //progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
     }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
@@ -116,12 +116,12 @@ public class HomeController {
             } else {
                 ALERT_BUILDER
                         .formEntryWarning(vegMealsEaten.getText(),
-                                "This value cannot be negative.").show();
+                                "This value cannot be negative.");
             }
         } else {
             ALERT_BUILDER
                     .formEntryWarning(vegMealsEaten.getText(),
-                    YOU_NEED_TO_FILL_A_NUMBER).show();
+                    YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 
@@ -152,7 +152,7 @@ public class HomeController {
         } else {
             ALERT_BUILDER
                     .formEntryWarning(vegMealsEaten.getText(),
-                            YOU_NEED_TO_FILL_A_NUMBER).show();
+                            YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 
@@ -177,12 +177,12 @@ public class HomeController {
             } else {
                 ALERT_BUILDER
                         .formEntryWarning(bicycleUsedLabel.getText(),
-                                "This value cannot be negative.").show();
+                                "This value cannot be negative.");
             }
         } else {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
-                            YOU_NEED_TO_FILL_A_NUMBER).show();
+                            YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
     /**
@@ -207,7 +207,7 @@ public class HomeController {
         } else {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
-                            YOU_NEED_TO_FILL_A_NUMBER).show();
+                            YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 

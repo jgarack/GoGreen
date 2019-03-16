@@ -42,6 +42,7 @@ public class User {
         this.totalScore = userTotalScore;
         this.dateOfBirth = birthDate;
 
+
         //TODO implement friends querry;
     }
 

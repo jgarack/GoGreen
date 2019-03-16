@@ -10,10 +10,6 @@ import java.security.NoSuchAlgorithmException;
  */
 public class RegisterHandler {
     /**
-     * Private constructor just because.
-     */
-    private RegisterHandler() { }
-    /**
      * The domain on which the server is running.
      */
     private String domain;
@@ -30,7 +26,7 @@ public class RegisterHandler {
     /**
      * The builder used to build alerts for this handler.
      */
-    public AlertBuilder ALERT_BUILDER;
+    public AlertBuilder alertBuilder;
 
     /**
      * Constructor.
@@ -38,7 +34,7 @@ public class RegisterHandler {
      */
     public RegisterHandler(final String host) {
         domain = host;
-        ALERT_BUILDER = new AlertBuilder();
+        alertBuilder = new AlertBuilder();
         httpHandler = new HttpRequestHandler(domain);
     }
 
@@ -65,15 +61,15 @@ public class RegisterHandler {
                         md5.digest(pass.getBytes()));
                 httpHandler.reqPost("/register",
                         new AccountMessage(username, md5Pass));
-                ALERT_BUILDER
-                        .formNotification("You have registered successfully!")
-                        .showInformation();
+                alertBuilder
+                        .showInformationNotification(
+                                "You have registered successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
+                alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (Exception e) {
-                ALERT_BUILDER.displayException(e);
+                alertBuilder.displayException(e);
                 return false;
             }
         } else {
@@ -101,11 +97,10 @@ public class RegisterHandler {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
             } else {
-                AlertBuilder alertBuilder = new AlertBuilder();
+
                 alertBuilder
                         .formEntryWarning("Password/Confirm Password",
-                                "Passwords do not match!")
-                        .showAndWait();
+                                "Passwords do not match!");
                 return false;
             }
         }
@@ -126,21 +121,21 @@ public class RegisterHandler {
                                       final String secretAnswer) {
         if (userFieldEntry.isEmpty()) {
 
-            ALERT_BUILDER.formEntryWarning("Username",
-                    "You need to fill in your username").showAndWait();
+            alertBuilder.formEntryWarning("Username",
+                    "You need to fill in your username");
             return false;
         } else if (passFieldEntry.isEmpty()) {
-            ALERT_BUILDER.formEntryWarning("Password",
-                    "You need to fill in your password").show();
+            alertBuilder.formEntryWarning("Password",
+                    "You need to fill in your password");
 
             return false;
         } else if (secretQ.isEmpty()) {
-            ALERT_BUILDER.formEntryWarning("Secret Question Field",
-                        "You need to fill in your secret question").show();
+            alertBuilder.formEntryWarning("Secret Question Field",
+                        "You need to fill in your secret question");
                 return false;
         } else if (secretAnswer.isEmpty()) {
-                ALERT_BUILDER.formEntryWarning("Secret Answer Field",
-                        "You need to fill in your secret answer").show();
+                alertBuilder.formEntryWarning("Secret Answer Field",
+                        "You need to fill in your secret answer");
                 return false;
             }
 

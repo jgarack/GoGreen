@@ -41,8 +41,9 @@ public class AlertBuilder {
      */
     public void displayException(final Exception e) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
-        statusCodeError.setTitle(e.getMessage());
-        statusCodeError.setContentText("See terminal for stacktrace.");
+        statusCodeError.setTitle("Access denied!");
+        statusCodeError
+                .setContentText("Invalid username and password combination!");
         e.printStackTrace();
         statusCodeError.showAndWait();
     }
@@ -50,14 +51,13 @@ public class AlertBuilder {
      * Displays a warning message.
      * @param fieldName the field that was not filled in correctly.
      * @param description a description of what went wrong.
-     * @return returns an alert with the message.
      */
-    public Alert formEntryWarning(final String fieldName,
+    public void formEntryWarning(final String fieldName,
                                   final String description) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Illegal entry in field " + fieldName + ":");
         alert.setContentText(description);
-        return alert;
+        alert.showAndWait();
     }
 
     /**
@@ -72,5 +72,13 @@ public class AlertBuilder {
                 .text(notificationMsg)
                 .hideAfter(Duration
                         .seconds(durationNotification));
+    }
+
+    /**
+     * Shows an information notification.
+     * @param notificationMsg The message to be shown
+     */
+    public void showInformationNotification(final String notificationMsg) {
+        formNotification(notificationMsg).showInformation();
     }
 }

@@ -31,7 +31,7 @@ public final class LoginHandler {
     /**
      * The builder used to build alerts for this handler.
      */
-    public AlertBuilder ALERT_BUILDER;
+    public AlertBuilder alertBuilder;
 
     /**
      * Default constructor.
@@ -39,7 +39,7 @@ public final class LoginHandler {
      */
     public LoginHandler(final String host) {
         domain = host;
-        ALERT_BUILDER = new AlertBuilder();
+        alertBuilder = new AlertBuilder();
         httpHandler = new HttpRequestHandler(domain);
     }
 
@@ -60,13 +60,13 @@ public final class LoginHandler {
                         md5.digest(pass.getBytes()));
                 httpHandler.reqPost("/login",
                         new AccountMessage(username, md5Pass));
-                ALERT_BUILDER.formNotification("Logged in successfully!");
+                alertBuilder.formNotification("Logged in successfully!");
                 return true;
             } catch (NoSuchAlgorithmException md5Error) {
-                ALERT_BUILDER.encryptionExceptionHandler(md5Error);
+                alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (Exception e) {
-                ALERT_BUILDER.displayException(e);
+                alertBuilder.displayException(e);
                 return false;
             }
         } else {
@@ -87,12 +87,12 @@ public final class LoginHandler {
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
 
-            ALERT_BUILDER.formEntryWarning("Username",
-                    "You need to fill in your username").show();
+            alertBuilder.formEntryWarning("Username",
+                    "You need to fill in your username");
             return false;
         } else if (passFieldEntry.isEmpty()) {
-            ALERT_BUILDER.formEntryWarning("Password",
-                    "You need to fill in your password").show();
+            alertBuilder.formEntryWarning("Password",
+                    "You need to fill in your password");
 
             return false;
         }

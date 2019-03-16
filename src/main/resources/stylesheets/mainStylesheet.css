@@ -75,7 +75,7 @@
 #featuresList .text-field {
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
 }
-.label{
+#featuresList .label{
     -fx-font-weight: bold;
     -fx-font-size: 30;
     -fx-text-alignment: right;
@@ -83,4 +83,15 @@
     -fx-effect: dropshadow( three-pass-box, rgb(41, 41, 41) , 0 , 0 , 0 , 1);
 }
 
+#userSection .label{
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+    -fx-font-size: 24;
+    -fx-text-fill: lightgreen;
+    -fx-effect: dropshadow( three-pass-box, rgb(41, 41, 41) , 0 , 0 , 0 , 1);
+}
+
+#LeaderBoard {
+    -fx-background-color: #191970;
+}
 

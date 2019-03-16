@@ -34,7 +34,7 @@
     </HBox>
 
     <Label fx:id="aboutSceneText" text="Did you like the app? Leave your thoughts below." GridPane.rowIndex="9" GridPane.halignment="CENTER"/>
-    <TextArea fx:id="reviewArea" GridPane.rowIndex="11" GridPane.columnSpan="3" GridPane.rowSpan="2"/>
+    <TextArea fx:id="reviewArea" GridPane.rowIndex="11" GridPane.columnSpan="3" GridPane.rowSpan="2" promptText="Add your review here..."/>
 
     <HBox GridPane.rowIndex="15">
         <Rating fx:id="ratingBar" orientation="HORIZONTAL" partialRating="true" GridPane.halignment="LEFT" updateOnHover="true"/>
