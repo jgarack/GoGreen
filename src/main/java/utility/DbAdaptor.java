@@ -168,7 +168,7 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO activity "
-                            + "(activity) VALUES (?)");
+                            + "(name) VALUES (?)");
             st.setString(1, habitName);
             st.executeUpdate();
             st.close();
@@ -203,7 +203,12 @@ public class DbAdaptor {
         }
     }
 
-    public boolean comparecredentials(LoginCredentials LC){
+    /**
+     * authentication of user who is logging in.
+     * @param logCre object with username and password fields.
+     * @return boolean true if ok false if not ok.
+     */
+    public boolean comparecredentials(LoginCredentials logCre) {
 
 
         try {
@@ -213,19 +218,18 @@ public class DbAdaptor {
                     "SELECT username, password FROM credentials WHERE username = ?");
 
 
-            st.setString(1, LC.getUsername());
+            st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
 
             LoginCredentials tempLC = new LoginCredentials( null, null);
 
 
-           while(rs.next()) {
+            while (rs.next()) {
+                tempLC.setUsername(rs.getString(one));
+                tempLC.setPassword(rs.getString(two));
+            }
 
-               tempLC.setUsername(rs.getString(one));
-               tempLC.setPassword(rs.getString(two));
-           }
-
-            if(LC.equals(tempLC)){
+            if (logCre.equals(tempLC)) {
                 return true;
             }
 
@@ -233,7 +237,7 @@ public class DbAdaptor {
 
 
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -241,17 +245,30 @@ public class DbAdaptor {
         return false;
     }
 
-    public boolean addNewUser(LoginCredentials LC){
+    /**
+     * adds newly registered user to the database.
+     * @param regCre object that holds all data for registering.
+     * @return
+     */
+    public boolean addNewUser(RegisterCredentials regCre) {
 
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
                             + "credentials(username, password,"
                             + " question, answer) VALUES (?,?,?,?)");
-            st.setString(one, LC.getUsername());
-            st.setString(two, LC.getPassword());
-            st.setString(three, null);
-            st.setString(four, null);
+            st.setString(one, regCre.getUsername());
+            st.setString(two, regCre.getPassword());
+            st.setString(three, regCre.getQuestion());
+            st.setString(four, regCre.getAnswer());
+            st.executeUpdate();
+            st.close();
+
+            st = conn
+                    .prepareStatement("INSERT INTO "
+                            + "users(username, total_score) VALUES (?,?)");
+            st.setString(one, regCre.getUsername());
+            st.setInt(two, 0);
             st.executeUpdate();
             st.close();
             return true;
@@ -261,6 +278,7 @@ public class DbAdaptor {
 
         return false;
     }
+
     /**
      * Gets user from the DB.
      * @param userName username upon which a user is searched.\

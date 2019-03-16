@@ -74,7 +74,7 @@ public class RegisterController {
                                 confirmPass.getText().trim(),
                                 secretQuestion.getText().trim(),
                                 secretAnswer.getText().trim())) {
-                                    redirectToView(event);
+            redirectToView(event);
         }
     }
 

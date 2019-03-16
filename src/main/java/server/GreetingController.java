@@ -89,21 +89,22 @@ public class GreetingController {
      * Sends a conflict error response to the client if the username is already
      * taken. Sends an internal server error response if the Authenticator
      * fails to create a new account.
-     * @param account The login credentials of the account to create.
+     * @param regCre The register credentials of the account to create.
      *                Send by the client in JSON form.
      * @return An HTTP response as a ResponseEntity Object.
      */
     @PostMapping("/register")
     public ResponseEntity registerResponse(
-        @RequestBody final LoginCredentials account) {
-            db.connect();
-            if (db.addNewUser(account)) {
-                db.disconnect();
-                return new ResponseEntity("Registration successful. "
-                        + "You can now log in", HttpStatus.OK);
-            }
+        @RequestBody final RegisterCredentials regCre) {
+
+        db.connect();
+        if (db.addNewUser(regCre)) {
             db.disconnect();
-            return new ResponseEntity("Your account could not be created",
+            return new ResponseEntity("Registration successful. "
+                    + "You can now log in", HttpStatus.OK);
+        }
+        db.disconnect();
+        return new ResponseEntity("Your account could not be created",
                     HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
