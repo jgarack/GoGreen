@@ -69,6 +69,10 @@
 
 .list-cell{
     -fx-background-color: transparent;
+
+}
+#featuresList .text-field {
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
 }
 .label{
     -fx-font-weight: bold;

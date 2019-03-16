@@ -93,11 +93,11 @@ public final class LoginHandler {
                                        final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
             ALERT_BUILDER.formEntryWarning("Username",
-                    "You need to fill in your username");
+                    "You need to fill in your username").show();
             return false;
         } else if (passFieldEntry.isEmpty()) {
             ALERT_BUILDER.formEntryWarning("Password",
-                    "You need to fill in your password");
+                    "You need to fill in your password").show();
             return false;
         }
         return true;

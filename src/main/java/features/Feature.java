@@ -88,9 +88,7 @@ public class Feature {
                         domain).reqPost(
                         "/points", new Activity(choice, this.getValue()));
             }
-            ALERT_BUILDER
-                    .formNotification("Good job! Keep on going greener!")
-                    .showInformation();
+
             String con = new HttpRequestHandler(domain).resLog(
                     httpBody, null);
             System.out.println(con);

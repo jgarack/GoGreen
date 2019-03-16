@@ -37,8 +37,9 @@
             <Button fx:id="increaseBicycleUsageBtn" text="+" onAction="#increaseBicycleUsage"/>
         </HBox>
 
-
-
+        <HBox alignment="CENTER" >
+            <Label fx:id="pointsEarnedLabel" text="Points earned:" HBox.hgrow="ALWAYS" />
+        </HBox>
 
 <stylesheets>
     <URL value="@../stylesheets/mainStylesheet.css"/>

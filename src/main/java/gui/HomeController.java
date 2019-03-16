@@ -42,6 +42,10 @@ public class HomeController {
      */
     private int bicycleUsed = 0;
     /**
+     * Data about the points of the user.
+     */
+    private int pointsEarned = 0;
+    /**
      * Bound to the text field linked with vegetarian meals.
      */
     @FXML
@@ -80,6 +84,12 @@ public class HomeController {
     @FXML
     private ListView featuresList;
 
+    /**
+     * Bound to the points earned label.
+     */
+    @FXML
+    private Label pointsEarnedLabel;
+
 
     /**
      *
@@ -95,9 +105,19 @@ public class HomeController {
     @FXML
     protected void decreaseVegetarianMeals(final ActionEvent event) {
         if (MainHandler.tryParseInt(vegMeals.getText())) {
-            this.vegetarianMeals -= Integer.parseInt(vegMeals.getText());
-            vegMealsEaten.setText("Vegetarian meals eaten:"
-                    + this.vegetarianMeals);
+            int valVegMeals = Integer.parseInt(vegMeals.getText());
+            if (MainHandler.checkPositiveValues(this.vegetarianMeals,
+                    valVegMeals)) {
+                Feature meal = new Feature(vegMeals.getText());
+                this.pointsEarned -= meal.calculatePoints(1);
+                this.vegetarianMeals -= valVegMeals;
+                pointsEarnedLabel.setText("Points earned:"
+                        + this.pointsEarned);
+            } else {
+                ALERT_BUILDER
+                        .formEntryWarning(vegMealsEaten.getText(),
+                                "This value cannot be negative.").show();
+            }
         } else {
             ALERT_BUILDER
                     .formEntryWarning(vegMealsEaten.getText(),
@@ -117,12 +137,17 @@ public class HomeController {
             Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals += meal.calculatePoints(2);
+            this.vegetarianMeals += Integer.parseInt(vegMeals.getText());
+            this.pointsEarned += meal.calculatePoints(2);
 
-            vegMealsEaten.setText("Points earned:"
-                    + this.vegetarianMeals);
+            pointsEarnedLabel.setText("Points earned: "
+                    + this.pointsEarned);
 
-            new Pulse(this.vegMealsEaten).play();
+            ALERT_BUILDER
+                    .formNotification("Good job! Keep on going greener!")
+                    .showInformation();
+
+            new Pulse(this.pointsEarnedLabel).play();
 
         } else {
             ALERT_BUILDER
@@ -139,11 +164,21 @@ public class HomeController {
     @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+            Feature meal = new Feature(bicycleUsage.getText());
+            int bicycleUse = Integer.parseInt(bicycleUsage.getText());
+            if (MainHandler.checkPositiveValues(this.bicycleUsed,
+                    bicycleUse)) {
+                this.bicycleUsed -= bicycleUse;
 
-            this.bicycleUsed -= Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel
-                    .setText("Times you have used bicycle instead of a car:"
-                    + this.bicycleUsed);
+                this.pointsEarned -= meal.calculatePoints(2);
+                this.pointsEarnedLabel
+                        .setText("Points earned: " + this.pointsEarned);
+
+            } else {
+                ALERT_BUILDER
+                        .formEntryWarning(bicycleUsedLabel.getText(),
+                                "This value cannot be negative.").show();
+            }
         } else {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
@@ -158,12 +193,17 @@ public class HomeController {
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+            Feature meal = new Feature(bicycleUsage.getText());
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel
-                    .setText("Times you have used bicycle instead of a car:"
-                    + this.bicycleUsed);
+            this.pointsEarned += meal.calculatePoints(2);
+            this.pointsEarnedLabel
+                    .setText("Points earned: " + this.pointsEarned);
 
-            new Pulse(this.bicycleUsedLabel).play();
+            ALERT_BUILDER
+                    .formNotification("Good job! Keep on going greener!")
+                    .showInformation();
+
+            new Pulse(this.pointsEarnedLabel).play();
         } else {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),

@@ -2,6 +2,9 @@ package utility;
 
 import java.sql.Date;
 
+/**
+ * Class for the activities.
+ */
 public class ActivityDb {
 
     /**
@@ -26,16 +29,17 @@ public class ActivityDb {
 
     /**
      * Constructor.
-     * @param activityId number of activity.
-     * @param score calculated score.
-     * @param dateOfActivity when the activity was done.
-     * @param username username of the user.
+     * @param actId number of activity.
+     * @param scoreUser calculated score.
+     * @param activityDate when the activity was done.
+     * @param userName username of the user.
      */
-    public ActivityDb(int activityId, int score, Date dateOfActivity, User username) {
-        this.activityId = activityId;
-        this.score = score;
-        this.dateOfActivity = dateOfActivity;
-        this.username = username;
+    public ActivityDb(final int actId, final int scoreUser,
+                      final Date activityDate, final User userName) {
+        this.activityId = actId;
+        this.score = scoreUser;
+        this.dateOfActivity = activityDate;
+        this.username = userName;
     }
 
     /**

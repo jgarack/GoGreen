@@ -44,12 +44,17 @@ public final class RegisterHandler {
      * @param username The username for the account to register.
      * @param pass The password for the acccount to register.
      * @param confirmPass The password to be confirmed.
+     * @param secretQuestion Secret question of the user.
+     * @param secretAnswer Answer to the secret question.
      * @return true iff registered
      */
     public static boolean registerSubmit(final String username,
                                          final String pass,
-                                         final String confirmPass) {
-        if (checkForm(username, pass, confirmPass)) {
+                                         final String confirmPass,
+                                         final String secretQuestion,
+                                         final String secretAnswer) {
+        if (checkForm(username, pass, confirmPass,
+                secretQuestion, secretAnswer)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
@@ -81,12 +86,17 @@ public final class RegisterHandler {
      * @param passFieldEntry The received input for the password.
      * @param confirmPassFieldEntry The received
      *                              input for the confirmed password.
+     * @param secretQuestion The received secret question.
+     * @param secretAnswer The received secret answer.
      * @return true iff the input is in the correct format.
      */
     private static boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
-                                     final String confirmPassFieldEntry) {
-        if (emptyFields(userFieldEntry, passFieldEntry)) {
+                                     final String confirmPassFieldEntry,
+                                     final String secretQuestion,
+                                     final String secretAnswer) {
+        if (emptyFields(userFieldEntry, passFieldEntry,
+                secretQuestion, secretAnswer)) {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
             } else {
@@ -98,5 +108,31 @@ public final class RegisterHandler {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks the given values whether they are empty.
+     * @param userFieldEntry Value for username.
+     * @param passFieldEntry Value for password.
+     * @param secretQ Value for secret question.
+     * @param secretAnswer Value for secret answer.
+     * @return true iff none of the fields is empty.
+     */
+    private static boolean emptyFields(final String userFieldEntry,
+                                      final String passFieldEntry,
+                                      final String secretQ,
+                                      final String secretAnswer) {
+        if (LoginHandler.emptyFields(userFieldEntry, passFieldEntry)) {
+            if (secretQ.isEmpty()) {
+                ALERT_BUILDER.formEntryWarning("Secret Question Field",
+                        "You need to fill in your secret question").show();
+                return false;
+            } else if (secretAnswer.isEmpty()) {
+                ALERT_BUILDER.formEntryWarning("Secret Answer Field",
+                        "You need to fill in your secret answer").show();
+                return false;
+            }
+        }
+        return true;
     }
 }
