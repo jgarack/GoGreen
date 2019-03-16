@@ -8,10 +8,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Adapter class for the database.
@@ -139,7 +135,7 @@ public class DbAdaptor {
      * Inserts user into the DB.
      * @param user object of the user.
      */
-    public void insertUser(User user) {
+    public void insertUser(final User user) {
         System.out.println("Inserting...");
 
         try {
@@ -267,7 +263,8 @@ public class DbAdaptor {
     }
     /**
      * Gets user from the DB.
-     * @param userName username upon which a user is searched.
+     * @param userName username upon which a user is searched.\
+     * @return User info.
      */
     public User getUser(final String userName) {
         try {
@@ -279,7 +276,7 @@ public class DbAdaptor {
             st.setString(1, userName);
             rs = st.executeQuery();
 
-            User tempUser = new User( null,
+            User tempUser = new User(null,
                         null, 0, null);
 
             tempUser.setUsername(rs.getString(one));

@@ -2,32 +2,16 @@ package gui;
 
 import animatefx.animation.ZoomIn;
 import animatefx.animation.JackInTheBox;
-import features.Feature;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
-import javafx.scene.SnapshotParameters;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.stage.Screen;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.GlyphFont;
-import org.controlsfx.glyphfont.GlyphFontRegistry;
-import utility.MainHandler;
+//import org.controlsfx.glyphfont.FontAwesome;
+//import org.controlsfx.glyphfont.GlyphFont;
+//import org.controlsfx.glyphfont.GlyphFontRegistry;
 import java.io.IOException;
 
 
@@ -74,18 +58,15 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        //CREATES ERRORS WHEN LOADING FROM OTHER TO HOME PAGE -> MIGHT HAVE TO SPLIT HOME AND MAIN CONTROLLER
-        personalInfo.setGraphic(font.create(FontAwesome.Glyph.PENCIL));
+        //GlyphFont font = GlyphFontRegistry.font("FontAwesome");
+        //personalInfo.setGraphic(font
+        // .create(FontAwesome.Glyph.PENCIL).size(16));
 
         try {
             loadHomeScene();
         } catch (IOException err) {
             err.printStackTrace();
         }
-
-
-
     }
 
 
@@ -123,7 +104,10 @@ public class MainController {
         loadScene("about");
     }
 
-
+    /**
+     * Loads screen with personal info.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
     @FXML
     protected void loadPersonalInfoScene() throws IOException {
         loadScene("personalInfo");

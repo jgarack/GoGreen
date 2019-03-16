@@ -3,6 +3,8 @@ package utility;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 /**
  * Class used to test the User class.
  * @author Jonathan
@@ -97,4 +99,5 @@ public class UserTest {
                 + ", dateOfBirth='" + dateOfBirth + '\'' + '}';
         assertEquals(expected, user.toString());
     }
+
 }

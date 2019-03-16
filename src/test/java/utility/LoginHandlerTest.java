@@ -1,201 +1,69 @@
-//package utility;
-//
-//import javafx.application.Application;
-//import org.junit.jupiter.api.BeforeAll;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.mockito.InjectMocks;
-//import org.mockito.Mock;
-//import org.mockito.Mockito;
-//import org.mockito.MockitoAnnotations;
-//import org.springframework.boot.SpringApplication;
-//import org.springframework.boot.autoconfigure.SpringBootApplication;
-//import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-//import org.springframework.context.annotation.ComponentScan;
-//import server.GreetingController;
-//import sun.rmi.runtime.Log;
-//
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static org.mockito.Mockito.when;
-//
-//
-//public class LoginHandlerTest extends SpringBootServletInitializer {
-//    private static final String NULL = "";
-//    private static final String USER = "user";
-//    private static final String PASS = "pass";
-//    private static final String ADDITION = "123";
-//    private static final String PASS_TOMD5 = "1a1dc91c907325c69271ddf0c944bc72";
-//
-//    @Mock
-//    private HttpRequestHandler httpHandler;
-//    static LoginHandler mock;
-//    @BeforeAll
-//    public static void initMock(){
-//        mock = Mockito.mock(LoginHandler.class);
-//        MockitoAnnotations.initMocks(mock);
-//    }
-//    @BeforeEach
-//    public void clearMock(){
-//
-//    }
-//
-//    @Test
-//    public void registerUserNull() {
-//        assertFalse(LoginHandler.registerSubmit(NULL, PASS, PASS),
-//                "Handler allowed register without username.");
-//    }
-//    @Test
-//    public void registerPassNull() {
-//        assertFalse(LoginHandler.registerSubmit(USER, NULL, NULL),
-//                "Handler allowed register without password.");
-//    }
-//    @Test
-//    public void registerEmptySucceed() {
-//        assertTrue(LoginHandler.registerSubmit(USER, PASS, PASS),
-//                "Handler rejected valid registration.");
-//    }
-//    @Test
-//    public void registerSucceed() {
-//        LoginHandler.registerSubmit(USER, PASS, PASS);
-//        assertFalse(LoginHandler.registerSubmit(USER+ADDITION, PASS, PASS),
-//                "Handler rejected unique registration.");
-//    }
-//    @Test
-//    public void registerFailure(){
-//        LoginHandler.registerSubmit(USER, PASS, PASS);
-//        assertFalse(LoginHandler.registerSubmit(USER, PASS, PASS),
-//                "Handler accepted duplicate registration.");
-//    }
-//    @Test
-//    public void loginUserNull() {
-//        assertFalse(LoginHandler.loginSubmit(NULL, PASS),
-//                "Handler allowed login without username.");
-//    }
-//    @Test
-//    public void loginPassNull() {
-//        assertFalse(LoginHandler.loginSubmit(USER, NULL),
-//                "Hanlder allowed login without password.");
-//    }
-//    @Test
-//    public void loginEmptyFailure() {
-//        assertFalse(LoginHandler.loginSubmit(USER, PASS),
-//                "Handler allowed login while no accounts are registered.");
-//    }
-//    @Test
-//    public void loginUserFailure() {
-//        LoginHandler.registerSubmit(USER, PASS, PASS);
-//        assertFalse(LoginHandler.loginSubmit(USER+ADDITION, PASS),
-//                "Handler allowed non-existing user to log in.");
-//    }
-//    @Test
-//    public void loginPassFailure(){
-//        LoginHandler.registerSubmit(USER, PASS, PASS);
-//        assertFalse(LoginHandler.loginSubmit(USER, PASS+ADDITION));
-//    }
-//    @Test
-//    public void loginSucceed() {
-//        LoginHandler.registerSubmit(USER, PASS, PASS);
-//        assertTrue(LoginHandler.loginSubmit(USER, PASS),
-//                "Valid login credentials were rejected.");
-//    }
-//}
+package utility;
 
-/*
-import org.junit.jupiter.api.BeforeAll;
+import exceptions.ServerStatusException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 import gui.AlertBuilder;
-import org.springframework.web.HttpRequestHandler;
-import utility.LoginHandler;
-import utility.RegisterHandler;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.security.NoSuchAlgorithmException;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 
 public class LoginHandlerTest {
     private static final String NULL = "";
     private static final String USER = "user";
     private static final String PASS = "pass";
-    private static final String ADDITION = "123";
-    private static final String PASS_TOMD5 = "1a1dc91c907325c69271ddf0c944bc72";
+    private static final String PASS_TOMD5 = "1A1DC91C907325C69271DDF0C944BC72";
+    private static final String DOMAIN = "http://localhost:8080";
 
-    @Mock
-    private HttpRequestHandler httpHandler;
-    @Mock
-    private AlertBuilder alert;
-    static LoginHandler handler;
-    @BeforeAll
-    public  void initMock() {
-        MockitoAnnotations.initMocks(this);
-        handler = new LoginHandler(httpHandler, alert);
-        httpHandler.clear();
-    }
+    private static final LoginHandler testObject = new LoginHandler(DOMAIN);
+
     @BeforeEach
-    public void clearMock() {
+    public void initMocks() {
+        testObject.httpHandler = Mockito.mock(HttpRequestHandler.class);
+        testObject.alertBuilder = Mockito.mock(AlertBuilder.class);
     }
 
-    @Test
-    public void registerUserNull() {
-        assertFalse(RegisterHandler.registerSubmit(NULL, PASS, PASS),
-                "Handler allowed register without username.");
-    }
-    @Test
-    public void registerPassNull() {
-        assertFalse(RegisterHandler.registerSubmit(USER, NULL, NULL),
-                "Handler allowed register without password.");
-    }
-    @Test
-    public void registerEmptySucceed() {
-        assertTrue(RegisterHandler.registerSubmit(USER, PASS, PASS),
-                "Handler rejected valid registration.");
-    }
-    @Test
-    public void registerSucceed() {
-        RegisterHandler.registerSubmit(USER, PASS, PASS);
-        assertFalse(RegisterHandler.registerSubmit(USER+ADDITION, PASS, PASS),
-                "Handler rejected unique registration.");
-    }
-    @Test
-    public void registerFailure(){
-        LoginHandler.registerSubmit(USER, PASS, PASS);
-        assertFalse(LoginHandler.registerSubmit(USER, PASS, PASS),
-                "Handler accepted duplicate registration.");
-    }
     @Test
     public void loginUserNull() {
-        assertFalse(LoginHandler.loginSubmit(NULL, PASS),
+        assertFalse(testObject.loginSubmit(NULL, PASS),
                 "Handler allowed login without username.");
     }
     @Test
     public void loginPassNull() {
-        assertFalse(LoginHandler.loginSubmit(USER, NULL),
+        assertFalse(testObject.loginSubmit(USER, NULL),
                 "Hanlder allowed login without password.");
     }
     @Test
-    public void loginEmptyFailure() {
-        assertFalse(LoginHandler.loginSubmit(USER, PASS),
-                "Handler allowed login while no accounts are registered.");
-    }
-    @Test
-    public void loginUserFailure() {
-        RegisterHandler.registerSubmit(USER, PASS, PASS);
-        assertFalse(LoginHandler.loginSubmit(USER+ADDITION, PASS),
-                "Handler allowed non-existing user to log in.");
-    }
-    @Test
-    public void loginPassFailure(){
-        RegisterHandler.registerSubmit(USER, PASS, PASS);
-        assertFalse(LoginHandler.loginSubmit(USER, PASS+ADDITION));
+    public void loginFailure() throws Exception{
+        try {
+            when(testObject.httpHandler.reqPost("/login",
+                    new AccountMessage(USER, PASS_TOMD5))).thenThrow(
+                            new ServerStatusException(401));
+        } catch(Exception e) {
+            //Never occurs
+        }
+        /*assertThrows(ServerStatusException.class, () -> testObject.httpHandler.reqPost("/login",
+                new AccountMessage(USER, PASS_TOMD5)));*/
+        boolean result = testObject.loginSubmit(USER, PASS);
+        verify(testObject.httpHandler).reqPost("/login", new AccountMessage(USER, PASS_TOMD5));
+        assertThrows(ServerStatusException.class, () -> testObject.httpHandler.reqPost("/login", new AccountMessage(USER, PASS_TOMD5)));
+        assertFalse(result);
     }
     @Test
     public void loginSucceed() {
-        RegisterHandler.registerSubmit(USER, PASS, PASS);
-        assertTrue(LoginHandler.loginSubmit(USER, PASS),
+        assertTrue(testObject.loginSubmit(USER, PASS),
                 "Valid login credentials were rejected.");
     }
+    @Test
+    public void simulateEncError() throws Exception {
+        given(testObject.httpHandler.reqPost("/login",
+                new AccountMessage(USER, PASS_TOMD5))).willAnswer(
+                invocation -> { throw new NoSuchAlgorithmException(); });
+        assertFalse(testObject.loginSubmit(USER, PASS));
+    }
 }
-*/

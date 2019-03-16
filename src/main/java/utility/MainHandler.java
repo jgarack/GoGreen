@@ -23,4 +23,18 @@ public final class MainHandler {
         }
     }
 
+    /**
+     * Checks if the subtracted value
+     * is greater than the initial one.
+     * @param initVal initial value
+     * @param valSubtract value to be subtracted
+     * @return true if
+     * the initial is greater or equal
+     */
+    public static boolean checkPositiveValues(final int initVal,
+                                              final int valSubtract) {
+        return initVal >= valSubtract;
+    }
+
+
 }

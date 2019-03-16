@@ -1,14 +1,13 @@
 package gui;
 
+import animatefx.animation.Pulse;
 import features.Feature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
-import javafx.stage.Screen;
 import utility.MainHandler;
 
 /**
@@ -43,6 +42,10 @@ public class HomeController {
      */
     private int bicycleUsed = 0;
     /**
+     * Data about the points of the user.
+     */
+    private int pointsEarned = 0;
+    /**
      * Bound to the text field linked with vegetarian meals.
      */
     @FXML
@@ -74,12 +77,18 @@ public class HomeController {
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder alert = new AlertBuilder();
+    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
     /**
      * Bound to the list of goGreen features.
      */
     @FXML
     private ListView featuresList;
+
+    /**
+     * Bound to the points earned label.
+     */
+    @FXML
+    private Label pointsEarnedLabel;
 
 
     /**
@@ -87,14 +96,7 @@ public class HomeController {
      */
     @FXML
     public void initialize() {
-        progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-        progressBarGreen.setPrefWidth(bounds.getWidth() - TWO_HUNDRED_FIFTY);
-
-        featuresList.setPrefSize(bounds.getHeight() - THREE_HUNDRED, bounds.getWidth() - THREE_HUNDRED);
-
-
-
+        //progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
     }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
@@ -103,11 +105,23 @@ public class HomeController {
     @FXML
     protected void decreaseVegetarianMeals(final ActionEvent event) {
         if (MainHandler.tryParseInt(vegMeals.getText())) {
-            this.vegetarianMeals -= Integer.parseInt(vegMeals.getText());
-            vegMealsEaten.setText("Vegetarian meals eaten:"
-                    + this.vegetarianMeals);
+            int valVegMeals = Integer.parseInt(vegMeals.getText());
+            if (MainHandler.checkPositiveValues(this.vegetarianMeals,
+                    valVegMeals)) {
+                Feature meal = new Feature(vegMeals.getText());
+                this.pointsEarned -= meal.calculatePoints(1);
+                this.vegetarianMeals -= valVegMeals;
+                pointsEarnedLabel.setText("Points earned:"
+                        + this.pointsEarned);
+            } else {
+                ALERT_BUILDER
+                        .formEntryWarning(vegMealsEaten.getText(),
+                                "This value cannot be negative.");
+            }
         } else {
-            alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(vegMealsEaten.getText(),
+                    YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 
@@ -123,13 +137,22 @@ public class HomeController {
             Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals += meal.calculatePoints(2);
+            this.vegetarianMeals += Integer.parseInt(vegMeals.getText());
+            this.pointsEarned += meal.calculatePoints(2);
 
-            vegMealsEaten.setText("Points earned:"
-                    + this.vegetarianMeals);
+            pointsEarnedLabel.setText("Points earned: "
+                    + this.pointsEarned);
+
+            ALERT_BUILDER
+                    .formNotification("Good job! Keep on going greener!")
+                    .showInformation();
+
+            new Pulse(this.pointsEarnedLabel).play();
 
         } else {
-            alert.formEntryWarning(vegMealsEaten.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(vegMealsEaten.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 
@@ -141,12 +164,25 @@ public class HomeController {
     @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+            Feature meal = new Feature(bicycleUsage.getText());
+            int bicycleUse = Integer.parseInt(bicycleUsage.getText());
+            if (MainHandler.checkPositiveValues(this.bicycleUsed,
+                    bicycleUse)) {
+                this.bicycleUsed -= bicycleUse;
 
-            this.bicycleUsed -= Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
-                    + this.bicycleUsed);
+                this.pointsEarned -= meal.calculatePoints(2);
+                this.pointsEarnedLabel
+                        .setText("Points earned: " + this.pointsEarned);
+
+            } else {
+                ALERT_BUILDER
+                        .formEntryWarning(bicycleUsedLabel.getText(),
+                                "This value cannot be negative.");
+            }
         } else {
-            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(bicycleUsedLabel.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
     /**
@@ -157,11 +193,21 @@ public class HomeController {
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+            Feature meal = new Feature(bicycleUsage.getText());
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            bicycleUsedLabel.setText("Times you have used bicycle instead of a car:"
-                    + this.bicycleUsed);
+            this.pointsEarned += meal.calculatePoints(2);
+            this.pointsEarnedLabel
+                    .setText("Points earned: " + this.pointsEarned);
+
+            ALERT_BUILDER
+                    .formNotification("Good job! Keep on going greener!")
+                    .showInformation();
+
+            new Pulse(this.pointsEarnedLabel).play();
         } else {
-            alert.formEntryWarning(bicycleUsedLabel.getText(),YOU_NEED_TO_FILL_A_NUMBER).show();
+            ALERT_BUILDER
+                    .formEntryWarning(bicycleUsedLabel.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
 

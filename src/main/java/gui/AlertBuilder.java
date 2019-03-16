@@ -1,20 +1,18 @@
 package gui;
 
-import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.Notifications;
-
 import java.security.NoSuchAlgorithmException;
 
 /**
  * Class that builds different kinds of alerts.
  */
 public class AlertBuilder {
+    /**
+     * Duration of the defaultNotification.
+     */
+    private final double durationNotification = 1.5;
     /**
      * Default constructor.
      */
@@ -43,8 +41,9 @@ public class AlertBuilder {
      */
     public void displayException(final Exception e) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
-        statusCodeError.setTitle(e.getMessage());
-        statusCodeError.setContentText("See terminal for stacktrace.");
+        statusCodeError.setTitle("Access denied!");
+        statusCodeError
+                .setContentText("Invalid username and password combination!");
         e.printStackTrace();
         statusCodeError.showAndWait();
     }
@@ -52,14 +51,13 @@ public class AlertBuilder {
      * Displays a warning message.
      * @param fieldName the field that was not filled in correctly.
      * @param description a description of what went wrong.
-     * @return returns an alert with the message.
      */
-    public Alert formEntryWarning(final String fieldName,
+    public void formEntryWarning(final String fieldName,
                                   final String description) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Illegal entry in field " + fieldName + ":");
         alert.setContentText(description);
-        return alert;
+        alert.showAndWait();
     }
 
     /**
@@ -67,11 +65,20 @@ public class AlertBuilder {
      * @param notificationMsg The message of the popup.
      * @return Returns a notfication pane that should popup.
      */
-    public final Notifications formNotificationPane(final String notificationMsg) {
+    public Notifications formNotification(final String notificationMsg) {
 
         return Notifications.create()
                 .darkStyle()
                 .text(notificationMsg)
-                .hideAfter(Duration.seconds(1.5)); // sets node to display
+                .hideAfter(Duration
+                        .seconds(durationNotification));
+    }
+
+    /**
+     * Shows an information notification.
+     * @param notificationMsg The message to be shown
+     */
+    public void showInformationNotification(final String notificationMsg) {
+        formNotification(notificationMsg).showInformation();
     }
 }
