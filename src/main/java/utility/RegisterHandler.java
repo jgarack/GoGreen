@@ -1,27 +1,22 @@
 package utility;
 
-import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 import javax.xml.bind.DatatypeConverter;
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import static utility.LoginHandler.emptyFields;
 
 /**
  * Class for handling register forms.
  */
-public final class RegisterHandler {
+public class RegisterHandler {
     /**
      * Private constructor just because.
      */
     private RegisterHandler() { }
     /**
      * The domain on which the server is running.
-     * {@value}
      */
-    private static final String DOMAIN = "http://localhost:8080";
+    private String domain;
     /**
      * The folder that contains the log files for this class.
      * {@value}
@@ -31,12 +26,21 @@ public final class RegisterHandler {
     /**
      * The HttpRequestHandler used for this class.
      */
-    private static final HttpRequestHandler HTTP_HANDLER =
-            new HttpRequestHandler(DOMAIN);
+    public HttpRequestHandler httpHandler;
     /**
      * The builder used to build alerts for this handler.
      */
-    private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
+    public AlertBuilder ALERT_BUILDER;
+
+    /**
+     * Constructor.
+     * @param host the domain to operate on
+     */
+    public RegisterHandler(final String host) {
+        domain = host;
+        ALERT_BUILDER = new AlertBuilder();
+        httpHandler = new HttpRequestHandler(domain);
+    }
 
     /**
      * Sends a registration request to the server with the input username and
@@ -48,7 +52,7 @@ public final class RegisterHandler {
      * @param secretAnswer Answer to the secret question.
      * @return true iff registered
      */
-    public static boolean registerSubmit(final String username,
+    public boolean registerSubmit(final String username,
                                          final String pass,
                                          final String confirmPass,
                                          final String secretQuestion,
@@ -58,8 +62,8 @@ public final class RegisterHandler {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
-                        md5.digest(pass.getBytes())).toUpperCase();
-                HTTP_HANDLER.reqPost("/register",
+                        md5.digest(pass.getBytes()));
+                httpHandler.reqPost("/register",
                         new AccountMessage(username, md5Pass));
                 ALERT_BUILDER
                         .formNotification("You have registered successfully!")
@@ -68,10 +72,7 @@ public final class RegisterHandler {
             } catch (NoSuchAlgorithmException md5Error) {
                 ALERT_BUILDER.encryptionExceptionHandler(md5Error);
                 return false;
-            } catch (ServerStatusException e) {
-                ALERT_BUILDER.displayException(e);
-                return false;
-            } catch (IOException e) {
+            } catch (Exception e) {
                 ALERT_BUILDER.displayException(e);
                 return false;
             }
@@ -90,7 +91,7 @@ public final class RegisterHandler {
      * @param secretAnswer The received secret answer.
      * @return true iff the input is in the correct format.
      */
-    private static boolean checkForm(final String userFieldEntry,
+    private boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
                                      final String confirmPassFieldEntry,
                                      final String secretQuestion,
@@ -105,6 +106,7 @@ public final class RegisterHandler {
                         .formEntryWarning("Password/Confirm Password",
                                 "Passwords do not match!")
                         .showAndWait();
+                return false;
             }
         }
         return false;
@@ -118,21 +120,30 @@ public final class RegisterHandler {
      * @param secretAnswer Value for secret answer.
      * @return true iff none of the fields is empty.
      */
-    private static boolean emptyFields(final String userFieldEntry,
+    private boolean emptyFields(final String userFieldEntry,
                                       final String passFieldEntry,
                                       final String secretQ,
                                       final String secretAnswer) {
-        if (LoginHandler.emptyFields(userFieldEntry, passFieldEntry)) {
-            if (secretQ.isEmpty()) {
-                ALERT_BUILDER.formEntryWarning("Secret Question Field",
+        if (userFieldEntry.isEmpty()) {
+
+            ALERT_BUILDER.formEntryWarning("Username",
+                    "You need to fill in your username").showAndWait();
+            return false;
+        } else if (passFieldEntry.isEmpty()) {
+            ALERT_BUILDER.formEntryWarning("Password",
+                    "You need to fill in your password").show();
+
+            return false;
+        } else if (secretQ.isEmpty()) {
+            ALERT_BUILDER.formEntryWarning("Secret Question Field",
                         "You need to fill in your secret question").show();
                 return false;
-            } else if (secretAnswer.isEmpty()) {
+        } else if (secretAnswer.isEmpty()) {
                 ALERT_BUILDER.formEntryWarning("Secret Answer Field",
                         "You need to fill in your secret answer").show();
                 return false;
             }
-        }
+
         return true;
     }
 }

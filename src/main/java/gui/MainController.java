@@ -9,9 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.GlyphFont;
-import org.controlsfx.glyphfont.GlyphFontRegistry;
+//import org.controlsfx.glyphfont.FontAwesome;
+//import org.controlsfx.glyphfont.GlyphFont;
+//import org.controlsfx.glyphfont.GlyphFontRegistry;
 import java.io.IOException;
 
 
@@ -58,8 +58,9 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        personalInfo.setGraphic(font.create(FontAwesome.Glyph.PENCIL));
+        //GlyphFont font = GlyphFontRegistry.font("FontAwesome");
+        //personalInfo.setGraphic(font
+        // .create(FontAwesome.Glyph.PENCIL).size(16));
 
         try {
             loadHomeScene();

@@ -23,7 +23,7 @@
     </stylesheets>
     <top>
         <SplitPane orientation="HORIZONTAL" fx:id="navBar">
-            <HBox spacing="15" alignment="TOP_LEFT" fillHeight="true" fx:id="redirectHBox">
+            <HBox spacing="15" alignment="TOP_LEFT" fx:id="redirectHBox">
                     <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
                     <Button fx:id="howToPlay" text="How to Play" onAction="#loadHowToPlayScene"/>
                     <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>

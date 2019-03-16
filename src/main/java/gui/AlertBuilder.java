@@ -3,7 +3,6 @@ package gui;
 import javafx.scene.control.Alert;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
-
 import java.security.NoSuchAlgorithmException;
 
 /**

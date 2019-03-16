@@ -38,6 +38,11 @@ public final class LoginController {
     @FXML
     private TextField pass;
 
+    /**
+     * LoginHandler used for handling login requests.
+     */
+    private LoginHandler handler = new LoginHandler("http://localhost:8080");
+
 
     /**
      * Initialize method.
@@ -66,7 +71,7 @@ public final class LoginController {
      */
     @FXML
     protected void handleSubmitButtonAction(final ActionEvent event) {
-        if (LoginHandler.loginSubmit(username.getText().trim(),
+        if (handler.loginSubmit(username.getText().trim(),
                 pass.getText())) {
             redirectToView(event, "main");
         }

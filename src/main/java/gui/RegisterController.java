@@ -18,9 +18,7 @@ import java.io.IOException;
 /**
  * The controller for the Register page.
  */
-public class
-
-RegisterController {
+public class RegisterController {
     /**
      * The width of the stage.
      */
@@ -47,6 +45,11 @@ RegisterController {
     private PasswordField confirmPass;
 
     /**
+     * Domain for the connection.
+     */
+    private static final String DOMAIN = "http://localhost:8080";
+
+    /**
      * Bound to the secret question text field.
      */
     @FXML
@@ -64,11 +67,14 @@ RegisterController {
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
-        if (RegisterHandler.registerSubmit(username.getText().trim(),
-                pass.getText().trim(), confirmPass.getText().trim(),
-                secretQuestion.getText().trim(),
-                secretAnswer.getText().trim())) {
-                redirectToView(event);
+
+        if (new RegisterHandler(DOMAIN)
+                .registerSubmit(username.getText().trim(),
+                                pass.getText().trim(),
+                                confirmPass.getText().trim(),
+                                secretQuestion.getText().trim(),
+                                secretAnswer.getText().trim())) {
+                                    redirectToView(event);
         }
     }
 
