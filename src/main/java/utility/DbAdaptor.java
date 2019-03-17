@@ -169,7 +169,7 @@ public class DbAdaptor {
 
     }
 
-    public ActivityDb getActivityByDate(String username, Date date){
+    public ActivityDb getActivityByDate(String username, String date){
 
         try {
 
@@ -179,7 +179,7 @@ public class DbAdaptor {
 
 
             st.setString(1,username);
-            st.setDate(two, date);
+            st.setString(two, date);
             rs = st.executeQuery();
 
             ActivityDb actDB = new ActivityDb( 0,0 , null, null);
@@ -188,7 +188,7 @@ public class DbAdaptor {
             while (rs.next()) {
                actDB.setActivityId(rs.getInt(one));
                actDB.setScore(rs.getInt(two));
-               actDB.setDateOfActivity(rs.getDate(three));
+               actDB.setDateOfActivity(rs.getString(three));
                actDB.setUsername(rs.getString(four));
                break;
             }
@@ -218,7 +218,7 @@ public class DbAdaptor {
                             + " date_of_activity, score) VALUES (?,?,?,?)");
             st.setString(one, activity.getUsernameAct());
             st.setInt(two, activity.getActivityId());
-            st.setDate(three, activity.getDateOfActivity());
+            st.setString(three, activity.getDateOfActivity());
             st.setInt(four, activity.getScore());
             st.executeUpdate();
             st.close();

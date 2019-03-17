@@ -16,7 +16,9 @@ class DbAdaptorTest {
         db.insertUser(user);
         db.disconnect();
         db.connect();
-        assertEquals(db.getUser("testUser"), user);
+        User user2 = db.getUser("testUser");
+        assertEquals(user2.getUsername(), user.getUsername());
+        assertEquals(user2.getTotalScore(), user.getTotalScore());
         db.disconnect();
     }
 
@@ -28,12 +30,18 @@ class DbAdaptorTest {
     @Test
     void addActivity() {
         db.connect();
-        Date date = new Date(System.currentTimeMillis());
+        Date date1 = new Date(System.currentTimeMillis());
+        String date = date1.toString();
         ActivityDb activity = new ActivityDb(1, 450, date, "testUser");
         db.addActivity(activity);
         db.disconnect();
         db.connect();
-        assertEquals(db.getActivityByDate("testUser", date), activity);
+        ActivityDb adb = db.getActivityByDate("testUser", date);
+        assertEquals(adb.getActivityId(), activity.getActivityId());
+        assertEquals(adb.getDateOfActivity(), activity.getDateOfActivity());
+        assertEquals(adb.getScore(), activity.getScore());
+        assertEquals(adb.getUsernameAct(), activity.getUsernameAct());
+
         db.disconnect();
     }
 

@@ -20,7 +20,7 @@ public class ActivityDb {
     /**
      * variable that stores the date.
      */
-    private Date dateOfActivity;
+    private String dateOfActivity;
 
     /**
      * variable that stores the username of the user who did the activity.
@@ -35,7 +35,7 @@ public class ActivityDb {
      * @param userName username of the user.
      */
     public ActivityDb(final int actId, final int scoreUser,
-                      final Date activityDate, final String userName) {
+                      final String activityDate, final String userName) {
         this.activityId = actId;
         this.score = scoreUser;
         this.dateOfActivity = activityDate;
@@ -62,7 +62,7 @@ public class ActivityDb {
      * returns the date of the activity.
      * @return the date of the activity.
      */
-    public Date getDateOfActivity() {
+    public String getDateOfActivity() {
         return dateOfActivity;
     }
 
@@ -74,7 +74,7 @@ public class ActivityDb {
         this.score = score;
     }
 
-    public void setDateOfActivity(Date dateOfActivity) {
+    public void setDateOfActivity(String dateOfActivity) {
         this.dateOfActivity = dateOfActivity;
     }
 
