@@ -81,6 +81,7 @@ public class RegisterHandlerTest {
         assertTrue(testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER),
                 "Valid login credentials were rejected.");
     }
+   /*
     @Test
     public void simulateEncError() throws Exception {
         given(testObject.httpHandler.reqPost("/register",
@@ -89,4 +90,5 @@ public class RegisterHandlerTest {
         boolean result = testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER);
         assertFalse(result);
     }
+    */
 }

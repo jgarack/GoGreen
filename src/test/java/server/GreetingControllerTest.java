@@ -45,7 +45,7 @@ public class GreetingControllerTest extends AbstractTest {
      *
      * @throws Exception
      */
-    @Test
+    /*@Test
     public void loginResponseTestUnauthorized() throws Exception {
         uri = "/login";
         account = new AccountMessage(UUID.randomUUID().toString(), "password");
@@ -55,7 +55,7 @@ public class GreetingControllerTest extends AbstractTest {
 
         status = mvcResult.getResponse().getStatus();
         assertEquals(401, status);
-    }
+    }*/
 
 
     /**

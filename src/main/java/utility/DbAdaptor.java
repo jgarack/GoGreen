@@ -4,7 +4,16 @@ import gui.AlertBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+
 
 /**
  * Adapter class for the database.
@@ -171,43 +180,6 @@ public class DbAdaptor {
 
     }
 
-    public ActivityDb getActivityByDate(String username, String date){
-
-        try {
-
-
-            PreparedStatement st = conn.prepareStatement(
-                    "SELECT activity_id, score, player, date_of_activity FROM activities WHERE player = ? AND date_of_activity = ?");
-
-
-            st.setString(1,username);
-            st.setString(two, date);
-            rs = st.executeQuery();
-
-            ActivityDb actDB = new ActivityDb( 0,0 , null, null);
-
-
-            while (rs.next()) {
-               actDB.setActivityId(rs.getInt(one));
-               actDB.setScore(rs.getInt(two));
-               actDB.setDateOfActivity(rs.getString(three));
-               actDB.setUsername(rs.getString(four));
-               break;
-            }
-
-
-            return actDB;
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-
-        return null;
-    }
-
     /**
      * Adds activity to a user.
      * @param activity object that holds all needed fields for activity relation.
@@ -217,13 +189,39 @@ public class DbAdaptor {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
                             + "Activities(player, activity_id,"
-                            + " date_of_activity, score) VALUES (?,?,?,?)");
+                            + " amount, score) VALUES (?,?,?,?)");
             st.setString(one, activity.getUsernameAct());
             st.setInt(two, activity.getActivityId());
-            st.setString(three, activity.getDateOfActivity());
+            st.setInt(three, activity.getAmount());
             st.setInt(four, activity.getScore());
             st.executeUpdate();
             st.close();
+
+            updateTotalScore(activity);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * updates total_score when inserting to activities table.
+     * @param activity says which user should have the total_score updated.
+     */
+    public void updateTotalScore(final ActivityDb activity) {
+
+        try {
+            PreparedStatement st = conn
+                    .prepareStatement("UPDATE Users\n"
+                            + "        SET total_score = total_score + ?\n"
+                            + "        WHERE username = ?");
+            st.setInt(one, activity.getScore());
+            st.setString(two, activity.getUsernameAct());
+            st.executeUpdate();
+            st.close();
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -321,7 +319,7 @@ public class DbAdaptor {
             rs = st.executeQuery();
 
             User tempUser = new User(null, 0);
-            while(rs.next()) {
+            while (rs.next()) {
                 tempUser.setUsername(rs.getString(one));
                 tempUser.setTotalScore(rs.getInt(two));
                 break;
@@ -336,6 +334,13 @@ public class DbAdaptor {
         return null;
     }
 
+    /**
+     * updates activity.
+     * @param username whose activity should be updated
+     * @param activityID which activity should be updated
+     * @param amount by how many should it be updated
+     * @return true if worked false if exceptions
+     */
     public boolean updateActivity(final String username, final int activityID, final int amount) {
         try {
             connect();
@@ -348,12 +353,18 @@ public class DbAdaptor {
             disconnect();
             System.out.println(rs.toString());
             return true;
-        } catch(Exception e) {
+        } catch (SQLException e) {
             new AlertBuilder().displayException(e);
             return false;
         }
     }
 
+    /**
+     * returns activity amount.
+     * @param username username whose activity amount should be returned.
+     * @param activityID id of the activity
+     * @return amount of given activity of given user
+     */
     public int getActivityAmount(final String username, final int activityID) {
         try {
             connect();
@@ -364,12 +375,17 @@ public class DbAdaptor {
             rs = conn.prepareStatement(query.toString()).executeQuery();
             disconnect();
             return rs.getInt(one);
-        } catch(Exception e) {
+        } catch (SQLException e) {
             new AlertBuilder().displayException(e);
             return -1;
         }
     }
 
+    /**
+     * returns total_score.
+     * @param username which total_score should be returned.
+     * @return total_score
+     */
     public int getTotalScore(final String username) {
         try {
             connect();
@@ -379,7 +395,7 @@ public class DbAdaptor {
             rs = conn.prepareStatement(query.toString()).executeQuery();
             disconnect();
             return rs.getInt(one);
-        } catch(Exception e) {
+        } catch (SQLException e) {
             new AlertBuilder().displayException(e);
             return -1;
         }

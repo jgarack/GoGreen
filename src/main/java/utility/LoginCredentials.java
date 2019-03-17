@@ -57,13 +57,21 @@ public class LoginCredentials {
         this.password = password;
     }
 
-    public boolean equals(Object Obj){
-        if(this == Obj) {return true;}
+    /**
+     * Equals method.
+     * @param obj to be checked
+     * @return true if equal, false if not
+     */
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
 
-        if(Obj instanceof LoginCredentials){
-            LoginCredentials that = (LoginCredentials) Obj;
+        if (obj instanceof LoginCredentials) {
+            LoginCredentials that = (LoginCredentials) obj;
 
-            return that.getPassword().equals(this.getPassword()) && that.getUsername().equals(this.getUsername());
+            return that.getPassword().equals(this.getPassword())
+                    && that.getUsername().equals(this.getUsername());
         }
         return false;
     }
