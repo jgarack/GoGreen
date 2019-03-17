@@ -87,26 +87,4 @@ public class RegisterCredentials {
         this.password = password;
     }
 
-    /**
-     * Checks if fiven object is equal.
-     * @param obj to be checked.
-     * @return true if equal, false if not.
-     */
-    public boolean equals(Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof RegisterCredentials) {
-            RegisterCredentials regCre = (RegisterCredentials) obj;
-
-            return regCre.getUsername().equals(this.getUsername())
-                    && regCre.getAnswer().equals(this.getAnswer())
-                    && regCre.getPassword().equals(this.getPassword())
-                    && regCre.getQuestion().equals(this.getPassword());
-        }
-
-        return false;
-    }
 }

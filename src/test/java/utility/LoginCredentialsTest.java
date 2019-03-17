@@ -50,16 +50,22 @@ class LoginCredentialsTest {
     @Test
     void notEquals() {
         LC2.setPassword("pass");
-        assertNotEquals(LC1,LC2);
+        assertNotEquals(LC1, LC2);
     }
 
     @Test
     void Equals() {
-        assertEquals(LC1,LC2);
+        assertEquals(LC1, LC2);
     }
 
     @Test
     void nullEquals() {
-        assertNotEquals(null,LC2);
+        assertNotEquals(null, LC2);
     }
+
+    @Test
+    void objectEquals() {
+        assertNotEquals(new Object(), LC2);
+    }
+    
 }

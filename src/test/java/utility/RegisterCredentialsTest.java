@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class RegisterCredentialsTest {
 
     RegisterCredentials RC1 = new RegisterCredentials("username", "password", "question", "answer");
-    RegisterCredentials RC2 = new RegisterCredentials("username", "password", "question", "answer");
 
 
 

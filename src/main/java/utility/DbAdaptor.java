@@ -227,9 +227,9 @@ public class DbAdaptor {
             int score = rs.getInt(1);
 
             st = conn
-                    .prepareStatement("UPDATE Users\n"
-                            + "        SET total_score = ?\n"
-                            + "        WHERE username = ?");
+                    .prepareStatement("UPDATE users"
+                            + "SET total_score = ?"
+                            + "WHERE username = ?");
             st.setInt(one, score);
             st.setString(two, username);
             st.executeUpdate();
@@ -374,7 +374,7 @@ public class DbAdaptor {
         try {
             connect();
             rs = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
-                    .append(" activities WHERE player = ").append(username)
+                    .append(" activities WHERE player like ").append(username)
                     .append(" AND activity_id = ").append(activityID)
                     .toString()).executeQuery();
             PreparedStatement st = conn.prepareStatement("UPDATE activities SET amount = ? "

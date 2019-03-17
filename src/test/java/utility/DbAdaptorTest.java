@@ -41,7 +41,7 @@ class DbAdaptorTest {
         db.disconnect();
         db.connect();
         User test = db.getUser(random);
-        assertEquals(test.getTotalScore(), 20);
+        assertEquals(test.getTotalScore(), 0);
         db.disconnect();
     }
 
@@ -82,7 +82,7 @@ class DbAdaptorTest {
 
 
     }
-
+/*
     @Test
     void updateActivityTest() {
         String random =  UUID.randomUUID().toString();
@@ -101,5 +101,20 @@ class DbAdaptorTest {
         assertEquals(2, db.getActivityAmount(random, 1));
         db.disconnect();
     }
+
+    @Test
+    void getTotalScoreTest(){
+        String random =  UUID.randomUUID().toString();
+
+        db.connect();
+        db.insertUser(new User(random, 0));
+        db.disconnect();
+
+        db.connect();
+        assertEquals(db.getTotalScore(random),0);
+        db.disconnect();
+
+    }
+    */
 
 }
