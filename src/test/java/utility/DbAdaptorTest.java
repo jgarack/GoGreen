@@ -37,7 +37,7 @@ class DbAdaptorTest {
         db.addNewUser(new RegisterCredentials(random, "password", "q", "a"));
         db.disconnect();
         db.connect();
-        db.updateTotalScore(new ActivityDb(1, 20, 1, random));
+        db.updateTotalScore(random);
         db.disconnect();
         db.connect();
         User test = db.getUser(random);
@@ -95,9 +95,7 @@ class DbAdaptorTest {
         db.addActivity(new ActivityDb(1, 20, 12, random));
         db.disconnect();
 
-        db.connect();
         db.updateActivity(random, 1,2);
-        db.disconnect();
 
         db.connect();
         assertEquals(2, db.getActivityAmount(random, 1));

@@ -7,8 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import utility.MainHandler;
 //import org.controlsfx.glyphfont.FontAwesome;
 //import org.controlsfx.glyphfont.GlyphFont;
 //import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -49,6 +51,17 @@ public class MainController {
      */
     @FXML
     private Button personalInfo;
+    /**
+     * Bound to the greetings label on top.
+     */
+    @FXML
+    private Label greetingsText;
+
+
+    public void setGreetingsText(String greetingsText){
+        this.greetingsText.setText(greetingsText);
+        MainHandler.username = greetingsText;
+    }
 
 
 

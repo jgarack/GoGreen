@@ -161,8 +161,6 @@ public class DbAdaptor {
 
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Inserts a habit into the DB.
      *
@@ -181,7 +179,6 @@ public class DbAdaptor {
         }
 
     }
->>>>>>> fb9351c47a95a1d4b3fb3d69c88a52d557a34033
 
     /**
      * Adds activity to a user.
@@ -362,17 +359,23 @@ public class DbAdaptor {
      * @param amount     by how many should it be updated
      * @return true if worked false if exceptions
      */
-    public boolean updateActivity(final String username, final int activityID, final int amount) {
+    public boolean updateActivity(final String username, final int activityID, int amount) {
         try {
             connect();
+            rs = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
+                    .append(" activities WHERE player = ").append(username)
+                    .append(" AND activity_id = ").append(activityID)
+                    .toString()).executeQuery();
             PreparedStatement st = conn.prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
-            st.setString(one, amount + "");
+            st.setString(one, rs.getInt(one) + "");
             st.setString(two, username);
             st.setString(three, activityID + "");
-            rs = st.executeQuery();
+            st.executeUpdate();
+            st.close();
             disconnect();
             System.out.println(rs.toString());
+            updateTotalScore(username);
             return true;
         } catch (SQLException e) {
             new AlertBuilder().displayException(e);

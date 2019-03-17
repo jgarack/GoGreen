@@ -11,6 +11,7 @@ import java.io.IOException;
 public class MainHandler {
 
     private HttpRequestHandler httpHandler;
+    public static String username;
     /**
      * Constructor.
      */
@@ -48,7 +49,7 @@ public class MainHandler {
     public int updateVegMeal(int amount) {
         try {
             return Integer.parseInt(httpHandler
-                    .reqPost("/vegmeal", amount).readLine());
+                    .reqPost("/vegmeal", new UpdateRequest(username, 1, amount)).readLine());
         } catch(Exception e) {
             new AlertBuilder().displayException(e);
             return -1;
@@ -56,7 +57,7 @@ public class MainHandler {
     }
 
     public int getTotalScore() throws IOException, ServerStatusException {
-        return Integer.parseInt(httpHandler.reqGet("/total").readLine());
+        return Integer.parseInt(httpHandler.reqPost("/total", username).readLine());
     }
 
 

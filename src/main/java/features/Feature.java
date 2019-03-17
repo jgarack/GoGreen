@@ -6,6 +6,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import gui.AlertBuilder;
 import javafx.scene.control.Alert;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import utility.Activity;
 import utility.HttpRequestHandler;
 
@@ -30,6 +34,24 @@ public class Feature {
      * Magic number 60.
      */
     private final int sixty = 60;
+
+
+    /**
+     * api path.
+     */
+    private static final String BP_API = "http://impact.brighter"
+            + "planet.com";
+    /**
+     * api key.
+     */
+    private static final String BP_KEY =
+            "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
+
+    /**
+     * HttpRequestHandler object that can be used for contacting the api.
+     */
+    private static final HttpRequestHandler HTTP_HANDLER_API =
+            new HttpRequestHandler(BP_API);
 
     /**
      * Constructor for Feature.
@@ -63,42 +85,6 @@ public class Feature {
      * The builder used to build alerts for this handler.
      */
     private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
-
-
-    /**
-     * Handles request for Vegetarian meal points from server.
-     * Feature 1 VeggieMeal
-     * Feature 2 BikeRide
-     * @param choice the id of the feature that is chosen.
-     * @return returns points
-     * @author ohussein
-     */
-    public int calculatePoints(final int choice) {
-        try {
-            BufferedReader httpBody;
-            if (choice == 2) {
-                httpBody = new HttpRequestHandler(
-                    domain).reqPost(
-                    "/points", new Activity(choice, this.getValue()
-                            * sixty));
-            } else {
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()));
-            }
-
-            String con = new HttpRequestHandler(domain).resLog(
-                    httpBody, null);
-            System.out.println(con);
-            return jsonCon(con);
-
-        } catch (Exception e) {
-
-            exceptionHandler(e);
-
-        }
-        return 0;
-    }
 
 
     /**
@@ -144,5 +130,25 @@ public class Feature {
         return "Feature{"
                 + "value=" + value
                 + '}';
+    }
+
+    /**
+     * Mapping for post request to calculate points.
+     * @param amount Activity to be calculated
+     * @return ResponseEntity with http response body and status code
+     * @throws Exception UrlNotFound
+     */
+    public int vegmeal_calcScore(final int amount) {
+        try {
+            StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
+                    .append(amount).append("&timeframe=2019-03-01%2F2019-03-02")
+                    .append(BP_KEY);
+            BufferedReader httpBody =
+                    HTTP_HANDLER_API.reqGet(urlRouting.toString());
+            return jsonCon(HTTP_HANDLER_API.resLog(httpBody, null));
+        } catch(Exception e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
     }
 }
