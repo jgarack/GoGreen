@@ -15,6 +15,10 @@ public class MainHandler {
      */
     private HttpRequestHandler httpHandler;
     /**
+     * Username of the user.
+     */
+    public static String username;
+    /**
      * Constructor.
      * @param domain The host.
      */
@@ -57,8 +61,11 @@ public class MainHandler {
     public int updateVegMeal(final int amount) {
         try {
             return Integer.parseInt(httpHandler
-                    .reqPost("/vegmeal", amount).readLine());
-        } catch (Exception e) {
+
+                    .reqPost("/vegmeal",
+                            new UpdateRequest(username, 1, amount))
+                    .readLine());
+        } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);
             return -1;
         }
@@ -71,7 +78,10 @@ public class MainHandler {
      * @throws ServerStatusException When req fails.
      */
     public int getTotalScore() throws IOException, ServerStatusException {
-        return Integer.parseInt(httpHandler.reqGet("/total").readLine());
+        return Integer
+                .parseInt(httpHandler
+                        .reqPost("/total", username)
+                        .readLine());
     }
 
 

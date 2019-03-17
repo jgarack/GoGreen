@@ -311,6 +311,18 @@ public class DbAdaptor {
             st.setInt(two, 0);
             st.executeUpdate();
             st.close();
+
+            st = conn
+                    .prepareStatement("INSERT INTO "
+                            + "activities(activity_id, score, player, amount)"
+                            + " VALUES (?,?,?,?)");
+            st.setInt(one, 1);
+            st.setInt(two, 0);
+            st.setString(three, regCre.getUsername());
+            st.setInt(four, 0);
+            st.executeUpdate();
+            st.close();
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -358,20 +370,28 @@ public class DbAdaptor {
      * @param activityID which activity should be updated
      * @param amount     by how many should it be updated
      * @return true if worked false if exceptions
-     */
+
+    */
     public boolean updateActivity(final String name,
-                                  final int activityID, final int amount) {
+                                  final int activityID,
+                                  final int amount) {
         try {
             connect();
+            rs = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
+                    .append(" activities WHERE player = ").append(name)
+                    .append(" AND activity_id = ").append(activityID)
+                    .toString()).executeQuery();
             PreparedStatement st = conn
                     .prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
-            st.setString(one, amount + "");
+            st.setString(one, rs.getInt(one) + "");
             st.setString(two, name);
             st.setString(three, activityID + "");
-            rs = st.executeQuery();
+            st.executeUpdate();
+            st.close();
             disconnect();
             System.out.println(rs.toString());
+            updateTotalScore(name);
             return true;
         } catch (SQLException e) {
             new AlertBuilder().displayException(e);

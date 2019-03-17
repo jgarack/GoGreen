@@ -100,9 +100,11 @@ public final class LoginController {
                 new Pulse(root).play();
             } else {
                 MainController controller = fxmlLoader.getController();
+
                 controller
                         .setGreetingsText("Greetings, " + username.getText()
                                 .trim());
+
                 new ZoomInLeft(root).play();
             }
             stage.setX(bounds.getMinX());
