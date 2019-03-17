@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-
-
 /**
  * Adapter class for the database.
  */
@@ -139,6 +137,7 @@ public class DbAdaptor {
 
     /**
      * Inserts user into the DB.
+     *
      * @param user object of the user.
      */
     public void insertUser(final User user) {
@@ -147,8 +146,8 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
-                                        + "total_score)"
-                                        + " VALUES(?,?)");
+                            + "total_score)"
+                            + " VALUES(?,?)");
             st.setString(one, user.getUsername());
             st.setInt(two, user.getTotalScore());
             st.executeUpdate();
@@ -164,6 +163,7 @@ public class DbAdaptor {
 
     /**
      * Inserts a habit into the DB.
+     *
      * @param habitName the habit to be inserted.
      */
     public void insertActivity(final String habitName) {
@@ -182,6 +182,7 @@ public class DbAdaptor {
 
     /**
      * Adds activity to a user.
+     *
      * @param activity object that holds all needed fields for activity relation.
      */
     public void addActivity(final ActivityDb activity) {
@@ -197,7 +198,7 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            updateTotalScore(activity);
+            updateTotalScore(activity.getUsernameAct());
 
 
         } catch (SQLException e) {
@@ -207,20 +208,34 @@ public class DbAdaptor {
 
     /**
      * updates total_score when inserting to activities table.
-     * @param activity says which user should have the total_score updated.
+     *
+     * @param username says which user should have the total_score updated.
      */
-    public void updateTotalScore(final ActivityDb activity) {
+    public void updateTotalScore(final String username) {
 
         try {
+            connect();
+
             PreparedStatement st = conn
+                    .prepareStatement("SELECT sum(score) " +
+                            "FROM activities" +
+                            "WHERE player = ?");
+            st.setString(one, username);
+            rs = st.executeQuery();
+            st.close();
+
+            int score = rs.getInt(1);
+
+            st = conn
                     .prepareStatement("UPDATE Users\n"
-                            + "        SET total_score = total_score + ?\n"
+                            + "        SET total_score = ?\n"
                             + "        WHERE username = ?");
-            st.setInt(one, activity.getScore());
-            st.setString(two, activity.getUsernameAct());
+            st.setInt(one, score);
+            st.setString(two, username);
             st.executeUpdate();
             st.close();
 
+            disconnect();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -229,6 +244,7 @@ public class DbAdaptor {
 
     /**
      * authentication of user who is logging in.
+     *
      * @param logCre object with username and password fields.
      * @return boolean true if ok false if not ok.
      */
@@ -245,7 +261,7 @@ public class DbAdaptor {
             st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
 
-            LoginCredentials tempLC = new LoginCredentials( null, null);
+            LoginCredentials tempLC = new LoginCredentials(null, null);
 
 
             while (rs.next()) {
@@ -260,7 +276,6 @@ public class DbAdaptor {
             return false;
 
 
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -271,6 +286,7 @@ public class DbAdaptor {
 
     /**
      * adds newly registered user to the database.
+     *
      * @param regCre object that holds all data for registering.
      * @return
      */
@@ -305,6 +321,7 @@ public class DbAdaptor {
 
     /**
      * Gets user from the DB.
+     *
      * @param userName username upon which a user is searched.\
      * @return User info.
      */
@@ -336,9 +353,10 @@ public class DbAdaptor {
 
     /**
      * updates activity.
-     * @param username whose activity should be updated
+     *
+     * @param username   whose activity should be updated
      * @param activityID which activity should be updated
-     * @param amount by how many should it be updated
+     * @param amount     by how many should it be updated
      * @return true if worked false if exceptions
      */
     public boolean updateActivity(final String username, final int activityID, final int amount) {
@@ -361,7 +379,8 @@ public class DbAdaptor {
 
     /**
      * returns activity amount.
-     * @param username username whose activity amount should be returned.
+     *
+     * @param username   username whose activity amount should be returned.
      * @param activityID id of the activity
      * @return amount of given activity of given user
      */
@@ -383,6 +402,7 @@ public class DbAdaptor {
 
     /**
      * returns total_score.
+     *
      * @param username which total_score should be returned.
      * @return total_score
      */
@@ -400,7 +420,6 @@ public class DbAdaptor {
             return -1;
         }
     }
-
 
 
 }
