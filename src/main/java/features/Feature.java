@@ -29,7 +29,7 @@ public class Feature {
     /**
      * Magic number 60.
      */
-    private final int sixty = 60;
+    private int pointMultiplier;
 
     /**
      * Constructor for Feature.
@@ -59,6 +59,7 @@ public class Feature {
     public void setValue(final int raw) {
         this.value = raw;
     }
+
     /**
      * The builder used to build alerts for this handler.
      */
@@ -69,23 +70,40 @@ public class Feature {
      * Handles request for Vegetarian meal points from server.
      * Feature 1 VeggieMeal
      * Feature 2 BikeRide
+     *
      * @param choice the id of the feature that is chosen.
      * @return returns points
      * @author ohussein
      */
+
+    //To add more features, add another if-else statement with appropriate choice ID and pointMultiplier.
     public int calculatePoints(final int choice) {
         try {
             BufferedReader httpBody;
-            if (choice == 2) {
-                httpBody = new HttpRequestHandler(
-                    domain).reqPost(
-                    "/points", new Activity(choice, this.getValue()
-                            * sixty));
-            } else {
+
+            //Picking Vegetarian Meal
+            if (choice == 1) {
                 httpBody = new HttpRequestHandler(
                         domain).reqPost(
                         "/points", new Activity(choice, this.getValue()));
             }
+
+            //Picking Bike Ride
+            else if (choice == 2) {
+                pointMultiplier = 60;
+                httpBody = new HttpRequestHandler(
+                        domain).reqPost(
+                        "/points", new Activity(choice, this.getValue()
+                                * pointMultiplier));
+            }
+
+            //The default case, same as picking a Vegetarian Meal
+            else {
+                httpBody = new HttpRequestHandler(
+                        domain).reqPost(
+                        "/points", new Activity(choice, this.getValue()));
+            }
+
 
             String con = new HttpRequestHandler(domain).resLog(
                     httpBody, null);
