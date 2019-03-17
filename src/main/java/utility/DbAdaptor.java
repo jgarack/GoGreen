@@ -182,8 +182,8 @@ public class DbAdaptor {
 
     /**
      * Adds activity to a user.
-     *
-     * @param activity object that holds all needed fields for activity relation.
+     * @param activity object that holds
+     *                 all needed fields for activity relation.
      */
     public void addActivity(final ActivityDb activity) {
         try {
@@ -209,18 +209,18 @@ public class DbAdaptor {
     /**
      * updates total_score when inserting to activities table.
      *
-     * @param username says which user should have the total_score updated.
+     * @param name says which user should have the total_score updated.
      */
-    public void updateTotalScore(final String username) {
+    public void updateTotalScore(final String name) {
 
         try {
             connect();
 
             PreparedStatement st = conn
-                    .prepareStatement("SELECT sum(score) " +
-                            "FROM activities" +
-                            "WHERE player = ?");
-            st.setString(one, username);
+                    .prepareStatement("SELECT sum(score) "
+                            + "FROM activities"
+                            + "WHERE player = ?");
+            st.setString(one, name);
             rs = st.executeQuery();
             st.close();
 
@@ -231,7 +231,7 @@ public class DbAdaptor {
                             + "SET total_score = ?"
                             + "WHERE username = ?");
             st.setInt(one, score);
-            st.setString(two, username);
+            st.setString(two, name);
             st.executeUpdate();
             st.close();
 
@@ -244,18 +244,18 @@ public class DbAdaptor {
 
     /**
      * authentication of user who is logging in.
-     *
      * @param logCre object with username and password fields.
      * @return boolean true if ok false if not ok.
      */
-    public boolean comparecredentials(LoginCredentials logCre) {
+    public boolean comparecredentials(final LoginCredentials logCre) {
 
 
         try {
 
 
             PreparedStatement st = conn.prepareStatement(
-                    "SELECT username, password FROM credentials WHERE username = ?");
+                    "SELECT username,"
+                            + " password FROM credentials WHERE username = ?");
 
 
             st.setString(1, logCre.getUsername());
@@ -288,9 +288,9 @@ public class DbAdaptor {
      * adds newly registered user to the database.
      *
      * @param regCre object that holds all data for registering.
-     * @return
+     * @return returns true iff the adding has been successful.
      */
-    public boolean addNewUser(RegisterCredentials regCre) {
+    public boolean addNewUser(final RegisterCredentials regCre) {
 
         try {
             PreparedStatement st = conn
@@ -314,7 +314,8 @@ public class DbAdaptor {
 
             st = conn
                     .prepareStatement("INSERT INTO "
-                            + "activities(activity_id, score, player, amount) VALUES (?,?,?,?)");
+                            + "activities(activity_id, score, player, amount)"
+                            + " VALUES (?,?,?,?)");
             st.setInt(one, 1);
             st.setInt(two, 0);
             st.setString(three, regCre.getUsername());
@@ -365,28 +366,36 @@ public class DbAdaptor {
     /**
      * updates activity.
      *
-     * @param username   whose activity should be updated
+     * @param name   whose activity should be updated
      * @param activityID which activity should be updated
      * @param amount     by how many should it be updated
      * @return true if worked false if exceptions
-     */
-    public boolean updateActivity(final String username, final int activityID, int amount) {
+
+    */
+    public boolean updateActivity(final String name,
+                                  final int activityID,
+                                  final int amount) {
         try {
             connect();
             rs = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
+<<<<<<< HEAD
                     .append(" activities WHERE player like ").append(username)
+=======
+                    .append(" activities WHERE player = ").append(name)
+>>>>>>> a29106c46fe70a8832859365f9929be2231ff2f5
                     .append(" AND activity_id = ").append(activityID)
                     .toString()).executeQuery();
-            PreparedStatement st = conn.prepareStatement("UPDATE activities SET amount = ? "
+            PreparedStatement st = conn
+                    .prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
             st.setString(one, rs.getInt(one) + "");
-            st.setString(two, username);
+            st.setString(two, name);
             st.setString(three, activityID + "");
             st.executeUpdate();
             st.close();
             disconnect();
             System.out.println(rs.toString());
-            updateTotalScore(username);
+            updateTotalScore(name);
             return true;
         } catch (SQLException e) {
             new AlertBuilder().displayException(e);
@@ -397,16 +406,16 @@ public class DbAdaptor {
     /**
      * returns activity amount.
      *
-     * @param username   username whose activity amount should be returned.
+     * @param name   username whose activity amount should be returned.
      * @param activityID id of the activity
      * @return amount of given activity of given user
      */
-    public int getActivityAmount(final String username, final int activityID) {
+    public int getActivityAmount(final String name, final int activityID) {
         try {
             connect();
             StringBuilder query = new StringBuilder(
                     "SELECT score FROM activities WHERE player = ")
-                    .append(username).append(" AND activity_id = ")
+                    .append(name).append(" AND activity_id = ")
                     .append(activityID);
             rs = conn.prepareStatement(query.toString()).executeQuery();
             disconnect();
@@ -420,15 +429,15 @@ public class DbAdaptor {
     /**
      * returns total_score.
      *
-     * @param username which total_score should be returned.
+     * @param name which total_score should be returned.
      * @return total_score
      */
-    public int getTotalScore(final String username) {
+    public int getTotalScore(final String name) {
         try {
             connect();
             StringBuilder query = new StringBuilder(
                     "SELECT total_score FROM users WHERE username = ")
-                    .append(username);
+                    .append(name);
             rs = conn.prepareStatement(query.toString()).executeQuery();
             disconnect();
             return rs.getInt(one);

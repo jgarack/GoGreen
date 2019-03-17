@@ -4,12 +4,9 @@ package features;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 import javafx.scene.control.Alert;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import utility.Activity;
 import utility.HttpRequestHandler;
 
@@ -33,7 +30,11 @@ public class Feature {
     /**
      * Magic number 60.
      */
-    private final int sixty = 60;
+    private static final int SIXTY = 60;
+    /**
+     * Multiplier for the score of the user.
+     */
+    private int pointMultiplier;
 
 
     /**
@@ -81,10 +82,59 @@ public class Feature {
     public void setValue(final int raw) {
         this.value = raw;
     }
+
     /**
      * The builder used to build alerts for this handler.
      */
     private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
+
+
+    /**
+
+     * Handles request for Vegetarian meal points from server.
+     * Feature 1 VeggieMeal
+     * Feature 2 BikeRide
+     * @param choice the id of the feature that is chosen.
+     * @return returns points
+     * @author ohussein
+     */
+
+    //To add more features, add another if-else statement
+    // with appropriate choice ID and pointMultiplier.
+    public int calculatePoints(final int choice) {
+        try {
+            BufferedReader httpBody;
+
+            //Picking Vegetarian Meal
+            if (choice == 1) {
+                httpBody = new HttpRequestHandler(
+                        domain).reqPost(
+                        "/points", new Activity(choice, this.getValue()));
+            } /*Picking Bike Ride*/ else if (choice == 2) {
+                pointMultiplier = SIXTY;
+                httpBody = new HttpRequestHandler(
+                        domain).reqPost(
+                        "/points", new Activity(choice, this.getValue()
+                                * pointMultiplier));
+            } else {
+                httpBody = new HttpRequestHandler(
+                        domain).reqPost(
+                        "/points", new Activity(choice, this.getValue()));
+            }
+
+
+            String con = new HttpRequestHandler(domain).resLog(
+                    httpBody, null);
+            System.out.println(con);
+            return jsonCon(con);
+
+        } catch (Exception e) {
+
+            exceptionHandler(e);
+
+        }
+        return 0;
+    }
 
 
     /**
@@ -138,7 +188,7 @@ public class Feature {
      * @return ResponseEntity with http response body and status code
      * @throws Exception UrlNotFound
      */
-    public int vegmeal_calcScore(final int amount) {
+    public int vegmealCalcScore(final int amount) {
         try {
             StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
                     .append(amount).append("&timeframe=2019-03-01%2F2019-03-02")
@@ -146,7 +196,7 @@ public class Feature {
             BufferedReader httpBody =
                     HTTP_HANDLER_API.reqGet(urlRouting.toString());
             return jsonCon(HTTP_HANDLER_API.resLog(httpBody, null));
-        } catch(Exception e) {
+        } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);
             return -1;
         }

@@ -1,6 +1,5 @@
 package utility;
 
-import java.sql.Date;
 
 /**
  * Class for the activities.
@@ -31,7 +30,7 @@ public class ActivityDb {
      * Constructor.
      * @param actId number of activity.
      * @param scoreUser calculated score.
-     * @param activityDate when the activity was done.
+     * @param count when the activity was done.
      * @param userName username of the user.
      */
     public ActivityDb(final int actId, final int scoreUser,
@@ -66,24 +65,44 @@ public class ActivityDb {
         return amount;
     }
 
-    public void setActivityId(int activityId) {
-        this.activityId = activityId;
+    /**
+     * Sets the id of the activity.
+     * @param activity the id to be set.
+     */
+    public void setActivityId(final int activity) {
+        this.activityId = activity;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    /**
+     * Sets the score of the user.
+     * @param userScore the score to be set.
+     */
+    public void setScore(final int userScore) {
+        this.score = userScore;
     }
 
+    /**
+     *  Sets amount.
+     * @param count the amount to be set.
+     */
     public void setAmount(final int count) {
         this.amount = count;
     }
 
+    /**
+     * Increases amount with count.
+     * @param count Increases the amount.
+     */
     public void increaseAmount(final int count) {
         this.amount += count;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    /**
+     * Sets a new username.
+     * @param name The username to be set.
+     */
+    public void setUsername(final String name) {
+        this.username = name;
     }
 
     /**

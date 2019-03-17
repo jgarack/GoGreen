@@ -12,7 +12,8 @@
     -fx-max-height: 20%;
 }
 #navBar{
-    -fx-background-color:  	#4B0082;
+    -fx-background-color: transparent;
+    -fx-padding: 5 5 0 5;
 }
 #home,#howToPlay,#aboutUs,#personalInfo{
     -fx-text-fill: white;

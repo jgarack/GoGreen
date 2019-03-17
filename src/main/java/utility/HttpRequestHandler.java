@@ -163,12 +163,6 @@ public class HttpRequestHandler {
     public String resLog(final BufferedReader message,
                                 final String filepath) {
         try {
-            //TODO: Implement logging to file
-            /*
-            File log = new File(filepath);
-            log.mkdirs();
-            FileHandler handler = new FileHandler(filepath);
-            */
             String line;
             StringBuilder logtxt = new StringBuilder();
             while ((line = message.readLine()) != null) {

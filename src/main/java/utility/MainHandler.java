@@ -10,10 +10,17 @@ import java.io.IOException;
  */
 public class MainHandler {
 
+    /**
+     * A private Handler for Http requests.
+     */
     private HttpRequestHandler httpHandler;
+    /**
+     * Username of the user.
+     */
     public static String username;
     /**
      * Constructor.
+     * @param domain The host.
      */
     public MainHandler(final String domain) {
         httpHandler = new HttpRequestHandler(domain);
@@ -46,18 +53,35 @@ public class MainHandler {
         return initVal >= valSubtract;
     }
 
-    public int updateVegMeal(int amount) {
+    /**
+     * Updates a veg meal.
+     * @param amount to be updated.
+     * @return returns the new amount.
+     */
+    public int updateVegMeal(final int amount) {
         try {
             return Integer.parseInt(httpHandler
-                    .reqPost("/vegmeal", new UpdateRequest(username, 1, amount)).readLine());
-        } catch(Exception e) {
+
+                    .reqPost("/vegmeal",
+                            new UpdateRequest(username, 1, amount))
+                    .readLine());
+        } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);
             return -1;
         }
     }
 
+    /**
+     * Gets the total score.
+     * @return the total score.
+     * @throws IOException When req fails.
+     * @throws ServerStatusException When req fails.
+     */
     public int getTotalScore() throws IOException, ServerStatusException {
-        return Integer.parseInt(httpHandler.reqPost("/total", username).readLine());
+        return Integer
+                .parseInt(httpHandler
+                        .reqPost("/total", username)
+                        .readLine());
     }
 
 
