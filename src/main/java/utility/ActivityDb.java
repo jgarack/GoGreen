@@ -25,7 +25,7 @@ public class ActivityDb {
     /**
      * variable that stores the username of the user who did the activity.
      */
-    private User username;
+    private String username;
 
     /**
      * Constructor.
@@ -35,7 +35,7 @@ public class ActivityDb {
      * @param userName username of the user.
      */
     public ActivityDb(final int actId, final int scoreUser,
-                      final Date activityDate, final User userName) {
+                      final Date activityDate, final String userName) {
         this.activityId = actId;
         this.score = scoreUser;
         this.dateOfActivity = activityDate;
@@ -66,11 +66,27 @@ public class ActivityDb {
         return dateOfActivity;
     }
 
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setDateOfActivity(Date dateOfActivity) {
+        this.dateOfActivity = dateOfActivity;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     /**
      * returns the username of the user.
      * @return the username of the user.
      */
-    public User getUsernameAct() {
+    public String getUsernameAct() {
         return username;
     }
 }

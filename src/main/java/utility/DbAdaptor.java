@@ -2,12 +2,7 @@ package utility;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Adapter class for the database.
@@ -141,14 +136,10 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
-                                        + " gender,total_score,"
-                                        + " date_of_birth)"
-                                        + " VALUES(?,?,?,?)");
+                                        + "total_score)"
+                                        + " VALUES(?,?)");
             st.setString(one, user.getUsername());
-            st.setString(two, user.getGender());
-            st.setInt(three, user.getTotalScore());
-            st.setString(four, user.getDateOfBirth());
-            System.out.println(st.toString());
+            st.setInt(two, user.getTotalScore());
             st.executeUpdate();
             st.close();
             System.out.println("Inserted");
@@ -178,6 +169,43 @@ public class DbAdaptor {
 
     }
 
+    public ActivityDb getActivityByDate(String username, Date date){
+
+        try {
+
+
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT activity_id, score, player, date_of_activity FROM activities WHERE player = ? AND date_of_activity = ?");
+
+
+            st.setString(1,username);
+            st.setDate(two, date);
+            rs = st.executeQuery();
+
+            ActivityDb actDB = new ActivityDb( 0,0 , null, null);
+
+
+            while (rs.next()) {
+               actDB.setActivityId(rs.getInt(one));
+               actDB.setScore(rs.getInt(two));
+               actDB.setDateOfActivity(rs.getDate(three));
+               actDB.setUsername(rs.getString(four));
+               break;
+            }
+
+
+            return actDB;
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return null;
+    }
+
     /**
      * Adds activity to a user.
      * @param activity object that holds all needed fields for activity relation.
@@ -186,9 +214,9 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
-                            + "Activities(pleyer_id, activity_id,"
+                            + "Activities(player, activity_id,"
                             + " date_of_activity, score) VALUES (?,?,?,?)");
-            st.setString(one, activity.getUsernameAct().getUsername());
+            st.setString(one, activity.getUsernameAct());
             st.setInt(two, activity.getActivityId());
             st.setDate(three, activity.getDateOfActivity());
             st.setInt(four, activity.getScore());
@@ -290,14 +318,12 @@ public class DbAdaptor {
             st.setString(1, userName);
             rs = st.executeQuery();
 
-            User tempUser = new User(null,
-                        null, 0, null);
-
-            tempUser.setUsername(rs.getString(one));
-            tempUser.setGender(rs.getString(two));
-            tempUser.setTotalScore(rs.getInt(three));
-            tempUser.setDateOfBirth(rs.getString(four));
-
+            User tempUser = new User(null, 0);
+            while(rs.next()) {
+                tempUser.setUsername(rs.getString(one));
+                tempUser.setTotalScore(rs.getInt(two));
+                break;
+            }
 
             return tempUser;
 
