@@ -2,58 +2,106 @@ package utility;
 
 import org.junit.jupiter.api.Test;
 import java.sql.Date;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DbAdaptorTest {
     DbAdaptor db = new DbAdaptor();
 
+    @Test
+    void ConstructorTest(){
+
+    }
+
 
     @Test
     void insertUser() {
         db.connect();
-        User user = new User("testUser", 1000 );
+        String random =  UUID.randomUUID().toString();
+
+        User user = new User(random, 1000 );
         db.insertUser(user);
         db.disconnect();
         db.connect();
-        User user2 = db.getUser("testUser");
+        User user2 = db.getUser(random);
         assertEquals(user2.getUsername(), user.getUsername());
         assertEquals(user2.getTotalScore(), user.getTotalScore());
         db.disconnect();
     }
 
     @Test
-    void insertActivity() {
-
-    }
-/*
-    @Test
-    void addActivity() {
+    void updateTotalScoreTest() {
         db.connect();
-        Date date1 = new Date(System.currentTimeMillis());
-        String date = date1.toString();
-        ActivityDb activity = new ActivityDb(1, 450, date, "testUser");
-        db.addActivity(activity);
+        String random = UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "password", "q", "a"));
         db.disconnect();
         db.connect();
-        ActivityDb adb = db.getActivityByDate("testUser", date);
-        assertEquals(adb.getActivityId(), activity.getActivityId());
-        assertEquals(adb.getDateOfActivity(), activity.getDateOfActivity());
-        assertEquals(adb.getScore(), activity.getScore());
-        assertEquals(adb.getUsernameAct(), activity.getUsernameAct());
-
+        db.updateTotalScore(new ActivityDb(1, 20, 1, random));
+        db.disconnect();
+        db.connect();
+        User test = db.getUser(random);
+        assertEquals(test.getTotalScore(), 20);
         db.disconnect();
     }
-*/
+
+
     @Test
     void comparecredentials() {
+        db.connect();
+        String random =  UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "pass","que", "ans"));
+        db.disconnect();
+        db.connect();
+        LoginCredentials LC = new LoginCredentials(random,"pass");
+        assertEquals(db.comparecredentials(LC),true);
+        db.disconnect();
     }
 
     @Test
     void addNewUser() {
+        db.connect();
+        String random =  UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "pass","que", "ans"));
+        db.disconnect();
+        LoginCredentials LC = new LoginCredentials(random,"pass");
+        db.connect();
+        assertEquals(db.comparecredentials(LC),true);
+        db.disconnect();
     }
 
     @Test
     void getUser() {
+        String random =  UUID.randomUUID().toString();
+        db.connect();
+        db.insertUser(new User(random, 0));
+        db.disconnect();
+        db.connect();
+        assertEquals(db.getUser(random).getUsername(), random);
+        db.disconnect();
+
+
     }
+
+    @Test
+    void updateActivityTest() {
+        String random =  UUID.randomUUID().toString();
+
+        db.connect();
+        db.insertUser(new User(random, 0));
+        db.disconnect();
+
+        db.connect();
+        db.addActivity(new ActivityDb(1, 20, 12, random));
+        db.disconnect();
+
+        db.connect();
+        db.updateActivity(random, 1,2);
+        db.disconnect();
+
+        db.connect();
+        assertEquals(2, db.getActivityAmount(random, 1));
+        db.disconnect();
+    }
+
 }

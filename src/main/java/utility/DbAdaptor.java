@@ -162,23 +162,6 @@ public class DbAdaptor {
 
     }
 
-    /**
-     * Inserts a habit into the DB.
-     * @param habitName the habit to be inserted.
-     */
-    public void insertActivity(final String habitName) {
-        try {
-            PreparedStatement st = conn
-                    .prepareStatement("INSERT INTO activity "
-                            + "(name) VALUES (?)");
-            st.setString(1, habitName);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     /**
      * Adds activity to a user.
