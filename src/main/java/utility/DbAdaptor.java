@@ -1,5 +1,6 @@
 package utility;
 
+import features.Feature;
 import gui.AlertBuilder;
 
 import java.net.URI;
@@ -377,29 +378,46 @@ public class DbAdaptor {
                                   final int amount) {
         try {
             connect();
-            rs = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
-<<<<<<< HEAD
-                    .append(" activities WHERE player like ").append(username)
-=======
-                    .append(" activities WHERE player = ").append(name)
->>>>>>> a29106c46fe70a8832859365f9929be2231ff2f5
-                    .append(" AND activity_id = ").append(activityID)
-                    .toString()).executeQuery();
-            PreparedStatement st = conn
-                    .prepareStatement("UPDATE activities SET amount = ? "
+            PreparedStatement st = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
+                    .append(" activities WHERE player = ?")
+                    .append(" AND activity_id = ?")
+                    .toString());
+            st.setString(one, username);
+            st.setInt(two, activityID);
+            rs = st.executeQuery();
+            amount += rs.getInt("amount");
+            PreparedStatement pst = conn.prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
-            st.setString(one, rs.getInt(one) + "");
-            st.setString(two, name);
-            st.setString(three, activityID + "");
-            st.executeUpdate();
-            st.close();
+            pst.setString(one, amount + "");
+            pst.setString(two, username);
+            pst.setString(three, activityID + "");
+            pst.executeUpdate();
+            pst.close();
             disconnect();
             System.out.println(rs.toString());
-            updateTotalScore(name);
+            calculateScore(username, activityID, amount);
+            updateTotalScore(username);
             return true;
         } catch (SQLException e) {
-            new AlertBuilder().displayException(e);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
+        }
+    }
+
+    public void calculateScore(final String username, final int activityID,
+                                final int amount) {
+        try {
+            PreparedStatement st = conn.prepareStatement(new StringBuilder(
+                    "UPDATE activities SET score = ? WHERE player = ")
+                    .append(username).append(" AND activity_id = ")
+                    .append(activityID).toString());
+            st.setInt(one, new Feature("1").vegmeal_calcScore(amount));
+            st.executeUpdate();
+            st.close();
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -421,7 +439,8 @@ public class DbAdaptor {
             disconnect();
             return rs.getInt(one);
         } catch (SQLException e) {
-            new AlertBuilder().displayException(e);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return -1;
         }
     }
@@ -442,7 +461,8 @@ public class DbAdaptor {
             disconnect();
             return rs.getInt(one);
         } catch (SQLException e) {
-            new AlertBuilder().displayException(e);
+            System.out.println(e.getMessage());
+            e.printStackTrace();
             return -1;
         }
     }

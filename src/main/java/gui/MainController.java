@@ -68,8 +68,6 @@ public class MainController {
 
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
-        MainHandler.username = greetingstext;
-
     }
 
 

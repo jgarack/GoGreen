@@ -13,6 +13,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
+import utility.MainHandler;
+
 import java.io.IOException;
 
 /**
@@ -100,11 +102,10 @@ public final class LoginController {
                 new Pulse(root).play();
             } else {
                 MainController controller = fxmlLoader.getController();
-
                 controller
                         .setGreetingsText("Greetings, " + username.getText()
                                 .trim());
-
+                MainHandler.username = username.getText().trim();
                 new ZoomInLeft(root).play();
             }
             stage.setX(bounds.getMinX());

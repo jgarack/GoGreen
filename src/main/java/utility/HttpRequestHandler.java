@@ -23,7 +23,7 @@ public class HttpRequestHandler {
         + "10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
         + "Chrome/60.0.3112.113 Safari/537.36";
     /** The default url to use in HTTP requests. **/
-    private static String domain;
+    private String domain;
 
     /**
      * Class Constructor for domain.

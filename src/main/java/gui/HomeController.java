@@ -190,9 +190,9 @@ public class HomeController {
      * that has been used filled in the text field.
      * @param event The fired event when the decrease button is pressed.
      */
-    /*@FXML
+    @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+        /*if (MainHandler.tryParseInt(bicycleUsage.getText())) {
             Feature meal = new Feature(bicycleUsage.getText());
             int bicycleUse = Integer.parseInt(bicycleUsage.getText());
             if (MainHandler.checkPositiveValues(this.bicycleUsed,
@@ -214,16 +214,16 @@ public class HomeController {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
-        }
-    }*/
+        }*/
+    }
     /**
      * Used to increase the amount of times a bicycle
      * that has been used filled in the text field.
      * @param event The fired event when the increase button is pressed.
      */
-    /*@FXML
+    @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+        /*if (MainHandler.tryParseInt(bicycleUsage.getText())) {
             Feature meal = new Feature(bicycleUsage.getText());
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
             this.pointsEarned += meal.calculatePoints(2);
@@ -240,8 +240,8 @@ public class HomeController {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
-        }
-    }*/
+        }*/
+    }
 
     /**
      *  Makes the points earned label glow.
