@@ -56,11 +56,14 @@ public class RegisterHandler {
         if (checkForm(username, pass, confirmPass,
                 secretQuestion, secretAnswer)) {
             try {
+
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 String md5Pass = DatatypeConverter.printHexBinary(
                         md5.digest(pass.getBytes()));
+                RegisterCredentials RC = new RegisterCredentials(username, md5Pass, secretQuestion, secretAnswer);
+
                 httpHandler.reqPost("/register",
-                        new AccountMessage(username, md5Pass));
+                        RC);
                 alertBuilder
                         .showInformationNotification(
                                 "You have registered successfully!");

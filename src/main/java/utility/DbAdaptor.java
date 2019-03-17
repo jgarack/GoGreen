@@ -1,13 +1,17 @@
 package utility;
 
+import gui.AlertBuilder;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 
 /**
  * Adapter class for the database.
@@ -133,6 +137,7 @@ public class DbAdaptor {
 
     /**
      * Inserts user into the DB.
+     *
      * @param user object of the user.
      */
     public void insertUser(final User user) {
@@ -141,14 +146,10 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
-                                        + " gender,total_score,"
-                                        + " date_of_birth)"
-                                        + " VALUES(?,?,?,?)");
+                            + "total_score)"
+                            + " VALUES(?,?)");
             st.setString(one, user.getUsername());
-            st.setString(two, user.getGender());
-            st.setInt(three, user.getTotalScore());
-            st.setString(four, user.getDateOfBirth());
-            System.out.println(st.toString());
+            st.setInt(two, user.getTotalScore());
             st.executeUpdate();
             st.close();
             System.out.println("Inserted");
@@ -162,13 +163,14 @@ public class DbAdaptor {
 
     /**
      * Inserts a habit into the DB.
+     *
      * @param habitName the habit to be inserted.
      */
     public void insertActivity(final String habitName) {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO activity "
-                            + "(activity) VALUES (?)");
+                            + "(name) VALUES (?)");
             st.setString(1, habitName);
             st.executeUpdate();
             st.close();
@@ -180,31 +182,146 @@ public class DbAdaptor {
 
     /**
      * Adds activity to a user.
-     * @param playerId the user to which activity is added.
-     * @param activityId the activity to be added.
-     * @param dateOfActivity date of the activity.
-     * @param score score of the activity.
+     *
+     * @param activity object that holds all needed fields for activity relation.
      */
-    public void addActivity(final int playerId, final int activityId,
-                            final String dateOfActivity, final int score) {
+    public void addActivity(final ActivityDb activity) {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
-                            + "Activities(pleye_id, activity_id,"
-                            + " date_of_activity, score) VALUES (?,?,?,?)");
-            st.setInt(one, playerId);
-            st.setInt(two, activityId);
-            st.setString(three, dateOfActivity);
-            st.setInt(four, score);
+                            + "Activities(player, activity_id,"
+                            + " amount, score) VALUES (?,?,?,?)");
+            st.setString(one, activity.getUsernameAct());
+            st.setInt(two, activity.getActivityId());
+            st.setInt(three, activity.getAmount());
+            st.setInt(four, activity.getScore());
             st.executeUpdate();
             st.close();
+
+            updateTotalScore(activity.getUsernameAct());
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
+     * updates total_score when inserting to activities table.
+     *
+     * @param username says which user should have the total_score updated.
+     */
+    public void updateTotalScore(final String username) {
+
+        try {
+            connect();
+
+            PreparedStatement st = conn
+                    .prepareStatement("SELECT sum(score) " +
+                            "FROM activities" +
+                            "WHERE player = ?");
+            st.setString(one, username);
+            rs = st.executeQuery();
+            st.close();
+
+            int score = rs.getInt(1);
+
+            st = conn
+                    .prepareStatement("UPDATE Users\n"
+                            + "        SET total_score = ?\n"
+                            + "        WHERE username = ?");
+            st.setInt(one, score);
+            st.setString(two, username);
+            st.executeUpdate();
+            st.close();
+
+            disconnect();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * authentication of user who is logging in.
+     *
+     * @param logCre object with username and password fields.
+     * @return boolean true if ok false if not ok.
+     */
+    public boolean comparecredentials(LoginCredentials logCre) {
+
+
+        try {
+
+
+            PreparedStatement st = conn.prepareStatement(
+                    "SELECT username, password FROM credentials WHERE username = ?");
+
+
+            st.setString(1, logCre.getUsername());
+            rs = st.executeQuery();
+
+            LoginCredentials tempLC = new LoginCredentials(null, null);
+
+
+            while (rs.next()) {
+                tempLC.setUsername(rs.getString(one));
+                tempLC.setPassword(rs.getString(two));
+            }
+
+            if (logCre.equals(tempLC)) {
+                return true;
+            }
+
+            return false;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return false;
+    }
+
+    /**
+     * adds newly registered user to the database.
+     *
+     * @param regCre object that holds all data for registering.
+     * @return
+     */
+    public boolean addNewUser(RegisterCredentials regCre) {
+
+        try {
+            PreparedStatement st = conn
+                    .prepareStatement("INSERT INTO "
+                            + "credentials(username, password,"
+                            + " question, answer) VALUES (?,?,?,?)");
+            st.setString(one, regCre.getUsername());
+            st.setString(two, regCre.getPassword());
+            st.setString(three, regCre.getQuestion());
+            st.setString(four, regCre.getAnswer());
+            st.executeUpdate();
+            st.close();
+
+            st = conn
+                    .prepareStatement("INSERT INTO "
+                            + "users(username, total_score) VALUES (?,?)");
+            st.setString(one, regCre.getUsername());
+            st.setInt(two, 0);
+            st.executeUpdate();
+            st.close();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
      * Gets user from the DB.
+     *
      * @param userName username upon which a user is searched.\
      * @return User info.
      */
@@ -218,15 +335,12 @@ public class DbAdaptor {
             st.setString(1, userName);
             rs = st.executeQuery();
 
-            User tempUser = new User(null,
-                        null, 0, null);
-
-            tempUser.setUsername(rs.getString(one));
-            tempUser.setGender(rs.getString(two));
-            tempUser.setTotalScore(rs.getInt(three));
-            tempUser.setDateOfBirth(rs.getString(four));
-
-            System.out.println(tempUser.toString());
+            User tempUser = new User(null, 0);
+            while (rs.next()) {
+                tempUser.setUsername(rs.getString(one));
+                tempUser.setTotalScore(rs.getInt(two));
+                break;
+            }
 
             return tempUser;
 
@@ -237,6 +351,75 @@ public class DbAdaptor {
         return null;
     }
 
+    /**
+     * updates activity.
+     *
+     * @param username   whose activity should be updated
+     * @param activityID which activity should be updated
+     * @param amount     by how many should it be updated
+     * @return true if worked false if exceptions
+     */
+    public boolean updateActivity(final String username, final int activityID, final int amount) {
+        try {
+            connect();
+            PreparedStatement st = conn.prepareStatement("UPDATE activities SET amount = ? "
+                    + "WHERE player = ? AND activity_id = ?");
+            st.setString(one, amount + "");
+            st.setString(two, username);
+            st.setString(three, activityID + "");
+            rs = st.executeQuery();
+            disconnect();
+            System.out.println(rs.toString());
+            return true;
+        } catch (SQLException e) {
+            new AlertBuilder().displayException(e);
+            return false;
+        }
+    }
+
+    /**
+     * returns activity amount.
+     *
+     * @param username   username whose activity amount should be returned.
+     * @param activityID id of the activity
+     * @return amount of given activity of given user
+     */
+    public int getActivityAmount(final String username, final int activityID) {
+        try {
+            connect();
+            StringBuilder query = new StringBuilder(
+                    "SELECT score FROM activities WHERE player = ")
+                    .append(username).append(" AND activity_id = ")
+                    .append(activityID);
+            rs = conn.prepareStatement(query.toString()).executeQuery();
+            disconnect();
+            return rs.getInt(one);
+        } catch (SQLException e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
+
+    /**
+     * returns total_score.
+     *
+     * @param username which total_score should be returned.
+     * @return total_score
+     */
+    public int getTotalScore(final String username) {
+        try {
+            connect();
+            StringBuilder query = new StringBuilder(
+                    "SELECT total_score FROM users WHERE username = ")
+                    .append(username);
+            rs = conn.prepareStatement(query.toString()).executeQuery();
+            disconnect();
+            return rs.getInt(one);
+        } catch (SQLException e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
 
 
 }

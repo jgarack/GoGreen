@@ -40,4 +40,40 @@ public class LoginCredentials {
     public String getPassword() {
         return password;
     }
+
+    /**
+     * sets username.
+     * @param username to be set.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * sets password.
+     * @param password to be set.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * Equals method.
+     * @param obj to be checked
+     * @return true if equal, false if not
+     */
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof LoginCredentials) {
+            LoginCredentials that = (LoginCredentials) obj;
+
+            return that.getPassword().equals(this.getPassword())
+                    && that.getUsername().equals(this.getUsername());
+        }
+        return false;
+    }
+
 }

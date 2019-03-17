@@ -12,11 +12,9 @@ import java.util.ArrayList;
 public class UserTest {
 
     String username = "username";
-    String gender = "male";
     int totalScore = 1000;
-    String dateOfBirth = "dd.mm.yy";
 
-    User user = new User(username, gender, totalScore, dateOfBirth);
+    User user = new User(username, totalScore);
 
 
     /**
@@ -36,22 +34,6 @@ public class UserTest {
         assertEquals("username2", user.getUsername());
     }
 
-    /**
-     * Gender getter test.
-     */
-    @Test
-    void getGenderTest() {
-        assertEquals(gender, user.getGender());
-    }
-
-    /**
-     * Gender setter test.
-     */
-    @Test
-    void setGenderTest() {
-        user.setGender("female");
-        assertEquals("female", user.getGender());
-    }
 
     /**
      * TotalScore getter test.
@@ -70,22 +52,6 @@ public class UserTest {
         assertEquals(1100, user.getTotalScore());
     }
 
-    /**
-     * DateOfBirth getter test.
-     */
-    @Test
-    void getDateOfBirthTest() {
-        assertEquals(dateOfBirth, user.getDateOfBirth());
-    }
-
-    /**
-     * DateOfBirth setter test.
-     */
-    @Test
-    void setDateOfBirthTest() {
-        user.setDateOfBirth("dd.mm.rr");
-        assertEquals("dd.mm.rr", user.getDateOfBirth());
-    }
 
     /**
      * ToString method test.
@@ -94,9 +60,7 @@ public class UserTest {
     void toStringEmptyTest() {
         String expected = "User{"
                 + ", username='" + username + '\''
-                + ", gender='" + gender + '\''
-                + ", totalScore=" + totalScore
-                + ", dateOfBirth='" + dateOfBirth + '\'' + '}';
+                + ", totalScore=" + totalScore + '\'' + '}';
         assertEquals(expected, user.toString());
     }
 

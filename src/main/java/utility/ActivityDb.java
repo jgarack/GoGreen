@@ -18,14 +18,14 @@ public class ActivityDb {
     private int score;
 
     /**
-     * variable that stores the date.
+     * variable that stores the amount of times an activity was completed.
      */
-    private Date dateOfActivity;
+    private int amount;
 
     /**
      * variable that stores the username of the user who did the activity.
      */
-    private User username;
+    private String username;
 
     /**
      * Constructor.
@@ -35,10 +35,10 @@ public class ActivityDb {
      * @param userName username of the user.
      */
     public ActivityDb(final int actId, final int scoreUser,
-                      final Date activityDate, final User userName) {
+                      final int count, final String userName) {
         this.activityId = actId;
         this.score = scoreUser;
-        this.dateOfActivity = activityDate;
+        this.amount = count;
         this.username = userName;
     }
 
@@ -62,15 +62,35 @@ public class ActivityDb {
      * returns the date of the activity.
      * @return the date of the activity.
      */
-    public Date getDateOfActivity() {
-        return dateOfActivity;
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setAmount(final int count) {
+        this.amount = count;
+    }
+
+    public void increaseAmount(final int count) {
+        this.amount += count;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
      * returns the username of the user.
      * @return the username of the user.
      */
-    public User getUsernameAct() {
+    public String getUsernameAct() {
         return username;
     }
 }

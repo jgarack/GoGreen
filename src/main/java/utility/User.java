@@ -12,17 +12,9 @@ public class User {
      */
     private String username;
     /**
-     * The gender of the user.
-     */
-    private String gender;
-    /**
      * Total score of the user.
      */
     private int totalScore;
-    /**
-     * Date of birth of the user.
-     */
-    private String dateOfBirth;
     /**
      * Friend list of the user.
      */
@@ -31,16 +23,11 @@ public class User {
     /**
      * Default constructor of the User class.
      * @param userName username of the user.
-     * @param sex Gender of the user.
      * @param userTotalScore Total score of the user.
-     * @param birthDate Date of birth of the user.
      */
-    public User(final String userName, final String sex,
-                final int userTotalScore, final String birthDate) {
+    public User(final String userName, final int userTotalScore) {
         this.username = userName;
-        this.gender = sex;
         this.totalScore = userTotalScore;
-        this.dateOfBirth = birthDate;
 
 
         //TODO implement friends querry;
@@ -63,21 +50,6 @@ public class User {
         this.username = userName;
     }
 
-    /**
-     * Retrieves gender of the user.
-     * @return the gender of the user.
-     */
-    public String getGender() {
-        return gender;
-    }
-
-    /**
-     * Sets a new gender to the user.
-     * @param genderUser the gender to be set.
-     */
-    public void setGender(final String genderUser) {
-        this.gender = genderUser;
-    }
 
     /**
      * Retrieves total score of the user.
@@ -93,22 +65,6 @@ public class User {
      */
     public void setTotalScore(final int userTotalScore) {
         this.totalScore = userTotalScore;
-    }
-
-    /**
-     * Retrieves date of birth of the user.
-     * @return the date of birth of the user.
-     */
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    /**
-     * Sets a new date of birth to the user.
-     * @param birthDate the date of birth to be set.
-     */
-    public void setDateOfBirth(final String birthDate) {
-        this.dateOfBirth = birthDate;
     }
 
     /**
@@ -135,8 +91,6 @@ public class User {
     public String toString() {
         return "User{"
                 + ", username='" + username + '\''
-                + ", gender='" + gender + '\''
-                + ", totalScore=" + totalScore
-                + ", dateOfBirth='" + dateOfBirth.toString() + '\'' + '}';
+                + ", totalScore=" + totalScore + '\'' + '}';
     }
 }

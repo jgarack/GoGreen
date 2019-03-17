@@ -93,6 +93,10 @@ public class HomeController {
     @FXML
     private Label pointsEarnedLabel;
 
+    public MainHandler handler = new MainHandler("http://localhost:8080");
+
+    private static final int MINUS = -1;
+
 
     /**
      *
@@ -112,8 +116,13 @@ public class HomeController {
             if (MainHandler.checkPositiveValues(this.vegetarianMeals,
                     valVegMeals)) {
                 Feature meal = new Feature(vegMeals.getText());
-                this.pointsEarned -= meal.calculatePoints(1);
-                this.vegetarianMeals -= valVegMeals;
+
+                this.vegetarianMeals = handler.updateVegMeal(MINUS*valVegMeals);
+                try {
+                    this.pointsEarned = handler.getTotalScore();
+                } catch(Exception e) {
+                    new AlertBuilder().displayException(e);
+                }
                 pointsEarnedLabel.setText("Points earned:"
                         + this.pointsEarned);
 
@@ -143,15 +152,19 @@ public class HomeController {
             Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals += Integer.parseInt(vegMeals.getText());
-            this.pointsEarned += meal.calculatePoints(2);
+            this.vegetarianMeals = handler.updateVegMeal(Integer.parseInt(vegMeals.getText()));
+            try {
+                this.pointsEarned = handler.getTotalScore();
+            } catch(Exception e) {
+                new AlertBuilder().displayException(e);
+            }
 
             pointsEarnedLabel.setText("Points earned: "
                     + this.pointsEarned);
 
             ALERT_BUILDER
-                    .formNotification("Good job! Keep on going greener!")
-                    .showInformation();
+                    .showInformationNotification(
+                            "Good job! Keep on going greener!");
 
             onUpdatePointsEarnedLabel(Color.WHITE,Color.LIGHTGREEN);
 
