@@ -340,7 +340,7 @@ public class DbAdaptor {
         try {
             connect();
             PreparedStatement st = conn.prepareStatement("UPDATE activities SET amount = ? "
-                    + "WHERE username = ? AND activity_id = ?");
+                    + "WHERE player = ? AND activity_id = ?");
             st.setString(one, amount + "");
             st.setString(two, username);
             st.setString(three, activityID + "");
@@ -358,7 +358,7 @@ public class DbAdaptor {
         try {
             connect();
             StringBuilder query = new StringBuilder(
-                    "SELECT score FROM activities WHERE username = ")
+                    "SELECT score FROM activities WHERE player = ")
                     .append(username).append(" AND activity_id = ")
                     .append(activityID);
             rs = conn.prepareStatement(query.toString()).executeQuery();
