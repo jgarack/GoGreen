@@ -375,7 +375,7 @@ public class DbAdaptor {
     */
     public boolean updateActivity(final String name,
                                   final int activityID,
-                                  final int amount) {
+                                  int amount) {
         try {
             connect();
             PreparedStatement st = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
