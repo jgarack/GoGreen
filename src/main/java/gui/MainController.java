@@ -1,7 +1,6 @@
 package gui;
 
-import animatefx.animation.ZoomIn;
-import animatefx.animation.JackInTheBox;
+import animatefx.animation.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -126,6 +125,10 @@ public class MainController {
                 .getResource("/fxml/" + scene + "Scene.fxml"));
         if (scene.equals("home")) {
             new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
+        } else if (scene.equals("howToPlay")) {
+            new SlideInRight(newScene).play();
+        } else if (scene.equals("about")) {
+            new FadeInRight(newScene).play();
         }
 
         root.setCenter(newScene);
