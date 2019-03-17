@@ -1,13 +1,22 @@
 package utility;
 
+import exceptions.ServerStatusException;
+import gui.AlertBuilder;
+
+import java.io.IOException;
+
 /**
  * Handler for the main controller.
  */
-public final class MainHandler {
+public class MainHandler {
+
+    private HttpRequestHandler httpHandler;
     /**
-     * Literally does nothing.
+     * Constructor.
      */
-    private MainHandler() { }
+    public MainHandler(final String domain) {
+        httpHandler = new HttpRequestHandler(domain);
+    }
     /**
      * Tries to parse integer.
      *
@@ -34,6 +43,20 @@ public final class MainHandler {
     public static boolean checkPositiveValues(final int initVal,
                                               final int valSubtract) {
         return initVal >= valSubtract;
+    }
+
+    public int updateVegMeal(int amount) {
+        try {
+            return Integer.parseInt(httpHandler
+                    .reqPost("/vegmeal", amount).readLine());
+        } catch(Exception e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
+
+    public int getTotalScore() throws IOException, ServerStatusException {
+        return Integer.parseInt(httpHandler.reqGet("/total").readLine());
     }
 
 

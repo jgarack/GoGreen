@@ -109,6 +109,23 @@ public class GreetingController {
 
     }
 
+    @PostMapping("/vegmeal")
+    public ResponseEntity vegmealUpdate(
+            @RequestBody final UpdateRequest request) {
+        String username = request.getUsername();
+        int amount = request.getAmount();
+        int activityID = request.getActivityID();
+        if(!db.updateActivity(username, activityID, amount)) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(db.getActivityAmount(username, activityID), HttpStatus.OK);
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity totalScore( @RequestBody final String username) {
+        return new ResponseEntity(db.getUser(username).getTotalScore(), HttpStatus.OK);
+    }
+
     /**
      * Mapping for post request to calculate points.
      * @param activity Activity to be calculated
@@ -117,7 +134,7 @@ public class GreetingController {
      */
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
-            @RequestBody final Activity activity)throws Exception {
+            @RequestBody final Activity activity) throws Exception {
         if (activity.getId() == 1) {
 
             BufferedReader httpBody =

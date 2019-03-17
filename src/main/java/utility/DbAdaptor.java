@@ -1,5 +1,7 @@
 package utility;
 
+import gui.AlertBuilder;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.*;
@@ -332,6 +334,55 @@ public class DbAdaptor {
         }
 
         return null;
+    }
+
+    public boolean updateActivity(final String username, final int activityID, final int amount) {
+        try {
+            connect();
+            PreparedStatement st = conn.prepareStatement("UPDATE activities SET amount = ? "
+                    + "WHERE username = ? AND activity_id = ?");
+            st.setString(one, amount + "");
+            st.setString(two, username);
+            st.setString(three, activityID + "");
+            rs = st.executeQuery();
+            disconnect();
+            System.out.println(rs.toString());
+            return true;
+        } catch(Exception e) {
+            new AlertBuilder().displayException(e);
+            return false;
+        }
+    }
+
+    public int getActivityAmount(final String username, final int activityID) {
+        try {
+            connect();
+            StringBuilder query = new StringBuilder(
+                    "SELECT score FROM activities WHERE username = ")
+                    .append(username).append(" AND activity_id = ")
+                    .append(activityID);
+            rs = conn.prepareStatement(query.toString()).executeQuery();
+            disconnect();
+            return rs.getInt(one);
+        } catch(Exception e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
+
+    public int getTotalScore(final String username) {
+        try {
+            connect();
+            StringBuilder query = new StringBuilder(
+                    "SELECT total_score FROM users WHERE username = ")
+                    .append(username);
+            rs = conn.prepareStatement(query.toString()).executeQuery();
+            disconnect();
+            return rs.getInt(one);
+        } catch(Exception e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
     }
 
 
