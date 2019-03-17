@@ -29,6 +29,10 @@ public class Feature {
     /**
      * Magic number 60.
      */
+    private static final int SIXTY = 60;
+    /**
+     * Multiplier for the score of the user.
+     */
     private int pointMultiplier;
 
     /**
@@ -76,7 +80,8 @@ public class Feature {
      * @author ohussein
      */
 
-    //To add more features, add another if-else statement with appropriate choice ID and pointMultiplier.
+    //To add more features, add another if-else statement
+    // with appropriate choice ID and pointMultiplier.
     public int calculatePoints(final int choice) {
         try {
             BufferedReader httpBody;
@@ -86,19 +91,13 @@ public class Feature {
                 httpBody = new HttpRequestHandler(
                         domain).reqPost(
                         "/points", new Activity(choice, this.getValue()));
-            }
-
-            //Picking Bike Ride
-            else if (choice == 2) {
-                pointMultiplier = 60;
+            } /*Picking Bike Ride*/ else if (choice == 2) {
+                pointMultiplier = SIXTY;
                 httpBody = new HttpRequestHandler(
                         domain).reqPost(
                         "/points", new Activity(choice, this.getValue()
                                 * pointMultiplier));
-            }
-
-            //The default case, same as picking a Vegetarian Meal
-            else {
+            } else {
                 httpBody = new HttpRequestHandler(
                         domain).reqPost(
                         "/points", new Activity(choice, this.getValue()));

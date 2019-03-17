@@ -43,18 +43,18 @@ public class LoginCredentials {
 
     /**
      * sets username.
-     * @param username to be set.
+     * @param userName to be set.
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(final String userName) {
+        this.username = userName;
     }
 
     /**
      * sets password.
-     * @param password to be set.
+     * @param passWord to be set.
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(final String passWord) {
+        this.password = passWord;
     }
 
     /**
@@ -62,7 +62,7 @@ public class LoginCredentials {
      * @param obj to be checked
      * @return true if equal, false if not
      */
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -74,6 +74,15 @@ public class LoginCredentials {
                     && that.getUsername().equals(this.getUsername());
         }
         return false;
+    }
+
+    /**
+     * Hashes.
+     * @return returns the hash code.;
+     */
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
 }

@@ -1,8 +1,8 @@
 package gui;
 
-import animatefx.animation.GlowBackground;
 import animatefx.animation.GlowText;
 import animatefx.animation.Pulse;
+import exceptions.ServerStatusException;
 import features.Feature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +12,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import utility.MainHandler;
+
+import java.io.IOException;
 
 /**
  * Controller for the home page.
@@ -93,13 +95,19 @@ public class HomeController {
     @FXML
     private Label pointsEarnedLabel;
 
+    /**
+     * Handler for handling main operations.
+     */
     public MainHandler handler = new MainHandler("http://localhost:8080");
 
+    /**
+     * The almighty i^2.
+     */
     private static final int MINUS = -1;
 
 
     /**
-     *
+     * Triggered upon initialization of the home scene.
      */
     @FXML
     public void initialize() {
@@ -117,16 +125,17 @@ public class HomeController {
                     valVegMeals)) {
                 Feature meal = new Feature(vegMeals.getText());
 
-                this.vegetarianMeals = handler.updateVegMeal(MINUS*valVegMeals);
+                this.vegetarianMeals = handler
+                        .updateVegMeal(MINUS * valVegMeals);
                 try {
                     this.pointsEarned = handler.getTotalScore();
-                } catch(Exception e) {
+                } catch (IOException | ServerStatusException e) {
                     new AlertBuilder().displayException(e);
                 }
                 pointsEarnedLabel.setText("Points earned:"
                         + this.pointsEarned);
 
-                onUpdatePointsEarnedLabel(Color.WHITE,Color.RED);
+                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
 
             } else {
                 ALERT_BUILDER
@@ -152,10 +161,11 @@ public class HomeController {
             Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals = handler.updateVegMeal(Integer.parseInt(vegMeals.getText()));
+            this.vegetarianMeals = handler
+                    .updateVegMeal(Integer.parseInt(vegMeals.getText()));
             try {
                 this.pointsEarned = handler.getTotalScore();
-            } catch(Exception e) {
+            } catch (IOException | ServerStatusException e) {
                 new AlertBuilder().displayException(e);
             }
 
@@ -166,7 +176,7 @@ public class HomeController {
                     .showInformationNotification(
                             "Good job! Keep on going greener!");
 
-            onUpdatePointsEarnedLabel(Color.WHITE,Color.LIGHTGREEN);
+            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
 
         } else {
             ALERT_BUILDER
@@ -193,7 +203,7 @@ public class HomeController {
                 this.pointsEarnedLabel
                         .setText("Points earned: " + this.pointsEarned);
 
-                onUpdatePointsEarnedLabel(Color.WHITE,Color.RED);
+                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
 
             } else {
                 ALERT_BUILDER
@@ -224,7 +234,7 @@ public class HomeController {
                     .formNotification("Good job! Keep on going greener!")
                     .showInformation();
 
-            onUpdatePointsEarnedLabel(Color.WHITE,Color.LIGHTGREEN);
+            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
 
         } else {
             ALERT_BUILDER
@@ -233,11 +243,21 @@ public class HomeController {
         }
     }
 
-    private void glowPointsEarnedLabel(Color c1, Color c2) {
+    /**
+     *  Makes the points earned label glow.
+     * @param c1 The first color
+     * @param c2 The second color.
+     */
+    private void glowPointsEarnedLabel(final Color c1, final Color c2) {
         new GlowText(this.pointsEarnedLabel, c1, c2).play();
     }
 
-    private void onUpdatePointsEarnedLabel(Color c1,Color c2) {
+    /**
+     *  Makes the points earned label glow and pulse.
+     * @param c1 The first color
+     * @param c2 The second color.
+     */
+    private void onUpdatePointsEarnedLabel(final Color c1, final Color c2) {
         new Pulse(this.pointsEarnedLabel).play();
         glowPointsEarnedLabel(c1, c2);
 

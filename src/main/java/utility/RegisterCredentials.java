@@ -26,15 +26,17 @@ public class RegisterCredentials {
 
     /**
      * Constructor.
-     * @param username the username.
-     * @param password the password.
+     * @param userName the username.
+     * @param pass the password.
      * @param secretQuestion set by user.
      * @param secretAnswer set by user.
      */
-    public RegisterCredentials(final String username, final String password,
-                               final String secretQuestion, final String secretAnswer) {
-        this.username = username;
-        this.password = password;
+    public RegisterCredentials(final String userName,
+                               final String pass,
+                               final String secretQuestion,
+                               final String secretAnswer) {
+        this.username = userName;
+        this.password = pass;
         this.question = secretQuestion;
         this.answer = secretAnswer;
     }
@@ -73,18 +75,18 @@ public class RegisterCredentials {
 
     /**
      * sets username.
-     * @param username to be set.
+     * @param userName to be set.
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(final String userName) {
+        this.username = userName;
     }
 
     /**
      * sets password.
-     * @param password to be set.
+     * @param pass to be set.
      */
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(final String pass) {
+        this.password = pass;
     }
 
     /**
@@ -92,7 +94,7 @@ public class RegisterCredentials {
      * @param obj to be checked.
      * @return true if equal, false if not.
      */
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
 
         if (this == obj) {
             return true;
@@ -109,4 +111,14 @@ public class RegisterCredentials {
 
         return false;
     }
+
+    /**
+     *  Hashes.
+     * @return return the hashed integer.
+     */
+    @Override
+    public int hashCode() {
+        return 0;
+    }
 }
+

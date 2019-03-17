@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import sun.applet.Main;
 import utility.LoginHandler;
 import java.io.IOException;
 
@@ -57,7 +56,7 @@ public final class LoginController {
      * Triggered when the user clicks "Register".
      *
      * @param event The event fired when the user clicks the button.
-     * @see utility.RegisterHandler#registerSubmit(String, String, String,String,String)
+     * @see utility.RegisterHandler#registerSubmit
      */
     @FXML
     protected void handleRegisterButtonAction(final ActionEvent event) {
@@ -101,7 +100,9 @@ public final class LoginController {
                 new Pulse(root).play();
             } else {
                 MainController controller = fxmlLoader.getController();
-                controller.setGreetingsText("Greetings, " + username.getText().trim());
+                controller
+                        .setGreetingsText("Greetings, " + username.getText()
+                                .trim());
                 new ZoomInLeft(root).play();
             }
             stage.setX(bounds.getMinX());
