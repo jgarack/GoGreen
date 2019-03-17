@@ -26,10 +26,11 @@ public class RegisterCredentials {
 
     /**
      * Constructor.
-     * @param userName the username.
-     * @param pass the password.
+     *
+     * @param userName       the username.
+     * @param pass           the password.
      * @param secretQuestion set by user.
-     * @param secretAnswer set by user.
+     * @param secretAnswer   set by user.
      */
     public RegisterCredentials(final String userName,
                                final String pass,
@@ -43,6 +44,7 @@ public class RegisterCredentials {
 
     /**
      * returns the question set by user.
+     *
      * @return question.
      */
     public String getQuestion() {
@@ -51,6 +53,7 @@ public class RegisterCredentials {
 
     /**
      * returns the answer set by user.
+     *
      * @return answer.
      */
     public String getAnswer() {
@@ -59,6 +62,7 @@ public class RegisterCredentials {
 
     /**
      * returns the username.
+     *
      * @return the username.
      */
     public String getUsername() {
@@ -67,6 +71,7 @@ public class RegisterCredentials {
 
     /**
      * returns the password.
+     *
      * @return the password.
      */
     public String getPassword() {
@@ -75,6 +80,7 @@ public class RegisterCredentials {
 
     /**
      * sets username.
+     *
      * @param userName to be set.
      */
     public void setUsername(final String userName) {
@@ -83,46 +89,11 @@ public class RegisterCredentials {
 
     /**
      * sets password.
+     *
      * @param pass to be set.
      */
     public void setPassword(final String pass) {
         this.password = pass;
     }
 
-<<<<<<< HEAD
 }
-=======
-    /**
-     * Checks if fiven object is equal.
-     * @param obj to be checked.
-     * @return true if equal, false if not.
-     */
-    public boolean equals(final Object obj) {
-
-        if (this == obj) {
-            return true;
-        }
-
-        if (obj instanceof RegisterCredentials) {
-            RegisterCredentials regCre = (RegisterCredentials) obj;
-
-            return regCre.getUsername().equals(this.getUsername())
-                    && regCre.getAnswer().equals(this.getAnswer())
-                    && regCre.getPassword().equals(this.getPassword())
-                    && regCre.getQuestion().equals(this.getPassword());
-        }
-
-        return false;
-    }
-
-    /**
-     *  Hashes.
-     * @return return the hashed integer.
-     */
-    @Override
-    public int hashCode() {
-        return 0;
-    }
-}
-
->>>>>>> a29106c46fe70a8832859365f9929be2231ff2f5
