@@ -101,49 +101,49 @@ public class Feature {
 
     //To add more features, add another if-else statement
     // with appropriate choice ID and pointMultiplier.
-    public int calculatePoints(final int choice) {
-        try {
-            BufferedReader httpBody;
+//    public int calculatePoints(final int choice) {
+//        try {
+//            BufferedReader httpBody;
+//
+//            //Picking Vegetarian Meal
+//            if (choice == 1) {
+//                httpBody = new HttpRequestHandler(
+//                        domain).reqPost(
+//                        "/points", new Activity(choice, this.getValue()));
+//            } /*Picking Bike Ride*/ else if (choice == 2) {
+//                pointMultiplier = SIXTY;
+//                httpBody = new HttpRequestHandler(
+//                        domain).reqPost(
+//                        "/points", new Activity(choice, this.getValue()
+//                                * pointMultiplier));
+//            } else {
+//                httpBody = new HttpRequestHandler(
+//                        domain).reqPost(
+//                        "/points", new Activity(choice, this.getValue()));
+//            }
+//
+//
+//            String con = new HttpRequestHandler(domain).resLog(
+//                    httpBody, null);
+//            System.out.println(con);
+//            return jsonCon(con);
+//
+//        } catch (Exception e) {
+//
+//            exceptionHandler(e);
+//
+//        }
+//        return 0;
+//    }
 
-            //Picking Vegetarian Meal
-            if (choice == 1) {
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()));
-            } /*Picking Bike Ride*/ else if (choice == 2) {
-                pointMultiplier = SIXTY;
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()
-                                * pointMultiplier));
-            } else {
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()));
-            }
 
-
-            String con = new HttpRequestHandler(domain).resLog(
-                    httpBody, null);
-            System.out.println(con);
-            return jsonCon(con);
-
-        } catch (Exception e) {
-
-            exceptionHandler(e);
-
-        }
-        return 0;
-    }
-
-
-    /**
-     * Helper method that parses con to a desired integer.
-     *
-     * @param con The given String
-     * @return An integer that is derived from the string.
-     * @throws IOException Throws an exception if the Mapping is not succesful.
-     */
+//    /**
+//     * Helper method that parses con to a desired integer.
+//     *
+//     * @param con The given String
+//     * @return An integer that is derived from the string.
+//     * @throws IOException Throws an exception if the Mapping is not succesful.
+//     */
     public int jsonCon(final String con) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -157,18 +157,18 @@ public class Feature {
         return ret;
     }
 
-    /**
-     * Helper method that handles exceptions.
-     *
-     * @param e exception that was thrown
-     */
-    protected void exceptionHandler(final Exception e) {
-        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
-        statusCodeError.setTitle(e.getMessage());
-//        statusCodeError.setContentText("See terminal for stacktrace.");
-        statusCodeError.setContentText(e.toString());
-        statusCodeError.showAndWait();
-    }
+//    /**
+//     * Helper method that handles exceptions.
+//     *
+//     * @param e exception that was thrown
+//     */
+//    protected void exceptionHandler(final Exception e) {
+//        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
+//        statusCodeError.setTitle(e.getMessage());
+////        statusCodeError.setContentText("See terminal for stacktrace.");
+//        statusCodeError.setContentText(e.toString());
+//        statusCodeError.showAndWait();
+//    }
 
     /**
      * Converts object to a String representation.
@@ -182,12 +182,12 @@ public class Feature {
                 + '}';
     }
 
-    /**
-     * Mapping for post request to calculate points.
-     * @param amount Activity to be calculated
-     * @return ResponseEntity with http response body and status code
-     * @throws Exception UrlNotFound
-     */
+//    /**
+//     * Mapping for post request to calculate points.
+//     * @param amount Activity to be calculated
+//     * @return ResponseEntity with http response body and status code
+//     * @throws Exception UrlNotFound
+//     */
     public int vegmealCalcScore(final int amount) {
         try {
             StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
