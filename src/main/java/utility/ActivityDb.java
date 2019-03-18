@@ -1,6 +1,5 @@
 package utility;
 
-import java.sql.Date;
 
 /**
  * Class for the activities.
@@ -18,27 +17,27 @@ public class ActivityDb {
     private int score;
 
     /**
-     * variable that stores the date.
+     * variable that stores the amount of times an activity was completed.
      */
-    private Date dateOfActivity;
+    private int amount;
 
     /**
      * variable that stores the username of the user who did the activity.
      */
-    private User username;
+    private String username;
 
     /**
      * Constructor.
      * @param actId number of activity.
      * @param scoreUser calculated score.
-     * @param activityDate when the activity was done.
+     * @param count when the activity was done.
      * @param userName username of the user.
      */
     public ActivityDb(final int actId, final int scoreUser,
-                      final Date activityDate, final User userName) {
+                      final int count, final String userName) {
         this.activityId = actId;
         this.score = scoreUser;
-        this.dateOfActivity = activityDate;
+        this.amount = count;
         this.username = userName;
     }
 
@@ -62,15 +61,55 @@ public class ActivityDb {
      * returns the date of the activity.
      * @return the date of the activity.
      */
-    public Date getDateOfActivity() {
-        return dateOfActivity;
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * Sets the id of the activity.
+     * @param activity the id to be set.
+     */
+    public void setActivityId(final int activity) {
+        this.activityId = activity;
+    }
+
+    /**
+     * Sets the score of the user.
+     * @param userScore the score to be set.
+     */
+    public void setScore(final int userScore) {
+        this.score = userScore;
+    }
+
+    /**
+     *  Sets amount.
+     * @param count the amount to be set.
+     */
+    public void setAmount(final int count) {
+        this.amount = count;
+    }
+
+    /**
+     * Increases amount with count.
+     * @param count Increases the amount.
+     */
+    public void increaseAmount(final int count) {
+        this.amount += count;
+    }
+
+    /**
+     * Sets a new username.
+     * @param name The username to be set.
+     */
+    public void setUsername(final String name) {
+        this.username = name;
     }
 
     /**
      * returns the username of the user.
      * @return the username of the user.
      */
-    public User getUsernameAct() {
+    public String getUsernameAct() {
         return username;
     }
 }

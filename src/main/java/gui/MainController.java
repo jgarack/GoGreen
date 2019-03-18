@@ -1,6 +1,9 @@
 package gui;
 
-import animatefx.animation.*;
+import animatefx.animation.JackInTheBox;
+import animatefx.animation.ZoomIn;
+import animatefx.animation.SlideInRight;
+import animatefx.animation.FadeInRight;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import utility.MainHandler;
 //import org.controlsfx.glyphfont.FontAwesome;
 //import org.controlsfx.glyphfont.GlyphFont;
 //import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -56,8 +60,14 @@ public class MainController {
     private Label greetingsText;
 
 
-    public void setGreetingsText(String greetingsText){
-        this.greetingsText.setText(greetingsText);
+
+    /**
+     * Updates the Greeting in top right corner.
+     * @param greetingstext The text to be updated.
+     */
+
+    public void setGreetingsText(final String greetingstext) {
+        this.greetingsText.setText(greetingstext);
     }
 
 

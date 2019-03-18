@@ -1,8 +1,8 @@
 package gui;
 
-import animatefx.animation.GlowBackground;
 import animatefx.animation.GlowText;
 import animatefx.animation.Pulse;
+import exceptions.ServerStatusException;
 import features.Feature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +12,8 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import utility.MainHandler;
+
+import java.io.IOException;
 
 /**
  * Controller for the home page.
@@ -93,9 +95,19 @@ public class HomeController {
     @FXML
     private Label pointsEarnedLabel;
 
+    /**
+     * Handler for handling main operations.
+     */
+    public MainHandler handler = new MainHandler("http://localhost:8080");
 
     /**
-     *
+     * The almighty i^2.
+     */
+    private static final int MINUS = -1;
+
+
+    /**
+     * Triggered upon initialization of the home scene.
      */
     @FXML
     public void initialize() {
@@ -112,12 +124,18 @@ public class HomeController {
             if (MainHandler.checkPositiveValues(this.vegetarianMeals,
                     valVegMeals)) {
                 Feature meal = new Feature(vegMeals.getText());
-                this.pointsEarned -= meal.calculatePoints(1);
-                this.vegetarianMeals -= valVegMeals;
+
+                this.vegetarianMeals = handler
+                        .updateVegMeal(MINUS * valVegMeals);
+                try {
+                    this.pointsEarned = handler.getTotalScore();
+                } catch (IOException | ServerStatusException e) {
+                    new AlertBuilder().displayException(e);
+                }
                 pointsEarnedLabel.setText("Points earned:"
                         + this.pointsEarned);
 
-                onUpdatePointsEarnedLabel(Color.WHITE,Color.RED);
+                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
 
             } else {
                 ALERT_BUILDER
@@ -143,17 +161,22 @@ public class HomeController {
             Feature meal = new Feature(vegMeals.getText());
             System.out.println(meal.toString());
 
-            this.vegetarianMeals += Integer.parseInt(vegMeals.getText());
-            this.pointsEarned += meal.calculatePoints(2);
+            this.vegetarianMeals = handler
+                    .updateVegMeal(Integer.parseInt(vegMeals.getText()));
+            try {
+                this.pointsEarned = handler.getTotalScore();
+            } catch (IOException | ServerStatusException e) {
+                new AlertBuilder().displayException(e);
+            }
 
             pointsEarnedLabel.setText("Points earned: "
                     + this.pointsEarned);
 
             ALERT_BUILDER
-                    .formNotification("Good job! Keep on going greener!")
-                    .showInformation();
+                    .showInformationNotification(
+                            "Good job! Keep on going greener!");
 
-            onUpdatePointsEarnedLabel(Color.WHITE,Color.LIGHTGREEN);
+            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
 
         } else {
             ALERT_BUILDER
@@ -169,7 +192,7 @@ public class HomeController {
      */
     @FXML
     protected void decreaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+        /*if (MainHandler.tryParseInt(bicycleUsage.getText())) {
             Feature meal = new Feature(bicycleUsage.getText());
             int bicycleUse = Integer.parseInt(bicycleUsage.getText());
             if (MainHandler.checkPositiveValues(this.bicycleUsed,
@@ -180,7 +203,7 @@ public class HomeController {
                 this.pointsEarnedLabel
                         .setText("Points earned: " + this.pointsEarned);
 
-                onUpdatePointsEarnedLabel(Color.WHITE,Color.RED);
+                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
 
             } else {
                 ALERT_BUILDER
@@ -191,7 +214,7 @@ public class HomeController {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
-        }
+        }*/
     }
     /**
      * Used to increase the amount of times a bicycle
@@ -200,7 +223,7 @@ public class HomeController {
      */
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
-        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+        /*if (MainHandler.tryParseInt(bicycleUsage.getText())) {
             Feature meal = new Feature(bicycleUsage.getText());
             this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
             this.pointsEarned += meal.calculatePoints(2);
@@ -211,20 +234,30 @@ public class HomeController {
                     .formNotification("Good job! Keep on going greener!")
                     .showInformation();
 
-            onUpdatePointsEarnedLabel(Color.WHITE,Color.LIGHTGREEN);
+            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
 
         } else {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
-        }
+        }*/
     }
 
-    private void glowPointsEarnedLabel(Color c1, Color c2) {
+    /**
+     *  Makes the points earned label glow.
+     * @param c1 The first color
+     * @param c2 The second color.
+     */
+    private void glowPointsEarnedLabel(final Color c1, final Color c2) {
         new GlowText(this.pointsEarnedLabel, c1, c2).play();
     }
 
-    private void onUpdatePointsEarnedLabel(Color c1,Color c2) {
+    /**
+     *  Makes the points earned label glow and pulse.
+     * @param c1 The first color
+     * @param c2 The second color.
+     */
+    private void onUpdatePointsEarnedLabel(final Color c1, final Color c2) {
         new Pulse(this.pointsEarnedLabel).play();
         glowPointsEarnedLabel(c1, c2);
 

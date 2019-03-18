@@ -1,6 +1,5 @@
 package server;
 
-import java.io.BufferedReader;
 import java.net.URI;
 
 import org.springframework.http.HttpHeaders;
@@ -11,11 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 //native imports
-import exceptions.DataConflictException;
-import utility.Authenticator;
-import utility.AccountMessage;
-import utility.HttpRequestHandler;
-import utility.Activity;
+import utility.DbAdaptor;
+import utility.LoginCredentials;
+import utility.RegisterCredentials;
+import utility.UpdateRequest;
 
 /**
  * Class that maps route requests made to the server.
@@ -32,27 +30,13 @@ public class GreetingController {
      * Login page routing.
      */
     private static final String LOGIN_PAGE = "./login";
-    /**
-     * api path.
-     */
-    private static final String BP_API = "http://impact.brighter"
-            + "planet.com";
-    /**
-     * api key.
-     */
-    private static final String BP_KEY =
-            "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
 
     /**
-     * Authenticator Object that can be used to authenticate a user.
-     * State of the Authenticator can not be preserved yet.
+     * DB_ADAPTOR connections/ disconnection/ authentication.
      */
-    private static final Authenticator AUTHENTICATOR = new Authenticator();
-    /**
-     * HttpRequestHandler object that can be used for contacting the api.
-     */
-    private static final HttpRequestHandler HTTP_HANDLER_API =
-            new HttpRequestHandler(BP_API);
+    private static final DbAdaptor DB_ADAPTOR = new DbAdaptor();
+
+
 
     /**
      * Default mapping for index.
@@ -74,14 +58,18 @@ public class GreetingController {
      */
     @PostMapping("/login")
     public ResponseEntity loginResponse(
-            @RequestBody final AccountMessage account) {
-        if (AUTHENTICATOR.authenticate(account)) {
+            @RequestBody final LoginCredentials account) {
+        DB_ADAPTOR.connect();
+        if (DB_ADAPTOR.comparecredentials(account)) {
+            DB_ADAPTOR.disconnect();
             return new ResponseEntity("Hello " + account.getUsername()
                     + " Authenticated!", HttpStatus.OK);
         } else {
+            DB_ADAPTOR.disconnect();
             return new ResponseEntity("Unknown user-password combination.",
                     HttpStatus.UNAUTHORIZED);
         }
+
     }
 
     /**
@@ -90,56 +78,54 @@ public class GreetingController {
      * Sends a conflict error response to the client if the username is already
      * taken. Sends an internal server error response if the Authenticator
      * fails to create a new account.
-     * @param account The login credentials of the account to create.
+     * @param regCre The register credentials of the account to create.
      *                Send by the client in JSON form.
      * @return An HTTP response as a ResponseEntity Object.
      */
     @PostMapping("/register")
     public ResponseEntity registerResponse(
-        @RequestBody final AccountMessage account) {
-        try {
-            if (AUTHENTICATOR.registerNewUser(account)) {
-                return new ResponseEntity("Registration successful. "
-                        + "You can now log in", HttpStatus.OK);
-            }
-            return new ResponseEntity("Your account could not be created",
-                    HttpStatus.INTERNAL_SERVER_ERROR);
-        } catch (DataConflictException taken) {
-            return new ResponseEntity("Chosen username is already taken.",
-                    HttpStatus.CONFLICT);
+        @RequestBody final RegisterCredentials regCre) {
+
+        DB_ADAPTOR.connect();
+        if (DB_ADAPTOR.addNewUser(regCre)) {
+            DB_ADAPTOR.disconnect();
+            return new ResponseEntity("Registration successful. "
+                    + "You can now log in", HttpStatus.OK);
         }
+        DB_ADAPTOR.disconnect();
+        return new ResponseEntity("Your account could not be created",
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+
     }
 
     /**
-     * Mapping for post request to calculate points.
-     * @param activity Activity to be calculated
-     * @return ResponseEntity with http response body and status code
-     * @throws Exception UrlNotFound
+     * Updates the vegetarian meals.
+     * @param request Request to be updated.
+     * @return ResponseEntity that updates the vegMeal
      */
-    @PostMapping("/points")
-    public ResponseEntity pointsResponse(
-            @RequestBody final Activity activity)throws Exception {
-        if (activity.getId() == 1) {
+    @PostMapping("/vegmeal")
+    public ResponseEntity vegmealUpdate(
+            @RequestBody final UpdateRequest request) {
+        String username = request.getUsername();
+        int amount = request.getAmount();
+        int activityID = request.getActivityID();
+        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(DB_ADAPTOR
+                .getActivityAmount(username, activityID), HttpStatus.OK);
+    }
 
-            BufferedReader httpBody =
-                    new HttpRequestHandler(BP_API).reqGet("/diets."
-                            + "json?size="
-                            + activity.getValue()
-                            + "&timeframe=2019-03-01%2F2019-03-02"
-                            + BP_KEY);
-            return new ResponseEntity(HTTP_HANDLER_API
-                    .resLog(httpBody, null),
-                    HttpStatus.OK);
-        }
-        if (activity.getId() == 2) {
-            BufferedReader httpBody =
-                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
-                            + "trips.json?duration=" + activity.getValue()
-                            + BP_KEY);
-            return new ResponseEntity(HTTP_HANDLER_API
-                    .resLog(httpBody, null),
-                    HttpStatus.OK);
-        }
-        return new ResponseEntity("Not an Activity", HttpStatus.OK);
+    /**
+     * Returns a response entity with the total score.
+     * @param username The username of
+     *                 the user that is
+     *                 used to retrieve the score.
+     * @return the total score of a user.
+     */
+    @PostMapping("/total")
+    public ResponseEntity totalScore(@RequestBody final String username) {
+        return new ResponseEntity(DB_ADAPTOR
+                .getTotalScore(username.replace('"', ' ').trim()), HttpStatus.OK);
     }
 }

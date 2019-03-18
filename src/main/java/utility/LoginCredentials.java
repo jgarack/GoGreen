@@ -40,4 +40,49 @@ public class LoginCredentials {
     public String getPassword() {
         return password;
     }
+
+    /**
+     * sets username.
+     * @param userName to be set.
+     */
+    public void setUsername(final String userName) {
+        this.username = userName;
+    }
+
+    /**
+     * sets password.
+     * @param passWord to be set.
+     */
+    public void setPassword(final String passWord) {
+        this.password = passWord;
+    }
+
+    /**
+     * Equals method.
+     * @param obj to be checked
+     * @return true if equal, false if not
+     */
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj instanceof LoginCredentials) {
+            LoginCredentials that = (LoginCredentials) obj;
+
+            return that.getPassword().equals(this.getPassword())
+                    && that.getUsername().equals(this.getUsername());
+        }
+        return false;
+    }
+
+    /**
+     * Hashes.
+     * @return returns the hash code.;
+     */
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
 }

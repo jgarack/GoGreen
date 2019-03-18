@@ -4,6 +4,7 @@ package features;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 import javafx.scene.control.Alert;
 import utility.Activity;
@@ -29,7 +30,29 @@ public class Feature {
     /**
      * Magic number 60.
      */
+    private static final int SIXTY = 60;
+    /**
+     * Multiplier for the score of the user.
+     */
     private int pointMultiplier;
+
+
+    /**
+     * api path.
+     */
+    private static final String BP_API = "http://impact.brighter"
+            + "planet.com";
+    /**
+     * api key.
+     */
+    private static final String BP_KEY =
+            "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
+
+    /**
+     * HttpRequestHandler object that can be used for contacting the api.
+     */
+    private static final HttpRequestHandler HTTP_HANDLER_API =
+            new HttpRequestHandler(BP_API);
 
     /**
      * Constructor for Feature.
@@ -67,65 +90,59 @@ public class Feature {
 
 
     /**
+
      * Handles request for Vegetarian meal points from server.
      * Feature 1 VeggieMeal
      * Feature 2 BikeRide
-     *
-     * @param choice the id of the feature that is chosen.
      * @return returns points
      * @author ohussein
      */
 
-    //To add more features, add another if-else statement with appropriate choice ID and pointMultiplier.
-    public int calculatePoints(final int choice) {
-        try {
-            BufferedReader httpBody;
-
-            //Picking Vegetarian Meal
-            if (choice == 1) {
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()));
-            }
-
-            //Picking Bike Ride
-            else if (choice == 2) {
-                pointMultiplier = 60;
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()
-                                * pointMultiplier));
-            }
-
-            //The default case, same as picking a Vegetarian Meal
-            else {
-                httpBody = new HttpRequestHandler(
-                        domain).reqPost(
-                        "/points", new Activity(choice, this.getValue()));
-            }
-
-
-            String con = new HttpRequestHandler(domain).resLog(
-                    httpBody, null);
-            System.out.println(con);
-            return jsonCon(con);
-
-        } catch (Exception e) {
-
-            exceptionHandler(e);
-
-        }
-        return 0;
-    }
+    //To add more features, add another if-else statement
+    // with appropriate choice ID and pointMultiplier.
+//    public int calculatePoints(final int choice) {
+//        try {
+//            BufferedReader httpBody;
+//
+//            //Picking Vegetarian Meal
+//            if (choice == 1) {
+//                httpBody = new HttpRequestHandler(
+//                        domain).reqPost(
+//                        "/points", new Activity(choice, this.getValue()));
+//            } /*Picking Bike Ride*/ else if (choice == 2) {
+//                pointMultiplier = SIXTY;
+//                httpBody = new HttpRequestHandler(
+//                        domain).reqPost(
+//                        "/points", new Activity(choice, this.getValue()
+//                                * pointMultiplier));
+//            } else {
+//                httpBody = new HttpRequestHandler(
+//                        domain).reqPost(
+//                        "/points", new Activity(choice, this.getValue()));
+//            }
+//
+//
+//            String con = new HttpRequestHandler(domain).resLog(
+//                    httpBody, null);
+//            System.out.println(con);
+//            return jsonCon(con);
+//
+//        } catch (Exception e) {
+//
+//            exceptionHandler(e);
+//
+//        }
+//        return 0;
+//    }
 
 
-    /**
-     * Helper method that parses con to a desired integer.
-     *
-     * @param con The given String
-     * @return An integer that is derived from the string.
-     * @throws IOException Throws an exception if the Mapping is not succesful.
-     */
+//    /**
+//     * Helper method that parses con to a desired integer.
+//     *
+//     * @param con The given String
+//     * @return An integer that is derived from the string.
+//     * @throws IOException Throws an exception if the Mapping is not succesful.
+//     */
     public int jsonCon(final String con) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -139,18 +156,18 @@ public class Feature {
         return ret;
     }
 
-    /**
-     * Helper method that handles exceptions.
-     *
-     * @param e exception that was thrown
-     */
-    protected void exceptionHandler(final Exception e) {
-        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
-        statusCodeError.setTitle(e.getMessage());
-//        statusCodeError.setContentText("See terminal for stacktrace.");
-        statusCodeError.setContentText(e.toString());
-        statusCodeError.showAndWait();
-    }
+//    /**
+//     * Helper method that handles exceptions.
+//     *
+//     * @param e exception that was thrown
+//     */
+//    protected void exceptionHandler(final Exception e) {
+//        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
+//        statusCodeError.setTitle(e.getMessage());
+////        statusCodeError.setContentText("See terminal for stacktrace.");
+//        statusCodeError.setContentText(e.toString());
+//        statusCodeError.showAndWait();
+//    }
 
     /**
      * Converts object to a String representation.
@@ -162,5 +179,27 @@ public class Feature {
         return "Feature{"
                 + "value=" + value
                 + '}';
+    }
+
+    /**
+     * Mapping for post request to calculate points.
+     * @param amount Activity to be calculated
+     * @return ResponseEntity with http response body and status code
+     * @throws Exception UrlNotFound
+     */
+    public int vegmeal_calcScore(final int amount) {
+        try {
+            StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
+                    .append(amount).append("&timeframe=2019-01-01%2F2020-01-01")
+                    .append(BP_KEY);
+            BufferedReader httpBody =
+                    HTTP_HANDLER_API.reqGet(urlRouting.toString());
+            int res = jsonCon(HTTP_HANDLER_API.resLog(httpBody, null));
+            System.out.println("calc res " + res);
+            return res;
+        } catch (IOException | ServerStatusException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 }
