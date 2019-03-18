@@ -11,6 +11,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import java.net.URL?>
+<?import javafx.scene.text.Text?>
 <ListView xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="gui.HomeController"
@@ -18,42 +19,63 @@
         <!--<HBox alignment="CENTER">-->
             <!--<ProgressBar fx:id="progressBarGreen" prefWidth="1400" prefHeight="50" progress="0.0"/>-->
         <!--</HBox>-->
-        <HBox alignment="CENTER">
-            <Label fx:id="vegMealsEaten" alignment="CENTER" HBox.hgrow="ALWAYS">
-                Vegetarian Meals eaten
-            </Label>
-        </HBox>
-        <VBox alignment="CENTER" spacing="20">
-            <!--<Button fx:id="decreaseVegetarianMealsBtn" text="-" onAction="#decreaseVegetarianMeals"/>-->
-            <ImageView fx:id="featuresIcons" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+
+    <HBox alignment="CENTER">
+        <Label text="GoGreen98" fx:id="homeTitle"/>
+
+    </HBox>
+    <GridPane alignment="center" hgap="150" vgap="50">
+
+        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="featuresIconVeggie" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/icons/iconVegetarianMeal.png"/>
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-            <TextField alignment="CENTER" prefWidth="200" fx:id="vegMeals"/>
+            <TextField alignment="CENTER" prefWidth="150" fx:id="vegMeals"/>
             <Button fx:id="increaseVegetarianMealsBtn" text="+" onAction="#increaseVegetarianMeals"/>
             </HBox>
         </VBox>
 
-        <HBox alignment="CENTER">
-            <Label fx:id="bicycleUsedLabel" alignment="CENTER" HBox.hgrow="ALWAYS">
-                Times you have used a bicycle instead of a car
-            </Label>
-        </HBox>
-
-        <VBox alignment="CENTER" spacing="20">
-            <!--<Button fx:id="decreaseBicycleUsageBtn" text="-" onAction="#decreaseBicycleUsage"/>-->
-            <ImageView fx:id="featuresIcons" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="featuresIconBike" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/icons/iconBikeCar.png"/>
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-            <TextField alignment="CENTER" prefWidth="200" fx:id="bicycleUsage"/>
+            <TextField alignment="CENTER" prefWidth="150" fx:id="bicycleUsage"/>
             <Button fx:id="increaseBicycleUsageBtn" text="+" onAction="#increaseBicycleUsage"/>
             </HBox>
         </VBox>
+
+        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="featuresIconProduce" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/icons/iconLocalProduce.png"/>
+                </image>
+            </ImageView>
+            <HBox alignment="CENTER" spacing="20">
+                <TextField alignment="CENTER" prefWidth="150" fx:id="localProduce"/>
+                <Button fx:id="increaseLocalProduceBtn" text="+" />
+            </HBox>
+        </VBox>
+
+
+        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="featuresIconBus" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/icons/iconBusCar.png"/>
+                </image>
+            </ImageView>
+            <HBox alignment="CENTER" spacing="20">
+                <TextField alignment="CENTER" prefWidth="150" fx:id="busCar"/>
+                <Button fx:id="increaseBusUsageBtn" text="+" />
+            </HBox>
+        </VBox>
+
+    </GridPane>
 
         <HBox alignment="CENTER">
             <Label fx:id="pointsEarnedLabel" text="Points earned:" HBox.hgrow="ALWAYS" />

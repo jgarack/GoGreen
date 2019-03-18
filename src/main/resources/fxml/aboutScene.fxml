@@ -17,7 +17,7 @@
           prefHeight="400.0" prefWidth="600.0"
           alignment="center" hgap="10" vgap="10">
 
-    <Label text="About Us" alignment="CENTER" fx:id="howToTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    <Label text="About Us" alignment="CENTER" fx:id="aboutTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
     <Label fx:id="aboutSceneText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">GoGreen is an app designed with the purpose to make it easier to keep track of eco-friendly decisions and their impact on</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">the world, all whilst providing an engaging experience that will hopefully motivate the user to keep a greener lifestyle.</Label>
