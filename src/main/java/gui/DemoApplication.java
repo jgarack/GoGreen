@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import server.GreetingController;
-
+import utility.DbAdaptor;
+import utility.RegisterCredentials;
 
 
 /**

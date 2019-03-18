@@ -1,7 +1,6 @@
 package utility;
 
 import org.junit.jupiter.api.Test;
-import java.sql.Date;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +27,9 @@ class DbAdaptorTest {
         assertEquals(user2.getUsername(), user.getUsername());
         assertEquals(user2.getTotalScore(), user.getTotalScore());
         db.disconnect();
+        db.connect();
+        db.deleteByUsername(random);
+        db.disconnect();
     }
 
     @Test
@@ -43,6 +45,9 @@ class DbAdaptorTest {
         User test = db.getUser(random);
         assertEquals(test.getTotalScore(), 0);
         db.disconnect();
+        db.connect();
+        db.deleteByUsername(random);
+        db.disconnect();
     }
 
 
@@ -56,6 +61,9 @@ class DbAdaptorTest {
         LoginCredentials LC = new LoginCredentials(random,"pass");
         assertEquals(db.comparecredentials(LC),true);
         db.disconnect();
+        db.connect();
+        db.deleteByUsername(random);
+        db.disconnect();
     }
 
     @Test
@@ -68,6 +76,9 @@ class DbAdaptorTest {
         db.connect();
         assertEquals(db.comparecredentials(LC),true);
         db.disconnect();
+        db.connect();
+        db.deleteByUsername(random);
+        db.disconnect();
     }
 
     @Test
@@ -78,6 +89,9 @@ class DbAdaptorTest {
         db.disconnect();
         db.connect();
         assertEquals(db.getUser(random).getUsername(), random);
+        db.disconnect();
+        db.connect();
+        db.deleteByUsername(random);
         db.disconnect();
 
 

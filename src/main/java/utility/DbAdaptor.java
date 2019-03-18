@@ -491,6 +491,20 @@ public class DbAdaptor {
             return -1;
         }
     }
+    public void deleteByUsername(String username){
+        try {
+
+            PreparedStatement st = conn.prepareStatement(
+                    "DELETE FROM users WHERE username = ?");
+
+            st.setString(1, username);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
 
 }
