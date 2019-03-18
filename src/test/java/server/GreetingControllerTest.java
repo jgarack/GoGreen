@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import resources.AbstractTest;
 import utility.AccountMessage;
 import utility.Activity;
+import utility.DbAdaptor;
 
 import java.util.UUID;
 
@@ -89,14 +90,19 @@ public class GreetingControllerTest extends AbstractTest {
     @Test
     public void registerTest() throws Exception {
 
+        String random = UUID.randomUUID().toString();
         uri = "/register";
-        account = new AccountMessage(UUID.randomUUID().toString(), "password");
+        account = new AccountMessage(random , "password");
         inputJson = super.mapToJson(account);
         mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
 
         status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
+        DbAdaptor db = new DbAdaptor();
+        db.connect();
+        db.deleteByUsername(random);
+        db.disconnect();
     }
 
      /**
