@@ -39,7 +39,7 @@
             - Jackson
         - SQL
         - Plain text
-    - GUI
+    - gui
         - JavaFX
     - IDE
         - Eclipse

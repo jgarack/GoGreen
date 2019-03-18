@@ -16,7 +16,7 @@
 ## Decisions to make
 >* Server/client side frameworks.
 >  * Spring
->* GUI framework.
+>* gui framework.
 >  * JavaFX
 >  * Html based frameworks?
 >* Server hosting
@@ -75,7 +75,7 @@
 >* Setting up client and server;
 >  * Set up server hosting service;
 >* Set up package organisation;
->* Designing a GUI that fits the needs for our planned features;
+>* Designing a gui that fits the needs for our planned features;
 >* Integrate support for chosen DBMS;
 >* Prepare a Demo.
 ## Agenda for next week.
