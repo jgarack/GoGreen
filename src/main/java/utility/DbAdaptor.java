@@ -219,20 +219,22 @@ public class DbAdaptor {
 
             PreparedStatement st = conn
                     .prepareStatement("SELECT sum(score) "
-                            + "FROM activities"
+                            + "FROM activities "
                             + "WHERE player = ?");
             st.setString(one, name);
+            System.out.println(st.toString());
             rs = st.executeQuery();
+            System.out.println(rs.next());
+            int score = Integer.parseInt(rs.getString(one));
             st.close();
-
-            int score = rs.getInt(1);
 
             st = conn
                     .prepareStatement("UPDATE users"
-                            + "SET total_score = ?"
+                            + " SET total_score = ? "
                             + "WHERE username = ?");
             st.setInt(one, score);
             st.setString(two, name);
+            System.out.println(st.toString());
             st.executeUpdate();
             st.close();
 
@@ -382,21 +384,24 @@ public class DbAdaptor {
                     .append(" activities WHERE player = ?")
                     .append(" AND activity_id = ?")
                     .toString());
-            st.setString(one, username);
+            st.setString(one, name);
             st.setInt(two, activityID);
+            System.out.println(name);
+            System.out.println(st.toString());
             rs = st.executeQuery();
+            System.out.println(rs.next());
             amount += rs.getInt("amount");
             PreparedStatement pst = conn.prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
-            pst.setString(one, amount + "");
-            pst.setString(two, username);
-            pst.setString(three, activityID + "");
+            pst.setInt(one, amount);
+            pst.setString(two, name);
+            pst.setInt(three, activityID);
             pst.executeUpdate();
             pst.close();
             disconnect();
             System.out.println(rs.toString());
-            calculateScore(username, activityID, amount);
-            updateTotalScore(username);
+            calculateScore(name, activityID, amount);
+            updateTotalScore(name);
             return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -408,13 +413,17 @@ public class DbAdaptor {
     public void calculateScore(final String username, final int activityID,
                                 final int amount) {
         try {
+            connect();
             PreparedStatement st = conn.prepareStatement(new StringBuilder(
                     "UPDATE activities SET score = ? WHERE player = ")
-                    .append(username).append(" AND activity_id = ")
-                    .append(activityID).toString());
-            st.setInt(one, new Feature("1").vegmealCalcScore(amount));
+                    .append("?").append(" AND activity_id = ")
+                    .append("?").toString());
+            st.setInt(one, new Feature("1").vegmeal_calcScore(amount));
+            st.setString(two, username);
+            st.setInt(three, activityID);
             st.executeUpdate();
             st.close();
+            disconnect();
         } catch(SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -433,11 +442,17 @@ public class DbAdaptor {
             connect();
             StringBuilder query = new StringBuilder(
                     "SELECT score FROM activities WHERE player = ")
-                    .append(name).append(" AND activity_id = ")
-                    .append(activityID);
-            rs = conn.prepareStatement(query.toString()).executeQuery();
+                    .append("?").append(" AND activity_id = ")
+                    .append("?");
+            PreparedStatement st = conn.prepareStatement(query.toString());
+            st.setString(one, name);
+            st.setInt(two, activityID);
+            System.out.println(st.toString());
+            rs = st.executeQuery();
+            System.out.println(rs.next());
+            int ret = rs.getInt(one);
             disconnect();
-            return rs.getInt(one);
+            return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -453,13 +468,17 @@ public class DbAdaptor {
      */
     public int getTotalScore(final String name) {
         try {
+            System.out.println(name);
             connect();
-            StringBuilder query = new StringBuilder(
-                    "SELECT total_score FROM users WHERE username = ")
-                    .append(name);
-            rs = conn.prepareStatement(query.toString()).executeQuery();
+            String query = "SELECT total_score FROM users WHERE username = ?";
+            PreparedStatement st = conn.prepareStatement(query.toString());
+            st.setString(one, name);
+            System.out.println(st.toString());
+            rs = st.executeQuery();
+            System.out.println(rs.next());
+            int ret = rs.getInt("total_score");
             disconnect();
-            return rs.getInt(one);
+            return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

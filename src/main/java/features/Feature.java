@@ -182,13 +182,13 @@ public class Feature {
                 + '}';
     }
 
-//    /**
-//     * Mapping for post request to calculate points.
-//     * @param amount Activity to be calculated
-//     * @return ResponseEntity with http response body and status code
-//     * @throws Exception UrlNotFound
-//     */
-    public int vegmealCalcScore(final int amount) {
+    /**
+     * Mapping for post request to calculate points.
+     * @param amount Activity to be calculated
+     * @return ResponseEntity with http response body and status code
+     * @throws Exception UrlNotFound
+     */
+    public int vegmeal_calcScore(final int amount) {
         try {
             StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
                     .append(amount).append("&timeframe=2019-03-01%2F2019-03-02")

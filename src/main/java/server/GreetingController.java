@@ -123,9 +123,9 @@ public class GreetingController {
      *                 used to retrieve the score.
      * @return the total score of a user.
      */
-    @GetMapping("/total")
+    @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
         return new ResponseEntity(DB_ADAPTOR
-                .getTotalScore(username), HttpStatus.OK);
+                .getTotalScore(username.replace('"', ' ').trim()), HttpStatus.OK);
     }
 }
