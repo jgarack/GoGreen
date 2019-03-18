@@ -296,7 +296,17 @@ public class DbAdaptor {
     public boolean addNewUser(final RegisterCredentials regCre) {
 
         try {
+
             PreparedStatement st = conn
+                    .prepareStatement("INSERT INTO "
+                            + "users(username, total_score) VALUES (?,?)");
+            st.setString(one, regCre.getUsername());
+            st.setInt(two, 0);
+            st.executeUpdate();
+            st.close();
+
+
+             st = conn
                     .prepareStatement("INSERT INTO "
                             + "credentials(username, password,"
                             + " question, answer) VALUES (?,?,?,?)");
@@ -307,13 +317,6 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "users(username, total_score) VALUES (?,?)");
-            st.setString(one, regCre.getUsername());
-            st.setInt(two, 0);
-            st.executeUpdate();
-            st.close();
 
             st = conn
                     .prepareStatement("INSERT INTO "
