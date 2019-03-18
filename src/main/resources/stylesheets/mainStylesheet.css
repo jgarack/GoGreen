@@ -15,7 +15,7 @@
     -fx-background-color: transparent;
     -fx-padding: 5 5 0 5;
 }
-#home,#howToPlay,#aboutUs,#personalInfo{
+#home,#howToPlay,#aboutUs,#personalInfo,#friendsListBtn{
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
@@ -29,7 +29,7 @@
 }
 
 
-#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover {
+#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover,#friendsListBtn:hover {
     -fx-background-color: #78c292;
 }
 
@@ -151,3 +151,6 @@
     -fx-background-color: rgba(255, 255, 255, 0.493);
 }
 
+#friendsPane{
+    -fx-background-color: transparent;
+}

@@ -143,6 +143,8 @@ public class HomeController {
 
                 onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
 
+                this.vegMealsEaten.setText("");
+
             } else {
                 ALERT_BUILDER
                         .formEntryWarning(vegMealsEaten.getText(),
@@ -183,6 +185,8 @@ public class HomeController {
                             "Good job! Keep on going greener!");
 
             onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+
+            this.vegMeals.setText("");
 
         } else {
             ALERT_BUILDER

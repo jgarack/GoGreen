@@ -32,6 +32,7 @@
 
             <HBox alignment="TOP_RIGHT" fx:id="userSection" spacing="30">
                 <Label fx:id="greetingsText" text="Greetings, User!" HBox.hgrow="ALWAYS"/>
+                <Button fx:id="friendsListBtn" text="Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
                 <Button fx:id="personalInfo" text="Edit Personal Info" onAction="#loadPersonalInfoScene"/>
             </HBox>
         </SplitPane>

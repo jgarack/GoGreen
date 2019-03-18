@@ -133,6 +133,11 @@ public class MainController {
         loadScene("personalInfo");
     }
 
+    @FXML
+    protected void loadFriendsListScene() throws IOException {
+        loadScene("friendsList");
+    }
+
 
     /**
      * Loads a scene based on the given string.
