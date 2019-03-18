@@ -436,7 +436,7 @@ public class DbAdaptor {
     /**
      * returns activity amount.
      *
-     * @param name   username whose activity amount should be returned.
+     * @param name username whose activity amount should be returned.
      * @param activityID id of the activity
      * @return amount of given activity of given user
      */

@@ -28,10 +28,10 @@
     <TextField fx:id="secretAnswer" GridPane.rowIndex="12" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="13">
-        <Button text="Register" onAction="#handleRegisterButtonAction" />
+        <Button text="Register" onAction="#handleRegisterButtonAction" defaultButton="true"/>
     </HBox>
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="14">
-        <Button text="Back" onAction="#handleBackButtonAction" />
+        <Button text="Back" onAction="#handleBackButtonAction" cancelButton="true"/>
     </HBox>
 
     <Text fx:id="actionTarget" GridPane.rowIndex="8" />
