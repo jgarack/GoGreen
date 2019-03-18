@@ -8,7 +8,15 @@
 }
 .table-row-cell {
      -fx-cell-size: 50px;
+    -fx-background-color: INDIGO;
+    -fx-opacity: 0.5;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+
  }
 #friendsTable{
+    -fx-background-color: transparent;
+}
+#friendsPane{
     -fx-background-color: transparent;
 }
