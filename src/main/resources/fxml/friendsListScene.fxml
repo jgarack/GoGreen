@@ -7,15 +7,18 @@
 <?import javafx.scene.layout.*?>
 
 <?import org.controlsfx.control.textfield.CustomTextField?>
-<SplitPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-           fx:controller="gui.FriendsController"
-            prefHeight="400.0" prefWidth="600.0"
-            fx:id="friendsPane">
-    <VBox fx:id="pendingRequests">
-        <ListView fx:id="friendReqs"></ListView>
-    </VBox>
-    <VBox fx:id="friendsListBox">
-        <!-- TODO: Create a clearable text field for search bar-->
-    </VBox>
-</SplitPane>
+<?import java.net.URL?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<GridPane xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="gui.FriendsController"
+      prefHeight="400.0" prefWidth="600.0"
+      fx:id="friendsPane" alignment="CENTER">
+    <Label fx:id="leaderBoardTitle" text="Leaderboard" GridPane.valignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0"
+    GridPane.columnIndex="0"/>
+    <TextField fx:id="searchBar" promptText="Search for a friend..." GridPane.rowIndex="1" stylesheets=""/>
+    <TableView fx:id="friendsTable" GridPane.rowIndex="2"/>
+    <stylesheets>
+        <URL value="@../stylesheets/friendsStylesheet.css"/>
+    </stylesheets>
+</GridPane>

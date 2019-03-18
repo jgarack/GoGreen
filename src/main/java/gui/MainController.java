@@ -10,9 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import utility.MainHandler;
 //import org.controlsfx.glyphfont.FontAwesome;
 //import org.controlsfx.glyphfont.GlyphFont;
 //import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -58,8 +58,6 @@ public class MainController {
      */
     @FXML
     private Label greetingsText;
-
-
 
     /**
      * Updates the Greeting in top right corner.
