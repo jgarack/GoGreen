@@ -82,3 +82,4 @@ You can download the latest version [here](https://github.com/SERG-Delft/TI1216/
 
 ## Referentials:
 * [1]: "A succesful Git branching model" by *Vincent Driessen*, first published on 05-01-2010, visited on 23-02-2019 at https://nvie.com/posts/a-successful-git-branching-model/
+* [2]: "Car Emissions data - A dataset of over 5000 vehicles and their Emissions" by dananos, last updated Fri Sep 08 2017 16:15:08 GMT+0200, visited on 28-02-2019 at https://www.kaggle.com/dananos/car-emissions-data

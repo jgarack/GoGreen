@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Authenticator</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">utility</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Authenticator (utility)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Authenticator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    63.6%
+  </span>
+  <span class="absValue">
+    (7/ 11)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package utility;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import exceptions.DataConflictException;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;/**
+<i>9</i>&nbsp; * Class that can keep track of registered accounts and can check if the
+<i>10</i>&nbsp; * provided
+<i>11</i>&nbsp; * account is registered.
+<i>12</i>&nbsp; * @author awjvanvugt
+<i>13</i>&nbsp; */
+<i>14</i>&nbsp;public class Authenticator {
+<i>15</i>&nbsp;    /**
+<i>16</i>&nbsp;     * List of registered accounts.
+<i>17</i>&nbsp;     * Authentication happens internal, therefore there is no get method for
+<i>18</i>&nbsp;     * this
+<i>19</i>&nbsp;     * Object.
+<i>20</i>&nbsp;     */
+<i>21</i>&nbsp;    private final List&lt;AccountMessage&gt; accounts;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    /**
+<i>24</i>&nbsp;     * Constructs an Authenticator Object with an empty list of accounts.
+<i>25</i>&nbsp;     */
+<b class="fc"><i>26</i>&nbsp;    public Authenticator() {</b>
+<b class="fc"><i>27</i>&nbsp;        accounts = new ArrayList&lt;AccountMessage&gt;();</b>
+<b class="fc"><i>28</i>&nbsp;    }</b>
+<i>29</i>&nbsp;
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * Authenticates the input user.
+<i>32</i>&nbsp;     * @param user account to authenticate.
+<i>33</i>&nbsp;     * @return whether the username is registered AND the password is correct.
+<i>34</i>&nbsp;     */
+<i>35</i>&nbsp;    public boolean authenticate(final AccountMessage user) {
+<b class="nc"><i>36</i>&nbsp;        if (accounts.contains(user)) {</b>
+<b class="nc"><i>37</i>&nbsp;            return true;</b>
+<i>38</i>&nbsp;        }
+<b class="nc"><i>39</i>&nbsp;        return false;</b>
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    /**
+<i>43</i>&nbsp;     * Registers an account for the input user.
+<i>44</i>&nbsp;     * @param user account to register.
+<i>45</i>&nbsp;     * @return true if the account was added correctly.
+<i>46</i>&nbsp;     * @throws DataConflictException if the username provided is already
+<i>47</i>&nbsp;     * registered.
+<i>48</i>&nbsp;     */
+<i>49</i>&nbsp;    public boolean registerNewUser(final AccountMessage user)
+<i>50</i>&nbsp;            throws DataConflictException {
+<b class="fc"><i>51</i>&nbsp;        for (AccountMessage account : accounts) {</b>
+<b class="fc"><i>52</i>&nbsp;            if (account.getUsername().equals(user.getUsername())) {</b>
+<b class="fc"><i>53</i>&nbsp;                throw new DataConflictException(&quot;Username is already taken.&quot;);</b>
+<i>54</i>&nbsp;            }
+<b class="nc"><i>55</i>&nbsp;        }</b>
+<b class="fc"><i>56</i>&nbsp;        return accounts.add(user);</b>
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-03-03 22:06</div>
+</div>
+</body>
+</html>
