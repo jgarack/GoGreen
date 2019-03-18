@@ -92,11 +92,17 @@ public final class LoginController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                     .getResource("/fxml/" + view + "View.fxml"));
+
+            System.out.println(1);
+            MainHandler.username = username.getText().trim();
+            System.out.println(MainHandler.username);
             Parent root = fxmlLoader.load();
 
 
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
+
+
 
             if (view.equals("register")) {
                 new Pulse(root).play();
@@ -105,7 +111,6 @@ public final class LoginController {
                 controller
                         .setGreetingsText("Greetings, " + username.getText()
                                 .trim());
-                MainHandler.username = username.getText().trim();
                 new ZoomInLeft(root).play();
             }
             stage.setX(bounds.getMinX());

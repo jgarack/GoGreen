@@ -112,6 +112,12 @@ public class HomeController {
     @FXML
     public void initialize() {
         //progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
+        try {
+            System.out.println(2);
+            pointsEarnedLabel.setText("Points earned: " + handler.getTotalScore());
+        } catch(ServerStatusException | IOException e) {
+            ALERT_BUILDER.displayException(e);
+        }
     }
     /**
      * Used to decrease the amount of vegetarian meals filled in the text field.
