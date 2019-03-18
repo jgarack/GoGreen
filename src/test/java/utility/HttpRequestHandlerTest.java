@@ -24,18 +24,17 @@ public class HttpRequestHandlerTest {
 
     private static final Object POST_OBJ = new Integer(42);
 
-    private static HttpRequestHandler httpHome, httpHandler;
+    private static HttpRequestHandler httpHandler;
 
     @BeforeAll
     public static void setUp() throws IOException {
-        httpHome = new HttpRequestHandler("http://httpbin.org/get");
         httpHandler = new HttpRequestHandler("http://httpbin.org");
     }
 
     @Test
     public void getHome_default() {
         try {
-            BufferedReader result = httpHome.reqGetHome();
+            BufferedReader result = httpHandler.reqGetHome();
             int i = 0;
             while(result.readLine() != null) {
                 ++i;
@@ -49,7 +48,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void getHome_userAgent() {
         try {
-            BufferedReader result = httpHome.reqGetHome(USER_AGENT);
+            BufferedReader result = httpHandler.reqGetHome(USER_AGENT);
             int i = 0;
             while(result.readLine() != null) {
                 ++i;
@@ -63,7 +62,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void get_route() {
         try {
-            BufferedReader result = httpHome.reqGet(GET);
+            BufferedReader result = httpHandler.reqGet(GET);
             int i = 0;
             while(result.readLine() != null) {
                 ++i;
@@ -77,7 +76,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void get_route_userAgent() {
         try {
-            BufferedReader result = httpHome.reqGet(GET, USER_AGENT);
+            BufferedReader result = httpHandler.reqGet(GET, USER_AGENT);
             int i = 0;
             while(result.readLine() != null) {
                 ++i;
@@ -91,7 +90,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void post_route_msg() {
         try {
-            BufferedReader result = httpHome.reqPost(POST, POST_OBJ);
+            BufferedReader result = httpHandler.reqPost(POST, POST_OBJ);
             int i = 0;
             while(result.readLine() != null) {
                 ++i;
@@ -105,7 +104,7 @@ public class HttpRequestHandlerTest {
     @Test
     public void post_route_msg_userAgent() {
         try {
-            BufferedReader result = httpHome.reqPost(POST, POST_OBJ,
+            BufferedReader result = httpHandler.reqPost(POST, POST_OBJ,
                     USER_AGENT);
             int i = 0;
             while(result.readLine() != null) {

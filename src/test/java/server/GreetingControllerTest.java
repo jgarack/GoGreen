@@ -126,7 +126,7 @@ public class GreetingControllerTest extends AbstractTest {
      *
      * @throws Exception
      */
-    @Test
+    /*@Test
     public void pointsTest() throws Exception {
 
         uri = "/points";
@@ -138,14 +138,14 @@ public class GreetingControllerTest extends AbstractTest {
 
         status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
-    }
+    }*/
 
     /**
      * Tests an activity with an ID of 3 ("Not an activity").
      *
      * @throws Exception
      */
-    @Test
+    /*@Test
     public void pointsTestNotAnActivity() throws Exception {
 
         uri = "/points";
@@ -157,7 +157,7 @@ public class GreetingControllerTest extends AbstractTest {
 
         status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
-    }
+    }*/
 
     /**
      * Tests the default Get mapping.

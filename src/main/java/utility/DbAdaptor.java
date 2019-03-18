@@ -414,11 +414,14 @@ public class DbAdaptor {
                                 final int amount) {
         try {
             connect();
+            System.out.println("update vegmeal for amount: " + amount);
             PreparedStatement st = conn.prepareStatement(new StringBuilder(
                     "UPDATE activities SET score = ? WHERE player = ")
                     .append("?").append(" AND activity_id = ")
                     .append("?").toString());
-            st.setInt(one, new Feature("1").vegmeal_calcScore(amount));
+            int score = new Feature("1").vegmeal_calcScore(amount);
+            System.out.println("score is now " + score);
+            st.setInt(one, score);
             st.setString(two, username);
             st.setInt(three, activityID);
             st.executeUpdate();

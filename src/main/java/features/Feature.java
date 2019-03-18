@@ -94,7 +94,6 @@ public class Feature {
      * Handles request for Vegetarian meal points from server.
      * Feature 1 VeggieMeal
      * Feature 2 BikeRide
-     * @param choice the id of the feature that is chosen.
      * @return returns points
      * @author ohussein
      */
@@ -191,13 +190,15 @@ public class Feature {
     public int vegmeal_calcScore(final int amount) {
         try {
             StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
-                    .append(amount).append("&timeframe=2019-03-01%2F2019-03-02")
+                    .append(amount).append("&timeframe=2019-01-01%2F2020-01-01")
                     .append(BP_KEY);
             BufferedReader httpBody =
                     HTTP_HANDLER_API.reqGet(urlRouting.toString());
-            return jsonCon(HTTP_HANDLER_API.resLog(httpBody, null));
+            int res = jsonCon(HTTP_HANDLER_API.resLog(httpBody, null));
+            System.out.println("calc res " + res);
+            return res;
         } catch (IOException | ServerStatusException e) {
-            new AlertBuilder().displayException(e);
+            e.printStackTrace();
             return -1;
         }
     }
