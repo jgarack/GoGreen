@@ -190,7 +190,7 @@ public class Feature {
     public int vegmeal_calcScore(final int amount) {
         try {
             StringBuilder urlRouting = new StringBuilder("/diets.json?size=")
-                    .append(amount).append("&timeframe=2019-01-01%2F2020-01-01")
+                    .append(amount).append("&timeframe=2019-01-01%2F2019-01-02")
                     .append(BP_KEY);
             BufferedReader httpBody =
                     HTTP_HANDLER_API.reqGet(urlRouting.toString());
