@@ -429,7 +429,7 @@ public class DbAdaptor {
                     "UPDATE activities SET score = ? WHERE player = ")
                     .append("?").append(" AND activity_id = ")
                     .append("?").toString());
-            int score = new Feature("1").vegmeal_calcScore(amount);
+            int score = new Feature(1,amount).calculatePoints();
             System.out.println("score is now " + score);
             st.setInt(one, score);
             st.setString(two, username);

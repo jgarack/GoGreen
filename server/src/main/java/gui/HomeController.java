@@ -146,43 +146,43 @@ public class HomeController {
             ALERT_BUILDER.displayException(e);
         }
     }
-    /**
-     * Used to decrease the amount of vegetarian meals filled in the text field.
-     * @param event The fired event when the decrease button is pressed.
-     */
-    @FXML
-    protected void decreaseVegetarianMeals(final ActionEvent event) {
-        if (MainHandler.tryParseInt(vegMeals.getText())) {
-            int valVegMeals = Integer.parseInt(vegMeals.getText());
-            if (MainHandler.checkPositiveValues(this.vegetarianMeals,
-                    valVegMeals)) {
-                Feature meal = new Feature(vegMeals.getText());
-
-                this.vegetarianMeals = handler
-                        .updateVegMeal(MINUS * valVegMeals);
-                try {
-                    this.pointsEarned = handler.getTotalScore();
-                } catch (IOException | ServerStatusException e) {
-                    new AlertBuilder().displayException(e);
-                }
-                pointsEarnedLabel.setText("Points earned:"
-                        + this.pointsEarned);
-
-                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
-
-                this.vegMealsEaten.setText("");
-
-            } else {
-                ALERT_BUILDER
-                        .formEntryWarning(vegMealsEaten.getText(),
-                                "This value cannot be negative.");
-            }
-        } else {
-            ALERT_BUILDER
-                    .formEntryWarning(vegMealsEaten.getText(),
-                    YOU_NEED_TO_FILL_A_NUMBER);
-        }
-    }
+//    /**
+//     * Used to decrease the amount of vegetarian meals filled in the text field.
+//     * @param event The fired event when the decrease button is pressed.
+//     */
+//    @FXML
+//    protected void decreaseVegetarianMeals(final ActionEvent event) {
+//        if (MainHandler.tryParseInt(vegMeals.getText())) {
+//            int valVegMeals = Integer.parseInt(vegMeals.getText());
+//            if (MainHandler.checkPositiveValues(this.vegetarianMeals,
+//                    valVegMeals)) {
+//                Feature meal = new Feature(Integer.parseInt(vegMeals.getText()),1);
+//
+//                this.vegetarianMeals = handler
+//                        .updateVegMeal(MINUS * valVegMeals);
+//                try {
+//                    this.pointsEarned = handler.getTotalScore();
+//                } catch (IOException | ServerStatusException e) {
+//                    new AlertBuilder().displayException(e);
+//                }
+//                pointsEarnedLabel.setText("Points earned:"
+//                        + this.pointsEarned);
+//
+//                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
+//
+//                this.vegMealsEaten.setText("");
+//
+//            } else {
+//                ALERT_BUILDER
+//                        .formEntryWarning(vegMealsEaten.getText(),
+//                                "This value cannot be negative.");
+//            }
+//        } else {
+//            ALERT_BUILDER
+//                    .formEntryWarning(vegMealsEaten.getText(),
+//                    YOU_NEED_TO_FILL_A_NUMBER);
+//        }
+//    }
 
     /**
      * Used to increase the amount of vegetarian meals filled in the text field.
@@ -193,7 +193,7 @@ public class HomeController {
         if (MainHandler.tryParseInt(vegMeals.getText())) {
 
 
-            Feature meal = new Feature(vegMeals.getText());
+            Feature meal = new Feature(Integer.parseInt(vegMeals.getText()),1);
             System.out.println(meal.toString());
 
             this.vegetarianMeals = handler

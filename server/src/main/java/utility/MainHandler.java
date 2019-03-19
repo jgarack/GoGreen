@@ -62,7 +62,7 @@ public class MainHandler {
         try {
             return Integer.parseInt(httpHandler
 
-                    .reqPost("/vegmeal",
+                    .reqPost("/points",
                             new UpdateRequest(username, 1, amount))
                     .readLine());
         } catch (IOException | ServerStatusException e) {

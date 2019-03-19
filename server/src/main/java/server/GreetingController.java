@@ -36,8 +36,6 @@ public class GreetingController {
      */
     private static final DbAdaptor DB_ADAPTOR = new DbAdaptor();
 
-
-
     /**
      * Default mapping for index.
      * @return ResponseEntity with status code and head
@@ -98,36 +96,22 @@ public class GreetingController {
 
     }
 
-    /**
-     * Updates the vegetarian meals.
-     * @param request Request to be updated.
-     * @return ResponseEntity that updates the vegMeal
-     */
-    @PostMapping("/vegmeal")
-    public ResponseEntity vegmealUpdate(
-            @RequestBody final UpdateRequest request) {
-        String username = request.getUsername();
-        int amount = request.getAmount();
-        int activityID = request.getActivityID();
-        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity(DB_ADAPTOR
-                .getActivityAmount(username, activityID), HttpStatus.OK);
-    }
+//    /**
+//     * Updates the vegetarian meals.
+//     * @param request Request to be updated.
+//     * @return ResponseEntity that updates the vegMeal
+//     */
+//    @PostMapping("/vegmeal")
+//    public ResponseEntity vegmealUpdate(
+//            @RequestBody final UpdateRequest request) {
+//        String username = request.getUsername();
+//        int amount = request.getAmount();
+//        int activityID = request.getActivityID();
+//        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
+//            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//        return new ResponseEntity(DB_ADAPTOR
+//                .getActivityAmount(username, activityID), HttpStatus.OK);
+//    }
 
-    /**
-     * Returns a response entity with the total score.
-     * @param username The username of
-     *                 the user that is
-     *                 used to retrieve the score.
-     * @return the total score of a user.
-     */
-    @PostMapping("/total")
-    public ResponseEntity totalScore(@RequestBody final String username) {
-        return new ResponseEntity(DB_ADAPTOR
-                .getTotalScore(username
-                        .replace('"', ' ').trim()),
-                HttpStatus.OK);
-    }
 }
