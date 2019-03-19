@@ -10,8 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import utility.User;
+//import utility.User;
 
+/**
+ * Controller for the friends page.
+ */
 public class FriendsController {
 
     /**
@@ -56,24 +59,36 @@ public class FriendsController {
     private void constructTableFriends() {
 
         TableColumn usernameCol = new TableColumn("Username");
-        usernameCol.setCellValueFactory(new PropertyValueFactory<>("username"));
+        usernameCol
+                .setCellValueFactory(new PropertyValueFactory<>("username"));
         TableColumn totalScoreCol = new TableColumn("Score");
-        totalScoreCol.setCellValueFactory(new PropertyValueFactory<>("totalScore"));
-        friendsTable.getColumns().addAll(usernameCol,totalScoreCol);
+        totalScoreCol
+                .setCellValueFactory(new PropertyValueFactory<>("totalScore"));
+        friendsTable
+                .getColumns()
+                .addAll(usernameCol, totalScoreCol);
 
         friendsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
 
         //Added users for to style.
-        friendsTable.getItems().add(new User("Added" , 299));
-        friendsTable.getItems().add(new User("Some" , 330));
-        friendsTable.getItems().add(new User("Users" , 360));
-        friendsTable.getItems().add(new User("To" , 320));
-        friendsTable.getItems().add(new User("Check" , 340));
-        friendsTable.getItems().add(new User("The" , 310));
-        friendsTable.getItems().add(new User("Looks" , 350));
-        friendsTable.getItems().add(new User("Out" , 300));
+//        friendsTable.getItems().add(new User("Added" , 299));
+//        friendsTable.getItems().add(new User("Some" , 330));
+//        friendsTable.getItems().add(new User("Users" , 360));
+//        friendsTable.getItems().add(new User("To" , 320));
+//        friendsTable.getItems().add(new User("Check" , 340));
+//        friendsTable.getItems().add(new User("The" , 310));
+//        friendsTable.getItems().add(new User("Looks" , 350));
+//        friendsTable.getItems().add(new User("Out" , 300));
 
+    }
+
+    /**
+     * Seaches with the given value.
+     */
+    @FXML
+    protected void submitSearch() {
+        String username = searchBar.getText().trim();
     }
 }

@@ -1,7 +1,6 @@
 package utility;
 
 import features.Feature;
-import gui.AlertBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -383,7 +382,8 @@ public class DbAdaptor {
                                   int amount) {
         try {
             connect();
-            PreparedStatement st = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
+            PreparedStatement st = conn
+                    .prepareStatement(new StringBuilder("SELECT amount FROM")
                     .append(" activities WHERE player = ?")
                     .append(" AND activity_id = ?")
                     .toString());
@@ -394,7 +394,8 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             amount += rs.getInt("amount");
-            PreparedStatement pst = conn.prepareStatement("UPDATE activities SET amount = ? "
+            PreparedStatement pst = conn
+                    .prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
@@ -413,6 +414,12 @@ public class DbAdaptor {
         }
     }
 
+    /**
+     * Calculates score of a given user.
+     * @param username the username of the user.
+     * @param activityID the activity of the user.
+     * @param amount the count of activities.
+     */
     public void calculateScore(final String username, final int activityID,
                                 final int amount) {
         try {
@@ -430,7 +437,7 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
             disconnect();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
@@ -491,7 +498,12 @@ public class DbAdaptor {
             return -1;
         }
     }
-    public void deleteByUsername(String username){
+
+    /**
+     * Deletes by username from the DB.
+     * @param username the User that should be deleted.
+     */
+    public void deleteByUsername(final String username) {
         try {
 
             PreparedStatement st = conn.prepareStatement(

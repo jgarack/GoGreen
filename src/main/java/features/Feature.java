@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.ServerStatusException;
 import gui.AlertBuilder;
-import javafx.scene.control.Alert;
-import utility.Activity;
 import utility.HttpRequestHandler;
 
 import java.io.BufferedReader;
@@ -136,18 +134,19 @@ public class Feature {
 //    }
 
 
-//    /**
-//     * Helper method that parses con to a desired integer.
-//     *
-//     * @param con The given String
-//     * @return An integer that is derived from the string.
-//     * @throws IOException Throws an exception if the Mapping is not succesful.
-//     */
-    public int jsonCon(final String con) throws IOException {
+    /**
+     * Helper method that parses con to a desired integer.
+     * @param con The given String
+     * @return An integer that is derived from the string.
+     * @throws IOException Throws an exception if the Mapping is not succesful.
+     */
+    public int jsonCon(final String con)
+            throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(
-                DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                DeserializationFeature
+                        .FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
         int ret = (int) Math.ceil(Double.parseDouble(em.get("decisions").
                 get("carbon").

@@ -7,10 +7,11 @@ import features.Feature;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 import utility.MainHandler;
 
 import java.io.IOException;
@@ -72,23 +73,37 @@ public class HomeController {
      */
     @FXML
     private Label bicycleUsedLabel;
-    /**
-     * Bound to the Progress bar
-     * indicating the progress of the user.
-     */
-    @FXML
-    private ProgressBar progressBarGreen;
+//    /**
+//     * Bound to the Progress bar
+//     * indicating the progress of the user.
+//     */
+//    @FXML
+//    private ProgressBar progressBarGreen;
 
     /**
      * The builder used to build alerts for this handler.
      */
     private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
     /**
-     * Bound to the list of goGreen features.
+     * Bound to the bicycle button.
      */
     @FXML
-    private ListView featuresList;
-
+    private Button increaseBicycleUsageBtn;
+    /**
+     * Bound to the veggie meals button.
+     */
+    @FXML
+    private Button increaseVegetarianMealsBtn;
+    /**
+     * Bound to the local produce button.
+     */
+    @FXML
+    private Button increaseLocalProduceBtn;
+    /**
+     * Bound to the bus usage button.
+     */
+    @FXML
+    private Button increaseBusUsageBtn;
     /**
      * Bound to the points earned label.
      */
@@ -113,9 +128,21 @@ public class HomeController {
     public void initialize() {
         //progressBarGreen.setProgress(PROGRESS_BAR_INIT_VAL);
         try {
-            System.out.println(2);
-            pointsEarnedLabel.setText("Points earned: " + handler.getTotalScore());
-        } catch(ServerStatusException | IOException e) {
+            pointsEarnedLabel
+                    .setText("Points earned: " + handler.getTotalScore());
+            FontAwesome.Glyph plusGlyph = FontAwesome.Glyph.PLUS;
+            setFontAwesomeGlyphToBtn(increaseBicycleUsageBtn,
+                    plusGlyph);
+            setFontAwesomeGlyphToBtn(increaseBusUsageBtn,
+                    plusGlyph);
+            setFontAwesomeGlyphToBtn(increaseVegetarianMealsBtn,
+                    plusGlyph);
+            setFontAwesomeGlyphToBtn(increaseLocalProduceBtn,
+                    plusGlyph);
+
+
+
+        } catch (ServerStatusException | IOException e) {
             ALERT_BUILDER.displayException(e);
         }
     }
@@ -254,6 +281,30 @@ public class HomeController {
     }
 
     /**
+     * Linked to the button to increase
+     * the amount of local produced a user has bought.
+     * @param event The event fired
+     *              upon clicking the button
+     */
+    @FXML
+    protected void increaseLocalProduce(final ActionEvent event) {
+
+    }
+
+    /**
+     * Linked to the button to increase
+     * the amount of times a user has used a bus.
+     * @param event The event fired
+     *              upon clicking the button
+     */
+    @FXML
+    protected void increaseBusUsage(final ActionEvent event) {
+
+    }
+
+
+
+    /**
      *  Makes the points earned label glow.
      * @param c1 The first color
      * @param c2 The second color.
@@ -273,4 +324,16 @@ public class HomeController {
 
     }
 
+    /**
+     * Sets font awesome glyph to a button.
+     * @param btn The recipient.
+     * @param glyph The glyph that is appended.
+     */
+    private void setFontAwesomeGlyphToBtn(final Button btn, final FontAwesome.Glyph glyph) {
+        btn.setStyle("-fx-font-family: 'FontAwesome'");
+        btn
+                .setGraphic(GlyphFontRegistry
+                        .font("FontAwesome")
+                        .create(glyph));
+    }
 }

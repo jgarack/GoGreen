@@ -13,6 +13,9 @@ import javafx.scene.control.Label;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.GlyphFont;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 //import org.controlsfx.glyphfont.FontAwesome;
 //import org.controlsfx.glyphfont.GlyphFont;
 //import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -60,12 +63,24 @@ public class MainController {
     private Label greetingsText;
 
     /**
+     * Bound to the friends list page.
+     */
+    @FXML
+    private Button friendsListBtn;
+
+    /**
      * Updates the Greeting in top right corner.
      * @param greetingstext The text to be updated.
      */
 
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
+        this.greetingsText.setStyle("-fx-font-family: 'FontAwesome'");
+        this.greetingsText
+                .setGraphic(GlyphFontRegistry
+                        .font("FontAwesome")
+                        .create(FontAwesome.Glyph.USER));
+
     }
 
 
@@ -76,9 +91,15 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        //GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        //personalInfo.setGraphic(font
-        // .create(FontAwesome.Glyph.PENCIL).size(16));
+        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
+        personalInfo.setStyle("-fx-font-family: 'FontAwesome'");
+        personalInfo.setGraphic(font
+         .create(FontAwesome.Glyph.INFO));
+
+        friendsListBtn.setStyle("-fx-font-family: 'FontAwesome'");
+        friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE));
+
+
 
         try {
             loadHomeScene();
@@ -131,6 +152,10 @@ public class MainController {
         loadScene("personalInfo");
     }
 
+    /**
+     * Loads friends list scene.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
     @FXML
     protected void loadFriendsListScene() throws IOException {
         loadScene("friendsList");

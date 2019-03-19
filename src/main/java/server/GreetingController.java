@@ -126,6 +126,8 @@ public class GreetingController {
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
         return new ResponseEntity(DB_ADAPTOR
-                .getTotalScore(username.replace('"', ' ').trim()), HttpStatus.OK);
+                .getTotalScore(username
+                        .replace('"', ' ').trim()),
+                HttpStatus.OK);
     }
 }
