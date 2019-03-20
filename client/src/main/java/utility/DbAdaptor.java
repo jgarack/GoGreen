@@ -1,7 +1,5 @@
 package utility;
 
-import features.Feature;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -11,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -198,7 +198,6 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            updateTotalScore(activity.getUsernameAct());
 
 
         } catch (SQLException e) {
@@ -305,10 +304,9 @@ public class DbAdaptor {
             st.close();
 
 
-             st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "credentials(username, password,"
-                            + " question, answer) VALUES (?,?,?,?)");
+            st = conn.prepareStatement("INSERT INTO "
+                    + "credentials(username, password,"
+                    + " question, answer) VALUES (?,?,?,?)");
             st.setString(one, regCre.getUsername());
             st.setString(two, regCre.getPassword());
             st.setString(three, regCre.getQuestion());
@@ -316,17 +314,9 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-
-            st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "activities(activity_id, score, player, amount)"
-                            + " VALUES (?,?,?,?)");
-            st.setInt(one, 1);
-            st.setInt(two, 0);
-            st.setString(three, regCre.getUsername());
-            st.setInt(four, 0);
-            st.executeUpdate();
-            st.close();
+            for (int i = 1; i < 7;i++) {
+                addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
+            }
 
             return true;
         } catch (SQLException e) {
@@ -345,9 +335,9 @@ public class DbAdaptor {
     public User getUser(final String userName) {
         try {
 
-
+            connect();
             PreparedStatement st = conn.prepareStatement(
-                    "SELECT * FROM users WHERE username = ?");
+                    "SELECT username, total_score FROM users WHERE username = ?");
 
             st.setString(1, userName);
             rs = st.executeQuery();
@@ -363,6 +353,8 @@ public class DbAdaptor {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
         return null;
@@ -376,18 +368,20 @@ public class DbAdaptor {
      * @param amount     by how many should it be updated
      * @return true if worked false if exceptions
 
-    */
+     */
     public boolean updateActivity(final String name,
                                   final int activityID,
                                   int amount) {
         try {
             connect();
+
             PreparedStatement st = conn
                     .prepareStatement(new StringBuilder("SELECT amount FROM")
-                    .append(" activities WHERE player = ?")
-                    .append(" AND activity_id = ?")
-                    .toString());
+                            .append(" activities WHERE player = ?")
+                            .append(" AND activity_id = ?")
+                            .toString());
             st.setString(one, name);
+
             st.setInt(two, activityID);
             System.out.println(name);
             System.out.println(st.toString());
@@ -396,7 +390,7 @@ public class DbAdaptor {
             amount += rs.getInt("amount");
             PreparedStatement pst = conn
                     .prepareStatement("UPDATE activities SET amount = ? "
-                    + "WHERE player = ? AND activity_id = ?");
+                            + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
             pst.setInt(three, activityID);
@@ -421,17 +415,17 @@ public class DbAdaptor {
      * @param amount the count of activities.
      */
     public void calculateScore(final String username, final int activityID,
-                                final int amount) {
+                               final int amount) {
         try {
             connect();
-            System.out.println("update vegmeal for amount: " + amount);
+            System.out.println("update Feature:" + activityID
+                    + " for amount: " + amount);
             PreparedStatement st = conn.prepareStatement(new StringBuilder(
                     "UPDATE activities SET score = ? WHERE player = ")
                     .append("?").append(" AND activity_id = ")
                     .append("?").toString());
-            int score = new Feature("1").vegmeal_calcScore(amount);
-            System.out.println("score is now " + score);
-            st.setInt(one, score);
+            System.out.println("score is now " + amount);
+            st.setInt(one, amount);
             st.setString(two, username);
             st.setInt(three, activityID);
             st.executeUpdate();
@@ -516,6 +510,125 @@ public class DbAdaptor {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * send request to be friends method.
+     * @param fromUser from which the invitation is send
+     * @param toUser user to whom you want to send the invitation
+     */
+    public void sendFriendReq(final String fromUser, final String toUser) {
+        try {
+            connect();
+            PreparedStatement st = conn.prepareStatement(
+                    "INSERT INTO friend_request(from_user, "
+                            + "to_user, pending, accepted) VALUES (?,?,?,?)");
+            st.setString(1,fromUser);
+            st.setString(2,toUser);
+            st.setBoolean(3,true);
+            st.setBoolean(4, false);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    /**
+     * method to say if you rejected or accepted the invitation.
+     * @param fromUser user who send the inv
+     * @param toUser user who got the inv
+     * @param accepted rejected - false, accepted - true
+     */
+    public void considerRequest(final String fromUser,
+                                final String toUser, final boolean accepted) {
+        try {
+            connect();
+            PreparedStatement st = conn.prepareStatement("UPDATE friend_request "
+                    + "SET accepted = ?, pending = ?WHERE from_user = ? AND to_user = ?");
+            st.setBoolean(1, accepted);
+            st.setBoolean(2, false);
+            st.setString(3, fromUser);
+            st.setString(4, toUser);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+
+    }
+
+    /**
+     * returns all pending requests.
+     * @param username username who wants the pending requests
+     * @return pending requests
+     */
+    public List<String> getRequest(String username) {
+        try {
+            connect();
+            List<String> listOfPending = new ArrayList<>();
+            PreparedStatement st = conn.prepareStatement("SELECT to_user "
+                    + "FROM friend_request WHERE from_user = ? AND pending = true");
+            st.setString(1, username);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            st = conn.prepareStatement("SELECT from_user FROM friend_request"
+                    + " WHERE to_user = ? AND pending = true");
+            st.setString(1, username);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            return listOfPending;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+        return null;
+    }
+
+    /**
+     * returns friends of given user.
+     * @param username user who want the friends
+     * @return friends of given user
+     */
+    public List<String> getFriends(String username) {
+        try {
+            connect();
+            List<String> listOfPending = new ArrayList<>();
+            PreparedStatement st = conn.prepareStatement("SELECT to_user FROM "
+                    + "friend_request WHERE from_user = ? AND pending = false AND accepted = true");
+            st.setString(1, username);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            st = conn.prepareStatement("SELECT from_user FROM friend_request "
+                    + "WHERE to_user = ? AND pending = false AND accepted = true");
+            st.setString(1, username);
+            rs = st.executeQuery();
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            return listOfPending;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+        return null;
     }
 
 

@@ -1,16 +1,21 @@
 package gui;
 
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import org.controlsfx.control.PopOver;
 import utility.DbAdaptor;
+import utility.MainHandler;
 import utility.User;
 
 
@@ -78,6 +83,17 @@ public class FriendsController {
 
 
 
+        friendsTable.setRowFactory(tv -> {
+            TableRow<User> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if ( event.getButton() == MouseButton.SECONDARY) {
+                    attachAddFriendPopOver(row);
+                }
+            });
+            return row;
+        });
+
+
         //Added users to style.
         friendsTable.getItems().add(new User("Added" , 299));
         friendsTable.getItems().add(new User("Some" , 330));
@@ -88,6 +104,23 @@ public class FriendsController {
         friendsTable.getItems().add(new User("Looks" , 350));
         friendsTable.getItems().add(new User("Out" , 300));
 
+    }
+
+    private void attachAddFriendPopOver(TableRow<User> row) {
+        Button addFriendBtn = new Button();
+        addFriendBtn.setText("Add friend");
+        addFriendBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String sender = MainHandler.username;
+                String recipient = row.getTableView().getItems().get(0).getUsername();
+                System.out.println(sender + " -> " + recipient);
+            }
+        });
+        VBox addFriendBox = new VBox();
+        addFriendBox.getChildren().add(addFriendBtn);
+        PopOver popOver = new PopOver(addFriendBox);
+        popOver.show(row);
     }
 
     /**
@@ -102,5 +135,7 @@ public class FriendsController {
         friendsTable.getItems()
                 .add(new User(searchedUser.getUsername(),
                         searchedUser.getTotalScore()));
+
+
     }
 }
