@@ -511,12 +511,12 @@ public class DbAdaptor {
         }
     }
 
-    public void sendFriendReq(final String user1, final String user2){
+    public void sendFriendReq(final String fromUser, final String toUser){
         try{
             connect();
             PreparedStatement st = conn.prepareStatement("INSERT INTO friend_request(from_user, to_user, pending, accepted) VALUES (?,?,?,?)");
-            st.setString(1,user1);
-            st.setString(2,user2);
+            st.setString(1,fromUser);
+            st.setString(2,toUser);
             st.setBoolean(3,true);
             st.setBoolean(4, false);
             st.executeUpdate();
@@ -526,6 +526,25 @@ public class DbAdaptor {
         } finally {
             disconnect();
         }
+    }
+
+    public void considerRequest(final String fromUser, final String toUser, final boolean accepted) {
+        try {
+            connect();
+            PreparedStatement st = conn.prepareStatement("UPDATE friend_request SET accepted = ?, pending = ?WHERE from_user = ? AND to_user = ?");
+            st.setBoolean(1, accepted);
+            st.setBoolean(2, false);
+            st.setString(3, fromUser);
+            st.setString(4, toUser);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+
     }
 
 
