@@ -160,7 +160,7 @@ public class HttpRequestHandler {
      * @param filepath the path to the file
      * @return a String object containing the response
      */
-    public String resLog(final BufferedReader message,
+    public static String resLog(final BufferedReader message,
                                 final String filepath) {
         try {
             String line;

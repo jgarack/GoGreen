@@ -95,23 +95,4 @@ public class GreetingController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
-
-//    /**
-//     * Updates the vegetarian meals.
-//     * @param request Request to be updated.
-//     * @return ResponseEntity that updates the vegMeal
-//     */
-//    @PostMapping("/vegmeal")
-//    public ResponseEntity vegmealUpdate(
-//            @RequestBody final UpdateRequest request) {
-//        String username = request.getUsername();
-//        int amount = request.getAmount();
-//        int activityID = request.getActivityID();
-//        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
-//            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//        return new ResponseEntity(DB_ADAPTOR
-//                .getActivityAmount(username, activityID), HttpStatus.OK);
-//    }
-
 }

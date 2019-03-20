@@ -69,7 +69,7 @@ public class PointsController {
                             + "&timeframe=2019-03-01%2F2019-03-02"
                             + BP_KEY);
 
-            amount = jsonCon();
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
             if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }
