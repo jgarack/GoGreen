@@ -327,7 +327,7 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            for(int i = 0; i < 6;i++){
+            for(int i = 0; i < 7;i++){
                 addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
             }
 
