@@ -198,7 +198,6 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            updateTotalScore(activity.getUsernameAct());
 
 
         } catch (SQLException e) {
@@ -328,6 +327,10 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
+            for(int i = 0; i < 6;i++){
+                addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
+            }
+
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -382,12 +385,14 @@ public class DbAdaptor {
                                   int amount) {
         try {
             connect();
+
             PreparedStatement st = conn
                     .prepareStatement(new StringBuilder("SELECT amount FROM")
                     .append(" activities WHERE player = ?")
                     .append(" AND activity_id = ?")
                     .toString());
             st.setString(one, name);
+
             st.setInt(two, activityID);
             System.out.println(name);
             System.out.println(st.toString());
