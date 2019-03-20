@@ -10,7 +10,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-//import utility.User;
+import utility.DbAdaptor;
+import utility.User;
+
 
 /**
  * Controller for the friends page.
@@ -40,6 +42,10 @@ public class FriendsController {
     @FXML
     private TableView friendsTable;
 
+    /**
+     * Dbadaptor for getting users
+     */
+    private DbAdaptor dbAdaptor = new DbAdaptor();
 
     /**
      * Should contain the list of friends of a user.
@@ -72,15 +78,15 @@ public class FriendsController {
 
 
 
-        //Added users for to style.
-//        friendsTable.getItems().add(new User("Added" , 299));
-//        friendsTable.getItems().add(new User("Some" , 330));
-//        friendsTable.getItems().add(new User("Users" , 360));
-//        friendsTable.getItems().add(new User("To" , 320));
-//        friendsTable.getItems().add(new User("Check" , 340));
-//        friendsTable.getItems().add(new User("The" , 310));
-//        friendsTable.getItems().add(new User("Looks" , 350));
-//        friendsTable.getItems().add(new User("Out" , 300));
+        //Added users to style.
+        friendsTable.getItems().add(new User("Added" , 299));
+        friendsTable.getItems().add(new User("Some" , 330));
+        friendsTable.getItems().add(new User("Users" , 360));
+        friendsTable.getItems().add(new User("To" , 320));
+        friendsTable.getItems().add(new User("Check" , 340));
+        friendsTable.getItems().add(new User("The" , 310));
+        friendsTable.getItems().add(new User("Looks" , 350));
+        friendsTable.getItems().add(new User("Out" , 300));
 
     }
 
@@ -90,5 +96,11 @@ public class FriendsController {
     @FXML
     protected void submitSearch() {
         String username = searchBar.getText().trim();
+        System.out.println(username);
+        friendsTable.getItems().clear();
+        User searchedUser = dbAdaptor.getUser(username);
+        friendsTable.getItems()
+                .add(new User(searchedUser.getUsername(),
+                        searchedUser.getTotalScore()));
     }
 }
