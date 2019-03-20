@@ -22,11 +22,11 @@ class DbAdaptorTest {
         User user = new User(random, 1000 );
         db.insertUser(user);
         db.disconnect();
-        db.connect();
+
         User user2 = db.getUser(random);
         assertEquals(user2.getUsername(), user.getUsername());
         assertEquals(user2.getTotalScore(), user.getTotalScore());
-        db.disconnect();
+
         db.connect();
         db.deleteByUsername(random);
         db.disconnect();
@@ -41,10 +41,8 @@ class DbAdaptorTest {
         db.connect();
         db.updateTotalScore(random);
         db.disconnect();
-        db.connect();
         User test = db.getUser(random);
         assertEquals(test.getTotalScore(), 0);
-        db.disconnect();
         db.connect();
         db.deleteByUsername(random);
         db.disconnect();
@@ -87,9 +85,7 @@ class DbAdaptorTest {
         db.connect();
         db.insertUser(new User(random, 0));
         db.disconnect();
-        db.connect();
         assertEquals(db.getUser(random).getUsername(), random);
-        db.disconnect();
         db.connect();
         db.deleteByUsername(random);
         db.disconnect();

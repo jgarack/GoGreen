@@ -335,9 +335,9 @@ public class DbAdaptor {
     public User getUser(final String userName) {
         try {
 
-
+            connect();
             PreparedStatement st = conn.prepareStatement(
-                    "SELECT * FROM users WHERE username = ?");
+                    "SELECT username, total_score FROM users WHERE username = ?");
 
             st.setString(1, userName);
             rs = st.executeQuery();
@@ -353,6 +353,8 @@ public class DbAdaptor {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
         return null;
