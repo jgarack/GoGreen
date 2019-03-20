@@ -57,9 +57,6 @@ public class PointsController {
         String username = request.getUsername();
         int amount = request.getAmount();
         int activityID = request.getActivityID();
-        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
         if (activityID == 1) {
 
             BufferedReader httpBody =
@@ -79,8 +76,9 @@ public class PointsController {
         if (activityID == 2) {
             BufferedReader httpBody =
                     new HttpRequestHandler(BP_API).reqGet("/automobile_"
-                            + "trips.json?duration=" + amount
+                            + "trips.json?duration=" + amount * 60
                             + BP_KEY);
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
             if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
                 return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
             }

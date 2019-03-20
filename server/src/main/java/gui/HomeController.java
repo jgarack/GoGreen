@@ -146,43 +146,6 @@ public class HomeController {
             ALERT_BUILDER.displayException(e);
         }
     }
-//    /**
-//     * Used to decrease the amount of vegetarian meals filled in the text field.
-//     * @param event The fired event when the decrease button is pressed.
-//     */
-//    @FXML
-//    protected void decreaseVegetarianMeals(final ActionEvent event) {
-//        if (MainHandler.tryParseInt(vegMeals.getText())) {
-//            int valVegMeals = Integer.parseInt(vegMeals.getText());
-//            if (MainHandler.checkPositiveValues(this.vegetarianMeals,
-//                    valVegMeals)) {
-//                Feature meal = new Feature(Integer.parseInt(vegMeals.getText()),1);
-//
-//                this.vegetarianMeals = handler
-//                        .updateVegMeal(MINUS * valVegMeals);
-//                try {
-//                    this.pointsEarned = handler.getTotalScore();
-//                } catch (IOException | ServerStatusException e) {
-//                    new AlertBuilder().displayException(e);
-//                }
-//                pointsEarnedLabel.setText("Points earned:"
-//                        + this.pointsEarned);
-//
-//                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
-//
-//                this.vegMealsEaten.setText("");
-//
-//            } else {
-//                ALERT_BUILDER
-//                        .formEntryWarning(vegMealsEaten.getText(),
-//                                "This value cannot be negative.");
-//            }
-//        } else {
-//            ALERT_BUILDER
-//                    .formEntryWarning(vegMealsEaten.getText(),
-//                    YOU_NEED_TO_FILL_A_NUMBER);
-//        }
-//    }
 
     /**
      * Used to increase the amount of vegetarian meals filled in the text field.
@@ -221,38 +184,6 @@ public class HomeController {
                             YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
-
-    /**
-     * Used to decrease the amount of times a bicycle
-     * that has been used filled in the text field.
-     * @param event The fired event when the decrease button is pressed.
-     */
-    @FXML
-    protected void decreaseBicycleUsage(final ActionEvent event) {
-        /*if (MainHandler.tryParseInt(bicycleUsage.getText())) {
-            Feature meal = new Feature(bicycleUsage.getText());
-            int bicycleUse = Integer.parseInt(bicycleUsage.getText());
-            if (MainHandler.checkPositiveValues(this.bicycleUsed,
-                    bicycleUse)) {
-                this.bicycleUsed -= bicycleUse;
-
-                this.pointsEarned -= meal.calculatePoints(2);
-                this.pointsEarnedLabel
-                        .setText("Points earned: " + this.pointsEarned);
-
-                onUpdatePointsEarnedLabel(Color.WHITE, Color.RED);
-
-            } else {
-                ALERT_BUILDER
-                        .formEntryWarning(bicycleUsedLabel.getText(),
-                                "This value cannot be negative.");
-            }
-        } else {
-            ALERT_BUILDER
-                    .formEntryWarning(bicycleUsedLabel.getText(),
-                            YOU_NEED_TO_FILL_A_NUMBER);
-        }*/
-    }
     /**
      * Used to increase the amount of times a bicycle
      * that has been used filled in the text field.
@@ -260,24 +191,35 @@ public class HomeController {
      */
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
-        /*if (MainHandler.tryParseInt(bicycleUsage.getText())) {
-            Feature meal = new Feature(bicycleUsage.getText());
-            this.bicycleUsed += Integer.parseInt(bicycleUsage.getText());
-            this.pointsEarned += meal.calculatePoints(2);
-            this.pointsEarnedLabel
-                    .setText("Points earned: " + this.pointsEarned);
+        if (MainHandler.tryParseInt(bicycleUsage.getText())) {
+            Feature bike = new Feature(Integer.parseInt(bicycleUsage.getText())
+                    ,2);
+            System.out.println(bike.toString());
+            this.bicycleUsed = handler
+                    .updateBike(Integer.parseInt(bicycleUsage.getText()));
+
+            try {
+                this.pointsEarned = handler.getTotalScore();
+            } catch (IOException | ServerStatusException e) {
+                new AlertBuilder().displayException(e);
+            }
+
+            pointsEarnedLabel.setText("Points earned: "
+                    + this.pointsEarned);
 
             ALERT_BUILDER
-                    .formNotification("Good job! Keep on going greener!")
-                    .showInformation();
+                    .showInformationNotification(
+                            "Good job! Keep on going greener!");
 
             onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+
+            this.bicycleUsage.setText("");
 
         } else {
             ALERT_BUILDER
                     .formEntryWarning(bicycleUsedLabel.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
-        }*/
+        }
     }
 
     /**

@@ -424,7 +424,8 @@ public class DbAdaptor {
                                 final int amount) {
         try {
             connect();
-            System.out.println("update vegmeal for amount: " + amount);
+            System.out.println("update Feature:"+ activityID
+                    + " for amount: " + amount);
             PreparedStatement st = conn.prepareStatement(new StringBuilder(
                     "UPDATE activities SET score = ? WHERE player = ")
                     .append("?").append(" AND activity_id = ")
