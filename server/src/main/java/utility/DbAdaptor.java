@@ -315,7 +315,7 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            for(int i = 0; i < 7;i++){
+            for(int i = 1; i < 7;i++){
                 addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
             }
 
@@ -508,6 +508,23 @@ public class DbAdaptor {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void sendFriendReq(final String user1, final String user2){
+        try{
+            connect();
+            PreparedStatement st = conn.prepareStatement("INSERT INTO friend_request(from_user, to_user, pending, accepted) VALUES (?,?,?,?)");
+            st.setString(1,user1);
+            st.setString(2,user2);
+            st.setBoolean(3,true);
+            st.setBoolean(4, false);
+            st.executeUpdate();
+
+        } catch(SQLException e){
+            e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
