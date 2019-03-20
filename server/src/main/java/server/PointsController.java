@@ -56,6 +56,7 @@ public class PointsController {
             @RequestBody final UpdateRequest request)throws Exception {
         String username = request.getUsername();
         int amount = request.getAmount();
+        System.out.println("amount on server:" + amount);
         int activityID = request.getActivityID();
         if (activityID == 1) {
 
@@ -63,7 +64,6 @@ public class PointsController {
                     new HttpRequestHandler(BP_API).reqGet("/diets."
                             + "json?size="
                             + amount
-                            + "&timeframe=2019-03-01%2F2019-03-02"
                             + BP_KEY);
 
             amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));

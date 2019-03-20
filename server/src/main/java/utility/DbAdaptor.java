@@ -315,18 +315,6 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-
-            st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "activities(activity_id, score, player, amount)"
-                            + " VALUES (?,?,?,?)");
-            st.setInt(one, 1);
-            st.setInt(two, 0);
-            st.setString(three, regCre.getUsername());
-            st.setInt(four, 0);
-            st.executeUpdate();
-            st.close();
-
             for(int i = 0; i < 7;i++){
                 addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
             }
