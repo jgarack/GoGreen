@@ -73,6 +73,7 @@ public class FriendsController {
      */
     @FXML
     public void initialize() {
+        friends = (ArrayList<String>) dbAdaptor.getRequest(MainHandler.username);
         constructPendingListView();
         constructTableFriends();
     }
@@ -82,7 +83,6 @@ public class FriendsController {
      * with pending requests.
      */
     private void constructPendingListView() {
-        friends = (ArrayList<String>) dbAdaptor.getRequest(MainHandler.username);
         if(friends.isEmpty()){
 
         } else {
@@ -92,8 +92,23 @@ public class FriendsController {
             for (String friend : friends) {
                 HBox currFriend = new HBox();
                 Label sender = new Label(friend + "sent you a request!");
+
                 Button acceptBtn = new Button("Accept");
+                acceptBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        dbAdaptor.considerRequest(friend,MainHandler.username,true);
+                    }
+                });
+
+
                 Button declineBtn = new Button("Block user");
+                declineBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        dbAdaptor.considerRequest(friend,MainHandler.username,true);
+                    }
+                });
 
                 //sender.setAlignment(Pos.CENTER_LEFT);
 
@@ -138,16 +153,20 @@ public class FriendsController {
             return row;
         });
 
+        if (friends.isEmpty()){
+
+        } else {
+            for(String friend : friends){
+                friendsTable.getItems().add(new User(friend,dbAdaptor.getTotalScore(friend)));
+            }
+        }
 
         //Added users to style.
         friendsTable.getItems().add(new User("Added" , 299));
         friendsTable.getItems().add(new User("Some" , 330));
         friendsTable.getItems().add(new User("Users" , 360));
-        friendsTable.getItems().add(new User("To" , 320));
-        friendsTable.getItems().add(new User("Check" , 340));
-        friendsTable.getItems().add(new User("The" , 310));
-        friendsTable.getItems().add(new User("Looks" , 350));
-        friendsTable.getItems().add(new User("Out" , 300));
+
+
 
     }
 
