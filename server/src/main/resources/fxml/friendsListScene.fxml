@@ -10,17 +10,16 @@
 <?import java.net.URL?>
 
 <GridPane xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="gui.FriendsController"
-      prefHeight="400.0" prefWidth="600.0"
-      fx:id="friendsPane" alignment="CENTER">
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="gui.FriendsController"
+          fx:id="friendsPane" alignment="CENTER">
     <Label fx:id="leaderBoardTitle" text="Leaderboard" GridPane.valignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0"
-    GridPane.columnIndex="0"/>
-    <HBox GridPane.rowIndex="1" spacing="30">
-        <TextField fx:id="searchBar" promptText="Search for a friend..." GridPane.columnIndex="0" HBox.hgrow="ALWAYS"/>
+           GridPane.columnIndex="1"/>
+    <HBox GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="30">
+        <TextField fx:id="searchBar" promptText="Search for a friend..." GridPane.columnIndex="1" HBox.hgrow="ALWAYS"/>
         <Button fx:id="submitSearchBtn" text="Search for a friend" onAction="#submitSearch" GridPane.columnIndex="1"/>
     </HBox>
-    <TableView fx:id="friendsTable" GridPane.rowIndex="2"/>
+    <TableView fx:id="friendsTable" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
     <stylesheets>
         <URL value="@../stylesheets/friendsStylesheet.css"/>
     </stylesheets>

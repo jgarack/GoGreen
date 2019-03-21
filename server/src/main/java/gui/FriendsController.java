@@ -62,6 +62,10 @@ public class FriendsController {
      */
     private ArrayList<String> friends;
     /**
+     * Should contain list of pending requests.
+     */
+    private ArrayList<String> pendingRequests;
+    /**
      * The builder used to build alerts for this handler.
      */
     private AlertBuilder alertBuilder;
@@ -73,7 +77,9 @@ public class FriendsController {
      */
     @FXML
     public void initialize() {
-        friends = (ArrayList<String>) dbAdaptor.getRequest(MainHandler.username);
+        pendingRequests = (ArrayList<String>) dbAdaptor.getRequest(MainHandler.username);
+        friends =  (ArrayList<String>)dbAdaptor.getFriends(MainHandler.username);
+        System.out.println(friends);
         constructPendingListView();
         constructTableFriends();
     }
@@ -83,13 +89,13 @@ public class FriendsController {
      * with pending requests.
      */
     private void constructPendingListView() {
-        if(friends.isEmpty()){
+        if(pendingRequests.isEmpty()){
 
         } else {
             Label pendingReqTitle = new Label("Pending Requests:");
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
-            for (String friend : friends) {
+            for (String friend : pendingRequests) {
                 HBox currFriend = new HBox();
                 Label sender = new Label(friend + "sent you a request!");
 
@@ -97,7 +103,7 @@ public class FriendsController {
                 acceptBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        dbAdaptor.considerRequest(friend,MainHandler.username,true);
+                        dbAdaptor.considerRequest(friend, MainHandler.username,true);
                     }
                 });
 
@@ -106,7 +112,7 @@ public class FriendsController {
                 declineBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        dbAdaptor.considerRequest(friend,MainHandler.username,true);
+                        dbAdaptor.considerRequest(friend, MainHandler.username,false);
                     }
                 });
 
@@ -179,8 +185,6 @@ public class FriendsController {
                 String sender = MainHandler.username;
                 String recipient = row.getTableView().getItems().get(0).getUsername();
                 dbAdaptor.sendFriendReq(sender,recipient);
-                //TODO: make sendFriendReq boolean so that notifications are adequate
-                alertBuilder.showInformationNotification("Friend request sent!");
             }
         });
         VBox addFriendBox = new VBox();

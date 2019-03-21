@@ -16,9 +16,9 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="gui.HomeController"
           fx:id="featuresList">
-        <!--<HBox alignment="CENTER">-->
-            <!--<ProgressBar fx:id="progressBarGreen" prefWidth="1400" prefHeight="50" progress="0.0"/>-->
-        <!--</HBox>-->
+    <!--<HBox alignment="CENTER">-->
+    <!--<ProgressBar fx:id="progressBarGreen" prefWidth="1400" prefHeight="50" progress="0.0"/>-->
+    <!--</HBox>-->
 
     <HBox alignment="CENTER">
         <Label text="GoGreen98" fx:id="homeTitle"/>
@@ -26,32 +26,32 @@
     </HBox>
     <GridPane alignment="center" hgap="150" vgap="50">
 
-        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <ImageView fx:id="featuresIconVeggie" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/icons/iconVegetarianMeal.png"/>
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-            <TextField alignment="CENTER" prefWidth="150" fx:id="vegMeals"/>
-            <Button fx:id="increaseVegetarianMealsBtn" onAction="#increaseVegetarianMeals"/>
+                <TextField alignment="CENTER" prefWidth="150" fx:id="vegMeals"/>
+                <Button fx:id="increaseVegetarianMealsBtn" onAction="#increaseVegetarianMeals"/>
             </HBox>
         </VBox>
 
-        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <ImageView fx:id="featuresIconBike" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/icons/iconBikeCar.png"/>
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-            <TextField alignment="CENTER" prefWidth="150" fx:id="bicycleUsage"/>
+                <TextField alignment="CENTER" prefWidth="150" fx:id="bicycleUsage"/>
                 <Button fx:id="increaseBicycleUsageBtn" onAction="#increaseBicycleUsage">
                 </Button>
             </HBox>
         </VBox>
 
-        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <ImageView fx:id="featuresIconProduce" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/icons/iconLocalProduce.png"/>
@@ -64,7 +64,7 @@
         </VBox>
 
 
-        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <ImageView fx:id="featuresIconBus" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
                 <image>
                     <Image url="/icons/iconBusCar.png"/>
@@ -76,13 +76,41 @@
             </HBox>
         </VBox>
 
+
+        <VBox spacing="20" GridPane.rowIndex="0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <ImageView fx:id="featuresIconSolar" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/icons/iconSolarPanels.png"/>
+                </image>
+            </ImageView>
+            <HBox alignment="CENTER" spacing="20">
+                <TextField alignment="CENTER" prefWidth="150" fx:id="solarPanel"/>
+                <Button fx:id="increaseSolarPanelsBtn"/>
+            </HBox>
+        </VBox>
+
+
+        <VBox spacing="20" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"
+              maxHeight="250" maxWidth="250">
+            <ImageView fx:id="featuresIconTemps" layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="/icons/iconLowerTemps.png"/>
+                </image>
+            </ImageView>
+            <HBox alignment="CENTER" spacing="20">
+                <TextField alignment="CENTER" prefWidth="150" fx:id="lowerTemps"/>
+                <Button fx:id="increaseLowerTempsBtn"/>
+            </HBox>
+        </VBox>
+
+
     </GridPane>
 
-        <HBox alignment="CENTER">
-            <Label fx:id="pointsEarnedLabel" text="Points earned:" HBox.hgrow="ALWAYS" />
-        </HBox>
+    <HBox alignment="CENTER">
+        <Label fx:id="pointsEarnedLabel" text="Points earned:" HBox.hgrow="ALWAYS" />
+    </HBox>
 
-<stylesheets>
-    <URL value="@../stylesheets/mainStylesheet.css"/>
-</stylesheets>
+    <stylesheets>
+        <URL value="@/stylesheets/mainStylesheet.css"/>
+    </stylesheets>
 </ListView>

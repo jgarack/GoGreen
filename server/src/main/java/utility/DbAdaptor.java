@@ -1,5 +1,7 @@
 package utility;
 
+import gui.AlertBuilder;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -64,6 +66,8 @@ public class DbAdaptor {
      * Password for the DB.
      */
     private String password;
+
+    private AlertBuilder alertBuilder = new AlertBuilder();
 
     /**
      * Initial connection.
@@ -551,6 +555,7 @@ public class DbAdaptor {
                 st.setBoolean(3,true);
                 st.setBoolean(4, false);
                 st.executeUpdate();
+                alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -595,7 +600,7 @@ public class DbAdaptor {
         try {
 
             PreparedStatement st = conn.prepareStatement("UPDATE friend_request "
-                    + "SET accepted = ?, pending = ?WHERE from_user = ? AND to_user = ?");
+                    + "SET accepted = ? , pending = ? WHERE from_user = ? AND to_user = ?");
             st.setBoolean(1, accepted);
             st.setBoolean(2, false);
             st.setString(3, fromUser);

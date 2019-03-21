@@ -92,7 +92,6 @@ public class FriendsController {
             for (String friend : friends) {
                 HBox currFriend = new HBox();
                 Label sender = new Label(friend + "sent you a request!");
-
                 Button acceptBtn = new Button("Accept");
                 acceptBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
@@ -106,7 +105,7 @@ public class FriendsController {
                 declineBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        dbAdaptor.considerRequest(friend,MainHandler.username,true);
+                        dbAdaptor.considerRequest(friend,MainHandler.username,false);
                     }
                 });
 
