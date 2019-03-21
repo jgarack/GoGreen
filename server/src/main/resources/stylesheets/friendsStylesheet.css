@@ -29,3 +29,8 @@
     -fx-fill-height: true;
     -fx-effect: innershadow(three-pass-box, rgb(41, 41, 41), 1, 2, 2, 2);
 }
+#searchBar{
+    -fx-font-size: 20;
+    -fx-fill-height: true;
+    -fx-font-family: "Arial Black";
+}

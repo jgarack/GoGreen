@@ -566,7 +566,7 @@ public class DbAdaptor {
 
     }
 
-    public boolean checkIfInDb(final String from_us, final String to_us){
+    public boolean checkIfInDb(final String from_us, final String to_us) {
         boolean check = false;
         connect();
         try {
@@ -575,7 +575,7 @@ public class DbAdaptor {
             st.setString(2, from_us);
             st.setString(1, to_us);
             rs = st.executeQuery();
-            if(rs.next()==false){
+            if (rs.next() == false) {
                 check = true;
             }
             System.out.println(check);
