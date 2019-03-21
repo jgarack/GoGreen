@@ -518,22 +518,45 @@ public class DbAdaptor {
      * @param toUser user to whom you want to send the invitation
      */
     public void sendFriendReq(final String fromUser, final String toUser) {
+        if(checkIfInDb(fromUser,toUser)){
+            try {
+                connect();
+                PreparedStatement st = conn.prepareStatement(
+                        "INSERT INTO friend_request(from_user, "
+                             + "to_user, pending, accepted) VALUES (?,?,?,?)");
+                st.setString(1,fromUser);
+                st.setString(2,toUser);
+                st.setBoolean(3,true);
+                st.setBoolean(4, false);
+                st.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                disconnect();
+            }
+        }
+
+    }
+
+    public boolean checkIfInDb(final String from_us, final String to_us){
+        boolean check = false;
+        connect();
         try {
-            connect();
-            PreparedStatement st = conn.prepareStatement(
-                    "INSERT INTO friend_request(from_user, "
-                         + "to_user, pending, accepted) VALUES (?,?,?,?)");
-            st.setString(1,fromUser);
-            st.setString(2,toUser);
-            st.setBoolean(3,true);
-            st.setBoolean(4, false);
-            st.executeUpdate();
+
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM friend_request WHERE from_user = ? AND to_user = ?");
+            st.setString(2, from_us);
+            st.setString(1, to_us);
+            rs = st.executeQuery();
+            if(rs.next()==false){
+                check = true;
+            }
+            System.out.println(check);
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            disconnect();
         }
+        return check;
     }
 
     /**
