@@ -572,14 +572,7 @@ public class DbAdaptor {
         try {
             connect();
             List<String> listOfPending = new ArrayList<>();
-            PreparedStatement st = conn.prepareStatement("SELECT to_user "
-                    + "FROM friend_request WHERE from_user = ? AND pending = true");
-            st.setString(1, username);
-            rs = st.executeQuery();
-            while (rs.next()) {
-                listOfPending.add(rs.getString(1));
-            }
-            st = conn.prepareStatement("SELECT from_user FROM friend_request"
+            PreparedStatement st = conn.prepareStatement("SELECT from_user FROM friend_request"
                     + " WHERE to_user = ? AND pending = true");
             st.setString(1, username);
             rs = st.executeQuery();
