@@ -74,14 +74,15 @@ public class PointsController {
                             +"&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
             amount = (jsonCon(HttpRequestHandler.resLog(httpBody,null))
-        - jsonCon(HttpRequestHandler.resLog(veg,null)))*1000;
+        - jsonCon(HttpRequestHandler.resLog(veg,null)));
+
         }else if (activityID == 2) {
+
             BufferedReader httpBody =
                     new HttpRequestHandler(BP_API).reqGet("/automobile_"
                             + "trips.json?duration=" + amount * 60
                             + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null))
-                    *1000;
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
         }else if (activityID == 3) {
             //need to find new API
@@ -89,8 +90,21 @@ public class PointsController {
                     new HttpRequestHandler(BP_API).reqGet("/automobile_"
                             + "trips.json?duration=" + amount
                             + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null))
-                    *1000;
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
+
+        }else if (activityID == 4) {
+
+            BufferedReader httpBody =
+                    new HttpRequestHandler(BP_API).reqGet("/bus_"
+                            + "trips.json?duration=" + amount * 60
+                            + BP_KEY);
+            BufferedReader car =
+                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
+                            + "trips.json?duration=" + amount * 60
+                            + BP_KEY);
+            amount = jsonCon(HttpRequestHandler.resLog(car,null))
+                    - jsonCon(HttpRequestHandler.resLog(httpBody,null));
+
         }
 
         if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
@@ -119,7 +133,7 @@ public class PointsController {
      *
      * @param con The given String
      * @return An integer that is derived from the string.
-     * @throws IOException Throws an exception if the Mapping is not succesful.
+     * @throws IOException Throws an exception if the Mapping is not successful.
      */
     public static int jsonCon(final String con) throws IOException {
 
@@ -127,10 +141,11 @@ public class PointsController {
         mapper.configure(
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
-        int ret = (int) Math.ceil(Double.parseDouble(em.get("decisions").
+        int ret = (int) Double.parseDouble(em.get("decisions").
                 get("carbon").
                 get("description").textValue().
-                replace("kg", "").trim()));
+                //multiply by 1000 to convert to grams
+                replace("kg", "").trim())*1000;
         return ret;
     }
 }

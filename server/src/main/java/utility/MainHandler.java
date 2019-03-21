@@ -88,12 +88,30 @@ public class MainHandler {
             return -1;
         }
     }
+
+    /**
+     * Updates Local consumption.
+     * @param amount to be updated
+     * @return the new amount
+     */
     public int updateLocal(final int amount) {
         try {
             return Integer.parseInt(httpHandler
 
                     .reqPost("/points",
                             new UpdateRequest(username, 3, amount))
+                    .readLine());
+        } catch (IOException | ServerStatusException e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
+    public int updateBus(final int amount) {
+        try {
+            return Integer.parseInt(httpHandler
+
+                    .reqPost("/points",
+                            new UpdateRequest(username, 4, amount))
                     .readLine());
         } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);
@@ -113,6 +131,4 @@ public class MainHandler {
                         .reqPost("/total", username)
                         .readLine());
     }
-
-
 }

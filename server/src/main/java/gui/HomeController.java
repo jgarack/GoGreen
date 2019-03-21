@@ -53,6 +53,10 @@ public class HomeController {
      */
     private int localUsage =0;
     /**
+     *Data about the amount of bus rides taken.
+     */
+    private int busUsage = 0;
+    /**
      * Data about the points of the user.
      */
     private int pointsEarned = 0;
@@ -179,14 +183,7 @@ public class HomeController {
                     .updateVegMeal(Integer.parseInt(vegMeals.getText()));
             setPointsEarned();
 
-            pointsEarnedLabel.setText("Points earned: "
-                    + this.pointsEarned);
-
-            ALERT_BUILDER
-                    .showInformationNotification(
-                            "Good job! Keep on going greener!");
-
-            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+            alert();
 
             this.vegMeals.setText("");
 
@@ -212,14 +209,7 @@ public class HomeController {
 
             setPointsEarned();
 
-            pointsEarnedLabel.setText("Points earned: "
-                    + this.pointsEarned);
-
-            ALERT_BUILDER
-                    .showInformationNotification(
-                            "Good job! Keep on going greener!");
-
-            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+            alert();
 
             this.bicycleUsage.setText("");
 
@@ -246,14 +236,7 @@ public class HomeController {
 
             setPointsEarned();
 
-            pointsEarnedLabel.setText("Points earned: "
-                    + this.pointsEarned);
-
-            ALERT_BUILDER
-                    .showInformationNotification(
-                            "Good job! Keep on going greener!");
-
-            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+            alert();
 
             this.localProduce.setText("");
 
@@ -273,6 +256,24 @@ public class HomeController {
     @FXML
     protected void increaseBusUsage(final ActionEvent event) {
 
+        if (MainHandler.tryParseInt(busCar.getText())) {
+            Feature bus = new Feature(Integer.parseInt(busCar.getText())
+                    ,4);
+            System.out.println(busCar.toString());
+            this.busUsage= handler
+                    .updateBus(Integer.parseInt(busCar.getText()));
+
+            setPointsEarned();
+
+            alert();
+
+            this.busCar.setText("");
+
+        } else {
+            ALERT_BUILDER
+                    .formEntryWarning(localProduce.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
+        }
 
     }
 
@@ -311,12 +312,29 @@ public class HomeController {
                         .create(glyph));
     }
 
+    /**
+     * helper method for updating points earned.
+     */
     private void setPointsEarned(){
         try {
             this.pointsEarned = handler.getTotalScore();
         } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);
         }
+    }
+
+    /**
+     * helper method for alerts to decrease redundancy.
+     */
+    private void alert(){
+        pointsEarnedLabel.setText("Points earned: "
+                + this.pointsEarned);
+
+        ALERT_BUILDER
+                .showInformationNotification(
+                        "Good job! Keep on going greener!");
+
+        onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
 
     }
 }
