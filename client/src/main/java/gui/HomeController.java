@@ -105,6 +105,16 @@ public class HomeController {
     @FXML
     private Button increaseBusUsageBtn;
     /**
+     * Bound to the bus usage button.
+     */
+    @FXML
+    private Button increaseLowerTempsBtn;
+    /**
+     * Bound to the bus usage button.
+     */
+    @FXML
+    private Button increaseSolarPanelsBtn;
+    /**
      * Bound to the points earned label.
      */
     @FXML
@@ -138,6 +148,10 @@ public class HomeController {
             setFontAwesomeGlyphToBtn(increaseVegetarianMealsBtn,
                     plusGlyph);
             setFontAwesomeGlyphToBtn(increaseLocalProduceBtn,
+                    plusGlyph);
+            setFontAwesomeGlyphToBtn(increaseSolarPanelsBtn,
+                    plusGlyph);
+            setFontAwesomeGlyphToBtn(increaseLowerTempsBtn,
                     plusGlyph);
 
 

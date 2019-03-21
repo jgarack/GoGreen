@@ -91,50 +91,62 @@
 }
 
 
-#featuresIconVeggie {
+#featuresIconVeggie, #featuresIconBike, #featuresIconProduce, #featuresIconBus, #featuresIconSolar, #featuresIconTemps {
     -fx-padding: 30, 0, 30, 0;
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
-    -fx-image: url("../icons/iconVegetarianMeal.png");
 }
 
 
+#featuresIconVeggie {
+    -fx-image: url("../icons/iconVegetarianMeal.png");
+}
 #featuresIconVeggie:hover {
     -fx-image: url("../icons/iconVegetarianMealText.png");
 }
 
+
 #featuresIconBike {
-    -fx-padding: 30, 0, 30, 0;
-    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
     -fx-image: url("../icons/iconBikeCar.png");
 }
-
-
 #featuresIconBike:hover {
     -fx-image: url("../icons/iconBikeCarText.png");
 }
 
+
 #featuresIconProduce {
-     -fx-padding: 30, 0, 30, 0;
-     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
      -fx-image: url("../icons/iconLocalProduce.png");
  }
-
-
 #featuresIconProduce:hover {
     -fx-image: url("../icons/iconLocalProduceText.png");
 }
 
+
 #featuresIconBus {
-    -fx-padding: 30, 0, 30, 0;
-    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
     -fx-image: url("../icons/iconBusCar.png");
 }
-
 #featuresIconBus:hover {
     -fx-image: url("../icons/iconBusCarText.png");
 }
 
-#increaseVegetarianMealsBtn, #increaseBicycleUsageBtn, #increaseLocalProduceBtn, #increaseBusUsageBtn{
+
+#featuresIconSolar {
+    -fx-image: url("../icons/iconSolarPanels.png");
+}
+#featuresIconSolar:hover {
+    -fx-image: url("../icons/iconSolarPanelsText.png")
+}
+
+
+#featuresIconTemps {
+    -fx-image: url("../icons/iconLowerTemps.png")
+}
+#featuresIconTemps:hover {
+    -fx-image: url("../icons/iconLowerTempsText.png")
+}
+
+
+
+#increaseVegetarianMealsBtn, #increaseBicycleUsageBtn, #increaseLocalProduceBtn, #increaseBusUsageBtn, #increaseSolarPanelsBtn, #increaseLowerTempsBtn{
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
@@ -144,7 +156,7 @@
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 1, 2, 2, 2);
 }
 
-#increaseVegetarianMealsBtn:hover, #increaseBicycleUsageBtn:hover, #increaseLocalProduceBtn:hover, #increaseBusUsageBtn:hover{
+#increaseVegetarianMealsBtn:hover, #increaseBicycleUsageBtn:hover, #increaseLocalProduceBtn:hover, #increaseBusUsageBtn:hover, #increaseSolarPanelsBtn:hover, #increaseLowerTempsBtn:hover{
     -fx-background-color: #78c292;
 }
 
