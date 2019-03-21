@@ -64,29 +64,40 @@ public class PointsController {
                     new HttpRequestHandler(BP_API).reqGet("/diets."
                             + "json?size="
                             + amount
-                            +"?timeframe=2019-01-01%2F2019-01-02"
+                            +"&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
-
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
-            if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
-                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            return new ResponseEntity(DB_ADAPTOR
-                    .getActivityAmount(username, activityID), HttpStatus.OK);
-        }
-        if (activityID == 2) {
+            BufferedReader veg =
+                    new HttpRequestHandler(BP_API).reqGet("/diets."
+                            + "json?size="
+                            + amount
+                            +"&diet_class=vegeterian"
+                            +"&timeframe=2019-01-01%2F2019-01-02"
+                            + BP_KEY);
+            amount = (jsonCon(HttpRequestHandler.resLog(httpBody,null))
+        - jsonCon(HttpRequestHandler.resLog(veg,null)))*1000;
+        }else if (activityID == 2) {
             BufferedReader httpBody =
                     new HttpRequestHandler(BP_API).reqGet("/automobile_"
                             + "trips.json?duration=" + amount * 60
                             + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
-            if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
-                return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            return new ResponseEntity(DB_ADAPTOR
-                    .getActivityAmount(username, activityID), HttpStatus.OK);
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null))
+                    *1000;
+
+        }else if (activityID == 3) {
+            //need to find new API
+            BufferedReader httpBody =
+                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
+                            + "trips.json?duration=" + amount
+                            + BP_KEY);
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null))
+                    *1000;
         }
-        return new ResponseEntity("Not an Activity", HttpStatus.OK);
+
+        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return new ResponseEntity(DB_ADAPTOR
+                .getActivityAmount(username, activityID), HttpStatus.OK);
     }
     /**
      * Returns a response entity with the total score.

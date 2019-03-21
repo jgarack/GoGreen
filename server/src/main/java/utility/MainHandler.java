@@ -70,12 +70,30 @@ public class MainHandler {
             return -1;
         }
     }
+
+    /**
+     * Updates Bike trip.
+     * @param amount to be updated
+     * @return returns the new amount
+     */
     public int updateBike(final int amount) {
         try {
             return Integer.parseInt(httpHandler
 
                     .reqPost("/points",
                             new UpdateRequest(username, 2, amount))
+                    .readLine());
+        } catch (IOException | ServerStatusException e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
+    public int updateLocal(final int amount) {
+        try {
+            return Integer.parseInt(httpHandler
+
+                    .reqPost("/points",
+                            new UpdateRequest(username, 3, amount))
                     .readLine());
         } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);

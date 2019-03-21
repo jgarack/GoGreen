@@ -48,6 +48,11 @@ public class HomeController {
      */
     private int bicycleUsed = 0;
     /**
+     * Data about the amount of times
+     * local produce has been consumed.
+     */
+    private int localUsage =0;
+    /**
      * Data about the points of the user.
      */
     private int pointsEarned = 0;
@@ -57,17 +62,28 @@ public class HomeController {
     @FXML
     private TextField vegMeals;
     /**
+     * Bound to the text field about the usage of bicycle.
+     */
+    @FXML
+    private TextField bicycleUsage;
+    /**
+     * Bound to the text field linked with buying local produce.
+     */
+
+    @FXML
+    private TextField localProduce;
+    /**
+     * bount to the text field linked with using public transport.
+     */
+    @FXML
+    private TextField busCar;
+
+    /**
      * Bound to the label about the vegetarian meals
      * (used to show progress).
      */
     @FXML
     private Label vegMealsEaten;
-
-    /**
-     * Bound to the text field about the usage of bicycle.
-     */
-    @FXML
-    private TextField bicycleUsage;
     /**
      * Bound to the bicycle label - used to show progress.
      */
@@ -161,11 +177,7 @@ public class HomeController {
 
             this.vegetarianMeals = handler
                     .updateVegMeal(Integer.parseInt(vegMeals.getText()));
-            try {
-                this.pointsEarned = handler.getTotalScore();
-            } catch (IOException | ServerStatusException e) {
-                new AlertBuilder().displayException(e);
-            }
+            setPointsEarned();
 
             pointsEarnedLabel.setText("Points earned: "
                     + this.pointsEarned);
@@ -198,11 +210,7 @@ public class HomeController {
             this.bicycleUsed = handler
                     .updateBike(Integer.parseInt(bicycleUsage.getText()));
 
-            try {
-                this.pointsEarned = handler.getTotalScore();
-            } catch (IOException | ServerStatusException e) {
-                new AlertBuilder().displayException(e);
-            }
+            setPointsEarned();
 
             pointsEarnedLabel.setText("Points earned: "
                     + this.pointsEarned);
@@ -217,7 +225,7 @@ public class HomeController {
 
         } else {
             ALERT_BUILDER
-                    .formEntryWarning(bicycleUsedLabel.getText(),
+                    .formEntryWarning(bicycleUsage.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
         }
     }
@@ -225,12 +233,35 @@ public class HomeController {
     /**
      * Linked to the button to increase
      * the amount of local produced a user has bought.
-     * @param event The event fired
-     *              upon clicking the button
+     * @param event The event fired upon clicking the button
      */
     @FXML
     protected void increaseLocalProduce(final ActionEvent event) {
+        if (MainHandler.tryParseInt(localProduce.getText())) {
+            Feature local = new Feature(Integer.parseInt(localProduce.getText())
+                    ,3);
+            System.out.println(local.toString());
+            this.localUsage = handler
+                    .updateLocal(Integer.parseInt(localProduce.getText()));
 
+            setPointsEarned();
+
+            pointsEarnedLabel.setText("Points earned: "
+                    + this.pointsEarned);
+
+            ALERT_BUILDER
+                    .showInformationNotification(
+                            "Good job! Keep on going greener!");
+
+            onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+
+            this.localProduce.setText("");
+
+        } else {
+            ALERT_BUILDER
+                    .formEntryWarning(localProduce.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
+        }
     }
 
     /**
@@ -241,6 +272,7 @@ public class HomeController {
      */
     @FXML
     protected void increaseBusUsage(final ActionEvent event) {
+
 
     }
 
@@ -278,4 +310,14 @@ public class HomeController {
                         .font("FontAwesome")
                         .create(glyph));
     }
+
+    private void setPointsEarned(){
+        try {
+            this.pointsEarned = handler.getTotalScore();
+        } catch (IOException | ServerStatusException e) {
+            new AlertBuilder().displayException(e);
+        }
+
+    }
 }
+
