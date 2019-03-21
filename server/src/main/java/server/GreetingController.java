@@ -57,13 +57,10 @@ public class GreetingController {
     @PostMapping("/login")
     public ResponseEntity loginResponse(
             @RequestBody final LoginCredentials account) {
-        DB_ADAPTOR.connect();
         if (DB_ADAPTOR.comparecredentials(account)) {
-            DB_ADAPTOR.disconnect();
             return new ResponseEntity("Hello " + account.getUsername()
                     + " Authenticated!", HttpStatus.OK);
         } else {
-            DB_ADAPTOR.disconnect();
             return new ResponseEntity("Unknown user-password combination.",
                     HttpStatus.UNAUTHORIZED);
         }
@@ -84,13 +81,10 @@ public class GreetingController {
     public ResponseEntity registerResponse(
         @RequestBody final RegisterCredentials regCre) {
 
-        DB_ADAPTOR.connect();
         if (DB_ADAPTOR.addNewUser(regCre)) {
-            DB_ADAPTOR.disconnect();
             return new ResponseEntity("Registration successful. "
                     + "You can now log in", HttpStatus.OK);
         }
-        DB_ADAPTOR.disconnect();
         return new ResponseEntity("Your account could not be created",
                     HttpStatus.INTERNAL_SERVER_ERROR);
 

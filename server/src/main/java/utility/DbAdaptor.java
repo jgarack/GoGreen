@@ -142,7 +142,7 @@ public class DbAdaptor {
      */
     public void insertUser(final User user) {
         System.out.println("Inserting...");
-
+        connect();
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
@@ -157,6 +157,8 @@ public class DbAdaptor {
         } catch (SQLException e) {
             System.out.println("Not Inserted");
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
     }
@@ -168,6 +170,7 @@ public class DbAdaptor {
      */
     public void insertActivity(final String habitName) {
         try {
+            connect();
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO activity "
                             + "(name) VALUES (?)");
@@ -176,6 +179,8 @@ public class DbAdaptor {
             st.close();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
     }
@@ -187,6 +192,7 @@ public class DbAdaptor {
      */
     public void addActivity(final ActivityDb activity) {
         try {
+            connect();
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
                             + "Activities(player, activity_id,"
@@ -202,6 +208,8 @@ public class DbAdaptor {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
@@ -236,10 +244,12 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            disconnect();
+
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
@@ -253,7 +263,7 @@ public class DbAdaptor {
 
         try {
 
-
+            connect();
             PreparedStatement st = conn.prepareStatement(
                     "SELECT username,"
                             + " password FROM credentials WHERE username = ?");
@@ -279,6 +289,8 @@ public class DbAdaptor {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
 
@@ -294,7 +306,7 @@ public class DbAdaptor {
     public boolean addNewUser(final RegisterCredentials regCre) {
 
         try {
-
+            connect();
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
                             + "users(username, total_score) VALUES (?,?)");
@@ -321,6 +333,8 @@ public class DbAdaptor {
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
         return false;
@@ -396,7 +410,6 @@ public class DbAdaptor {
             pst.setInt(three, activityID);
             pst.executeUpdate();
             pst.close();
-            disconnect();
             System.out.println(rs.toString());
             calculateScore(name, activityID, amount);
             updateTotalScore(name);
@@ -405,6 +418,8 @@ public class DbAdaptor {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
+        } finally {
+            disconnect();
         }
     }
 
@@ -430,10 +445,11 @@ public class DbAdaptor {
             st.setInt(three, activityID);
             st.executeUpdate();
             st.close();
-            disconnect();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
@@ -458,12 +474,13 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt(one);
-            disconnect();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return -1;
+        } finally {
+            disconnect();
         }
     }
 
@@ -474,9 +491,10 @@ public class DbAdaptor {
      * @return total_score
      */
     public int getTotalScore(final String name) {
+        connect();
+
         try {
             System.out.println(name);
-            connect();
             String query = "SELECT total_score FROM users WHERE username = ?";
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
@@ -484,12 +502,13 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt("total_score");
-            disconnect();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return -1;
+        } finally {
+            disconnect();
         }
     }
 
@@ -498,6 +517,7 @@ public class DbAdaptor {
      * @param username the User that should be deleted.
      */
     public void deleteByUsername(final String username) {
+        connect();
         try {
 
             PreparedStatement st = conn.prepareStatement(
@@ -509,6 +529,8 @@ public class DbAdaptor {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
@@ -519,8 +541,8 @@ public class DbAdaptor {
      */
     public void sendFriendReq(final String fromUser, final String toUser) {
         if(checkIfInDb(fromUser,toUser)){
+            connect();
             try {
-                connect();
                 PreparedStatement st = conn.prepareStatement(
                         "INSERT INTO friend_request(from_user, "
                              + "to_user, pending, accepted) VALUES (?,?,?,?)");
@@ -555,6 +577,8 @@ public class DbAdaptor {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
         return check;
     }
@@ -567,8 +591,9 @@ public class DbAdaptor {
      */
     public void considerRequest(final String fromUser,
                                 final String toUser, final boolean accepted) {
+        connect();
         try {
-            connect();
+
             PreparedStatement st = conn.prepareStatement("UPDATE friend_request "
                     + "SET accepted = ?, pending = ?WHERE from_user = ? AND to_user = ?");
             st.setBoolean(1, accepted);
@@ -592,8 +617,9 @@ public class DbAdaptor {
      * @return pending requests
      */
     public List<String> getRequest(String username) {
+        connect();
+
         try {
-            connect();
             List<String> listOfPending = new ArrayList<>();
             PreparedStatement st = conn.prepareStatement("SELECT from_user FROM friend_request"
                     + " WHERE to_user = ? AND pending = true");
@@ -619,8 +645,8 @@ public class DbAdaptor {
      * @return friends of given user
      */
     public List<String> getFriends(String username) {
+        connect();
         try {
-            connect();
             List<String> listOfPending = new ArrayList<>();
             PreparedStatement st = conn.prepareStatement("SELECT to_user FROM "
                     + "friend_request WHERE from_user = ? AND pending = false AND accepted = true");

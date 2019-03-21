@@ -100,9 +100,7 @@ public class GreetingControllerTest extends AbstractTest {
         status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
         DbAdaptor db = new DbAdaptor();
-        db.connect();
         db.deleteByUsername(random);
-        db.disconnect();
     }
 
      /**

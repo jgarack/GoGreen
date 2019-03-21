@@ -27,70 +27,44 @@ class DbAdaptorTest {
         assertEquals(user2.getUsername(), user.getUsername());
         assertEquals(user2.getTotalScore(), user.getTotalScore());
 
-        db.connect();
         db.deleteByUsername(random);
-        db.disconnect();
     }
 
     @Test
     void updateTotalScoreTest() {
-        db.connect();
         String random = UUID.randomUUID().toString();
         db.addNewUser(new RegisterCredentials(random, "password", "q", "a"));
-        db.disconnect();
-        db.connect();
         db.updateTotalScore(random);
-        db.disconnect();
         User test = db.getUser(random);
         assertEquals(test.getTotalScore(), 0);
-        db.connect();
         db.deleteByUsername(random);
-        db.disconnect();
     }
 
 
     @Test
     void comparecredentials() {
-        db.connect();
         String random =  UUID.randomUUID().toString();
         db.addNewUser(new RegisterCredentials(random, "pass","que", "ans"));
-        db.disconnect();
-        db.connect();
         LoginCredentials LC = new LoginCredentials(random,"pass");
         assertEquals(db.comparecredentials(LC),true);
-        db.disconnect();
-        db.connect();
         db.deleteByUsername(random);
-        db.disconnect();
     }
 
     @Test
     void addNewUser() {
-        db.connect();
         String random =  UUID.randomUUID().toString();
         db.addNewUser(new RegisterCredentials(random, "pass","que", "ans"));
-        db.disconnect();
         LoginCredentials LC = new LoginCredentials(random,"pass");
-        db.connect();
         assertEquals(db.comparecredentials(LC),true);
-        db.disconnect();
-        db.connect();
         db.deleteByUsername(random);
-        db.disconnect();
     }
 
     @Test
     void getUser() {
         String random =  UUID.randomUUID().toString();
-        db.connect();
         db.insertUser(new User(random, 0));
-        db.disconnect();
         assertEquals(db.getUser(random).getUsername(), random);
-        db.connect();
         db.deleteByUsername(random);
-        db.disconnect();
-
-
     }
 /*
     @Test
