@@ -1,4 +1,4 @@
-#leaderBoardTitle{
+#leaderBoardTitle,#pendingReqTitle{
     -fx-font-weight: bold;
     -fx-font-size: 55;
     -fx-text-alignment: right;

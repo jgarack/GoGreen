@@ -3,6 +3,8 @@ package gui;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
@@ -17,6 +19,9 @@ import org.controlsfx.control.PopOver;
 import utility.DbAdaptor;
 import utility.MainHandler;
 import utility.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -55,13 +60,53 @@ public class FriendsController {
     /**
      * Should contain the list of friends of a user.
      */
-    private int[] friends;
+    private ArrayList<String> friends;
+    /**
+     * The builder used to build alerts for this handler.
+     */
+    private AlertBuilder alertBuilder;
+
+
+
     /**
      * Upon initialization, it triggers.
      */
     @FXML
     public void initialize() {
+        constructPendingListView();
         constructTableFriends();
+    }
+
+    /**
+     * Constructs the list view
+     * with pending requests.
+     */
+    private void constructPendingListView() {
+        friends = (ArrayList<String>) dbAdaptor.getRequest(MainHandler.username);
+        if(friends.isEmpty()){
+
+        } else {
+            Label pendingReqTitle = new Label("Pending Requests:");
+            pendingReqTitle.setId("pendingReqTitle");
+            ListView listOfPendingReq = new ListView();
+            for (String friend : friends) {
+                HBox currFriend = new HBox();
+                Label sender = new Label(friend + "sent you a request!");
+                Button acceptBtn = new Button("Accept");
+                Button declineBtn = new Button("Block user");
+
+                //sender.setAlignment(Pos.CENTER_LEFT);
+
+                currFriend.getChildren().addAll(sender,acceptBtn,declineBtn);
+                currFriend.setAlignment(Pos.CENTER);
+                currFriend.setSpacing(30);
+
+                listOfPendingReq.getItems().add(currFriend);
+
+            }
+            friendsPane.add(pendingReqTitle,0,0);
+            friendsPane.add(listOfPendingReq,0,2);
+        }
     }
 
     /**
@@ -114,7 +159,9 @@ public class FriendsController {
             public void handle(MouseEvent event) {
                 String sender = MainHandler.username;
                 String recipient = row.getTableView().getItems().get(0).getUsername();
-                System.out.println(sender + " -> " + recipient);
+                dbAdaptor.sendFriendReq(sender,recipient);
+                //TODO: make sendFriendReq boolean so that notifications are adequate
+                alertBuilder.showInformationNotification("Friend request sent!");
             }
         });
         VBox addFriendBox = new VBox();
