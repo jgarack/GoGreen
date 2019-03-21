@@ -64,6 +64,7 @@ public class PointsController {
                     new HttpRequestHandler(BP_API).reqGet("/diets."
                             + "json?size="
                             + amount
+                            +"?timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
 
             amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
