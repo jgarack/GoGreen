@@ -30,7 +30,15 @@
     -fx-effect: innershadow(three-pass-box, rgb(41, 41, 41), 1, 2, 2, 2);
 }
 #searchBar{
-    -fx-font-size: 20;
+    -fx-font-size: 18;
     -fx-fill-height: true;
     -fx-font-family: "Arial Black";
+}
+#infoLabel{
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-background-color: lightgreen;
+    -fx-fill-width: true;
+    -fx-fill-height: true;
 }

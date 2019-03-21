@@ -1,6 +1,7 @@
 package gui;
 
 
+import animatefx.animation.Pulse;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -14,14 +15,20 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
 import utility.DbAdaptor;
 import utility.MainHandler;
 import utility.User;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Controller for the friends page.
@@ -34,11 +41,6 @@ public class FriendsController {
     @FXML
     private GridPane friendsPane;
 
-    /**
-     * Bound to the area of pending friend requests.
-     */
-    @FXML
-    private HBox menuFriends;
 
     /**
      * Bound to the search bar.
@@ -50,6 +52,11 @@ public class FriendsController {
      */
     @FXML
     private TableView friendsTable;
+    /**
+     * Bound to the search box.
+     */
+    @FXML
+    private Button searchInfoButton;
 
     /**
      * Dbadaptor for getting users.
@@ -69,6 +76,11 @@ public class FriendsController {
      */
     private AlertBuilder alertBuilder;
 
+    /**
+     * Custom popOver;
+     */
+    private PopOver popOver;
+
 
 
     /**
@@ -79,9 +91,43 @@ public class FriendsController {
         pendingRequests = (ArrayList<String>) dbAdaptor
                 .getRequest(MainHandler.username);
         friends =  (ArrayList<String>)dbAdaptor.getFriends(MainHandler.username);
-        System.out.println(friends);
+
+        addInformationIconToSearchBox();
+
         constructPendingListView();
         constructTableFriends();
+    }
+
+    /**
+     * Adds information icon to search bar.
+     */
+    private void addInformationIconToSearchBox() {
+        searchInfoButton.setBackground(Background.EMPTY);
+        searchInfoButton.setStyle("-fx-font-family: 'FontAwesome'");
+        searchInfoButton
+                .setGraphic(GlyphFontRegistry
+                .font("FontAwesome")
+                .create(FontAwesome.Glyph.INFO_CIRCLE)
+                .size(20));
+        searchInfoButton
+                .setOnMouseEntered(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(final MouseEvent event) {
+                        Label infoLabel = new Label("Search for a user by his username\nand do a right-click on his name\nto add him.");
+                        infoLabel.setId("infoLabel");
+                        popOver = new PopOver(infoLabel);
+                        popOver.setFadeInDuration(Duration.seconds(0.5));
+                        popOver.setId("infoPopOver");
+                        popOver.show(searchInfoButton);
+                        new Pulse(infoLabel).play();
+                    }
+                });
+        searchInfoButton.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                popOver.hide();
+            }
+        });
     }
 
     /**
@@ -135,6 +181,8 @@ public class FriendsController {
      */
     private void constructTableFriends() {
 
+
+
         TableColumn usernameCol = new TableColumn("Username");
         usernameCol
                 .setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -159,13 +207,33 @@ public class FriendsController {
             return row;
         });
 
+        ArrayList<User> friendsList = new ArrayList<>();
+
         if (!friends.isEmpty()) {
+
             for (String friend : friends) {
-                friendsTable.getItems().add(new User(friend, dbAdaptor.getTotalScore(friend)));
+                friendsList.add(new User(friend,dbAdaptor.getTotalScore(friend)));
             }
         }
+        Collections.sort(friendsList, new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                if (o1.getTotalScore() < o2.getTotalScore()) {
+                    return 1;
+                } else if (o1.getTotalScore() > o2.getTotalScore()) {
+                    return -1;
+                } else {
+                    return o1.getUsername().compareToIgnoreCase(o2.getUsername());
+                }
+            }
+        });
+
+        friendsTable.getItems().addAll(friendsList);
+
+
 
     }
+
 
     private void attachAddFriendPopOver(TableRow<User> row) {
 
