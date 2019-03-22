@@ -162,8 +162,6 @@ public class FriendsController {
                     }
                 });
 
-                //sender.setAlignment(Pos.CENTER_LEFT);
-
                 currFriend.getChildren().addAll(sender, acceptBtn, declineBtn);
                 currFriend.setAlignment(Pos.CENTER);
                 currFriend.setSpacing(30);
