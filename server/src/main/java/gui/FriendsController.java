@@ -56,7 +56,7 @@ public class FriendsController {
      * Bound to the search box.
      */
     @FXML
-    private Button searchInfoButton;
+    private Label searchInfoLabel;
 
     /**
      * Dbadaptor for getting users.
@@ -74,12 +74,9 @@ public class FriendsController {
     /**
      * The builder used to build alerts for this handler.
      */
-    private AlertBuilder alertBuilder;
+    private AlertBuilder alertBuilder = new AlertBuilder();
 
-    /**
-     * Custom popOver;
-     */
-    private PopOver popOver;
+    private InformationBuilder informationBuilder = new InformationBuilder();
 
 
 
@@ -92,43 +89,14 @@ public class FriendsController {
                 .getRequest(MainHandler.username);
         friends =  (ArrayList<String>)dbAdaptor.getFriends(MainHandler.username);
 
-        addInformationIconToSearchBox();
+        informationBuilder.addInformationIconToSearchBox(searchInfoLabel);
 
         constructPendingListView();
         constructTableFriends();
     }
 
-    /**
-     * Adds information icon to search bar.
-     */
-    private void addInformationIconToSearchBox() {
-        searchInfoButton.setBackground(Background.EMPTY);
-        searchInfoButton.setStyle("-fx-font-family: 'FontAwesome'");
-        searchInfoButton
-                .setGraphic(GlyphFontRegistry
-                .font("FontAwesome")
-                .create(FontAwesome.Glyph.INFO_CIRCLE)
-                .size(20));
-        searchInfoButton
-                .setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(final MouseEvent event) {
-                        Label infoLabel = new Label("Search for a user by his username\nand do a right-click on his name\nto add him.");
-                        infoLabel.setId("infoLabel");
-                        popOver = new PopOver(infoLabel);
-                        popOver.setFadeInDuration(Duration.seconds(0.5));
-                        popOver.setId("infoPopOver");
-                        popOver.show(searchInfoButton);
-                        new Pulse(infoLabel).play();
-                    }
-                });
-        searchInfoButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                popOver.hide();
-            }
-        });
-    }
+
+
 
     /**
      * Constructs the list view
@@ -258,14 +226,14 @@ public class FriendsController {
     protected void submitSearch() {
         String username = searchBar.getText().trim();
         if (username.equals(MainHandler.username)) {
-            alertBuilder.formEntryWarning("searchBar","You cannot befriend yourself");
+            this.alertBuilder.formEntryWarning("search bar","You cannot befriend yourself!");
+        } else {
+            friendsTable.getItems().clear();
+            User searchedUser = dbAdaptor.getUser(username);
+            friendsTable.getItems()
+                    .add(new User(searchedUser.getUsername(),
+                            searchedUser.getTotalScore()));
         }
-        friendsTable.getItems().clear();
-        User searchedUser = dbAdaptor.getUser(username);
-        friendsTable.getItems()
-                .add(new User(searchedUser.getUsername(),
-                        searchedUser.getTotalScore()));
-
 
     }
 }

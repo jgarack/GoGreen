@@ -67,10 +67,6 @@
 
 }
 
-/*#featuresList .list-cell {*/
-/*-fx-effect: innershadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);*/
-/*}*/
-
 #featuresList .label{
     -fx-font-size: 30;
     -fx-text-alignment: right;
@@ -164,3 +160,12 @@
     -fx-background-color: rgba(255, 255, 255, 0.493);
 }
 
+#infoLabel{
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-background-color: lightgreen;
+    -fx-fill-width: true;
+    -fx-fill-height: true;
+    -fx-text-alignment: left;
+}
