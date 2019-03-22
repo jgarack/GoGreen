@@ -86,7 +86,6 @@ public class FriendsController {
     private InformationBuilder informationBuilder = new InformationBuilder();
 
 
-
     /**
      * Upon initialization, it triggers.
      */
@@ -94,7 +93,7 @@ public class FriendsController {
     public void initialize() {
         pendingRequests = (ArrayList<String>) dbAdaptor
                 .getRequest(MainHandler.username);
-        friends =  (ArrayList<String>)dbAdaptor.getFriends(MainHandler.username);
+        friends = (ArrayList<String>) dbAdaptor.getFriends(MainHandler.username);
 
         informationBuilder
                 .addInformationIconToSearchBox(searchInfoLabel,
@@ -121,8 +120,8 @@ public class FriendsController {
                 acceptBtn.setStyle("-fx-font-family: 'FontAwesome'");
                 acceptBtn
                         .setGraphic(GlyphFontRegistry
-                        .font("FontAwesome")
-                        .create(FontAwesome.Glyph.CHECK_CIRCLE_ALT));
+                                .font("FontAwesome")
+                                .create(FontAwesome.Glyph.CHECK_CIRCLE_ALT));
                 acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
@@ -171,7 +170,6 @@ public class FriendsController {
     private void constructTableFriends() {
 
 
-
         TableColumn usernameCol = new TableColumn("Username");
         usernameCol
                 .setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -185,12 +183,11 @@ public class FriendsController {
         friendsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
-
         friendsTable.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.SECONDARY && !friends.contains(row.getItem().getUsername())) {
-                        attachAddFriendPopOver(row);
+                    attachAddFriendPopOver(row);
                 }
             });
             return row;
@@ -201,7 +198,7 @@ public class FriendsController {
         if (!friends.isEmpty()) {
 
             for (String friend : friends) {
-                friendsList.add(new User(friend,dbAdaptor.getTotalScore(friend)));
+                friendsList.add(new User(friend, dbAdaptor.getTotalScore(friend)));
             }
         }
         Collections.sort(friendsList, new Comparator<User>() {
@@ -225,6 +222,7 @@ public class FriendsController {
 
     /**
      * Attaches add friend pop over.
+     *
      * @param row the row where the pop over is attached
      */
     private void attachAddFriendPopOver(TableRow<User> row) {
@@ -236,7 +234,7 @@ public class FriendsController {
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
                 String recipient = row.getTableView().getItems().get(0).getUsername();
-                dbAdaptor.sendFriendReq(sender,recipient);
+                dbAdaptor.sendFriendReq(sender, recipient);
             }
         });
         VBox addFriendBox = new VBox();
@@ -268,9 +266,5 @@ public class FriendsController {
         }
         searchBar.setText("");
 
-    }
-
-    private void reloadPage(ActionEvent ev) {
-        new LoginController().redirectToView(ev,"main");
     }
 }
