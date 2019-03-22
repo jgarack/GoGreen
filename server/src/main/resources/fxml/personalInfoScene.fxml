@@ -15,10 +15,12 @@
           fx:controller="gui.personalInfoController"
           alignment="center" hgap="10" vgap="10">
     <padding><Insets top="10" right="25" bottom="10" left="25"/></padding>
-    <HBox spacing="20" fx:id="avatarBox" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.halignment="CENTER">
-         <ImageView fx:id="avatarImageView" GridPane.halignment="LEFT">
-             <Image url="@/icons/avatar1.png"/>
-         </ImageView>
+    <HBox spacing="20" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.halignment="CENTER">
+        <HBox fx:id="avatarImageBox">
+            <ImageView fx:id="avatarImageView" GridPane.halignment="LEFT">
+                <Image url="@/icons/avatar1.png"/>
+             </ImageView>
+        </HBox>
         <Button GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" fx:id="changeAvatar" text="Change Avatar" onAction="#changeAvatar"/>
         <Label fx:id="infoChangeAvatarLabel" GridPane.halignment="RIGHT"/>
     </HBox>

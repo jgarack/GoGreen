@@ -84,6 +84,15 @@ public class User {
     }
 
     /**
+     * Checks if the username has been instantiated.
+     * @return true iff the username is not null;
+     */
+    public boolean hasUsername(){
+        return this.username != null;
+    }
+
+
+    /**
      * Generates a string representation of the user.
      * @return A human-friendly string.
      */

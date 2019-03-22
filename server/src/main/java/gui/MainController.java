@@ -44,8 +44,6 @@ public class MainController {
     @FXML
     private BorderPane root;
 
-
-
     /**
      * Bound to the home button on top.
      */
