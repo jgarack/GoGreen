@@ -37,7 +37,9 @@ public class personalInfoController {
 
     @FXML
     private void initialize(){
-        informationBuilder.addInformationIconToSearchBox(infoChangeAvatarLabel);
+        informationBuilder
+                .addInformationIconToSearchBox(infoChangeAvatarLabel,
+                        "Click the button to the left to choose an avatar and\nsimple click on the avatar will save the changes.");
     }
 
 

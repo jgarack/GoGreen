@@ -20,7 +20,7 @@ public class InformationBuilder {
     /**
      * Adds information icon to search bar.
      */
-    public void addInformationIconToSearchBox(Label informativeLabel) {
+    public void addInformationIconToSearchBox(Label informativeLabel, String message) {
         informativeLabel.setBackground(Background.EMPTY);
         informativeLabel.setStyle("-fx-font-family: 'FontAwesome'");
         informativeLabel
@@ -32,7 +32,7 @@ public class InformationBuilder {
                 .setOnMouseEntered(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(final MouseEvent event) {
-                        Label infoLabel = new Label("Search for a user by his username\nand do a right-click on his name\nto add him.");
+                        Label infoLabel = new Label(message);
                         infoLabel.setId("infoLabel");
                         popOver = new PopOver(infoLabel);
                         popOver.setFadeInDuration(Duration.seconds(0.5));

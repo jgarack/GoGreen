@@ -89,7 +89,9 @@ public class FriendsController {
                 .getRequest(MainHandler.username);
         friends =  (ArrayList<String>)dbAdaptor.getFriends(MainHandler.username);
 
-        informationBuilder.addInformationIconToSearchBox(searchInfoLabel);
+        informationBuilder
+                .addInformationIconToSearchBox(searchInfoLabel,
+                        "Search for a user by his username\nand do a right-click on his name\nto add him.");
 
         constructPendingListView();
         constructTableFriends();
