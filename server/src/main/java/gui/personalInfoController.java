@@ -1,6 +1,9 @@
 package gui;
 
 import animatefx.animation.BounceIn;
+import animatefx.animation.GlowBackground;
+import animatefx.animation.GlowText;
+import com.sun.prism.paint.Paint;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,14 +13,23 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import org.controlsfx.control.PopOver;
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * Controller for the personal info scene.
  */
 public class personalInfoController {
+
+    @FXML
+    private GridPane grid;
 
     /**
      * Bound to the avatar box.
@@ -33,6 +45,9 @@ public class personalInfoController {
     /**
      * Bound to the change avatar button.
      */
+    @FXML
+    private Button selectAvatar;
+
     @FXML
     private Button changeAvatar;
 
@@ -73,6 +88,18 @@ public class personalInfoController {
      *                       where the drop is delivered.
      */
     private void setupDragAndDropTarget(HBox avatarImageBox) {
+        grid.setOnDragEntered(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                Dragboard db = event.getDragboard();
+                if (db.hasImage()) {
+                    Label label = new Label("Drop here");
+                    popOver = new PopOver(label);
+                    popOver.show(avatarImageBox);
+                    new GlowText(label,Color.RED,Color.GREEN).play();
+                }
+            }
+        });
         avatarImageBox.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
             public void handle(DragEvent event) {
@@ -89,8 +116,11 @@ public class personalInfoController {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
+                    System.out.println(db.getUrl());
                     avatarImageView.setImage(db.getImage());
-
+                    avatarImageView.setPreserveRatio(false);
+                    avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
+                    avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
                     popOver.hide();
                     new BounceIn(avatarImageBox).play();
                     event.setDropCompleted(true);
@@ -115,7 +145,7 @@ public class personalInfoController {
             else gridPane.add(createAvatar(i+1), i % 4, 1 );
         }
         popOver = new PopOver(gridPane);
-        popOver.show(changeAvatar);
+        popOver.show(selectAvatar);
     }
 
 
@@ -169,5 +199,9 @@ public class personalInfoController {
         return avatar;
     }
 
+    @FXML
+    protected void submitChanges(ActionEvent event){
+        //TODO: Updates avatarUrl in the user class in the db.
+    }
 
 }

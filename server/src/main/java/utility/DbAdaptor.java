@@ -108,12 +108,9 @@ public class DbAdaptor {
      * Connect method.
      */
     public void connect() {
-        System.out.println("connecting to database...");
         try {
             conn = DriverManager.getConnection(jdbUrl, username, password);
-            System.out.println("connected to database");
         } catch (SQLException e) {
-            System.out.println("connection failure");
             e.printStackTrace();
         }
     }
@@ -132,7 +129,6 @@ public class DbAdaptor {
             if (rs != null) {
                 rs.close();
             }
-            System.out.println("Disconnected from Database");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,7 +141,6 @@ public class DbAdaptor {
      * @param user object of the user.
      */
     public void insertUser(final User user) {
-        System.out.println("Inserting...");
         connect();
         try {
             PreparedStatement st = conn
@@ -156,10 +151,10 @@ public class DbAdaptor {
             st.setInt(two, user.getTotalScore());
             st.executeUpdate();
             st.close();
-            System.out.println("Inserted");
+
 
         } catch (SQLException e) {
-            System.out.println("Not Inserted");
+
             e.printStackTrace();
         } finally {
             disconnect();
@@ -232,7 +227,6 @@ public class DbAdaptor {
                             + "FROM activities "
                             + "WHERE player = ?");
             st.setString(one, name);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             int score = Integer.parseInt(rs.getString(one));
@@ -244,7 +238,6 @@ public class DbAdaptor {
                             + "WHERE username = ?");
             st.setInt(one, score);
             st.setString(two, name);
-            System.out.println(st.toString());
             st.executeUpdate();
             st.close();
 
@@ -401,8 +394,6 @@ public class DbAdaptor {
             st.setString(one, name);
 
             st.setInt(two, activityID);
-            System.out.println(name);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             amount += rs.getInt("amount");
@@ -414,12 +405,10 @@ public class DbAdaptor {
             pst.setInt(three, activityID);
             pst.executeUpdate();
             pst.close();
-            System.out.println(rs.toString());
             calculateScore(name, activityID, amount);
             updateTotalScore(name);
             return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         } finally {
@@ -437,13 +426,10 @@ public class DbAdaptor {
                                 final int amount) {
         try {
             connect();
-            System.out.println("update Feature:" + activityID
-                    + " for amount: " + amount);
             PreparedStatement st = conn.prepareStatement(new StringBuilder(
                     "UPDATE activities SET score = ? WHERE player = ")
                     .append("?").append(" AND activity_id = ")
                     .append("?").toString());
-            System.out.println("score is now " + amount);
             st.setInt(one, amount);
             st.setString(two, username);
             st.setInt(three, activityID);
@@ -474,7 +460,6 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
             st.setInt(two, activityID);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt(one);
@@ -498,11 +483,9 @@ public class DbAdaptor {
         connect();
 
         try {
-            System.out.println(name);
             String query = "SELECT total_score FROM users WHERE username = ?";
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt("total_score");
@@ -578,7 +561,6 @@ public class DbAdaptor {
             if (rs.next() == false) {
                 check = true;
             }
-            System.out.println(check);
 
         } catch (SQLException e) {
             e.printStackTrace();
