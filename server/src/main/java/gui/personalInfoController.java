@@ -18,6 +18,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import org.controlsfx.control.PopOver;
+import utility.DbAdaptor;
+import utility.MainHandler;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,17 +71,28 @@ public class personalInfoController {
     @FXML
     private InformationBuilder informationBuilder = new InformationBuilder();
 
+    private DbAdaptor dbAdaptor = new DbAdaptor();
+
 
     /**
      * Executed upon initialization.
      */
     @FXML
-    private void initialize(){
+    private void initialize() {
         informationBuilder
                 .addInformationIconToSearchBox(infoChangeAvatarLabel,
                         "Drag the desired avatar\n"
                                 + "to save the changes.");
+        setUpAvatar();
         setupDragAndDropTarget(avatarImageBox);
+    }
+
+    /**
+     * Sets up the avatar of the user.
+     */
+    private void setUpAvatar() {
+        System.out.println(dbAdaptor.getUser(MainHandler.username).getAvatarUrl());
+        avatarImageView.setImage(new Image(dbAdaptor.getUser(MainHandler.username).getAvatarUrl()));
     }
 
     /**

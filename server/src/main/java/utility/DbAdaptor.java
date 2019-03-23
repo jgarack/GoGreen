@@ -53,6 +53,11 @@ public class DbAdaptor {
      */
     private final int eight = 8;
 
+    private enum FRIEND_STATUS {
+        PENDING,
+        ACCEPTED,
+        DECLINED}
+
 
     /**
      * Url of the database.
@@ -145,10 +150,11 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
-                            + "total_score)"
-                            + " VALUES(?,?)");
+                            + "total_score,image)"
+                            + " VALUES(?,?,?)");
             st.setString(one, user.getUsername());
             st.setInt(two, user.getTotalScore());
+            st.setString(three,user.getAvatarUrl());
             st.executeUpdate();
             st.close();
 
@@ -306,9 +312,10 @@ public class DbAdaptor {
             connect();
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
-                            + "users(username, total_score) VALUES (?,?)");
+                            + "users(username, total_score, image) VALUES (?,?,?)");
             st.setString(one, regCre.getUsername());
             st.setInt(two, 0);
+            st.setString(three,"/icons/avatar1.png");
             st.executeUpdate();
             st.close();
 
@@ -348,15 +355,17 @@ public class DbAdaptor {
 
             connect();
             PreparedStatement st = conn.prepareStatement(
-                    "SELECT username, total_score FROM users WHERE username = ?");
+                    "SELECT username, total_score, image FROM users WHERE username = ?");
 
             st.setString(1, userName);
             rs = st.executeQuery();
 
             User tempUser = new User(null, 0);
+
             while (rs.next()) {
                 tempUser.setUsername(rs.getString(one));
                 tempUser.setTotalScore(rs.getInt(two));
+                tempUser.setAvatarUrl(rs.getString(three));
                 break;
             }
 
@@ -532,11 +541,10 @@ public class DbAdaptor {
             try {
                 PreparedStatement st = conn.prepareStatement(
                         "INSERT INTO friend_request(from_user, "
-                             + "to_user, pending, accepted) VALUES (?,?,?,?)");
+                             + "to_user,friend_status) VALUES (?,?, ?::friend_status)");
                 st.setString(1,fromUser);
                 st.setString(2,toUser);
-                st.setBoolean(3,true);
-                st.setBoolean(4, false);
+                st.setString(3,FRIEND_STATUS.PENDING.name());
                 st.executeUpdate();
                 alertBuilder.showInformationNotification("Friend request sent!");
 
@@ -582,11 +590,12 @@ public class DbAdaptor {
         try {
 
             PreparedStatement st = conn.prepareStatement("UPDATE friend_request "
-                    + "SET accepted = ? , pending = ? WHERE from_user = ? AND to_user = ?");
-            st.setBoolean(1, accepted);
-            st.setBoolean(2, false);
-            st.setString(3, fromUser);
-            st.setString(4, toUser);
+                    + "SET friend_status = ?::\"friend_status\" WHERE from_user = ? AND to_user = ?");
+            if (accepted) {
+                st.setString(1,FRIEND_STATUS.ACCEPTED.name()) ;
+            } else st.setString(1,FRIEND_STATUS.DECLINED.name());
+            st.setString(2, fromUser);
+            st.setString(3, toUser);
             st.executeUpdate();
 
         } catch (SQLException e) {
@@ -609,8 +618,9 @@ public class DbAdaptor {
         try {
             List<String> listOfPending = new ArrayList<>();
             PreparedStatement st = conn.prepareStatement("SELECT from_user FROM friend_request"
-                    + " WHERE to_user = ? AND pending = true");
+                    + " WHERE to_user = ? and friend_status = ?::\"friend_status\"");
             st.setString(1, username);
+            st.setString(2,FRIEND_STATUS.PENDING.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
@@ -636,15 +646,17 @@ public class DbAdaptor {
         try {
             List<String> listOfPending = new ArrayList<>();
             PreparedStatement st = conn.prepareStatement("SELECT to_user FROM "
-                    + "friend_request WHERE from_user = ? AND pending = false AND accepted = true");
+                    + "friend_request WHERE from_user = ? AND friend_status = ?::\"friend_status\"");
             st.setString(1, username);
+            st.setString(2,FRIEND_STATUS.ACCEPTED.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
             st = conn.prepareStatement("SELECT from_user FROM friend_request "
-                    + "WHERE to_user = ? AND pending = false AND accepted = true");
+                    + "WHERE to_user = ? AND friend_status = ?::\"friend_status\"");
             st.setString(1, username);
+            st.setString(2,FRIEND_STATUS.ACCEPTED.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));

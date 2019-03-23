@@ -16,6 +16,10 @@ public class User {
      */
     private int totalScore;
     /**
+     * Avatar of the user.
+     */
+    private String avatarUrl;
+    /**
      * Friend list of the user.
      */
     private List<String> friends;
@@ -28,7 +32,7 @@ public class User {
     public User(final String userName, final int userTotalScore) {
         this.username = userName;
         this.totalScore = userTotalScore;
-
+        this.avatarUrl = "/icons/avatar2.png";
 
         //TODO implement friends querry;
     }
@@ -101,5 +105,13 @@ public class User {
         return "User{"
                 + ", username='" + username + '\''
                 + ", totalScore=" + totalScore + '\'' + '}';
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatar) {
+        this.avatarUrl = avatar;
     }
 }
