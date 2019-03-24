@@ -256,6 +256,25 @@ public class DbAdaptor {
         }
     }
 
+    public void updateAvatarUrl(final String name, final String avatarUrl){
+        try {
+            connect();
+            PreparedStatement  st = conn
+                    .prepareStatement("UPDATE users"
+                            + " SET image = ? "
+                            + "WHERE username = ?");
+            st.setString(one, avatarUrl);
+            st.setString(two, name);
+            st.executeUpdate();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
     /**
      * authentication of user who is logging in.
      * @param logCre object with username and password fields.

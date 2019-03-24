@@ -17,9 +17,12 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
+import sun.applet.Main;
 import utility.DbAdaptor;
 import utility.MainHandler;
+import utility.User;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +47,8 @@ public class personalInfoController {
      */
     private PopOver popOver;
 
+    private PopOver helperPopOver;
+
     /**
      * Bound to the change avatar button.
      */
@@ -64,6 +69,11 @@ public class personalInfoController {
      */
     @FXML
     private Label infoChangeAvatarLabel;
+
+    /**
+     * String holder for avatar url.
+     */
+    private String avatarUrl = "/icons/avatar1.png";
 
     /**
      * Builds information labels.
@@ -93,6 +103,9 @@ public class personalInfoController {
     private void setUpAvatar() {
         System.out.println(dbAdaptor.getUser(MainHandler.username).getAvatarUrl());
         avatarImageView.setImage(new Image(dbAdaptor.getUser(MainHandler.username).getAvatarUrl()));
+        avatarImageView.setPreserveRatio(false);
+        avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
+        avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
     }
 
     /**
@@ -107,9 +120,9 @@ public class personalInfoController {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     Label label = new Label("Drop here");
-                    popOver = new PopOver(label);
-                    popOver.show(avatarImageBox);
-                    new GlowText(label,Color.RED,Color.GREEN).play();
+                    helperPopOver = new PopOver(label);
+                    helperPopOver.show(avatarImageBox);
+                    new GlowText(label,Color.RED,Color.GREEN).setSpeed(3).play();
                 }
             }
         });
@@ -130,11 +143,14 @@ public class personalInfoController {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     System.out.println(db.getUrl());
-                    avatarImageView.setImage(db.getImage());
+                    if(db.hasUrl()) {
+                        avatarUrl = db.getUrl();
+                    }
                     avatarImageView.setPreserveRatio(false);
                     avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
                     avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
-                    popOver.hide();
+                    avatarImageView.setImage(db.getImage());
+                    helperPopOver.hide(Duration.ONE);
                     new BounceIn(avatarImageBox).play();
                     event.setDropCompleted(true);
                 } else {
@@ -198,8 +214,9 @@ public class personalInfoController {
                 Image sourceImage = avatarIv.getImage();
                 content.putImage(sourceImage);
                 db.setContent(content);
-
-
+                avatarUrl = "/icons/avatar" + numOfAvatar + ".png";
+                System.out.println(avatarUrl+"DRAGDETECTED");
+                popOver.hide();
                 event.consume();
             }
         });
@@ -213,8 +230,9 @@ public class personalInfoController {
     }
 
     @FXML
-    protected void submitChanges(ActionEvent event){
-        //TODO: Updates avatarUrl in the user class in the db.
+    protected void submitChanges(ActionEvent event) {
+        System.out.println(avatarUrl);
+        dbAdaptor.updateAvatarUrl(MainHandler.username,avatarUrl);
     }
 
 }

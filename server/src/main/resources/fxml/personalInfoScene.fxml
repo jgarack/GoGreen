@@ -18,7 +18,7 @@
     <HBox spacing="20"  GridPane.valignment="CENTER" GridPane.halignment="CENTER">
         <HBox GridPane.rowIndex="1" fx:id="avatarImageBox" maxWidth="250" maxHeight="250" GridPane.rowSpan="2">
             <ImageView fx:id="avatarImageView" GridPane.halignment="LEFT">
-                <Image url="@/icons/avatar1.png"/>
+                <Image url="@/icons/avatar1.png" preserveRatio="false"/>
              </ImageView>
         </HBox>
         <Button GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" fx:id="selectAvatar" text="Select Avatar" onAction="#changeAvatar"/>
