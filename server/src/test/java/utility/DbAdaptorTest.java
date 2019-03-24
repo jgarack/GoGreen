@@ -1,17 +1,17 @@
 package utility;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class DbAdaptorTest {
     DbAdaptor db = new DbAdaptor();
-
-    @Test
-    void ConstructorTest(){
-
-    }
 
 
     @Test
@@ -66,39 +66,80 @@ class DbAdaptorTest {
         assertEquals(db.getUser(random).getUsername(), random);
         db.deleteByUsername(random);
     }
-/*
+
+
+
     @Test
-    void updateActivityTest() {
-        String random =  UUID.randomUUID().toString();
+    void updateActivityTest (){
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        db.addActivity(new ActivityDb(1,12, 12, random));
+        db.updateActivity(random, 1, 134);
+        assertEquals(134, db.getActivityAmount(random, 1));
+        db.deleteByUsername(random);
 
-        db.connect();
-        db.insertUser(new User(random, 0));
-        db.disconnect();
-
-        db.connect();
-        db.addActivity(new ActivityDb(1, 20, 12, random));
-        db.disconnect();
-
-        db.updateActivity(random, 1,2);
-
-        db.connect();
-        assertEquals(2, db.getActivityAmount(random, 1));
-        db.disconnect();
     }
 
     @Test
-    void getTotalScoreTest(){
-        String random =  UUID.randomUUID().toString();
+    void getActivityAmountTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        db.updateActivity(random,1,1 );
+        assertEquals(1, db.getActivityAmount(random, 1));
+        db.deleteByUsername(random);
+    }
 
-        db.connect();
-        db.insertUser(new User(random, 0));
-        db.disconnect();
+    @Test
+    void addActivityTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        assertEquals(0, db.getActivityAmount(random, 1));
+        db.deleteByUsername(random);
+    }
 
-        db.connect();
-        assertEquals(db.getTotalScore(random),0);
-        db.disconnect();
+    @Test
+    void checkIfInDbTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        System.out.println(random+"   :::  "+random2);
+        assertEquals(true ,db.checkIfInDb(random, random2));
+
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+    }
+
+    @Test
+    void sendRequestTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+
+        db.sendFriendReq(random, random2);
+
+
+        List<String> list1 = db.getRequest(random);
+
+        List<String> list2 = new ArrayList<>();
+
+        list2.add(random2);
+        assertEquals(list1, list2);
+
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+
 
     }
-    */
+
+
 
 }
