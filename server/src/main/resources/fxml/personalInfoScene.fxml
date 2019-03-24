@@ -34,7 +34,7 @@
     <PasswordField fx:id="newPass" GridPane.rowIndex="7"/>
     <Label text="Confirm new password" GridPane.rowIndex="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <PasswordField fx:id="confirmNewPass" GridPane.rowIndex="9"/>
-    <Button text="Change Password" GridPane.rowIndex="10" GridPane.halignment="CENTER"/>
+    <Button text="Change Password" GridPane.rowIndex="10" GridPane.halignment="CENTER" onAction="#changePass"/>
     <stylesheets>
         <URL value="@../stylesheets/loginStylesheet.css"/>
     </stylesheets>

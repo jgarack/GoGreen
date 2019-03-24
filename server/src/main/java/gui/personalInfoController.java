@@ -3,39 +3,52 @@ package gui;
 import animatefx.animation.BounceIn;
 import animatefx.animation.GlowBackground;
 import animatefx.animation.GlowText;
-import com.sun.prism.paint.Paint;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
-import sun.applet.Main;
 import utility.DbAdaptor;
 import utility.MainHandler;
-import utility.User;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 
 /**
  * Controller for the personal info scene.
  */
 public class personalInfoController {
 
+    /**
+     * Bound to the root.
+     */
     @FXML
     private GridPane grid;
 
+    /**
+     * Bound to the old pass field.
+     */
+    @FXML
+    private PasswordField oldPass;
+
+    /**
+     * Bound to the new pass field.
+     */
+    @FXML
+    private PasswordField newPass;
+    /**
+     * Bound to the confirm new pass field.
+     */
+    @FXML
+    private PasswordField confirmNewPass;
     /**
      * Bound to the avatar box.
      */
@@ -47,8 +60,15 @@ public class personalInfoController {
      */
     private PopOver popOver;
 
+    /**
+     * Generated when extra help is needed.
+     */
     private PopOver helperPopOver;
 
+    /**
+     * For building alerts.
+     */
+    private AlertBuilder alertBuilder = new AlertBuilder();
     /**
      * Bound to the change avatar button.
      */
@@ -230,9 +250,24 @@ public class personalInfoController {
     }
 
     @FXML
-    protected void submitChanges(ActionEvent event) {
+    protected void submitChanges(final ActionEvent event) {
         System.out.println(avatarUrl);
         dbAdaptor.updateAvatarUrl(MainHandler.username,avatarUrl);
     }
 
+    @FXML
+    protected void changePass(final ActionEvent event){
+
+        String oldPassStr = oldPass.getText().trim();
+        String newPassStr = newPass.getText().trim();
+        String confirmNewPassStr = confirmNewPass
+                .getText().trim();
+
+        if (!newPassStr.equals(confirmNewPassStr)) {
+            alertBuilder
+                    .formEntryWarning("password fields",
+                            "New password and confirmed"
+                                    + "new password do not match!");
+        }
+    }
 }
