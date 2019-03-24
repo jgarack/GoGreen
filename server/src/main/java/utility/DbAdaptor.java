@@ -53,6 +53,7 @@ public class DbAdaptor {
      */
     private final int eight = 8;
 
+
     private enum FRIEND_STATUS {
         PENDING,
         ACCEPTED,
@@ -576,6 +577,12 @@ public class DbAdaptor {
 
     }
 
+    /**
+     * Checks if tuple is in the db
+     * @param from_us sender
+     * @param to_us recipient
+     * @return true iff the tuple is in the table.
+     */
     public boolean checkIfInDb(final String from_us, final String to_us) {
         boolean check = false;
         connect();

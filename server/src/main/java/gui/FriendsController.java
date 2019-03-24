@@ -186,8 +186,12 @@ public class FriendsController {
         friendsTable.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (event.getButton() == MouseButton.SECONDARY && !friends.contains(row.getItem().getUsername())) {
-                    attachAddFriendPopOver(row);
+                if (event.getButton() == MouseButton.SECONDARY) {
+                    if (!friends.contains(row.getItem().getUsername())) {
+                        attachAddFriendPopOver(row);
+                    } else {
+                        attachRemoveFriendPopOver(row);
+                    }
                 }
             });
             return row;
@@ -218,6 +222,24 @@ public class FriendsController {
         new ZoomInRight(friendsTable).play();
 
 
+    }
+
+    private void attachRemoveFriendPopOver(TableRow<User> row) {
+        Button addFriendBtn = new Button();
+        addFriendBtn.setText("Remove friend");
+        addFriendBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(final MouseEvent event) {
+                String sender = MainHandler.username;
+                String recipient = row.getTableView().getItems().get(0).getUsername();
+                dbAdaptor.considerRequest(sender, recipient,false);
+                dbAdaptor.considerRequest(recipient,sender,false);
+            }
+        });
+        VBox addFriendBox = new VBox();
+        addFriendBox.getChildren().add(addFriendBtn);
+        PopOver popOver = new PopOver(addFriendBox);
+        popOver.show(row);
     }
 
     /**
