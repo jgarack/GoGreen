@@ -39,12 +39,12 @@ public class PointsController {
     /**
      * HttpRequestHandler object that can be used for contacting the api.
      */
-    private static final HttpRequestHandler HTTP_HANDLER_API =
+    public HttpRequestHandler HTTP_HANDLER_API =
             new HttpRequestHandler(BP_API);
     /**
      * DB_ADAPTOR connections/ disconnection/ authentication.
      */
-    private static final DbAdaptor DB_ADAPTOR = new DbAdaptor();
+    public DbAdaptor DB_ADAPTOR = new DbAdaptor();
     /**
      * Mapping for post request to calculate points.
      * @param request DB update request to be calculated
@@ -58,48 +58,57 @@ public class PointsController {
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
         int activityID = request.getActivityID();
+        //veg meal
         if (activityID == 1) {
 
             BufferedReader httpBody =
-                    new HttpRequestHandler(BP_API).reqGet("/diets."
+                    HTTP_HANDLER_API.reqGet("/diets."
                             + "json?size="
                             + amount
-                            +"&timeframe=2019-01-01%2F2019-01-02"
+                            + "&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
             BufferedReader veg =
-                    new HttpRequestHandler(BP_API).reqGet("/diets."
+                    HTTP_HANDLER_API.reqGet("/diets."
                             + "json?size="
                             + amount
-                            +"&diet_class=vegeterian"
+                            +"&diet_class=vegetarian"
                             +"&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
+            System.out.println("/diets."
+                    + "json?size="
+                    + amount
+                    +"&diet_class=vegetarian"
+                    +"&timeframe=2019-01-01%2F2019-01-02"
+                    + BP_KEY);
             amount = (jsonCon(HttpRequestHandler.resLog(httpBody,null))
         - jsonCon(HttpRequestHandler.resLog(veg,null)));
 
         }else if (activityID == 2) {
+            //bycicle
 
             BufferedReader httpBody =
-                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
+                    HTTP_HANDLER_API.reqGet("/automobile_"
                             + "trips.json?duration=" + amount * 60
                             + BP_KEY);
             amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
         }else if (activityID == 3) {
-            //need to find new API
+            //local produce
             BufferedReader httpBody =
-                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
+                    HTTP_HANDLER_API.reqGet("/automobile_"
                             + "trips.json?duration=" + amount
                             + BP_KEY);
             amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
         }else if (activityID == 4) {
+            //public transport
 
             BufferedReader httpBody =
-                    new HttpRequestHandler(BP_API).reqGet("/bus_"
+                    HTTP_HANDLER_API.reqGet("/bus_"
                             + "trips.json?duration=" + amount * 60
                             + BP_KEY);
             BufferedReader car =
-                    new HttpRequestHandler(BP_API).reqGet("/automobile_"
+                    HTTP_HANDLER_API.reqGet("/automobile_"
                             + "trips.json?duration=" + amount * 60
                             + BP_KEY);
             amount = jsonCon(HttpRequestHandler.resLog(car,null))
@@ -141,11 +150,10 @@ public class PointsController {
         mapper.configure(
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
-        int ret = (int) Double.parseDouble(em.get("decisions").
+        Double ret = (em.get("decisions").
                 get("carbon").
-                get("description").textValue().
+                get("description").get("object").get("value").asDouble()*1000);
                 //multiply by 1000 to convert to grams
-                replace("kg", "").trim())*1000;
-        return ret;
+        return ret.intValue();
     }
 }

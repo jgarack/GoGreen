@@ -24,15 +24,21 @@
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
-    -fx-background-color: rgb(82, 136, 81);
+    -fx-background-color: #a32243;
     -fx-font-size: 20;
     -fx-fill-height: true;
     -fx-effect: innershadow(three-pass-box, rgb(41, 41, 41), 1, 2, 2, 2);
 }
+
+#submitSearchBtn:hover{
+    -fx-background-color: #A0596B;
+}
+
+
 #searchBar{
     -fx-font-size: 18;
     -fx-fill-height: true;
-    -fx-font-family: "Arial Black";
+    -fx-font-family: "Myriad Pro";
 }
 #infoLabel{
     -fx-padding: 10 10 10 10;

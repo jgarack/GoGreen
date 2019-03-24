@@ -79,10 +79,7 @@ public class DbAdaptor {
      * Initial connection.
      */
     private Connection conn = null;
-    /**
-     * Initial statement.
-     */
-    private Statement stmt = null;
+
     /**
      * Initial set of results from DB.
      */
@@ -126,9 +123,6 @@ public class DbAdaptor {
      */
     public void disconnect() {
         try {
-            if (stmt != null) {
-                stmt.close();
-            }
             if (conn != null) {
                 conn.close();
             }
@@ -162,28 +156,6 @@ public class DbAdaptor {
 
         } catch (SQLException e) {
 
-            e.printStackTrace();
-        } finally {
-            disconnect();
-        }
-
-    }
-
-    /**
-     * Inserts a habit into the DB.
-     *
-     * @param habitName the habit to be inserted.
-     */
-    public void insertActivity(final String habitName) {
-        try {
-            connect();
-            PreparedStatement st = conn
-                    .prepareStatement("INSERT INTO activity "
-                            + "(name) VALUES (?)");
-            st.setString(1, habitName);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             disconnect();
@@ -350,7 +322,7 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            for (int i = 1; i < 7;i++) {
+            for (int i = 1; i < 5;i++) {
                 addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
             }
 
@@ -566,7 +538,7 @@ public class DbAdaptor {
                 st.setString(2,toUser);
                 st.setString(3,FRIEND_STATUS.PENDING.name());
                 st.executeUpdate();
-                alertBuilder.showInformationNotification("Friend request sent!");
+                //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
                 e.printStackTrace();

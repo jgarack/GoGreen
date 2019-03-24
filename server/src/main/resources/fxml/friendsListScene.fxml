@@ -16,9 +16,9 @@
     <Label fx:id="leaderBoardTitle" text="Leaderboard" GridPane.valignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0"
            GridPane.columnIndex="1"/>
     <HBox fx:id="searchBox" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="15">
-        <TextField fx:id="searchBar" promptText="Search for a friend..." GridPane.columnIndex="1" HBox.hgrow="ALWAYS"/>
+        <TextField fx:id="searchBar" promptText="Username" GridPane.columnIndex="1" HBox.hgrow="ALWAYS"/>
         <Label fx:id="searchInfoLabel"/>
-        <Button fx:id="submitSearchBtn" text="Search for a friend" onAction="#submitSearch" GridPane.columnIndex="1" defaultButton="true"/>
+        <Button fx:id="submitSearchBtn" text="🔍 Search" onAction="#submitSearch" GridPane.columnIndex="1" defaultButton="true"/>
     </HBox>
     <TableView fx:id="friendsTable" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
     <stylesheets>

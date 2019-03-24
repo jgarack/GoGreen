@@ -1,9 +1,7 @@
 package gui;
 
+import animatefx.animation.FadeInUp;
 import animatefx.animation.JackInTheBox;
-import animatefx.animation.ZoomIn;
-import animatefx.animation.SlideInRight;
-import animatefx.animation.FadeInRight;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.GlyphFont;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
-//import org.controlsfx.glyphfont.FontAwesome;
-//import org.controlsfx.glyphfont.GlyphFont;
-//import org.controlsfx.glyphfont.GlyphFontRegistry;
+
 import java.io.IOException;
 
 
@@ -89,14 +84,6 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        personalInfo.setGraphic(font
-         .create(FontAwesome.Glyph.INFO).size(20));
-
-        friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE).size(20));
-
-
-
         try {
             loadHomeScene();
         } catch (IOException err) {
@@ -169,11 +156,11 @@ public class MainController {
         Parent newScene = FXMLLoader.load(getClass()
                 .getResource("/fxml/" + scene + "Scene.fxml"));
         if (scene.equals("home")) {
-            new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
+            new FadeInUp(newScene).play();
         } else if (scene.equals("howToPlay")) {
-            new SlideInRight(newScene).play();
+            new FadeInUp(newScene).play();
         } else if (scene.equals("about")) {
-            new FadeInRight(newScene).play();
+            new FadeInUp(newScene).play();
         }
 
         root.setCenter(newScene);
