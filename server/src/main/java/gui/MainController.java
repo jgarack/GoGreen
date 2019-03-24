@@ -90,11 +90,9 @@ public class MainController {
     @FXML
     public void initialize() {
         GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        personalInfo.setStyle("-fx-font-family: 'FontAwesome'");
         personalInfo.setGraphic(font
          .create(FontAwesome.Glyph.INFO));
 
-        friendsListBtn.setStyle("-fx-font-family: 'FontAwesome'");
         friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE));
 
 

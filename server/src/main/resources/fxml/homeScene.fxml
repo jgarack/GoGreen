@@ -33,7 +33,7 @@
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-                <TextField alignment="CENTER" promptText="calories" prefWidth="150" fx:id="vegMeals"/>
+                <TextField alignment="CENTER" promptText="Calories" prefWidth="150" fx:id="vegMeals"/>
                 <Button fx:id="increaseVegetarianMealsBtn" onAction="#increaseVegetarianMeals"/>
             </HBox>
         </VBox>
@@ -45,7 +45,7 @@
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-                <TextField alignment="CENTER" promptText="km" prefWidth="150" fx:id="bicycleUsage"/>
+                <TextField alignment="CENTER" promptText="Km" prefWidth="150" fx:id="bicycleUsage"/>
                 <Button fx:id="increaseBicycleUsageBtn" onAction="#increaseBicycleUsage">
                 </Button>
             </HBox>
@@ -58,7 +58,7 @@
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-                <TextField alignment="CENTER" promptText="calories" prefWidth="150" fx:id="localProduce"/>
+                <TextField alignment="CENTER" promptText="Calories" prefWidth="150" fx:id="localProduce"/>
                 <Button fx:id="increaseLocalProduceBtn" onAction="#increaseLocalProduce"/>
             </HBox>
         </VBox>
@@ -71,7 +71,7 @@
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-                <TextField alignment="CENTER" promptText="km" prefWidth="150" fx:id="busCar"/>
+                <TextField alignment="CENTER" promptText="Km" prefWidth="150" fx:id="busCar"/>
                 <Button fx:id="increaseBusUsageBtn"  onAction="#increaseBusUsage"/>
             </HBox>
         </VBox>
@@ -84,7 +84,7 @@
                 </image>
             </ImageView>
             <HBox alignment="CENTER" spacing="20">
-                <TextField alignment="CENTER" promptText="panels" prefWidth="150" fx:id="solarPanel"/>
+                <TextField alignment="CENTER" promptText="Panels" prefWidth="150" fx:id="solarPanel"/>
                 <Button fx:id="increaseSolarPanelsBtn"/>
             </HBox>
         </VBox>
