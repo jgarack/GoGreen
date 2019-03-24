@@ -1,9 +1,6 @@
 package gui;
 
-import animatefx.animation.JackInTheBox;
-import animatefx.animation.ZoomIn;
-import animatefx.animation.SlideInRight;
-import animatefx.animation.FadeInRight;
+import animatefx.animation.*;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,10 +71,10 @@ public class MainController {
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
         this.greetingsText.setStyle("-fx-font-family: 'FontAwesome'");
-        this.greetingsText
-                .setGraphic(GlyphFontRegistry
-                        .font("FontAwesome")
-                        .create(FontAwesome.Glyph.USER));
+//        this.greetingsText
+//                .setGraphic(GlyphFontRegistry
+//                        .font("FontAwesome")
+//                        .create(FontAwesome.Glyph.USER));
 
     }
 
@@ -89,11 +86,11 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        personalInfo.setGraphic(font
-         .create(FontAwesome.Glyph.INFO));
-
-        friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE));
+//        GlyphFont font = GlyphFontRegistry.font("FontAwesome");
+//        personalInfo.setGraphic(font
+//         .create(FontAwesome.Glyph.INFO));
+//
+//        friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE));
 
 
 
@@ -169,11 +166,11 @@ public class MainController {
         Parent newScene = FXMLLoader.load(getClass()
                 .getResource("/fxml/" + scene + "Scene.fxml"));
         if (scene.equals("home")) {
-            new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
+            new FadeInUp(newScene).play();
         } else if (scene.equals("howToPlay")) {
-            new SlideInRight(newScene).play();
+            new FadeInUp(newScene).play();
         } else if (scene.equals("about")) {
-            new FadeInRight(newScene).play();
+            new FadeInUp(newScene).play();
         }
 
         root.setCenter(newScene);

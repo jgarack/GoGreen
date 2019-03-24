@@ -97,7 +97,7 @@ public class FriendsController {
 
         informationBuilder
                 .addInformationIconToSearchBox(searchInfoLabel,
-                        "Search for a user by his username\nand do a right-click on his name\nto add him.");
+                        "Right-click on a user to add them");
 
         constructTableFriends();
         constructPendingListView();

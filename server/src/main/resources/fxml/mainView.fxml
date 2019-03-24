@@ -29,11 +29,10 @@
                     <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>
             </HBox>
 
-
             <HBox alignment="TOP_RIGHT" fx:id="userSection" spacing="15">
                 <Label fx:id="greetingsText" text="Greetings, User!" HBox.hgrow="ALWAYS"/>
-                <Button fx:id="friendsListBtn" text=" Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
-                <Button fx:id="personalInfo" text=" Edit Your Profile" onAction="#loadPersonalInfoScene"/>
+                <Button fx:id="friendsListBtn" text="✉ Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
+                <Button fx:id="personalInfo" text="👤 Edit Your Profile" onAction="#loadPersonalInfoScene"/>
             </HBox>
         </SplitPane>
     </top>
