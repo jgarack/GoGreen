@@ -77,7 +77,7 @@ public class MainController {
         this.greetingsText
                 .setGraphic(GlyphFontRegistry
                         .font("FontAwesome")
-                        .create(FontAwesome.Glyph.USER));
+                        .create(FontAwesome.Glyph.USER).size(20));
 
     }
 
@@ -91,9 +91,9 @@ public class MainController {
     public void initialize() {
         GlyphFont font = GlyphFontRegistry.font("FontAwesome");
         personalInfo.setGraphic(font
-         .create(FontAwesome.Glyph.INFO));
+         .create(FontAwesome.Glyph.INFO).size(20));
 
-        friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE));
+        friendsListBtn.setGraphic(font.create(FontAwesome.Glyph.ENVELOPE).size(20));
 
 
 

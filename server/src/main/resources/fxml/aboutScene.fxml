@@ -24,7 +24,7 @@
     <Label fx:id="aboutSceneText" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">the world, all whilst providing an engaging experience that will hopefully motivate the user to keep a greener lifestyle.</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">It is our belief that every little action counts, which is our app provides long term tracking of the impact a user's habits have.</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">This app was developed by [OOPP Group 98], composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,</Label>
-    <Label fx:id="aboutSceneText" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Jonathan Garack, Lassie Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.</Label>
+    <Label fx:id="aboutSceneText" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Jonathan Garack, Lachezar Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.</Label>
 
     <HBox fx:id="howToImage" GridPane.rowIndex="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
     <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">

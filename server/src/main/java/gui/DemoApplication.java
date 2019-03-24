@@ -1,7 +1,9 @@
 package gui;
 
+import animatefx.animation.ZoomIn;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.stage.Screen;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -87,6 +89,7 @@ public class DemoApplication extends Application {
 
         root = fxmlLoader.load(getClass().getResource("/fxml/loginView.fxml"));
 
+        new ZoomIn(root).play();
 
     }
 
@@ -110,6 +113,7 @@ public class DemoApplication extends Application {
         primaryStage.setHeight(bounds.getHeight());
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 
 
