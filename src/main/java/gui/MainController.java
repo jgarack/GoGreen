@@ -59,7 +59,7 @@ public class MainController {
      * Bound to the friends list page.
      */
     @FXML
-    public Button friendsListBtn;
+    private Button friendsListBtn;
 
     /**
      * Updates the Greeting in top right corner.
@@ -153,20 +153,16 @@ public class MainController {
      */
     private void loadScene(final String scene)
             throws IOException {
-        Parent newScene = FXMLLoader.load(getClass()
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                 .getResource("/fxml/" + scene + "Scene.fxml"));
-        if (scene.equals("home")) {
-            new FadeInUp(newScene).play();
-        } else if (scene.equals("howToPlay")) {
-            new FadeInUp(newScene).play();
-        } else if (scene.equals("about")) {
-            new FadeInUp(newScene).play();
+        Parent newScene = fxmlLoader.load();
+        new FadeInUp(newScene).play();
+        if (scene.equals("personalInfo")) {
+            ((personalInfoController) fxmlLoader.getController()).setMainController(this);
+        } else if (scene.equals("friendsList")) {
+            ((FriendsController)fxmlLoader.getController()).setMainController(this);
         }
 
         root.setCenter(newScene);
-    }
-
-    public void fireAButton(){
-        friendsListBtn.fire();
     }
 }

@@ -2,6 +2,7 @@ package gui;
 
 
 
+import animatefx.animation.ZoomInLeft;
 import animatefx.animation.ZoomInRight;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +30,7 @@ import utility.DbAdaptor;
 import utility.MainHandler;
 import utility.User;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -94,6 +96,8 @@ public class FriendsController {
 
     private InformationBuilder informationBuilder = new InformationBuilder();
 
+    private MainController mainController;
+
 
     /**
      * Upon initialization, it triggers.
@@ -138,6 +142,11 @@ public class FriendsController {
                         dbAdaptor
                                 .considerRequest(friend,
                                         MainHandler.username, true);
+                        try {
+                            mainController.loadFriendsListScene();
+                        } catch (IOException err) {
+                            err.getMessage();
+                        }
                     }
                 });
 
@@ -154,6 +163,11 @@ public class FriendsController {
                         dbAdaptor
                                 .considerRequest(friend,
                                         MainHandler.username, false);
+                        try {
+                            mainController.loadFriendsListScene();
+                        } catch (IOException err) {
+                            err.getMessage();
+                        }
                     }
                 });
 
@@ -307,4 +321,10 @@ public class FriendsController {
         searchBar.setText("");
 
     }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+
 }

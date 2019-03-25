@@ -1,12 +1,10 @@
 package gui;
 
-import animatefx.animation.BounceIn;
-import animatefx.animation.GlowBackground;
-import animatefx.animation.GlowText;
-import animatefx.animation.Pulse;
+import animatefx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -31,7 +29,10 @@ import java.io.IOException;
 /**
  * Controller for the personal info scene.
  */
-public class personalInfoController{
+public class personalInfoController {
+
+
+    private MainController mainController;
 
     /**
      * Bound to the root.
@@ -126,6 +127,10 @@ public class personalInfoController{
         setupDragAndDropTarget(avatarImageBox);
     }
 
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
     /**
      * Sets up the avatar of the user.
      */
@@ -181,7 +186,7 @@ public class personalInfoController{
                     }
                     avatarImageView.setImage(db.getImage());
                     helperPopOver.hide();
-//                    new BounceIn(avatarImageBox).play();
+                    new BounceIn(avatarImageBox).play();
                     event.setDropCompleted(true);
                 } else {
                     event.setDropCompleted(false);
@@ -263,16 +268,22 @@ public class personalInfoController{
     protected void submitChanges(final ActionEvent event) {
         System.out.println(avatarUrl);
         dbAdaptor.updateAvatarUrl(MainHandler.username,avatarUrl);
+        new ZoomIn(avatarImageBox).play();
     }
 
     @FXML
-    protected void changePass(final ActionEvent event){
+    protected void changePass(final ActionEvent event) {
 
         String oldPassStr = oldPass.getText().trim();
         String newPassStr = newPass.getText().trim();
         String confirmNewPassStr = confirmNewPass
                 .getText().trim();
 
+        try {
+            this.mainController.loadPersonalInfoScene();
+        } catch (IOException err){
+            err.getMessage();
+        }
         if (!newPassStr.equals(confirmNewPassStr)) {
             alertBuilder
                     .formEntryWarning("password fields",
