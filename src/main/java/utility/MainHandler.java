@@ -118,6 +118,18 @@ public class MainHandler {
             return -1;
         }
     }
+    public int updateSolar(final int amount) {
+        try {
+            return Integer.parseInt(httpHandler
+
+                    .reqPost("/points",
+                            new UpdateRequest(username, 5, amount))
+                    .readLine());
+        } catch (IOException | ServerStatusException e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }
 
     /**
      * Gets the total score.

@@ -109,12 +109,13 @@ public class PointsController {
             amount = jsonCon(HttpRequestHandler.resLog(car,null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
-        }else if (activityID == 4) {
-            //public transport
+        }else if (activityID == 5) {
+            //solar panels
 
             BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/electricity_uses.json?" +
-                            "energy=" + amount * 60
+                    HTTP_HANDLER_API.reqGet("/electricity_uses.json?"
+                            + "energy=" + (double)amount/3.6
+                            +"&timeframe=2019-01-01%2F2019-02-01"
                             + BP_KEY);
 
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));

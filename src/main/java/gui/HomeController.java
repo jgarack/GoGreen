@@ -55,7 +55,10 @@ public class HomeController {
     /**
      *Data about the amount of bus rides taken.
      */
-    private int busUsage = 0;
+    private int busUsage = 0;/**
+     *Data about the amount of bus rides taken.
+     */
+    private int solarUsage = 0;
     /**
      * Data about the points of the user.
      */
@@ -77,10 +80,15 @@ public class HomeController {
     @FXML
     private TextField localProduce;
     /**
-     * bount to the text field linked with using public transport.
+     * Bound to the text field linked with using public transport.
      */
     @FXML
     private TextField busCar;
+    /**
+     * Bound to the text field linked with installing solar panel.
+     */
+    @FXML
+    private TextField solarPanel;
 
     /**
      * Bound to the label about the vegetarian meals
@@ -284,6 +292,34 @@ public class HomeController {
             alert();
 
             this.busCar.setText("");
+
+        } else {
+            ALERT_BUILDER
+                    .formEntryWarning(localProduce.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
+        }
+
+    }/**
+     * Linked to the button to increase
+     * the amount of KWH per month.
+     * @param event The event fired
+     *              upon clicking the button
+     */
+    @FXML
+    protected void increaseSolar(final ActionEvent event) {
+
+        if (MainHandler.tryParseInt(solarPanel.getText())) {
+            Feature solar = new Feature(Integer.parseInt(solarPanel.getText())
+                    ,5);
+            System.out.println(solarPanel.toString());
+            this.solarUsage = handler
+                    .updateSolar(Integer.parseInt(solarPanel.getText()));
+
+            setPointsEarned();
+
+            alert();
+
+            this.solarPanel.setText("");
 
         } else {
             ALERT_BUILDER
