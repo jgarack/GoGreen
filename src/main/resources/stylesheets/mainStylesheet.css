@@ -178,3 +178,8 @@
 #oldPasswordLabel {
     -fx-padding: 30 0 0 0;
 }
+#dropHereLabel{
+    -fx-font-size: 18;
+    -fx-padding: 10;
+    -fx-text-fill: #a32243;
+}

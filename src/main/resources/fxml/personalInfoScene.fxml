@@ -18,14 +18,14 @@
 
     <Label text="Your Profile" alignment="CENTER" fx:id="editProfileTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
-        <HBox GridPane.rowIndex="1" fx:id="avatarImageBox" maxWidth="120" maxHeight="120" GridPane.halignment="CENTER">
-            <ImageView fx:id="avatarImageView">
-                <Image url="@/icons/avatar1.png" preserveRatio="true"/>
-             </ImageView>
+    <StackPane GridPane.rowIndex="1">
+        <HBox fx:id="avatarImageBox" maxWidth="120" maxHeight="120" GridPane.halignment="CENTER">
+            <ImageView fx:id="avatarImageView"/>
         </HBox>
-        <Button GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" fx:id="selectAvatar" text="Select Avatar" onAction="#changeAvatar"/>
-        <Button GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" onAction="#submitChanges" text="Submit avatar changes"/>
-        <Label fx:id="infoChangeAvatarLabel" GridPane.rowIndex="2" GridPane.halignment="RIGHT"/>
+    </StackPane>
+    <Button GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" fx:id="selectAvatar" text="Select Avatar" onAction="#changeAvatar"/>
+    <Button GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" onAction="#submitChanges" text="Submit avatar changes"/>
+    <Label fx:id="infoChangeAvatarLabel" GridPane.rowIndex="2" GridPane.halignment="RIGHT"/>
 
 
     <Label fx:id="oldPasswordLabel" text="Old Password" GridPane.halignment="CENTER" GridPane.valignment="CENTER" GridPane.rowIndex="4"/>

@@ -3,10 +3,12 @@ package gui;
 import animatefx.animation.BounceIn;
 import animatefx.animation.GlowBackground;
 import animatefx.animation.GlowText;
+import animatefx.animation.Pulse;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -16,16 +18,20 @@ import javafx.scene.input.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
+import sun.applet.Main;
 import utility.DbAdaptor;
 import utility.MainHandler;
+
+import java.io.IOException;
 
 
 /**
  * Controller for the personal info scene.
  */
-public class personalInfoController {
+public class personalInfoController{
 
     /**
      * Bound to the root.
@@ -103,6 +109,9 @@ public class personalInfoController {
 
     private DbAdaptor dbAdaptor = new DbAdaptor();
 
+    private Image img = new Image(dbAdaptor.getUser(MainHandler.username).getAvatarUrl());
+
+
 
     /**
      * Executed upon initialization.
@@ -122,10 +131,13 @@ public class personalInfoController {
      */
     private void setUpAvatar() {
         System.out.println(dbAdaptor.getUser(MainHandler.username).getAvatarUrl());
-        avatarImageView.setImage(new Image(dbAdaptor.getUser(MainHandler.username).getAvatarUrl()));
+        avatarImageBox.setMaxSize(120,120);
+        avatarImageBox.setPrefSize(120,120);
+        avatarImageBox.setMinSize(120,120);
         avatarImageView.setPreserveRatio(false);
         avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
         avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
+        avatarImageView.setImage(img);
     }
 
     /**
@@ -140,9 +152,11 @@ public class personalInfoController {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     Label label = new Label("Drop here");
+                    label.setId("dropHereLabel");
                     helperPopOver = new PopOver(label);
+                    helperPopOver.setCornerRadius(2);
                     helperPopOver.show(avatarImageBox);
-                    new GlowText(label,Color.RED,Color.GREEN).setSpeed(3).play();
+//                    new Pulse(label).play();
                 }
             }
         });
@@ -162,16 +176,12 @@ public class personalInfoController {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
-                    System.out.println(db.getUrl());
-                    if(db.hasUrl()) {
+                    if (db.hasUrl()) {
                         avatarUrl = db.getUrl();
                     }
-                    avatarImageView.setPreserveRatio(false);
-                    avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
-                    avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
                     avatarImageView.setImage(db.getImage());
-                    helperPopOver.hide(Duration.ONE);
-                    new BounceIn(avatarImageBox).play();
+                    helperPopOver.hide();
+//                    new BounceIn(avatarImageBox).play();
                     event.setDropCompleted(true);
                 } else {
                     event.setDropCompleted(false);

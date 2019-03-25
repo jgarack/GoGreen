@@ -59,7 +59,7 @@ public class MainController {
      * Bound to the friends list page.
      */
     @FXML
-    private Button friendsListBtn;
+    public Button friendsListBtn;
 
     /**
      * Updates the Greeting in top right corner.
@@ -166,4 +166,7 @@ public class MainController {
         root.setCenter(newScene);
     }
 
+    public void fireAButton(){
+        friendsListBtn.fire();
+    }
 }
