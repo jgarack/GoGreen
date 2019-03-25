@@ -3,7 +3,6 @@ package gui;
 import animatefx.animation.ZoomIn;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.stage.Screen;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -2,9 +2,6 @@ package features;
 
 
 import javafx.scene.control.Alert;
-import utility.HttpRequestHandler;
-
-import java.io.BufferedReader;
 
 
 /**
@@ -13,10 +10,6 @@ import java.io.BufferedReader;
  */
 
 public class Feature {
-    /**
-     * Server Domain.
-     */
-    private final String domain = "http://localhost:8080";
     /**
      * value to be calculated.
      */
@@ -29,11 +22,17 @@ public class Feature {
      * Constructor for Feature.
      *
      * @param userValue Text field value
+     * @param choice the activity id
      */
     public Feature(final int userValue, final int choice) {
         this.value = userValue;
         this.id = choice;
     }
+
+    /**
+     * Getter for the activity id
+     * @return activity id
+     */
     public int getId() {
         return id;
     }
