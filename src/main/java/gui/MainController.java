@@ -144,6 +144,11 @@ public class MainController {
         loadScene("friendsList");
     }
 
+    @FXML
+    protected void loadAchievementsScene() throws IOException {
+        loadScene("achievements");
+    }
+
 
     /**
      * Loads a scene based on the given string.
@@ -162,7 +167,6 @@ public class MainController {
         } else if (scene.equals("friendsList")) {
             ((FriendsController)fxmlLoader.getController()).setMainController(this);
         }
-
         root.setCenter(newScene);
     }
 }
