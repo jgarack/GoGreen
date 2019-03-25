@@ -1,16 +1,13 @@
 package gui;
 
 
-import animatefx.animation.BounceInLeft;
-import animatefx.animation.Pulse;
-import animatefx.animation.SlideInRight;
+
 import animatefx.animation.ZoomInRight;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableColumn;
@@ -25,8 +22,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Screen;
-import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -34,7 +29,6 @@ import utility.DbAdaptor;
 import utility.MainHandler;
 import utility.User;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,6 +37,21 @@ import java.util.Comparator;
  * Controller for the friends page.
  */
 public class FriendsController {
+    /**
+     * Constant for spacing.
+     * {@value}
+     */
+    private static final int SPACING_VAL = 30;
+    /**
+     * Constant for width.
+     * {@value}
+     */
+    private static final int PERC_WIDTH_VAL = 35;
+    /**
+     * Constant for hgap.
+     * {@value}
+     */
+    private static final int HGAP_VAL = 160;
 
     /**
      * Bound to the vertical box with added friends.
@@ -93,7 +102,8 @@ public class FriendsController {
     public void initialize() {
         pendingRequests = (ArrayList<String>) dbAdaptor
                 .getRequest(MainHandler.username);
-        friends = (ArrayList<String>) dbAdaptor.getFriends(MainHandler.username);
+        friends = (ArrayList<String>) dbAdaptor
+                .getFriends(MainHandler.username);
 
         informationBuilder
                 .addInformationIconToSearchBox(searchInfoLabel,
@@ -149,16 +159,16 @@ public class FriendsController {
 
                 currFriend.getChildren().addAll(sender, acceptBtn, declineBtn);
                 currFriend.setAlignment(Pos.CENTER);
-                currFriend.setSpacing(30);
+                currFriend.setSpacing(SPACING_VAL);
 
                 listOfPendingReq.getItems().add(currFriend);
             }
             ColumnConstraints columnConstraints = new ColumnConstraints();
-            columnConstraints.setPercentWidth(35);
+            columnConstraints.setPercentWidth(PERC_WIDTH_VAL);
             columnConstraints.setHalignment(HPos.CENTER);
             friendsPane.getColumnConstraints().add(columnConstraints);
             friendsPane.getColumnConstraints().add(columnConstraints);
-            friendsPane.setHgap(160);
+            friendsPane.setHgap(HGAP_VAL);
             friendsPane.add(pendingReqTitle, 0, 0);
             friendsPane.add(listOfPendingReq, 0, 2);
         }
@@ -202,18 +212,20 @@ public class FriendsController {
         if (!friends.isEmpty()) {
 
             for (String friend : friends) {
-                friendsList.add(new User(friend, dbAdaptor.getTotalScore(friend)));
+                friendsList.add(new User(friend,
+                        dbAdaptor.getTotalScore(friend)));
             }
         }
         Collections.sort(friendsList, new Comparator<User>() {
             @Override
-            public int compare(User o1, User o2) {
+            public int compare(final User o1, final User o2) {
                 if (o1.getTotalScore() < o2.getTotalScore()) {
                     return 1;
                 } else if (o1.getTotalScore() > o2.getTotalScore()) {
                     return -1;
                 } else {
-                    return o1.getUsername().compareToIgnoreCase(o2.getUsername());
+                    return o1.getUsername()
+                            .compareToIgnoreCase(o2.getUsername());
                 }
             }
         });
@@ -224,16 +236,21 @@ public class FriendsController {
 
     }
 
-    private void attachRemoveFriendPopOver(TableRow<User> row) {
+    /**\
+     * Shows a button for deleting a fiend.
+     * @param row the row on which the friend is displayed
+     */
+    private void attachRemoveFriendPopOver(final TableRow<User> row) {
         Button addFriendBtn = new Button();
         addFriendBtn.setText("Remove friend");
         addFriendBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
-                String recipient = row.getTableView().getItems().get(0).getUsername();
-                dbAdaptor.considerRequest(sender, recipient,false);
-                dbAdaptor.considerRequest(recipient,sender,false);
+                String recipient = row.getTableView().getItems().get(0)
+                        .getUsername();
+                dbAdaptor.considerRequest(sender, recipient, false);
+                dbAdaptor.considerRequest(recipient, sender, false);
             }
         });
         VBox addFriendBox = new VBox();
@@ -247,7 +264,7 @@ public class FriendsController {
      *
      * @param row the row where the pop over is attached
      */
-    private void attachAddFriendPopOver(TableRow<User> row) {
+    private void attachAddFriendPopOver(final TableRow<User> row) {
 
         Button addFriendBtn = new Button();
         addFriendBtn.setText("Add friend");
@@ -255,7 +272,8 @@ public class FriendsController {
             @Override
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
-                String recipient = row.getTableView().getItems().get(0).getUsername();
+                String recipient = row.getTableView().getItems().get(0)
+                        .getUsername();
                 dbAdaptor.sendFriendReq(sender, recipient);
             }
         });

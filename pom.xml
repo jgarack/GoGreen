@@ -7,8 +7,10 @@
     <groupId>OOPP98</groupId>
     <artifactId>OOP-Project</artifactId>
     <version>0.1-SNAPSHOT</version>
-
-    <packaging>jar</packaging>
+    <modules>
+        <module>server</module>
+    </modules>
+    <packaging>pom</packaging>
     <name>Project GoGreen</name>
 
     <parent>
