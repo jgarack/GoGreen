@@ -114,9 +114,18 @@ public class PointsController {
             amount = jsonCon(HttpRequestHandler.resLog(car,null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
+        }else if (activityID == 4) {
+            //public transport
+
+            BufferedReader httpBody =
+                    HTTP_HANDLER_API.reqGet("/electricity_uses.json?" +
+                            "energy=" + amount * 60
+                            + BP_KEY);
+
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
         }
 
-        if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
+            if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity(DB_ADAPTOR
