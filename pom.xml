@@ -8,7 +8,6 @@
     <artifactId>OOP-Project</artifactId>
     <version>0.1-SNAPSHOT</version>
     <modules>
-        <module>client</module>
         <module>server</module>
     </modules>
     <packaging>pom</packaging>
