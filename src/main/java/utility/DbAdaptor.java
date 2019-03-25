@@ -705,4 +705,41 @@ public class DbAdaptor {
     }
 
 
+    //Achievements
+
+    public void addAchievement (int id, String username){
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement("INSERT INTO achieved(username, achievements) VALUES (?,?)");
+            st.setString(1, username);
+            st.setInt(2, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    public List<Achievement> getAchievements(String username) {
+        connect();
+        List<Achievement> temp = new ArrayList<>();
+        try {
+            PreparedStatement st = conn.prepareStatement("SELECT achievements.name FROM achieved, achievements WHERE achieved.achievements = achievements.id AND achieved.username = ?");
+            st.setString(1, username);
+            rs = st.executeQuery();
+
+            Achievement ach;
+            while (rs.next()) {
+                ach = new Achievement(rs.getString(1).replace("_", "  "), true);
+                temp.add(ach);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return temp;
+    }
+
 }
