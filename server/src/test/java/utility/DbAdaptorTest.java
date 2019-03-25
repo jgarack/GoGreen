@@ -127,11 +127,13 @@ class DbAdaptorTest {
         db.sendFriendReq(random, random2);
 
 
-        List<String> list1 = db.getRequest(random);
+        List<String> list1 = db.getRequest(random2);
 
         List<String> list2 = new ArrayList<>();
+        System.out.println(list1.toString());
+        System.out.println(list2.toString());
 
-        list2.add(random2);
+        list2.add(random);
         assertEquals(list1, list2);
 
         db.deleteByUsername(random);
