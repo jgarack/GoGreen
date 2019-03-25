@@ -10,9 +10,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 /**
@@ -667,6 +668,39 @@ public class DbAdaptor {
             disconnect();
         }
 
+        return null;
+    }
+
+    public void updateDate(String username, Date date){
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement("UPDATE users SET date_last_active = ? WHERE username = ?");
+            st.setDate(1, date);
+            st.setString(2, username);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+    }
+
+    public Date getDate(String username) {
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement("SELECT date_last_active FROM users WHERE username = ?");
+            st.setString(1, username);
+            rs = st.executeQuery();
+            if(rs.next())
+                return rs.getDate(1);
+        } catch(SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            disconnect();
+        }
         return null;
     }
 
