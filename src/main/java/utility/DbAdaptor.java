@@ -6,11 +6,11 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +58,8 @@ public class DbAdaptor {
     private enum FRIEND_STATUS {
         PENDING,
         ACCEPTED,
-        DECLINED}
+        DECLINED
+    }
 
 
     /**
@@ -230,7 +231,12 @@ public class DbAdaptor {
         }
     }
 
-    public void updateAvatarUrl(final String name, final String avatarUrl){
+    /**
+     * updates avatars url in database.
+     * @param name of the user
+     * @param avatarUrl url of the picture.
+     */
+    public void updateAvatarUrl(final String name, final String avatarUrl) {
         try {
             connect();
             PreparedStatement  st = conn
@@ -529,7 +535,7 @@ public class DbAdaptor {
      * @param toUser user to whom you want to send the invitation
      */
     public void sendFriendReq(final String fromUser, final String toUser) {
-        if(checkIfInDb(fromUser,toUser)){
+        if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
                 PreparedStatement st = conn.prepareStatement(
@@ -551,19 +557,20 @@ public class DbAdaptor {
     }
 
     /**
-     * Checks if tuple is in the db
-     * @param from_us sender
-     * @param to_us recipient
+     * Checks if tuple is in the db.
+     * @param fromUs sender
+     * @param toUs recipient
      * @return true iff the tuple is in the table.
      */
-    public boolean checkIfInDb(final String from_us, final String to_us) {
+    public boolean checkIfInDb(final String fromUs, final String toUs) {
         boolean check = false;
         connect();
         try {
 
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM friend_request WHERE from_user = ? AND to_user = ?");
-            st.setString(2, from_us);
-            st.setString(1, to_us);
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM friend_request "
+                    + "WHERE from_user = ? AND to_user = ?");
+            st.setString(2, fromUs);
+            st.setString(1, toUs);
             rs = st.executeQuery();
             if (rs.next() == false) {
                 check = true;
@@ -589,10 +596,13 @@ public class DbAdaptor {
         try {
 
             PreparedStatement st = conn.prepareStatement("UPDATE friend_request "
-                    + "SET friend_status = ?::\"friend_status\" WHERE from_user = ? AND to_user = ?");
+                    + "SET friend_status = ?::\"friend_status\" WHERE from_user = ? "
+                    + "AND to_user = ?");
             if (accepted) {
                 st.setString(1,FRIEND_STATUS.ACCEPTED.name()) ;
-            } else st.setString(1,FRIEND_STATUS.DECLINED.name());
+            } else {
+                st.setString(1, FRIEND_STATUS.DECLINED.name());
+            }
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
@@ -645,7 +655,8 @@ public class DbAdaptor {
         try {
             List<String> listOfPending = new ArrayList<>();
             PreparedStatement st = conn.prepareStatement("SELECT to_user FROM "
-                    + "friend_request WHERE from_user = ? AND friend_status = ?::\"friend_status\"");
+                    + "friend_request WHERE from_user = ? AND friend_status = ?"
+                    + "::\"friend_status\"");
             st.setString(1, username);
             st.setString(2,FRIEND_STATUS.ACCEPTED.name());
             rs = st.executeQuery();
@@ -671,10 +682,16 @@ public class DbAdaptor {
         return null;
     }
 
-    public void updateDate(String username, Date date){
+    /**
+     * updates the date when the user last time used the app.
+     * @param username of the user
+     * @param date to be updated.
+     */
+    public void updateDate(String username, Date date) {
         connect();
         try {
-            PreparedStatement st = conn.prepareStatement("UPDATE users SET date_last_active = ? WHERE username = ?");
+            PreparedStatement st = conn.prepareStatement("UPDATE users"
+                    + " SET date_last_active = ? WHERE username = ?");
             st.setDate(1, date);
             st.setString(2, username);
             st.executeUpdate();
@@ -687,18 +704,24 @@ public class DbAdaptor {
 
     }
 
+    /**
+     * returns date when the app was last time launched.
+     * @param username of the user
+     * @return date (java.sql.Date)
+     */
     public Date getDate(String username) {
         connect();
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT date_last_active FROM users WHERE username = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT date_last_active "
+                    + "FROM users WHERE username = ?");
             st.setString(1, username);
             rs = st.executeQuery();
-            if(rs.next())
+            if (rs.next()) {
                 return rs.getDate(1);
-        } catch(SQLException e) {
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             disconnect();
         }
         return null;
@@ -707,10 +730,16 @@ public class DbAdaptor {
 
     //Achievements
 
-    public void addAchievement (int id, String username){
+    /**
+     * adds achievements to user.
+     * @param id of the achievement
+     * @param username of the user
+     */
+    public void addAchievement(int id, String username) {
         connect();
         try {
-            PreparedStatement st = conn.prepareStatement("INSERT INTO achieved(username, achievements) VALUES (?,?)");
+            PreparedStatement st = conn.prepareStatement("INSERT INTO "
+                    + "achieved(username, achievements) VALUES (?,?)");
             st.setString(1, username);
             st.setInt(2, id);
             st.executeUpdate();
@@ -721,11 +750,19 @@ public class DbAdaptor {
         }
     }
 
+    /**
+     * returns list of achievements of the user.
+     * @param username of the user
+     * @return List with Achievements
+     */
     public List<Achievement> getAchievements(String username) {
         connect();
         List<Achievement> temp = new ArrayList<>();
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT achievements.name FROM achieved, achievements WHERE achieved.achievements = achievements.id AND achieved.username = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT achievements.name "
+                    + "FROM achieved, achievements "
+                    + "WHERE achieved.achievements = achievements.id "
+                    + "AND achieved.username = ?");
             st.setString(1, username);
             rs = st.executeQuery();
 
