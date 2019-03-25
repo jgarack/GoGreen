@@ -3,7 +3,6 @@ package gui;
 import animatefx.animation.ZoomIn;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.stage.Screen;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -83,7 +82,6 @@ public class DemoApplication extends Application {
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(DemoApplication.class);
-
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
 
@@ -112,7 +110,12 @@ public class DemoApplication extends Application {
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
         primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(event -> {
+            springContext.close();
+            System.out.println("Terminated");
+        });
         primaryStage.show();
+
 
     }
 
