@@ -750,6 +750,29 @@ public class DbAdaptor {
         }
     }
 
+    public List<Achievement> getAllAchievements() {
+        connect();
+        List<Achievement> temp = new ArrayList<>();
+        try {
+            String sql = "SELECT name,description "
+                    + "FROM achievements ORDER BY id";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            Achievement currAch;
+            while (rs.next()) {
+                currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
+                temp.add(currAch);
+            }
+
+            st.close();
+        } catch (SQLException e) {
+            alertBuilder.displayException(e);
+        } finally {
+            disconnect();
+        }
+        return temp;
+    }
+
     /**
      * returns list of achievements of the user.
      * @param username of the user
@@ -768,7 +791,7 @@ public class DbAdaptor {
 
             Achievement ach;
             while (rs.next()) {
-                ach = new Achievement(rs.getString(1).replace("_", "  "), true);
+                ach = new Achievement(rs.getString(1).replace("_", "  "), true,rs.getString(2));
                 temp.add(ach);
             }
         } catch (SQLException e) {

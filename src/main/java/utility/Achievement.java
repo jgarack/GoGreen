@@ -14,14 +14,19 @@ public class Achievement {
      */
     private boolean achieved;
 
+    private String description;
+
+
+
     /**
      * Constructs an achievment.
      * @param nameAcheived name of the achievement
      * @param isAchieved state of achievement
      */
-    public Achievement(String nameAcheived, boolean isAchieved) {
+    public Achievement(String nameAcheived, boolean isAchieved, String descr) {
         this.name = nameAcheived;
         this.achieved = isAchieved;
+        this.description = descr;
     }
 
     /**
@@ -55,4 +60,21 @@ public class Achievement {
     public void setName(String name) {
         this.name = name;
     }
+
+    /**
+     * Returns the description of an achievement.
+     * @return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * Sets a new description.
+     * @param description to be set.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

@@ -6,9 +6,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.net.URL?>
 <GridPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.AchievementsController"
-            prefHeight="400.0" prefWidth="600.0">
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="gui.AchievementsController"
+          prefHeight="400.0" prefWidth="600.0"
+          hgap="100" vgap="50" fx:id="grid"
+          alignment="CENTER">
 
+    <stylesheets>
+        <URL value="@/stylesheets/achievements.css"/>
+    </stylesheets>
 </GridPane>

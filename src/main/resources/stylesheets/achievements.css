@@ -1,0 +1,16 @@
+.achTitle{
+    -fx-font-weight: bold;
+    -fx-font-size: 30;
+    -fx-text-alignment: center;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
+}
+.achDescription{
+    -fx-font-style: italic;
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-background-color: lightgreen;
+    -fx-fill-width: true;
+    -fx-fill-height: true;
+}
