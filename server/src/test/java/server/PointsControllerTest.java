@@ -28,8 +28,7 @@ import static server.PointsController.jsonCon;
 
 public class PointsControllerTest extends AbstractTest {
     private static final String JSON =
-            "{\"decisions\":{\"carbon\":{\"description\":"
-        + "{\"object\":{\"value\":1}}}}}";
+            "{\"decisions\":{\"carbon\":{\"object\":{\"value\":1}}}}";
     private static final String KEY =
             "&key=5a98005a-09ff-4823-8d5b-96a3bbf3d7fd";
     private static final String[] httpmockcalls = {

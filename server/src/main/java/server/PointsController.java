@@ -54,6 +54,7 @@ public class PointsController {
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
             @RequestBody final UpdateRequest request)throws Exception {
+        System.out.println(request.getUsername()+ request.getActivityID() + request.getAmount());
         String username = request.getUsername();
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
@@ -74,12 +75,6 @@ public class PointsController {
                             +"&diet_class=vegetarian"
                             +"&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
-            System.out.println("/diets."
-                    + "json?size="
-                    + amount
-                    +"&diet_class=vegetarian"
-                    +"&timeframe=2019-01-01%2F2019-01-02"
-                    + BP_KEY);
             amount = (jsonCon(HttpRequestHandler.resLog(httpBody,null))
         - jsonCon(HttpRequestHandler.resLog(veg,null)));
 
@@ -151,8 +146,7 @@ public class PointsController {
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
         Double ret = (em.get("decisions").
-                get("carbon").
-                get("description").get("object").get("value").asDouble()*1000);
+                get("carbon").get("object").get("value").asDouble()*1000);
                 //multiply by 1000 to convert to grams
         return ret.intValue();
     }
