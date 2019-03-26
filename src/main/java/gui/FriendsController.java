@@ -9,22 +9,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -142,19 +133,16 @@ public class FriendsController {
                 constructFriendRow(currUser);
             }
         } else {
-            HBox noFriendsHBox = new HBox();
-            Label noFriendsLabel = new Label("You have no friends!\nSearch some and add them to show them here.");
-            noFriendsHBox.getChildren().add(noFriendsLabel);
-            friendsListView.getItems().add(noFriendsHBox);
+            friendsListView.setPlaceholder(new Label("Search for a friend and \nadd them to list them here."));
         }
     }
 
-    private void constructFriendRow(User currUser){
+    private void constructFriendRow(User currUser) {
         HBox currUserBox = new HBox();
         currUserBox.getStyleClass().add("userBox");
-        currUserBox.setSpacing(50);
+        currUserBox.setSpacing(100);
         currUserBox.setAlignment(Pos.CENTER);
-        currUserBox.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(currUserBox, Priority.ALWAYS);
 
 
         //Designing avatar box.
@@ -176,7 +164,6 @@ public class FriendsController {
         // Designing username box.
         VBox usernameBox = new VBox();
         Label usernameLbl = new Label(currUser.getUsername());
-        usernameBox.setMaxWidth(Double.MAX_VALUE);
         usernameBox.getChildren().add(usernameLbl);
         usernameBox.setAlignment(Pos.CENTER);
         usernameBox.setFillWidth(true);
@@ -202,6 +189,64 @@ public class FriendsController {
         });
         friendsListView.getItems().add(currUserBox);
     }
+//    private void constructTableFriends() {
+//
+//
+//        TableColumn usernameCol = new TableColumn("Username");
+//        usernameCol
+//                .setCellValueFactory(new PropertyValueFactory<>("username"));
+//        TableColumn totalScoreCol = new TableColumn("Score");
+//        totalScoreCol
+//                .setCellValueFactory(new PropertyValueFactory<>("totalScore"));
+//        friendsTable
+//                .getColumns()
+//                .addAll(usernameCol, totalScoreCol);
+//
+//        friendsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//
+//
+//        friendsTable.setRowFactory(tv -> {
+//            TableRow<User> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getButton() == MouseButton.SECONDARY) {
+//                    if (!friends.contains(row.getItem().getUsername())) {
+//                        attachAddFriendPopOver(row);
+//                    } else {
+//                        attachRemoveFriendPopOver(row);
+//                    }
+//                }
+//            });
+//            return row;
+//        });
+//
+//        ArrayList<User> friendsList = new ArrayList<>();
+//
+//        if (!friends.isEmpty()) {
+//
+//            for (String friend : friends) {
+//                friendsList.add(new User(friend,
+//                        dbAdaptor.getTotalScore(friend)));
+//            }
+//        }
+//        Collections.sort(friendsList, new Comparator<User>() {
+//            @Override
+//            public int compare(final User o1, final User o2) {
+//                if (o1.getTotalScore() < o2.getTotalScore()) {
+//                    return 1;
+//                } else if (o1.getTotalScore() > o2.getTotalScore()) {
+//                    return -1;
+//                } else {
+//                    return o1.getUsername()
+//                            .compareToIgnoreCase(o2.getUsername());
+//                }
+//            }
+//        });
+//
+//        friendsTable.getItems().addAll(friendsList);
+//        new ZoomInRight(friendsTable).play();
+//
+//
+//    }
     /**
      * Constructs the list view
      * with pending requests.
@@ -265,7 +310,6 @@ public class FriendsController {
             ColumnConstraints columnConstraints = new ColumnConstraints();
             columnConstraints.setPercentWidth(PERC_WIDTH_VAL);
             columnConstraints.setHalignment(HPos.CENTER);
-            friendsPane.getColumnConstraints().add(columnConstraints);
             friendsPane.getColumnConstraints().add(columnConstraints);
             friendsPane.setHgap(HGAP_VAL);
             friendsPane.add(pendingReqTitle, 0, 0);

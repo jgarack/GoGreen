@@ -536,7 +536,7 @@ public class DbAdaptor {
      */
     public void sendFriendReq(final String fromUser, final String toUser) {
 
-        if (!checkIfInDb(fromUser,toUser)) {
+        if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
                 PreparedStatement st = conn.prepareStatement(
