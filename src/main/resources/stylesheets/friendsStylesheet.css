@@ -6,10 +6,10 @@
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
     -fx-padding: 30, 0, 30, 0;
 }
-#friendsListView {
+#friendsTable {
     -fx-background-color: transparent;
 }
-#friendsListView .list-cell {
+#friendsTable .table-row-cell {
      -fx-cell-size: 60px;
     -fx-background-color: SKYBLUE;
     -fx-opacity: 0.7;

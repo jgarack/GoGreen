@@ -10,8 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
+import org.omg.PortableInterceptor.INACTIVE;
 import utility.Achievement;
 import utility.DbAdaptor;
+import utility.MainHandler;
 
 import java.util.List;
 
@@ -56,6 +58,11 @@ public class AchievementsController {
            achievementCounter++;
 
         }
+        List<Integer> achieved = dbAdaptor.getAchievements(MainHandler.username);
+        for (Integer id : achieved) {
+            String currId = "achievement" + id;
+            
+        }
 
 
     }
@@ -66,10 +73,11 @@ public class AchievementsController {
      * @param achievementCounter keeps track of the achievements.
      */
     private void createVBoxAchievement(Achievement achievement, int achievementCounter) {
-        if (achievementCounter < 4) {
+        if (achievementCounter < 12) {
             VBox currVBox = new VBox();
             ImageView currImgView = new ImageView();
             currImgView.setImage(new Image("/icons/achievement" + (achievementCounter + 1) + ".png"));
+            currImgView.setId("achievement" + achievementCounter);
             Label currTitle = new Label(achievement.getName());
             Label currDescription = new Label(achievement.getDescription());
             currTitle.getStyleClass().add("achTitle");
