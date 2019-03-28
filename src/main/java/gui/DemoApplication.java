@@ -34,19 +34,7 @@ public class DemoApplication extends Application {
      * The number 600.
      */
     private static final int SIXHUNDRED = 600;
-    //A list of files used in this class.
-    /**
-     * Login page fxml file.
-     * {@value}
-     */
 
-    //private final String loginFXML = "src/main/java/gui/loginView.fxml";
-
-    /**
-     * Index page css file.
-     * {@value}
-     */
-    private final String indexCSS = "src/main/java/gui/loginStylesheet.css";
 
     /**
      * The width dimension of the application window: {@value}.
