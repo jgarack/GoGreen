@@ -187,7 +187,7 @@ public class HomeController {
 
 
         } catch (ServerStatusException | IOException e) {
-            ALERT_BUILDER.displayException(e);
+            e.printStackTrace();
         }
     }
 
