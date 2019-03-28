@@ -20,7 +20,8 @@
         <Label fx:id="searchInfoLabel"/>
         <Button fx:id="submitSearchBtn" text="🔍 Search" onAction="#submitSearch" GridPane.columnIndex="1" defaultButton="true"/>
     </HBox>
-    <ListView fx:id="friendsListView" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    <!--<ListView fx:id="friendsListView" GridPane.rowIndex="2" GridPane.columnIndex="1"/>-->
+    <TableView fx:id="friendsTable" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
     <stylesheets>
         <URL value="@../stylesheets/friendsStylesheet.css"/>
     </stylesheets>
