@@ -538,6 +538,8 @@ public class DbAdaptor {
         if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
+                System.out.println("from: "+ fromUser + "  to:" + toUser);
+
                 PreparedStatement st = conn.prepareStatement(
                         "INSERT INTO friend_request(from_user, "
                              + "to_user,friend_status) VALUES (?,?, ?::friend_status)");
@@ -575,6 +577,20 @@ public class DbAdaptor {
             if (rs.next() == false) {
                 check = true;
             }
+
+            st = conn.prepareStatement("SELECT * FROM friend_request "
+                    + "WHERE from_user = ? AND to_user = ? AND friend_status = ?::friend_status");
+            st.setString(2, fromUs);
+            st.setString(1, toUs);
+            st.setString(3,FRIEND_STATUS.DECLINED.name());
+            rs = st.executeQuery();
+            System.out.println("...");
+            if (rs.next() == true) {
+                System.out.println("...");
+
+                check = true;
+            }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -801,5 +817,7 @@ public class DbAdaptor {
         }
         return temp;
     }
+
+
 
 }
