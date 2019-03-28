@@ -800,21 +800,21 @@ public class DbAdaptor {
      * @param username of the user
      * @return List with Achievements
      */
-    public List<Achievement> getAchievements(String username) {
+    public List<Integer> getAchievements(String username) {
         connect();
-        List<Achievement> temp = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT achievements.name "
-                    + "FROM achieved, achievements "
-                    + "WHERE achieved.achievements = achievements.id "
-                    + "AND achieved.username = ?");
+            PreparedStatement st = conn.prepareStatement("select achievements.id"
+                    + " from achieved,achievements "
+                    + "where achieved.achievements = achievements.id"
+                    + " and achieved.username = ?");
             st.setString(1, username);
             rs = st.executeQuery();
 
-            Achievement ach;
+            int currId;
             while (rs.next()) {
-                ach = new Achievement(rs.getString(1).replace("_", "  "), true,rs.getString(2));
-                temp.add(ach);
+                currId = rs.getInt(1);
+                temp.add(currId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
