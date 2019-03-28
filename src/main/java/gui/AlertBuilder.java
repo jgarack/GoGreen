@@ -81,4 +81,14 @@ public class AlertBuilder {
     public void showInformationNotification(final String notificationMsg) {
         formNotification(notificationMsg).showInformation();
     }
+
+
+    public void showAlert(String title, String msg){
+        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
+        statusCodeError.setTitle(title);
+        statusCodeError
+                .setContentText(msg);
+        statusCodeError.showAndWait();
+    }
+
 }

@@ -1,6 +1,7 @@
 package utility;
 
 import gui.AlertBuilder;
+import javafx.scene.control.Alert;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -116,6 +117,7 @@ public class DbAdaptor {
         try {
             conn = DriverManager.getConnection(jdbUrl, username, password);
         } catch (SQLException e) {
+            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -133,6 +135,7 @@ public class DbAdaptor {
             }
 
         } catch (SQLException e) {
+            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -247,8 +250,10 @@ public class DbAdaptor {
             st.setString(two, name);
             st.executeUpdate();
             st.close();
+            alertBuilder.showInformationNotification("You changed the avatar.");
 
         } catch (SQLException e) {
+            alertBuilder.showAlert("Avatar", "Couldn't add avatar to the database.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -286,10 +291,12 @@ public class DbAdaptor {
                 return true;
             }
 
+
             return false;
 
 
         } catch (SQLException e) {
+            alertBuilder.displayException(e);
             e.printStackTrace();
         } finally {
             disconnect();
@@ -335,6 +342,7 @@ public class DbAdaptor {
 
             return true;
         } catch (SQLException e) {
+            alertBuilder.showAlert("User already exists", "Please chose another username.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -417,6 +425,7 @@ public class DbAdaptor {
             updateTotalScore(name);
             return true;
         } catch (SQLException e) {
+
             e.printStackTrace();
             return false;
         } finally {
@@ -551,6 +560,7 @@ public class DbAdaptor {
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
+                alertBuilder.showAlert("User already added", "Check if you or your friend did not not sent a invitation already.");
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -590,6 +600,10 @@ public class DbAdaptor {
                 System.out.println("...");
 
                 check = true;
+            }
+
+            if(!check) {
+                alertBuilder.showAlert("User already added", "Check if the user did not send a invitation already.");
             }
 
 
