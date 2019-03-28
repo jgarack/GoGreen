@@ -535,6 +535,7 @@ public class DbAdaptor {
      * @param toUser user to whom you want to send the invitation
      */
     public void sendFriendReq(final String fromUser, final String toUser) {
+
         if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
@@ -622,6 +623,11 @@ public class DbAdaptor {
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
+            if (accepted) {
+                alertBuilder.showInformationNotification("Friend request accepted!");
+            } else {
+                alertBuilder.showInformationNotification("Friend request declined!\nUser is now blocked.");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
