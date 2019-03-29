@@ -52,7 +52,6 @@ public class UserTest {
         assertEquals(1100, user.getTotalScore());
     }
 
-
     /**
      * ToString method test.
      */
@@ -64,4 +63,9 @@ public class UserTest {
         assertEquals(expected, user.toString());
     }
 
+    @Test
+    void getFriendsTest() {
+        user.setUsername("username2");
+        assertEquals("username2", user.getUsername());
+    }
 }
