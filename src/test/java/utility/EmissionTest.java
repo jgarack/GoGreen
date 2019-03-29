@@ -96,6 +96,11 @@ public class EmissionTest {
         String emission1 = "28kg";
         assertNotEquals(emission,emission1);
     }
+    @Test
+    public void hashCodeTest(){
+        Emission emission = new Emission("52kg");
+        assertEquals(emission.hashCode(), 0);
+    }
 
 
 
