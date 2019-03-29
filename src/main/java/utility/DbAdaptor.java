@@ -241,16 +241,19 @@ public class DbAdaptor {
      */
     public void updateAvatarUrl(final String name, final String avatarUrl) {
         try {
-            connect();
-            PreparedStatement  st = conn
-                    .prepareStatement("UPDATE users"
-                            + " SET image = ? "
-                            + "WHERE username = ?");
-            st.setString(one, avatarUrl);
-            st.setString(two, name);
-            st.executeUpdate();
-            st.close();
-            alertBuilder.showInformationNotification("You changed the avatar.");
+            if(avatarUrl.startsWith("https://imgur.com")
+                    || avatarUrl.startsWith("/icons/avatar")) {
+                connect();
+                PreparedStatement st = conn
+                        .prepareStatement("UPDATE users"
+                                + " SET image = ? "
+                                + "WHERE username = ?");
+                st.setString(one, avatarUrl);
+                st.setString(two, name);
+                st.executeUpdate();
+                st.close();
+                alertBuilder.showInformationNotification("You changed the avatar.");
+            }
 
         } catch (SQLException e) {
             alertBuilder.showAlert("Avatar", "Couldn't add avatar to the database.");
