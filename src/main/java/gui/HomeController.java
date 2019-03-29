@@ -314,10 +314,11 @@ public class HomeController {
             System.out.println(solarPanel.toString());
             this.solarUsage = handler
                     .updateSolar(Integer.parseInt(solarPanel.getText()));
+            if (this.solarUsage != 0) {
+                setPointsEarned();
+                alert();
+            }
 
-            setPointsEarned();
-
-            alert();
 
             this.solarPanel.setText("");
 

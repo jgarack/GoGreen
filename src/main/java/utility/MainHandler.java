@@ -120,11 +120,21 @@ public class MainHandler {
     }
     public int updateSolar(final int amount) {
         try {
-            return Integer.parseInt(httpHandler
+            String res = httpHandler
 
                     .reqPost("/points",
                             new UpdateRequest(username, 5, amount))
-                    .readLine());
+                    .readLine();
+            if(res.equals("false")){
+                System.out.println(res);
+                new AlertBuilder().showInformationNotification(
+                        "You have Already "
+                                + "Performed this activity this month");
+                return 0;
+            }
+            return Integer.parseInt(res);
+
+
         } catch (IOException | ServerStatusException e) {
             new AlertBuilder().displayException(e);
             return -1;

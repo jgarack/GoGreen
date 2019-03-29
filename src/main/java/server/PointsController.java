@@ -3,13 +3,19 @@ package server;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import features.Feature;
+
+import org.apache.tomcat.jni.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import utility.DbAdaptor;
 import utility.HttpRequestHandler;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+
 
 import org.springframework.http.HttpStatus;
 
@@ -79,7 +85,7 @@ public class PointsController {
         - jsonCon(HttpRequestHandler.resLog(veg,null)));
 
         }else if (activityID == 2) {
-            //bycicle
+            //bicycle
 
             BufferedReader httpBody =
                     HTTP_HANDLER_API.reqGet("/automobile_"
@@ -89,11 +95,7 @@ public class PointsController {
 
         }else if (activityID == 3) {
             //local produce
-            BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/automobile_"
-                            + "trips.json?duration=" + amount
-                            + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
+            amount = amount * 88;
 
         }else if (activityID == 4) {
             //public transport
@@ -109,16 +111,34 @@ public class PointsController {
             amount = jsonCon(HttpRequestHandler.resLog(car,null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
-        }else if (activityID == 5) {
+        }else if (activityID == 5 ) {
             //solar panels
+            if(DB_ADAPTOR.getDate(request.getUsername())!= null) {
+                ZoneId z = ZoneId.of( "Europe/Amsterdam" );
+                LocalDate today = LocalDate.now( z );
+                java.util.Date conv = new java.util.Date(DB_ADAPTOR.getDate(
+                        request.getUsername()).getTime());
+                LocalDate lastAdded =
+                        conv.toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+                LocalDate oneMonthLater = lastAdded.plusMonths( 1 );
 
-            BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/electricity_uses.json?"
-                            + "energy=" + (double)amount/3.6
-                            +"&timeframe=2019-01-01%2F2019-02-01"
-                            + BP_KEY);
+                if (oneMonthLater.getMonthValue() > today.getMonthValue()) {
+                    System.out.println("you are here");
+                    return new ResponseEntity("false", HttpStatus.OK);
+                }
+            }else {
+                BufferedReader httpBody =
+                        HTTP_HANDLER_API.reqGet("/electricity_uses.json?"
+                                + "energy=" + (double) amount / 3.6
+                                + "&timeframe=2019-01-01%2F2019-02-01"
+                                + BP_KEY);
 
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
+                Date today = new Date(System.currentTimeMillis());
+                DB_ADAPTOR.updateDate(request.getUsername(), today);
+                amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
+            }
         }
 
             if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {

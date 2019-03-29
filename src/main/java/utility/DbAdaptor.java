@@ -692,6 +692,7 @@ public class DbAdaptor {
         try {
             PreparedStatement st = conn.prepareStatement("UPDATE users"
                     + " SET date_last_active = ? WHERE username = ?");
+            System.out.println(st.toString());
             st.setDate(1, date);
             st.setString(2, username);
             st.executeUpdate();
