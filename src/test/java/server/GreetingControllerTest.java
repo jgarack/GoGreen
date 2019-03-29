@@ -81,6 +81,7 @@ public class GreetingControllerTest extends AbstractTest {
 
     /**
      * Registers and tries to login with the registered credentials.
+     *
      * @throws Exception
      */
     @Test
@@ -106,6 +107,7 @@ public class GreetingControllerTest extends AbstractTest {
 
     /**
      * Registers a user but tries to login with different credentials.
+     *
      * @throws Exception
      */
     @Test
@@ -133,8 +135,8 @@ public class GreetingControllerTest extends AbstractTest {
     /**
      * Sends the server a login request without registering the user first.
      *
-    * @throws Exception
-    */
+     * @throws Exception
+     */
     /*@Test
     public void loginResponseTestUnauthorized() throws Exception {
         uri = "/login";
