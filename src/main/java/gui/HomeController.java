@@ -44,6 +44,18 @@ public class HomeController {
     private static final int TWO_HUNDRED_FIFTY = 250;
 
     /**
+     * Magic number 3.
+     */
+    private static final int THREE = 3;
+    /**
+     * Magic number 4.
+     */
+    private static final int FOUR = 4;
+    /**
+     * Magic number 5.
+     */
+    private static final int FIVE = 5;
+    /**
      * The builder used to build alerts for this handler.
      */
     private static final AlertBuilder ALERT_BUILDER = new AlertBuilder();
@@ -71,7 +83,8 @@ public class HomeController {
     /**
      *Data about the amount of bus rides taken.
      */
-    private int busUsage = 0;/**
+    private int busUsage = 0;
+    /**
      *Data about the amount of bus rides taken.
      */
     private int solarUsage = 0;
@@ -117,12 +130,6 @@ public class HomeController {
      */
     @FXML
     private Label bicycleUsedLabel;
-    //    /**
-    //     * Bound to the Progress bar
-    //     * indicating the progress of the user.
-    //     */
-    //    @FXML
-    //    private ProgressBar progressBarGreen;
 
     /**
      * Bound to the bicycle button.
@@ -201,7 +208,7 @@ public class HomeController {
         if (MainHandler.tryParseInt(vegMeals.getText())) {
 
 
-            Feature meal = new Feature(Integer.parseInt(vegMeals.getText()),1);
+            Feature meal = new Feature(Integer.parseInt(vegMeals.getText()), 1);
             System.out.println(meal.toString());
 
             this.vegetarianMeals = handler
@@ -227,10 +234,12 @@ public class HomeController {
     @FXML
     protected void increaseBicycleUsage(final ActionEvent event) {
         if (MainHandler.tryParseInt(bicycleUsage.getText())) {
-            Feature bike = new Feature(Integer.parseInt(bicycleUsage.getText()),2);
+            Feature bike = new Feature(Integer
+                    .parseInt(bicycleUsage.getText()), 2);
             System.out.println(bike.toString());
             this.bicycleUsed = handler
-                    .updateBike(Integer.parseInt(bicycleUsage.getText()));
+                    .updateBike(Integer
+                            .parseInt(bicycleUsage.getText()));
 
             setPointsEarned();
 
@@ -253,7 +262,8 @@ public class HomeController {
     @FXML
     protected void increaseLocalProduce(final ActionEvent event) {
         if (MainHandler.tryParseInt(localProduce.getText())) {
-            Feature local = new Feature(Integer.parseInt(localProduce.getText()),3);
+            Feature local = new Feature(Integer
+                    .parseInt(localProduce.getText()), THREE);
             System.out.println(local.toString());
             this.localUsage = handler
                     .updateLocal(Integer.parseInt(localProduce.getText()));
@@ -281,7 +291,8 @@ public class HomeController {
     protected void increaseBusUsage(final ActionEvent event) {
 
         if (MainHandler.tryParseInt(busCar.getText())) {
-            Feature bus = new Feature(Integer.parseInt(busCar.getText()),4);
+            Feature bus = new Feature(Integer
+                    .parseInt(busCar.getText()), FOUR);
             System.out.println(busCar.toString());
             this.busUsage = handler
                     .updateBus(Integer.parseInt(busCar.getText()));
@@ -310,7 +321,8 @@ public class HomeController {
     protected void increaseSolar(final ActionEvent event) {
 
         if (MainHandler.tryParseInt(solarPanel.getText())) {
-            Feature solar = new Feature(Integer.parseInt(solarPanel.getText()),5);
+            Feature solar = new Feature(Integer
+                    .parseInt(solarPanel.getText()), FIVE);
             System.out.println(solarPanel.toString());
             this.solarUsage = handler
                     .updateSolar(Integer.parseInt(solarPanel.getText()));
@@ -357,7 +369,9 @@ public class HomeController {
      * @param btn The recipient.
      * @param glyph The glyph that is appended.
      */
-    private void setFontAwesomeGlyphToBtn(final Button btn, final FontAwesome.Glyph glyph) {
+    private void
+    setFontAwesomeGlyphToBtn(final Button btn,
+                                          final FontAwesome.Glyph glyph) {
         btn.setStyle("-fx-font-family: 'FontAwesome'");
         btn
                 .setGraphic(GlyphFontRegistry

@@ -132,7 +132,9 @@ public class FriendsController {
     }
 
 
-
+    /**
+     * Construct the leaderboard as table view.
+     */
     private void constructTableFriends() {
 
 
@@ -275,7 +277,7 @@ public class FriendsController {
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
                 String recipient =
-                        ((User)row.getItem()).getUsername();
+                        ((User) row.getItem()).getUsername();
                 dbAdaptor.considerRequest(sender, recipient, false);
                 dbAdaptor.considerRequest(recipient, sender, false);
                 reloadPage();
@@ -301,7 +303,7 @@ public class FriendsController {
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
                 String recipient =
-                        ((User)row.getItem()).getUsername();
+                        ((User) row.getItem()).getUsername();
                 dbAdaptor.sendFriendReq(sender, recipient);
                 reloadPage();
             }
@@ -312,6 +314,9 @@ public class FriendsController {
         popOver.show(row);
     }
 
+    /**
+     * Used to reload the page.
+     */
     private void reloadPage() {
         try {
             mainController.loadFriendsListScene();
@@ -336,7 +341,6 @@ public class FriendsController {
                     .formEntryWarning("search bar",
                             "There is no user with this username");
         } else {
-            //TODO: add searched user.
             //friendsListView.getItems().clear();
             showSearchedFriend(searchedUser);
         }
@@ -348,7 +352,7 @@ public class FriendsController {
      * Shows searched friend.
      * @param searchedUser User Object
      */
-    private void showSearchedFriend(User searchedUser) {
+    private void showSearchedFriend(final User searchedUser) {
         friendsTable.getItems().clear();
         friendsTable.getItems()
                 .add(searchedUser);
@@ -356,10 +360,10 @@ public class FriendsController {
 
     /**
      * Sets a new main controller.
-     * @param mainController the controller to be set.
+     * @param main the controller to be set.
      */
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    public void setMainController(final MainController main) {
+        this.mainController = main;
     }
 
 

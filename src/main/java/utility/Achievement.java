@@ -14,6 +14,9 @@ public class Achievement {
      */
     private boolean achieved;
 
+    /**
+     * Description of the achievement.
+     */
     private String description;
 
 
@@ -22,8 +25,10 @@ public class Achievement {
      * Constructs an achievment.
      * @param nameAcheived name of the achievement
      * @param isAchieved state of achievement
+     * @param descr the descrption
+     *             of the achievement.
      */
-    public Achievement(String nameAcheived, boolean isAchieved, String descr) {
+    public Achievement(final String nameAcheived, final boolean isAchieved, final String descr) {
         this.name = nameAcheived;
         this.achieved = isAchieved;
         this.description = descr;
@@ -39,10 +44,10 @@ public class Achievement {
 
     /**
      * Sets achieved to the achievement.
-     * @param achieved the boolean to be set.
+     * @param isAchieved the boolean to be set.
      */
-    public void setAchieved(boolean achieved) {
-        this.achieved = achieved;
+    public void setAchieved(boolean isAchieved) {
+        this.achieved = isAchieved;
     }
 
     /**
@@ -55,10 +60,10 @@ public class Achievement {
 
     /**
      * Sets a name to the achievement.
-     * @param name the name to be set.
+     * @param achName the name to be set.
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String achName) {
+        this.name = achName;
     }
 
     /**
@@ -71,10 +76,10 @@ public class Achievement {
 
     /**
      * Sets a new description.
-     * @param description to be set.
+     * @param achDescription to be set.
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String achDescription) {
+        this.description = achDescription;
     }
 
 }

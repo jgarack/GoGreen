@@ -86,6 +86,10 @@ public class AlertBuilder {
         formNotification(notificationMsg).showInformation();
     }
 
+    /**
+     * Shows alert notification.
+     * @param notificationMsg the message to be shown.
+     */
     public void showAlertNotification(final String notificationMsg) {
         formNotification(notificationMsg).showError();
     }
@@ -95,7 +99,8 @@ public class AlertBuilder {
      * @param title of the alert
      * @param msg of the alert
      */
-    public void showAlert(String title, String msg) {
+    public void showAlert(final String title,
+                          final String msg) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
         statusCodeError.setTitle(title);
         statusCodeError
