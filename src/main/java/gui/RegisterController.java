@@ -20,6 +20,11 @@ import java.io.IOException;
  */
 public class RegisterController {
     /**
+     * Domain for the connection.
+     */
+    private static final String DOMAIN = "http://localhost:8080";
+
+    /**
      * The width of the stage.
      */
     private final int width = 800;
@@ -43,11 +48,6 @@ public class RegisterController {
      */
     @FXML
     private PasswordField confirmPass;
-
-    /**
-     * Domain for the connection.
-     */
-    private static final String DOMAIN = "http://localhost:8080";
 
     /**
      * Bound to the secret question text field.

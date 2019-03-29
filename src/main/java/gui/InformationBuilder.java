@@ -13,7 +13,7 @@ import org.controlsfx.glyphfont.GlyphFontRegistry;
 public class InformationBuilder {
     private PopOver popOver;
 
-    public InformationBuilder(){
+    public InformationBuilder() {
         this.popOver = new PopOver();
     }
 
