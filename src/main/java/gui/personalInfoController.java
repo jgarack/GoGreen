@@ -1,25 +1,24 @@
 package gui;
 
-import animatefx.animation.*;
+import animatefx.animation.BounceIn;
+import animatefx.animation.ZoomIn;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.util.Duration;
 import org.controlsfx.control.PopOver;
-import sun.applet.Main;
 import utility.DbAdaptor;
 import utility.MainHandler;
 
@@ -131,6 +130,7 @@ public class personalInfoController {
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
     /**
      * Sets up the avatar of the user.
      */
@@ -163,7 +163,7 @@ public class personalInfoController {
                     helperPopOver = new PopOver(label);
                     helperPopOver.setCornerRadius(2);
                     helperPopOver.show(avatarImageBox);
-//                    new Pulse(label).play();
+                    //new Pulse(label).play();
                 }
             }
         });
@@ -183,18 +183,21 @@ public class personalInfoController {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
-                    if (db.hasUrl() &&  db.getUrl().contains("imgur.com") &&  db.getUrl().contains("https")) {
+                    if (db.hasUrl() &&  db.getUrl().contains("imgur.com")
+                            &&  db.getUrl().contains("https")) {
 
                         avatarUrl = db.getUrl();
                         avatarImageView.setImage(db.getImage());
                         new BounceIn(avatarImageBox).play();
                         event.setDropCompleted(true);
                     } else {
-                        alertBuilder.showAlertNotification("Avatar update failed.\nTry dragging another image.");
+                        alertBuilder.showAlertNotification("Avatar update failed."
+                                + "\nTry dragging another image.");
                     }
                 } else {
                     event.setDropCompleted(false);
-                    alertBuilder.showAlertNotification("Avatar update failed.\nTry dragging another image.");
+                    alertBuilder.showAlertNotification("Avatar update failed."
+                            + "\nTry dragging another image.");
                 }
                 helperPopOver.hide();
             }
@@ -210,9 +213,12 @@ public class personalInfoController {
     public void changeAvatar(final ActionEvent event) {
         GridPane gridPane = new GridPane();
 
-        for(int i = 0 ; i < 8 ; i++) {
-            if(i<4) gridPane.add(createAvatar(i+1), i, 0);
-            else gridPane.add(createAvatar(i+1), i % 4, 1 );
+        for (int i = 0 ; i < 8 ; i++) {
+            if (i < 4) {
+                gridPane.add(createAvatar(i + 1), i, 0);
+            } else {
+                gridPane.add(createAvatar(i + 1), i % 4, 1 );
+            }
         }
         popOver = new PopOver(gridPane);
         popOver.show(selectAvatar);
@@ -222,8 +228,7 @@ public class personalInfoController {
     /**
      * Creates an avatar.
      * @param numOfAvatar the number of the avatar
-     * @return returns a button
-     * with the image of avatar.
+     * @return returns a button with the image of avatar.
      */
     private Button createAvatar(int numOfAvatar) {
         Button avatar = new Button();
@@ -231,17 +236,17 @@ public class personalInfoController {
         Image avatarImage = new Image("/icons/avatar" + numOfAvatar + ".png");
         avatarIv.setImage(avatarImage);
         avatar.setGraphic(avatarIv);
-//        avatar.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//            @Override
-//            public void handle(MouseEvent event) {
-//                Button btn = (Button) event.getSource();
-//                ImageView imageView = (ImageView) btn.getGraphic();
-//
-//                avatarImageView.setImage(imageView.getImage());
-//                popOver.hide();
-//            }
-//        });
-        avatar.setOnDragDetected(new EventHandler <MouseEvent>() {
+        //        avatar.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        //            @Override
+        //            public void handle(MouseEvent event) {
+        //                Button btn = (Button) event.getSource();
+        //                ImageView imageView = (ImageView) btn.getGraphic();
+        //
+        //                avatarImageView.setImage(imageView.getImage());
+        //                popOver.hide();
+        //            }
+        //        });
+        avatar.setOnDragDetected(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent event) {
@@ -256,7 +261,7 @@ public class personalInfoController {
                 content.putImage(sourceImage);
                 db.setContent(content);
                 avatarUrl = "/icons/avatar" + numOfAvatar + ".png";
-                System.out.println(avatarUrl+"DRAGDETECTED");
+                System.out.println(avatarUrl + "DRAGDETECTED");
                 popOver.hide();
                 event.consume();
             }
@@ -289,7 +294,7 @@ public class personalInfoController {
 
         try {
             this.mainController.loadPersonalInfoScene();
-        } catch (IOException err){
+        } catch (IOException err) {
             err.getMessage();
         }
         if (!newPassStr.equals(confirmNewPassStr)) {

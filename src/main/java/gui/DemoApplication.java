@@ -2,14 +2,15 @@ package gui;
 
 import animatefx.animation.ZoomIn;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import server.GreetingController;
@@ -65,7 +66,7 @@ public class DemoApplication extends Application {
     /**
      * Boots the spring server and loads in the fxml login page
      * Overrides the init() method in Application.
-     * @throws Exception
+     * @throws Exception .
      */
     @Override
     public void init() throws Exception {
@@ -82,7 +83,7 @@ public class DemoApplication extends Application {
     /**
      * Applies css file to stage and starts it.
      * @param primaryStage the stage to start.
-     * @throws Exception
+     * @throws Exception .
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -107,11 +108,9 @@ public class DemoApplication extends Application {
 
     }
 
-
-
     /**
      * Stops the server.
-     * @throws Exception
+     * @throws Exception .
      */
     @Override
     public void stop() {

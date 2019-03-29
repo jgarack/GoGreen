@@ -2,8 +2,8 @@ package gui;
 
 import animatefx.animation.Pulse;
 import animatefx.animation.ZoomInLeft;
-import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
@@ -84,18 +84,18 @@ public final class LoginController {
      * to main screen by setting up a new scene.
      * @param event The event fired
      * @param view The view to where the user should be redirected.
-     * when the user clicks the button from the login button.
+     *            When the user clicks the button from the login button.
      */
     private void redirectToView(final ActionEvent event, final String view) {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
-                    .getResource("/fxml/" + view + "View.fxml"));
 
             System.out.println(1);
             MainHandler.username = username.getText().trim();
             System.out.println(MainHandler.username);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass()
+                    .getResource("/fxml/" + view + "View.fxml"));
             Parent root = fxmlLoader.load();
 
 

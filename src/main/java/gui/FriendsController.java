@@ -1,21 +1,28 @@
 package gui;
 
-
-
-
 import animatefx.animation.ZoomInRight;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -184,6 +191,7 @@ public class FriendsController {
 
 
     }
+
     /**
      * Constructs the list view
      * with pending requests.
@@ -282,7 +290,7 @@ public class FriendsController {
     /**
      * Attaches add friend pop over.
      *
-     * @param box the row where the pop over is attached.
+     * @param row the row where the pop over is attached.
      */
     private void attachAddFriendPopOver(final TableRow row) {
 
@@ -305,9 +313,9 @@ public class FriendsController {
     }
 
     private void reloadPage() {
-        try{
+        try {
             mainController.loadFriendsListScene();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             alertBuilder.displayException(ex);
         }
     }
@@ -338,7 +346,7 @@ public class FriendsController {
 
     /**
      * Shows searched friend.
-     * @param searchedUser
+     * @param searchedUser User Object
      */
     private void showSearchedFriend(User searchedUser) {
         friendsTable.getItems().clear();

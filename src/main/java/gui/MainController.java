@@ -102,6 +102,7 @@ public class MainController {
             throws IOException {
         loadScene("howToPlay");
     }
+
     /**
      * Loads home screen.
      * @throws IOException when FXMLLoader cannot load properly.
@@ -153,8 +154,7 @@ public class MainController {
     /**
      * Loads a scene based on the given string.
      * @param scene The scene that needs to be loaded.
-     * @throws IOException Thrown if
-     * the FXMLLoader encounters an error
+     * @throws IOException Thrown if the FXMLLoader encounters an error
      */
     private void loadScene(final String scene)
             throws IOException {
