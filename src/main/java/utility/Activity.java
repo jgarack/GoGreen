@@ -46,6 +46,7 @@ public class Activity {
     public void setValue(final int weight) {
         this.value = weight;
     }
+
     /**Setter for id.
      *
      * @param num id of activity

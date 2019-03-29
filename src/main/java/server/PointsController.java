@@ -4,25 +4,21 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.apache.tomcat.jni.Local;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import utility.DbAdaptor;
 import utility.HttpRequestHandler;
+import utility.UpdateRequest;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Calendar;
-
-
-import org.springframework.http.HttpStatus;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import utility.UpdateRequest;
-
 
 /**
  * Class that maps points route requests made to the server.
@@ -50,7 +46,8 @@ public class PointsController {
     /**
      * DB_ADAPTOR connections/ disconnection/ authentication.
      */
-    public DbAdaptor DB_ADAPTOR = new DbAdaptor();
+    public DbAdaptor dbAdaptor = new DbAdaptor();
+
     /**
      * Mapping for post request to calculate points.
      * @param request DB update request to be calculated
@@ -60,7 +57,7 @@ public class PointsController {
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
             @RequestBody final UpdateRequest request)throws Exception {
-        System.out.println(request.getUsername()+ request.getActivityID() + request.getAmount());
+        System.out.println(request.getUsername() + request.getActivityID() + request.getAmount());
         String username = request.getUsername();
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
@@ -78,13 +75,13 @@ public class PointsController {
                     HTTP_HANDLER_API.reqGet("/diets."
                             + "json?size="
                             + amount
-                            +"&diet_class=vegetarian"
-                            +"&timeframe=2019-01-01%2F2019-01-02"
+                            + "&diet_class=vegetarian"
+                            + "&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
-            amount = (jsonCon(HttpRequestHandler.resLog(httpBody,null))
-        - jsonCon(HttpRequestHandler.resLog(veg,null)));
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null))
+                - jsonCon(HttpRequestHandler.resLog(veg,null));
 
-        }else if (activityID == 2) {
+        } else if (activityID == 2) {
             //bicycle
 
             BufferedReader httpBody =
@@ -93,11 +90,11 @@ public class PointsController {
                             + BP_KEY);
             amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
-        }else if (activityID == 3) {
+        } else if (activityID == 3) {
             //local produce
             amount = amount * 88;
 
-        }else if (activityID == 4) {
+        } else if (activityID == 4) {
             //public transport
 
             BufferedReader httpBody =
@@ -111,12 +108,12 @@ public class PointsController {
             amount = jsonCon(HttpRequestHandler.resLog(car,null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody,null));
 
-        }else if (activityID == 5 ) {
+        } else if (activityID == 5 ) {
             //solar panels
-            if(DB_ADAPTOR.getDate(request.getUsername())!= null) {
-                ZoneId z = ZoneId.of( "Europe/Amsterdam" );
-                LocalDate today = LocalDate.now( z );
-                java.util.Date conv = new java.util.Date(DB_ADAPTOR.getDate(
+            if (dbAdaptor.getDate(request.getUsername()) != null) {
+                ZoneId zone = ZoneId.of( "Europe/Amsterdam" );
+                LocalDate today = LocalDate.now( zone );
+                java.util.Date conv = new java.util.Date(dbAdaptor.getDate(
                         request.getUsername()).getTime());
                 LocalDate lastAdded =
                         conv.toInstant()
@@ -128,7 +125,7 @@ public class PointsController {
                     System.out.println("you are here");
                     return new ResponseEntity("false", HttpStatus.OK);
                 }
-            }else {
+            } else {
                 BufferedReader httpBody =
                         HTTP_HANDLER_API.reqGet("/electricity_uses.json?"
                                 + "energy=" + (double) amount / 3.6
@@ -136,17 +133,18 @@ public class PointsController {
                                 + BP_KEY);
 
                 Date today = new Date(System.currentTimeMillis());
-                DB_ADAPTOR.updateDate(request.getUsername(), today);
+                dbAdaptor.updateDate(request.getUsername(), today);
                 amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
             }
         }
 
-            if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
+        if (!dbAdaptor.updateActivity(username, activityID, amount)) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity(DB_ADAPTOR
+        return new ResponseEntity(dbAdaptor
                 .getActivityAmount(username, activityID), HttpStatus.OK);
     }
+
     /**
      * Returns a response entity with the total score.
      * @param username The username of
@@ -156,7 +154,7 @@ public class PointsController {
      */
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
-        return new ResponseEntity(DB_ADAPTOR
+        return new ResponseEntity(dbAdaptor
                 .getTotalScore(username
                         .replace('"', ' ').trim()),
                 HttpStatus.OK);
@@ -175,9 +173,9 @@ public class PointsController {
         mapper.configure(
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
-        Double ret = (em.get("decisions").
-                get("carbon").get("object").get("value").asDouble()*1000);
-                //multiply by 1000 to convert to grams
+        Double ret = em.get("decisions")
+                .get("carbon").get("object").get("value").asDouble() * 1000;
+        //multiply by 1000 to convert to grams
         return ret.intValue();
     }
 }

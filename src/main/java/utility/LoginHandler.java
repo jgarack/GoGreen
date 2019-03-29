@@ -1,10 +1,13 @@
 package utility;
 
+import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 
-import javax.xml.bind.DatatypeConverter;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
+
 
 /**
  * Class that handles the actions made by the user.
@@ -13,15 +16,9 @@ import java.security.NoSuchAlgorithmException;
  */
 public final class LoginHandler {
     /**
-     * The domain on which the server is running.
-     * {@value}
+     * The builder used to build alerts for this handler.
      */
-    private String domain;
-    /**
-     * The folder that contains the log files for this class.
-     * {@value}
-     */
-    private String logfolder = null;
+    public AlertBuilder alertBuilder;
 
     /**
      * The HttpRequestHandler used for this class.
@@ -29,9 +26,16 @@ public final class LoginHandler {
     public HttpRequestHandler httpHandler;
 
     /**
-     * The builder used to build alerts for this handler.
+     * The domain on which the server is running.
+     * {@value}
      */
-    public AlertBuilder alertBuilder;
+    private String domain;
+
+    /**
+     * The folder that contains the log files for this class.
+     * {@value}
+     */
+    private String logfolder = null;
 
     /**
      * Default constructor.
@@ -65,13 +69,14 @@ public final class LoginHandler {
             } catch (NoSuchAlgorithmException md5Error) {
                 alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
-            } catch (Exception e) {
-                alertBuilder.displayException(e);
-                return false;
+            } catch (ServerStatusException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } else {
-            return false;
         }
+        return false;
+
     }
 
     /**
