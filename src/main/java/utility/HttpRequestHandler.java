@@ -148,6 +148,7 @@ public class HttpRequestHandler {
             return new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
         }
+
         throw new ServerStatusException(con.getURL().toString(), responsecode);
     }
 

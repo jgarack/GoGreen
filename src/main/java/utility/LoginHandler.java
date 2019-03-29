@@ -70,9 +70,13 @@ public final class LoginHandler {
                 alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                e.printStackTrace();
+                if(e.getHttpStatusCode() == 401){
+                    alertBuilder.showAlert("Invalid credentials","The entered username and/or password are invalid.");
+                } else if (e.getHttpStatusCode() == 500) {
+                    alertBuilder.showAlert("Not registered.","The entered username is not registered.\nPlease register before you continue.");
+                }
             } catch (IOException e) {
-                e.printStackTrace();
+                alertBuilder.showAlert("IO exception", "Try again in a bit.");
             }
         }
         return false;
