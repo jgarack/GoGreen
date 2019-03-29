@@ -128,8 +128,8 @@ public class MainHandler {
             if(res.equals("false")){
                 System.out.println(res);
                 new AlertBuilder().showInformationNotification(
-                        "You have Already "
-                                + "Performed this activity this month");
+                        "You have already "
+                                + "performed this activity this month");
                 return 0;
             }
             return Integer.parseInt(res);

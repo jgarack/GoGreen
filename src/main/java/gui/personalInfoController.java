@@ -184,7 +184,7 @@ public class personalInfoController {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     if (db.hasUrl() &&  db.getUrl().contains("imgur.com") &&  db.getUrl().contains("https")) {
-                        
+
                         avatarUrl = db.getUrl();
                         avatarImageView.setImage(db.getImage());
                         new BounceIn(avatarImageBox).play();
