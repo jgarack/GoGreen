@@ -1,7 +1,6 @@
 package utility;
 
 import gui.AlertBuilder;
-import javafx.scene.control.Alert;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -241,17 +240,17 @@ public class DbAdaptor {
      */
     public boolean updateAvatarUrl(final String name, final String avatarUrl) {
         try {
-                connect();
-                PreparedStatement st = conn
-                        .prepareStatement("UPDATE users"
-                                + " SET image = ? "
-                                + "WHERE username = ?");
-                st.setString(one, avatarUrl);
-                st.setString(two, name);
-                st.executeUpdate();
-                st.close();
-                alertBuilder.showInformationNotification("You changed the avatar.");
-                return true;
+            connect();
+            PreparedStatement st = conn
+                            .prepareStatement("UPDATE users"
+                                    + " SET image = ? "
+                                    + "WHERE username = ?");
+            st.setString(one, avatarUrl);
+            st.setString(two, name);
+            st.executeUpdate();
+            st.close();
+            alertBuilder.showInformationNotification("You changed the avatar.");
+            return true;
 
 
         } catch (SQLException e) {
@@ -550,7 +549,7 @@ public class DbAdaptor {
         if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
-                System.out.println("from: "+ fromUser + "  to:" + toUser);
+                System.out.println("from: " + fromUser + "  to:" + toUser);
 
                 PreparedStatement st = conn.prepareStatement(
                         "INSERT INTO friend_request(from_user, "
@@ -562,7 +561,8 @@ public class DbAdaptor {
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
-                alertBuilder.showAlert("User already added", "Check if you or your friend did not not sent a invitation already.");
+                alertBuilder.showAlert("User already added", "Check if you or your friend"
+                        + " did not not sent a invitation already.");
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -604,8 +604,9 @@ public class DbAdaptor {
                 check = true;
             }
 
-            if(!check) {
-                alertBuilder.showAlert("User already added", "Check if the user did not send a invitation already.");
+            if (!check) {
+                alertBuilder.showAlert("User already added", "Check if the user did not "
+                        + "send a invitation already.");
             }
 
 
@@ -642,7 +643,8 @@ public class DbAdaptor {
             if (accepted) {
                 alertBuilder.showInformationNotification("Friend request accepted!");
             } else {
-                alertBuilder.showInformationNotification("Friend request declined!\nUser is now blocked.");
+                alertBuilder.showInformationNotification("Friend request declined!"
+                        + "\nUser is now blocked.");
             }
 
         } catch (SQLException e) {
@@ -789,6 +791,10 @@ public class DbAdaptor {
         }
     }
 
+    /**
+     * returns list of all achievements.
+     * @return achievement object
+     */
     public List<Achievement> getAllAchievements() {
         connect();
         List<Achievement> temp = new ArrayList<>();

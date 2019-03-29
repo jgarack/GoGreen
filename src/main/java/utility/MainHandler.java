@@ -9,15 +9,17 @@ import java.io.IOException;
  * Handler for the main controller.
  */
 public class MainHandler {
+    /**
+     * Username of the user.
+     */
+    public static String username;
 
     /**
      * A private Handler for Http requests.
      */
     private HttpRequestHandler httpHandler;
-    /**
-     * Username of the user.
-     */
-    public static String username;
+
+
     /**
      * Constructor.
      * @param domain The host.
@@ -25,6 +27,7 @@ public class MainHandler {
     public MainHandler(final String domain) {
         httpHandler = new HttpRequestHandler(domain);
     }
+
     /**
      * Tries to parse integer.
      *
@@ -45,8 +48,7 @@ public class MainHandler {
      * is greater than the initial one.
      * @param initVal initial value
      * @param valSubtract value to be subtracted
-     * @return true if
-     * the initial is greater or equal
+     * @return true if the initial is greater or equal
      */
     public static boolean checkPositiveValues(final int initVal,
                                               final int valSubtract) {
@@ -106,6 +108,12 @@ public class MainHandler {
             return -1;
         }
     }
+
+    /**
+     * updates Bus points.
+     * @param amount which should be added
+     * @return 0 if ok, -1 if exception thrown
+     */
     public int updateBus(final int amount) {
         try {
             return Integer.parseInt(httpHandler
@@ -118,6 +126,12 @@ public class MainHandler {
             return -1;
         }
     }
+
+    /**
+     * updates solar panels.
+     * @param amount which should be added
+     * @return 0 if ok, -1 if exception thrown
+     */
     public int updateSolar(final int amount) {
         try {
             String res = httpHandler
@@ -125,7 +139,7 @@ public class MainHandler {
                     .reqPost("/points",
                             new UpdateRequest(username, 5, amount))
                     .readLine();
-            if(res.equals("false")){
+            if (res.equals("false")) {
                 System.out.println(res);
                 new AlertBuilder().showInformationNotification(
                         "You have Already "

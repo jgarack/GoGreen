@@ -11,7 +11,8 @@ public class UpdateRequest {
     /**
      * Activity and amount.
      */
-    private int activityID, amount;
+    private int activityID;
+    private int amount;
 
     /**
      * Constructs an update req.
