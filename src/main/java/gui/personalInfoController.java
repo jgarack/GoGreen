@@ -143,6 +143,8 @@ public class personalInfoController {
         avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
         avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
         avatarImageView.setImage(img);
+        avatarImageView.setVisible(true);
+        System.out.println(avatarImageView.getImage());
     }
 
     /**
@@ -181,16 +183,20 @@ public class personalInfoController {
             public void handle(DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
-                    if (db.hasUrl()) {
+                    if (db.hasUrl() &&  db.getUrl().contains("imgur.com") &&  db.getUrl().contains("https")) {
+                        
                         avatarUrl = db.getUrl();
+                        avatarImageView.setImage(db.getImage());
+                        new BounceIn(avatarImageBox).play();
+                        event.setDropCompleted(true);
+                    } else {
+                        alertBuilder.showAlertNotification("Avatar update failed.\nTry dragging another image.");
                     }
-                    avatarImageView.setImage(db.getImage());
-                    helperPopOver.hide();
-                    new BounceIn(avatarImageBox).play();
-                    event.setDropCompleted(true);
                 } else {
                     event.setDropCompleted(false);
+                    alertBuilder.showAlertNotification("Avatar update failed.\nTry dragging another image.");
                 }
+                helperPopOver.hide();
             }
         });
     }
@@ -267,8 +273,10 @@ public class personalInfoController {
     @FXML
     protected void submitChanges(final ActionEvent event) {
         System.out.println(avatarUrl);
-        dbAdaptor.updateAvatarUrl(MainHandler.username,avatarUrl);
-        new ZoomIn(avatarImageBox).play();
+        if (dbAdaptor.updateAvatarUrl(MainHandler.username,avatarUrl)) {
+            new ZoomIn(avatarImageBox).play();
+        }
+
     }
 
     @FXML

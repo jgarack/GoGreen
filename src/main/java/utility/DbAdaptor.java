@@ -239,10 +239,8 @@ public class DbAdaptor {
      * @param name of the user
      * @param avatarUrl url of the picture.
      */
-    public void updateAvatarUrl(final String name, final String avatarUrl) {
+    public boolean updateAvatarUrl(final String name, final String avatarUrl) {
         try {
-            if(avatarUrl.startsWith("https://imgur.com")
-                    || avatarUrl.startsWith("/icons/avatar")) {
                 connect();
                 PreparedStatement st = conn
                         .prepareStatement("UPDATE users"
@@ -253,11 +251,12 @@ public class DbAdaptor {
                 st.executeUpdate();
                 st.close();
                 alertBuilder.showInformationNotification("You changed the avatar.");
-            }
+                return true;
+
 
         } catch (SQLException e) {
             alertBuilder.showAlert("Avatar", "Couldn't add avatar to the database.");
-            e.printStackTrace();
+            return false;
         } finally {
             disconnect();
         }
