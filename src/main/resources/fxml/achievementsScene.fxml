@@ -6,9 +6,90 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <GridPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gui.AchievementsController"
-            prefHeight="400.0" prefWidth="600.0">
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="gui.AchievementsController"
+          prefHeight="400.0" prefWidth="600.0"
+          hgap="100" vgap="50" fx:id="grid"
+          alignment="CENTER">
 
+    <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement1">
+            <Image url="@/icons/achievement1.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement2">
+            <Image url="@/icons/achievement2.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement3">
+            <Image url="@/icons/achievement3.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="0">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement4">
+            <Image url="@/icons/achievement4.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement5">
+            <Image url="@/icons/achievement5.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement6">
+            <Image url="@/icons/achievement6.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement7">
+            <Image url="@/icons/achievement7.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="1">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement8">
+            <Image url="@/icons/achievement8.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="2">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement9">
+            <Image url="@/icons/achievement9.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement10">
+            <Image url="@/icons/achievement10.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement11">
+            <Image url="@/icons/achievement11.png"/>
+        </ImageView>
+    </VBox>
+    <VBox alignment="CENTER" GridPane.columnIndex="3" GridPane.rowIndex="2">
+        <Label styleClass="achTitle"/>
+        <ImageView fx:id="achievement12">
+            <Image url="@/icons/achievement12.png"/>
+        </ImageView>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@/stylesheets/achievements.css"/>
+    </stylesheets>
 </GridPane>

@@ -1,6 +1,7 @@
 package utility;
 
 import gui.AlertBuilder;
+import javafx.scene.control.Alert;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -116,6 +117,7 @@ public class DbAdaptor {
         try {
             conn = DriverManager.getConnection(jdbUrl, username, password);
         } catch (SQLException e) {
+            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -133,6 +135,7 @@ public class DbAdaptor {
             }
 
         } catch (SQLException e) {
+            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -247,8 +250,10 @@ public class DbAdaptor {
             st.setString(two, name);
             st.executeUpdate();
             st.close();
+            alertBuilder.showInformationNotification("You changed the avatar.");
 
         } catch (SQLException e) {
+            alertBuilder.showAlert("Avatar", "Couldn't add avatar to the database.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -286,10 +291,12 @@ public class DbAdaptor {
                 return true;
             }
 
+
             return false;
 
 
         } catch (SQLException e) {
+            alertBuilder.displayException(e);
             e.printStackTrace();
         } finally {
             disconnect();
@@ -335,6 +342,7 @@ public class DbAdaptor {
 
             return true;
         } catch (SQLException e) {
+            alertBuilder.showAlert("User already exists", "Please chose another username.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -417,6 +425,7 @@ public class DbAdaptor {
             updateTotalScore(name);
             return true;
         } catch (SQLException e) {
+
             e.printStackTrace();
             return false;
         } finally {
@@ -535,9 +544,12 @@ public class DbAdaptor {
      * @param toUser user to whom you want to send the invitation
      */
     public void sendFriendReq(final String fromUser, final String toUser) {
+
         if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
+                System.out.println("from: "+ fromUser + "  to:" + toUser);
+
                 PreparedStatement st = conn.prepareStatement(
                         "INSERT INTO friend_request(from_user, "
                              + "to_user,friend_status) VALUES (?,?, ?::friend_status)");
@@ -548,6 +560,7 @@ public class DbAdaptor {
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
+                alertBuilder.showAlert("User already added", "Check if you or your friend did not not sent a invitation already.");
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -575,6 +588,24 @@ public class DbAdaptor {
             if (rs.next() == false) {
                 check = true;
             }
+
+            st = conn.prepareStatement("SELECT * FROM friend_request "
+                    + "WHERE from_user = ? AND to_user = ? AND friend_status = ?::friend_status");
+            st.setString(2, fromUs);
+            st.setString(1, toUs);
+            st.setString(3,FRIEND_STATUS.DECLINED.name());
+            rs = st.executeQuery();
+            System.out.println("...");
+            if (rs.next() == true) {
+                System.out.println("...");
+
+                check = true;
+            }
+
+            if(!check) {
+                alertBuilder.showAlert("User already added", "Check if the user did not send a invitation already.");
+            }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -606,6 +637,11 @@ public class DbAdaptor {
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
+            if (accepted) {
+                alertBuilder.showInformationNotification("Friend request accepted!");
+            } else {
+                alertBuilder.showInformationNotification("Friend request declined!\nUser is now blocked.");
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -751,26 +787,49 @@ public class DbAdaptor {
         }
     }
 
+    public List<Achievement> getAllAchievements() {
+        connect();
+        List<Achievement> temp = new ArrayList<>();
+        try {
+            String sql = "SELECT name,description "
+                    + "FROM achievements ORDER BY id";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            Achievement currAch;
+            while (rs.next()) {
+                currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
+                temp.add(currAch);
+            }
+
+            st.close();
+        } catch (SQLException e) {
+            alertBuilder.displayException(e);
+        } finally {
+            disconnect();
+        }
+        return temp;
+    }
+
     /**
      * returns list of achievements of the user.
      * @param username of the user
      * @return List with Achievements
      */
-    public List<Achievement> getAchievements(String username) {
+    public List<Integer> getAchievements(String username) {
         connect();
-        List<Achievement> temp = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
         try {
-            PreparedStatement st = conn.prepareStatement("SELECT achievements.name "
-                    + "FROM achieved, achievements "
-                    + "WHERE achieved.achievements = achievements.id "
-                    + "AND achieved.username = ?");
+            PreparedStatement st = conn.prepareStatement("select achievements.id"
+                    + " from achieved,achievements "
+                    + "where achieved.achievements = achievements.id"
+                    + " and achieved.username = ?");
             st.setString(1, username);
             rs = st.executeQuery();
 
-            Achievement ach;
+            int currId;
             while (rs.next()) {
-                ach = new Achievement(rs.getString(1).replace("_", "  "), true);
-                temp.add(ach);
+                currId = rs.getInt(1);
+                temp.add(currId);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -779,5 +838,7 @@ public class DbAdaptor {
         }
         return temp;
     }
+
+
 
 }

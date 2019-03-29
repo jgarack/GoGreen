@@ -6,14 +6,21 @@
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
     -fx-padding: 30, 0, 30, 0;
 }
-.table-row-cell {
-     -fx-cell-size: 50px;
+#friendsTable {
+    -fx-background-color: transparent;
+}
+#friendsTable .table-row-cell {
+     -fx-cell-size: 60px;
     -fx-background-color: SKYBLUE;
     -fx-opacity: 0.7;
     -fx-font-size: 30;
     -fx-font-weight: bold;
 
  }
+
+.userBox{
+    -fx-padding: 10 10 5 10;
+}
 #friendsTable{
     -fx-background-color: transparent;
 }
