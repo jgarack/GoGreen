@@ -43,6 +43,22 @@ class AchievementTest {
         String descr = "description";
         testAchievement.setDescription(descr);
         assertTrue(descr.equals(testAchievement.getDescription()));
+    }
 
+    @Test
+    void equalsSimilarObject() {
+        Achievement testAchievement1 = new Achievement("name", true, "descr");
+        assertTrue(testAchievement.equals(testAchievement1));
+    }
+
+    @Test
+    void equalsSameObject() {
+        assertTrue(testAchievement.equals(testAchievement));
+    }
+
+    @Test
+    void equalsDifferentObject() {
+        String testString = "test";
+        assertFalse(testAchievement.equals(testString));
     }
 }
