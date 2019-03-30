@@ -130,6 +130,8 @@ public class GreetingControllerTest extends AbstractTest {
 
         status = mvcResult.getResponse().getStatus();
         assertEquals(401, status);
+        DbAdaptor db = new DbAdaptor();
+        db.deleteByUsername(random);
     }
 
     /**

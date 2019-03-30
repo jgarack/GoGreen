@@ -247,6 +247,7 @@ class DbAdaptorTest {
 
         assertEquals(db.getFriends(random).get(0), random2);
         db.deleteByUsername(random);
+        db.deleteByUsername(random2);
     }
 
 
