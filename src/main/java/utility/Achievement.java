@@ -1,7 +1,5 @@
 package utility;
 
-import java.util.Objects;
-
 /**
  * Private achievement class.
  */
@@ -91,10 +89,15 @@ public class Achievement {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Achievement that = (Achievement) o;
-        return achieved == that.achieved && name.equals(that.name) && description.equals(that.description);
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Achievement that = (Achievement) object;
+        return achieved == that.achieved && name.equals(that.name)
+                && description.equals(that.description);
     }
 }

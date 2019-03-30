@@ -370,7 +370,7 @@ public class HomeController {
      * @param glyph The glyph that is appended.
      */
     private void
-    setFontAwesomeGlyphToBtn(final Button btn,
+        setFontAwesomeGlyphToBtn(final Button btn,
                                           final FontAwesome.Glyph glyph) {
         btn.setStyle("-fx-font-family: 'FontAwesome'");
         btn

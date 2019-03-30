@@ -15,18 +15,19 @@ import org.controlsfx.glyphfont.GlyphFontRegistry;
  */
 public class InformationBuilder {
     /**
+     * Duration value.
+     */
+    private static final double DURATION = 0.5;
+    /**
+     * Font size value.
+     */
+    private static final int FONT_SIZE = 20;
+
+    /**
      * Helper tool.
      */
     private PopOver popOver;
 
-    /**
-     * Duration value.
-     */
-    private final static double DURATION = 0.5;
-    /**
-     * Font size value.
-     */
-    private final static int FONT_SIZE = 20;
 
     /**
      * Default constructor.
@@ -42,7 +43,7 @@ public class InformationBuilder {
      * @param message the actual message
      */
     public void
-    addInformationIconToSearchBox(Label informativeLabel,
+        addInformationIconToSearchBox(Label informativeLabel,
                                   String message) {
         informativeLabel.setBackground(Background.EMPTY);
         informativeLabel.setStyle("-fx-font-family: 'FontAwesome'");

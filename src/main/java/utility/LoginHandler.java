@@ -70,7 +70,7 @@ public final class LoginHandler {
                 alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                if(e.getHttpStatusCode() == 401){
+                if (e.getHttpStatusCode() == 401) {
                     alertBuilder.showAlert("Invalid credentials",
                         "The entered username and/or password are invalid.");
                 } else if (e.getHttpStatusCode() == 500) {

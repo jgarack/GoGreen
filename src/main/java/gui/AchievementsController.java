@@ -20,6 +20,19 @@ import java.util.List;
  * Controller for the achievements page.
  */
 public class AchievementsController {
+
+    private static final int COLS = 4;
+
+    /**
+     * Used for full opacity.
+     */
+    private static final double FULL_OPACITY = 1.0;
+
+    /**
+     * Used for half opacity.
+     */
+    private static final double HALF_OPACITY = 0.5;
+
     /**
      * To retrieve all the achievements.
      */
@@ -101,20 +114,6 @@ public class AchievementsController {
     private PopOver popOver;
 
     /**
-     * Used for full opacity.
-     */
-    private static final double FULL_OPACITY = 1.0;
-    /**
-     * Used for half opacity.
-     */
-    private static final double HALF_OPACITY = 0.5;
-
-    /**
-     *
-     */
-    private static final int COLS = 4;
-
-    /**
      * Triggered upon loading of scene.
      */
     @FXML
@@ -140,20 +139,21 @@ public class AchievementsController {
      *                      achieved achievements.
      */
     private void
-    createVBoxAchievement(final Achievement achievement,
+        createVBoxAchievement(final Achievement achievement,
                                        final int achievementCounter,
                                        final List<Integer> achievmentIds) {
-        VBox currVBox = new VBox();
         ImageView currImgView = new ImageView();
         currImgView
                 .setImage(new Image("/icons/achievement"
                 + (achievementCounter + 1) + ".png"));
         currImgView.setId("achievement" + achievementCounter);
         if (achievmentIds.contains(achievementCounter + 1)) {
-                currImgView.setOpacity(FULL_OPACITY);
+            currImgView.setOpacity(FULL_OPACITY);
         } else {
-                currImgView.setOpacity(HALF_OPACITY);
+            currImgView.setOpacity(HALF_OPACITY);
         }
+        VBox currVBox = new VBox();
+
         Label currTitle = new Label(achievement.getName());
         Label currDescription = new Label(achievement.getDescription());
         currTitle.getStyleClass().add("achTitle");

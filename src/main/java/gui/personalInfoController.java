@@ -1,8 +1,6 @@
 package gui;
 
 import animatefx.animation.BounceIn;
-import animatefx.animation.GlowBackground;
-import animatefx.animation.GlowText;
 import animatefx.animation.ZoomIn;
 import exceptions.ServerStatusException;
 import javafx.event.ActionEvent;
@@ -22,27 +20,28 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.controlsfx.control.PopOver;
-import utility.*;
+import utility.DbAdaptor;
+import utility.HttpRequestHandler;
+import utility.LoginHandler;
+import utility.MainHandler;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Controller for the personal info scene.
  */
 public class personalInfoController {
 
-
-    private MainController mainController;
-
     /**
      * Localhost domain.
      * {@value}
      */
     private static final String LOCALHOST = "http://localhost:8080";
+
+    private MainController mainController;
 
     /**
      * Bound to the root.
@@ -303,19 +302,19 @@ public class personalInfoController {
         String confirmNewPassStr = confirmNewPass
                 .getText().trim();
 
-        if(newPassStr.equals(confirmNewPassStr) && new LoginHandler(null)
+        if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(null)
                 .loginSubmit(MainHandler.username, oldPassStr)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
                 newPassStr = DatatypeConverter.printHexBinary(
                         md5.digest(newPassStr.getBytes()));
-            } catch(NoSuchAlgorithmException e) {
+            } catch (NoSuchAlgorithmException e) {
                 alertBuilder.displayException(e);
             }
             try {
                 new HttpRequestHandler(LOCALHOST).reqPost("/changepass",
                         new String[]{MainHandler.username, newPassStr});
-            } catch(ServerStatusException | IOException exception) {
+            } catch (ServerStatusException | IOException exception) {
                 alertBuilder.displayException(exception);
             }
         }

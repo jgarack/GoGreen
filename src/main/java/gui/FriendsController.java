@@ -204,8 +204,7 @@ public class FriendsController {
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
             for (String friend : pendingRequests) {
-                HBox currFriend = new HBox();
-                Label sender = new Label(friend + " sent you a request!");
+
 
                 Button acceptBtn = new Button("Accept");
                 acceptBtn.setStyle("-fx-font-family: 'FontAwesome'");
@@ -227,13 +226,16 @@ public class FriendsController {
                     }
                 });
 
-
                 Button declineBtn = new Button("Block user");
                 declineBtn.setStyle("-fx-font-family: 'FontAwesome'");
                 declineBtn
                         .setGraphic(GlyphFontRegistry
                                 .font("FontAwesome")
                                 .create(FontAwesome.Glyph.TIMES_CIRCLE_ALT));
+
+                HBox currFriend = new HBox();
+                Label sender = new Label(friend + " sent you a request!");
+
                 declineBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
