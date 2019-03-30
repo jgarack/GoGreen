@@ -68,4 +68,16 @@ public class UserTest {
         user.setUsername("username2");
         assertEquals("username2", user.getUsername());
     }
+
+    @Test
+    public void hasUsername_true() {
+        assertTrue(user.hasUsername());
+    }
+
+    @Test
+    public void hasUsername_false() {
+        User mod = user;
+        mod.setUsername(null);
+        assertFalse(mod.hasUsername());
+    }
 }

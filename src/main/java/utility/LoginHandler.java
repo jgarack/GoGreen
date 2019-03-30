@@ -71,12 +71,16 @@ public final class LoginHandler {
                 return false;
             } catch (ServerStatusException e) {
                 if(e.getHttpStatusCode() == 401){
-                    alertBuilder.showAlert("Invalid credentials","The entered username and/or password are invalid.");
+                    alertBuilder.showAlert("Invalid credentials",
+                        "The entered username and/or password are invalid.");
                 } else if (e.getHttpStatusCode() == 500) {
-                    alertBuilder.showAlert("Not registered.","The entered username is not registered.\nPlease register before you continue.");
+                    alertBuilder.showAlert("Not registered.",
+                            "The entered username is not registered."
+                            + "\nPlease register before you continue.");
                 }
             } catch (IOException e) {
-                alertBuilder.showAlert("IO exception", "Try again in a bit.");
+                alertBuilder.showAlert("IO exception",
+                        "Try again in a bit.");
             }
         }
         return false;
