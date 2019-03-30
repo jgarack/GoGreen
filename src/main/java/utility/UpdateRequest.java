@@ -51,4 +51,17 @@ public class UpdateRequest {
     public int getAmount() {
         return amount;
     }
+
+    public boolean equals(Object other) {
+        if(this == other) {
+            return true;
+        }else if(!(other instanceof UpdateRequest)) {
+            return false;
+        }else {
+            UpdateRequest that = (UpdateRequest) other;
+            return username.equals(that.username)
+                    && activityID == that.activityID
+                    && amount == that.amount;
+        }
+    }
 }

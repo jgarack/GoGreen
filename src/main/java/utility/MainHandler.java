@@ -19,6 +19,8 @@ public class MainHandler {
      */
     private HttpRequestHandler httpHandler;
 
+    private AlertBuilder alertBuilder;
+
 
     /**
      * Constructor.
@@ -26,6 +28,19 @@ public class MainHandler {
      */
     public MainHandler(final String domain) {
         httpHandler = new HttpRequestHandler(domain);
+        alertBuilder = new AlertBuilder();
+    }
+
+    public void setHttpHandler(HttpRequestHandler handler) {
+        httpHandler = handler;
+    }
+
+    public HttpRequestHandler getHttpHandler() {
+        return httpHandler;
+    }
+
+    public void setAlertBuilder(AlertBuilder builder) {
+        alertBuilder = builder;
     }
 
     /**
@@ -43,17 +58,17 @@ public class MainHandler {
         }
     }
 
-    /**
+    /*
      * Checks if the subtracted value
      * is greater than the initial one.
      * @param initVal initial value
      * @param valSubtract value to be subtracted
      * @return true if the initial is greater or equal
      */
-    public static boolean checkPositiveValues(final int initVal,
+    /*public static boolean checkPositiveValues(final int initVal,
                                               final int valSubtract) {
         return initVal >= valSubtract;
-    }
+    }*/
 
     /**
      * Updates a veg meal.
@@ -135,13 +150,12 @@ public class MainHandler {
     public int updateSolar(final int amount) {
         try {
             String res = httpHandler
-
                     .reqPost("/points",
                             new UpdateRequest(username, 5, amount))
                     .readLine();
             if (res.equals("false")) {
                 System.out.println(res);
-                new AlertBuilder().showInformationNotification(
+                alertBuilder.showInformationNotification(
                         "You have already "
                                 + "performed this activity this month");
                 return 0;
