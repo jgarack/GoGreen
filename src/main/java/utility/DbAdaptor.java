@@ -2,7 +2,6 @@ package utility;
 
 import gui.AlertBuilder;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -268,29 +267,21 @@ public class DbAdaptor {
 
 
         try {
-
             connect();
             PreparedStatement st = conn.prepareStatement(
                     "SELECT username,"
                             + " password FROM credentials WHERE username = ?");
 
-
             st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
-
-
             LoginCredentials tempLC = new LoginCredentials(null, null);
-
-
             while (rs.next()) {
                 tempLC.setUsername(rs.getString(one));
                 tempLC.setPassword(rs.getString(two));
             }
-
             if (logCre.equals(tempLC)) {
                 return true;
             }
-
             st.close();
             return false;
 
@@ -342,7 +333,7 @@ public class DbAdaptor {
 
             return true;
         } catch (SQLException e) {
-           // alertBuilder.showAlert("User already exists", "Please chose another username.");
+            // alertBuilder.showAlert("User already exists", "Please chose another username.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -733,6 +724,11 @@ public class DbAdaptor {
         return null;
     }
 
+    /**
+     * change password in the database.
+     * @param user of the username
+     * @param newpass of the username
+     */
     public void changepass(final String user, final String newpass) {
         connect();
         try {
@@ -742,17 +738,23 @@ public class DbAdaptor {
             st.setString(two, user);
             st.executeUpdate();
             st.close();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
         disconnect();
     }
 
-    public void updateDate(String username, Date date){
+    /**
+     * updates the last seen date in user tuple.
+     * @param username of the user
+     * @param date when last seen
+     */
+    public void updateDate(String username, Date date) {
         connect();
         try {
-            PreparedStatement st = conn.prepareStatement("UPDATE users SET date_last_active = ? WHERE username = ?");
+            PreparedStatement st = conn.prepareStatement("UPDATE users SET"
+                    + " date_last_active = ? WHERE username = ?");
             st.setDate(1, date);
             st.setString(2, username);
             st.executeUpdate();
