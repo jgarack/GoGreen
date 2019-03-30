@@ -4,8 +4,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.TestInstance;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -14,6 +16,7 @@ import utility.AccountMessage;
 import utility.Activity;
 import utility.DbAdaptor;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 
@@ -135,6 +138,35 @@ public class GreetingControllerTest extends AbstractTest {
     }
 
     /**
+     * Tries to change the password of a user.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void changePassTest() throws Exception {
+
+        String random = UUID.randomUUID().toString();
+        uri = "/register";
+        account = new AccountMessage(random, "password");
+        inputJson = super.mapToJson(account);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        uri = "/changepass";
+        String[] testArray = {"0", random, "password1"};
+        inputJson = super.mapToJson(testArray);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+
+        DbAdaptor db = new DbAdaptor();
+        db.deleteByUsername(random);
+    }
+
+
+    /**
      * Sends the server a login request without registering the user first.
      *
      * @throws Exception
@@ -179,22 +211,22 @@ public class GreetingControllerTest extends AbstractTest {
      *
      * @throws Exception
      */
-     /*
-    @Test
-    public void registerTestTwice() throws Exception {
 
-        uri = "/register";
-        account = new AccountMessage(UUID.randomUUID().toString(), "password");
-        inputJson = super.mapToJson(account);
-        mvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson));
-
-        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        status = mvcResult.getResponse().getStatus();
-        assertEquals(409, status);
-    }*/
+//    @Test
+//    public void registerTestTwice() throws Exception {
+//
+//
+//        assertThrows(SQLException.class, () -> {uri = "/register";
+//        account = new AccountMessage(UUID.randomUUID().toString(), "password");
+//        inputJson = super.mapToJson(account);
+//        mvc.perform(MockMvcRequestBuilders.post(uri)
+//                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson));
+//
+//        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+//                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+//
+//        status = mvcResult.getResponse().getStatus();});
+//    }
 
     /**
      * Tests an activity with ID of 1.
