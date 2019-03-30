@@ -48,9 +48,17 @@ class LoginCredentialsTest {
     }
 
     @Test
-    void notEquals() {
-        LC2.setPassword("pass");
-        assertFalse(LC1.equals(LC2));
+    void notEquals_pass() {
+        LoginCredentials temp = LC2;
+        temp.setPassword("pass");
+        assertFalse(LC1.equals(temp));
+    }
+
+    @Test
+    void notEquals_user() {
+        LoginCredentials temp = LC2;
+        temp.setUsername("user");
+        assertFalse(LC1.equals(temp));
     }
 
     @Test

@@ -66,4 +66,18 @@ public class LoginHandlerTest {
                 invocation -> { throw new NoSuchAlgorithmException(); });
         assertFalse(testObject.loginSubmit(USER, PASS));
     }
+    @Test
+    public void stubbedResponse_internalServerError() throws Exception{
+        given(testObject.httpHandler.reqPost("/login",
+                new AccountMessage(USER, PASS_TOMD5))).willAnswer(invocation ->
+        { throw new ServerStatusException(500); });
+        assertFalse(testObject.loginSubmit(USER, PASS));
+    }
+    @Test
+    public void stubbedResponse_notFound() throws Exception{
+        given(testObject.httpHandler.reqPost("/login",
+                new AccountMessage(USER, PASS_TOMD5))).willAnswer(invocation ->
+        { throw new ServerStatusException(404); });
+        assertFalse(testObject.loginSubmit(USER, PASS));
+    }
 }
