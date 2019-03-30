@@ -249,7 +249,6 @@ public class DbAdaptor {
             st.setString(two, name);
             st.executeUpdate();
             st.close();
-            alertBuilder.showInformationNotification("You changed the avatar.");
             return true;
 
 
@@ -343,7 +342,7 @@ public class DbAdaptor {
 
             return true;
         } catch (SQLException e) {
-            alertBuilder.showAlert("User already exists", "Please chose another username.");
+           // alertBuilder.showAlert("User already exists", "Please chose another username.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -640,12 +639,12 @@ public class DbAdaptor {
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
-            if (accepted) {
+            /*if (accepted) {
                 alertBuilder.showInformationNotification("Friend request accepted!");
             } else {
                 alertBuilder.showInformationNotification("Friend request declined!"
                         + "\nUser is now blocked.");
-            }
+            }*/
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -1,5 +1,7 @@
 package utility;
 
+import java.util.Objects;
+
 /**
  * Private achievement class.
  */
@@ -20,13 +22,13 @@ public class Achievement {
     private String description;
 
 
-
     /**
      * Constructs an achievment.
+     *
      * @param nameAcheived name of the achievement
-     * @param isAchieved state of achievement
-     * @param descr the descrption
-     *             of the achievement.
+     * @param isAchieved   state of achievement
+     * @param descr        the descrption
+     *                     of the achievement.
      */
     public Achievement(final String nameAcheived, final boolean isAchieved, final String descr) {
         this.name = nameAcheived;
@@ -36,6 +38,7 @@ public class Achievement {
 
     /**
      * Checks if achievement is achieved.
+     *
      * @return true iff achievement is achieved.
      */
     public boolean isAchieved() {
@@ -44,6 +47,7 @@ public class Achievement {
 
     /**
      * Sets achieved to the achievement.
+     *
      * @param isAchieved the boolean to be set.
      */
     public void setAchieved(boolean isAchieved) {
@@ -52,6 +56,7 @@ public class Achievement {
 
     /**
      * Gets the name of the achievement.
+     *
      * @return the name.
      */
     public String getName() {
@@ -60,6 +65,7 @@ public class Achievement {
 
     /**
      * Sets a name to the achievement.
+     *
      * @param achName the name to be set.
      */
     public void setName(String achName) {
@@ -68,6 +74,7 @@ public class Achievement {
 
     /**
      * Returns the description of an achievement.
+     *
      * @return the description
      */
     public String getDescription() {
@@ -76,10 +83,18 @@ public class Achievement {
 
     /**
      * Sets a new description.
+     *
      * @param achDescription to be set.
      */
     public void setDescription(String achDescription) {
         this.description = achDescription;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Achievement that = (Achievement) o;
+        return achieved == that.achieved && name.equals(that.name) && description.equals(that.description);
+    }
 }
