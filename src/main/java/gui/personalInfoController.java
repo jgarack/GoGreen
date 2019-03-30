@@ -1,7 +1,9 @@
 package gui;
 
 import animatefx.animation.BounceIn;
-import animatefx.animation.ZoomIn;
+import animatefx.animation.GlowBackground;
+import animatefx.animation.GlowText;
+import exceptions.ServerStatusException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,10 +21,12 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import org.controlsfx.control.PopOver;
-import utility.DbAdaptor;
-import utility.MainHandler;
+import utility.*;
 
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 
 /**
@@ -32,6 +36,12 @@ public class personalInfoController {
 
 
     private MainController mainController;
+
+    /**
+     * Localhost domain.
+     * {@value}
+     */
+    private static final String LOCALHOST = "http://localhost:8080";
 
     /**
      * Bound to the root.
@@ -292,16 +302,21 @@ public class personalInfoController {
         String confirmNewPassStr = confirmNewPass
                 .getText().trim();
 
-        try {
-            this.mainController.loadPersonalInfoScene();
-        } catch (IOException err) {
-            err.getMessage();
-        }
-        if (!newPassStr.equals(confirmNewPassStr)) {
-            alertBuilder
-                    .formEntryWarning("password fields",
-                            "New password and confirmed"
-                                    + "new password do not match!");
+        if(newPassStr.equals(confirmNewPassStr) && new LoginHandler(null)
+                .loginSubmit(MainHandler.username, oldPassStr)) {
+            try {
+                MessageDigest md5 = MessageDigest.getInstance("MD5");
+                newPassStr = DatatypeConverter.printHexBinary(
+                        md5.digest(newPassStr.getBytes()));
+            } catch(NoSuchAlgorithmException e) {
+                alertBuilder.displayException(e);
+            }
+            try {
+                new HttpRequestHandler(LOCALHOST).reqPost("/changepass",
+                        new String[]{MainHandler.username, newPassStr});
+            } catch(ServerStatusException | IOException exception) {
+                alertBuilder.displayException(exception);
+            }
         }
     }
 }

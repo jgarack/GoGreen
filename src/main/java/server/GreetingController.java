@@ -87,4 +87,14 @@ public class GreetingController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
+
+    @PostMapping("/changepass")
+    public ResponseEntity changepass(@RequestBody final String[] creds) {
+        String user = creds[1];
+        String newpass = creds[2];
+
+        DB_ADAPTOR.changepass(user, newpass);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

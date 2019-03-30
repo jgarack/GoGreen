@@ -722,17 +722,26 @@ public class DbAdaptor {
         return null;
     }
 
-    /**
-     * updates the date when the user last time used the app.
-     * @param username of the user
-     * @param date to be updated.
-     */
-    public void updateDate(String username, Date date) {
+    public void changepass(final String user, final String newpass) {
         connect();
         try {
-            PreparedStatement st = conn.prepareStatement("UPDATE users"
-                    + " SET date_last_active = ? WHERE username = ?");
-            System.out.println(st.toString());
+            PreparedStatement st = conn.prepareStatement(new StringBuilder("UPDATE")
+                    .append(" credentials SET password = ? WHERE username = ?").toString());
+            st.setString(one, newpass);
+            st.setString(two, user);
+            st.executeUpdate();
+            st.close();
+        } catch(SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+    /*public void updateDate(String username, Date date){
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement("UPDATE users SET date_last_active = ? WHERE username = ?");
             st.setDate(1, date);
             st.setString(2, username);
             st.executeUpdate();
@@ -766,7 +775,7 @@ public class DbAdaptor {
             disconnect();
         }
         return null;
-    }
+    }*/
 
 
     //Achievements
