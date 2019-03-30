@@ -55,7 +55,7 @@ public class DbAdaptor {
     private final int eight = 8;
 
 
-    private enum FRIEND_STATUS {
+    private enum FriendStatus {
         PENDING,
         ACCEPTED,
         DECLINED
@@ -556,7 +556,7 @@ public class DbAdaptor {
                              + "to_user,friend_status) VALUES (?,?, ?::friend_status)");
                 st.setString(1,fromUser);
                 st.setString(2,toUser);
-                st.setString(3,FRIEND_STATUS.PENDING.name());
+                st.setString(3,FriendStatus.PENDING.name());
                 st.executeUpdate();
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
@@ -595,7 +595,7 @@ public class DbAdaptor {
                     + "WHERE from_user = ? AND to_user = ? AND friend_status = ?::friend_status");
             st.setString(2, fromUs);
             st.setString(1, toUs);
-            st.setString(3,FRIEND_STATUS.DECLINED.name());
+            st.setString(3, FriendStatus.DECLINED.name());
             rs = st.executeQuery();
             System.out.println("...");
             if (rs.next() == true) {
@@ -633,9 +633,9 @@ public class DbAdaptor {
                     + "SET friend_status = ?::\"friend_status\" WHERE from_user = ? "
                     + "AND to_user = ?");
             if (accepted) {
-                st.setString(1,FRIEND_STATUS.ACCEPTED.name()) ;
+                st.setString(1, FriendStatus.ACCEPTED.name()) ;
             } else {
-                st.setString(1, FRIEND_STATUS.DECLINED.name());
+                st.setString(1, FriendStatus.DECLINED.name());
             }
             st.setString(2, fromUser);
             st.setString(3, toUser);
@@ -669,7 +669,7 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement("SELECT from_user FROM friend_request"
                     + " WHERE to_user = ? and friend_status = ?::\"friend_status\"");
             st.setString(1, username);
-            st.setString(2,FRIEND_STATUS.PENDING.name());
+            st.setString(2, FriendStatus.PENDING.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
@@ -698,7 +698,7 @@ public class DbAdaptor {
                     + "friend_request WHERE from_user = ? AND friend_status = ?"
                     + "::\"friend_status\"");
             st.setString(1, username);
-            st.setString(2,FRIEND_STATUS.ACCEPTED.name());
+            st.setString(2, FriendStatus.ACCEPTED.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
@@ -706,7 +706,7 @@ public class DbAdaptor {
             st = conn.prepareStatement("SELECT from_user FROM friend_request "
                     + "WHERE to_user = ? AND friend_status = ?::\"friend_status\"");
             st.setString(1, username);
-            st.setString(2,FRIEND_STATUS.ACCEPTED.name());
+            st.setString(2, FriendStatus.ACCEPTED.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
@@ -738,7 +738,7 @@ public class DbAdaptor {
         disconnect();
     }
 
-    /*public void updateDate(String username, Date date){
+    public void updateDate(String username, Date date){
         connect();
         try {
             PreparedStatement st = conn.prepareStatement("UPDATE users SET date_last_active = ? WHERE username = ?");
@@ -775,7 +775,7 @@ public class DbAdaptor {
             disconnect();
         }
         return null;
-    }*/
+    }
 
 
     //Achievements

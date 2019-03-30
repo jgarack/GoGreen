@@ -3,6 +3,7 @@ package utility;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,6 +142,38 @@ class DbAdaptorTest {
 
 
     }
+
+    @Test
+    void DateTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+
+        Date date = new Date(System.currentTimeMillis());
+
+        db.updateDate(random, date);
+
+        assertEquals(date.toString(), db.getDate(random).toString());
+
+        db.deleteByUsername(random);
+    }
+
+    @Test
+    void AchievementTest(){
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+
+        db.addAchievement(1, random);
+
+        List<Integer> tempList = new ArrayList<>();
+        tempList.add(1);
+
+        assertEquals(db.getAchievements(random),tempList);
+
+        db.deleteByUsername(random);
+    }
+
 
 
 
