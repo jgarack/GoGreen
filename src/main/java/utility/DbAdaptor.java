@@ -2,6 +2,7 @@ package utility;
 
 import gui.AlertBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -186,8 +187,6 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -279,6 +278,7 @@ public class DbAdaptor {
             st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
 
+
             LoginCredentials tempLC = new LoginCredentials(null, null);
 
 
@@ -291,7 +291,7 @@ public class DbAdaptor {
                 return true;
             }
 
-
+            st.close();
             return false;
 
 
@@ -366,7 +366,6 @@ public class DbAdaptor {
 
             st.setString(1, userName);
             rs = st.executeQuery();
-
             User tempUser = new User(null, 0);
 
             while (rs.next()) {
@@ -375,6 +374,8 @@ public class DbAdaptor {
                 tempUser.setAvatarUrl(rs.getString(three));
                 break;
             }
+
+            st.close();
 
             return tempUser;
 
@@ -413,6 +414,9 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             amount += rs.getInt("amount");
+
+            st.close();
+
             PreparedStatement pst = conn
                     .prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
@@ -480,6 +484,7 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt(one);
+            st.close();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -506,6 +511,7 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt("total_score");
+            st.close();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -557,6 +563,7 @@ public class DbAdaptor {
                 st.setString(2,toUser);
                 st.setString(3,FriendStatus.PENDING.name());
                 st.executeUpdate();
+                st.close();
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
@@ -608,7 +615,7 @@ public class DbAdaptor {
                         + "send a invitation already.");
             }
 
-
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -645,7 +652,7 @@ public class DbAdaptor {
                 alertBuilder.showInformationNotification("Friend request declined!"
                         + "\nUser is now blocked.");
             }*/
-
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -673,7 +680,9 @@ public class DbAdaptor {
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
+            st.close();
             return listOfPending;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -699,6 +708,7 @@ public class DbAdaptor {
             st.setString(1, username);
             st.setString(2, FriendStatus.ACCEPTED.name());
             rs = st.executeQuery();
+
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
@@ -707,9 +717,11 @@ public class DbAdaptor {
             st.setString(1, username);
             st.setString(2, FriendStatus.ACCEPTED.name());
             rs = st.executeQuery();
+
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
+            st.close();
             return listOfPending;
 
         } catch (SQLException e) {
@@ -744,6 +756,7 @@ public class DbAdaptor {
             st.setDate(1, date);
             st.setString(2, username);
             st.executeUpdate();
+            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -765,9 +778,11 @@ public class DbAdaptor {
                     + "FROM users WHERE username = ?");
             st.setString(1, username);
             rs = st.executeQuery();
+
             if (rs.next()) {
                 return rs.getDate(1);
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -792,6 +807,7 @@ public class DbAdaptor {
             st.setString(1, username);
             st.setInt(2, id);
             st.executeUpdate();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -812,6 +828,7 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             Achievement currAch;
+
             while (rs.next()) {
                 currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
                 temp.add(currAch);
@@ -843,10 +860,12 @@ public class DbAdaptor {
             rs = st.executeQuery();
 
             int currId;
+
             while (rs.next()) {
                 currId = rs.getInt(1);
                 temp.add(currId);
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -854,7 +873,5 @@ public class DbAdaptor {
         }
         return temp;
     }
-
-
 
 }
