@@ -3,6 +3,7 @@ package gui;
 import animatefx.animation.BounceIn;
 import animatefx.animation.GlowBackground;
 import animatefx.animation.GlowText;
+import animatefx.animation.ZoomIn;
 import exceptions.ServerStatusException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

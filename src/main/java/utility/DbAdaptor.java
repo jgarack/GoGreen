@@ -738,7 +738,7 @@ public class DbAdaptor {
         disconnect();
     }
 
-    /*public void updateDate(String username, Date date){
+    public void updateDate(String username, Date date){
         connect();
         try {
             PreparedStatement st = conn.prepareStatement("UPDATE users SET date_last_active = ? WHERE username = ?");
@@ -775,7 +775,7 @@ public class DbAdaptor {
             disconnect();
         }
         return null;
-    }*/
+    }
 
 
     //Achievements
