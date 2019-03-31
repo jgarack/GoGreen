@@ -3,8 +3,6 @@ package gui;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +10,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
-import org.omg.PortableInterceptor.INACTIVE;
 import utility.Achievement;
 import utility.DbAdaptor;
 import utility.MainHandler;
@@ -23,6 +20,19 @@ import java.util.List;
  * Controller for the achievements page.
  */
 public class AchievementsController {
+
+    private static final int COLS = 4;
+
+    /**
+     * Used for full opacity.
+     */
+    private static final double FULL_OPACITY = 1.0;
+
+    /**
+     * Used for half opacity.
+     */
+    private static final double HALF_OPACITY = 0.5;
+
     /**
      * To retrieve all the achievements.
      */
@@ -97,12 +107,6 @@ public class AchievementsController {
     @FXML
     private ImageView achievement12;
 
-
-
-
-
-
-
     /**
      * Used to show useful information to the user.
      */
@@ -110,89 +114,70 @@ public class AchievementsController {
     private PopOver popOver;
 
     /**
-     * Triggered upon initialization.
+     * Triggered upon loading of scene.
      */
     @FXML
     public void initialize() {
-        setUpAchievementBoxes();
+        popOver.setId("popOver");
+        List<Achievement> allAchievements = dbAdaptor.getAllAchievements();
+        int achievementCounter = 0;
+        List<Integer> achievementIds =
+                dbAdaptor.getAchievements(MainHandler.username);
+        for (Achievement currAch : allAchievements) {
+            createVBoxAchievement(currAch,
+                    achievementCounter, achievementIds);
+            achievementCounter++;
+        }
     }
 
     /**
-     * Sets up the Boxes.
+     * Creates an individual box.
+     * @param achievement The achievement.
+     * @param achievementCounter keeps
+     *                         track of the achievements.
+     * @param achievmentIds ids of the
+     *                      achieved achievements.
      */
-    private void setUpAchievementBoxes() {
-
-        List<Achievement> achievementList = dbAdaptor.getAllAchievements();
-        int achievementCounter = 0;
-        for (Node currNode : grid.getChildren()) {
-            VBox currBox = (VBox) currNode;
-            Label currTitle = (Label) currBox.getChildren().get(0);
-            currTitle.setText(achievementList.get(achievementCounter).getName());
-
-            Label currDescription = new Label(achievementList.get(achievementCounter).getDescription());
-            currDescription.getStyleClass().add("achDescription");
-            currBox.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    popOver = new PopOver(currDescription);
-                    popOver.show(currBox);
-                }
-            });
-            currBox.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    popOver.hide();
-                }
-            });
-
-            achievementCounter++;
+    private void
+        createVBoxAchievement(final Achievement achievement,
+                                       final int achievementCounter,
+                                       final List<Integer> achievmentIds) {
+        ImageView currImgView = new ImageView();
+        currImgView
+                .setImage(new Image("/icons/achievement"
+                + (achievementCounter + 1) + ".png"));
+        currImgView.setId("achievement" + achievementCounter);
+        if (achievmentIds.contains(achievementCounter + 1)) {
+            currImgView.setOpacity(FULL_OPACITY);
+        } else {
+            currImgView.setOpacity(HALF_OPACITY);
         }
-        List<Integer> achieved = dbAdaptor.getAchievements(MainHandler.username);
-        for (Integer id : achieved) {
-            if (id == 1) {
-                achievement1.setOpacity(0.5);
-            } else if ( id == 2) {
-                achievement2.setOpacity(0.5);
+        VBox currVBox = new VBox();
+
+        Label currTitle = new Label(achievement.getName());
+        Label currDescription = new Label(achievement.getDescription());
+        currTitle.getStyleClass().add("achTitle");
+        currDescription.getStyleClass().add("achDescription");
+        currVBox.getChildren().addAll(currTitle, currImgView);
+        currVBox.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(final MouseEvent event) {
+                popOver = new PopOver(currDescription);
+                popOver.show(currVBox);
             }
-
-        }
-
+        });
+        currVBox.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(final MouseEvent event) {
+                popOver.hide();
+            }
+        });
+        currVBox.setAlignment(Pos.CENTER);
+        grid.add(currVBox,
+                achievementCounter  %  COLS,
+                achievementCounter / COLS);
 
     }
-
-//    /**
-//     * Creates an individual box.
-//     * @param achievement The achievement.
-//     * @param achievementCounter keeps track of the achievements.
-//     */
-//    private void createVBoxAchievement(Achievement achievement, int achievementCounter) {
-//        if (achievementCounter < 12) {
-//            VBox currVBox = new VBox();
-//            ImageView currImgView = new ImageView();
-//            currImgView.setImage(new Image("/icons/achievement" + (achievementCounter + 1) + ".png"));
-//            currImgView.setId("achievement" + achievementCounter);
-//            Label currTitle = new Label(achievement.getName());
-//            Label currDescription = new Label(achievement.getDescription());
-//            currTitle.getStyleClass().add("achTitle");
-//            currDescription.getStyleClass().add("achDescription");
-//            currVBox.getChildren().addAll(currTitle,currImgView);
-//            currVBox.setOnMouseEntered(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent event) {
-//                    popOver = new PopOver(currDescription);
-//                    popOver.show(currVBox);
-//                }
-//            });
-//            currVBox.setOnMouseExited(new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent event) {
-//                    popOver.hide();
-//                }
-//            });
-//            currVBox.setAlignment(Pos.CENTER);
-//            grid.add(currVBox,achievementCounter  % 4, achievementCounter / 4);
-//        }
-//    }
 
 
 }

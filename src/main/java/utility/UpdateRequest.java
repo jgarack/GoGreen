@@ -11,7 +11,8 @@ public class UpdateRequest {
     /**
      * Activity and amount.
      */
-    private int activityID, amount;
+    private int activityID;
+    private int amount;
 
     /**
      * Constructs an update req.
@@ -49,5 +50,23 @@ public class UpdateRequest {
      */
     public int getAmount() {
         return amount;
+    }
+
+    /**
+     * Egual method.
+     * @param other object to compare to this
+     * @return true if equal, false if true
+     */
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        } else if (!(other instanceof UpdateRequest)) {
+            return false;
+        } else {
+            UpdateRequest that = (UpdateRequest) other;
+            return username.equals(that.username)
+                    && activityID == that.activityID
+                    && amount == that.amount;
+        }
     }
 }

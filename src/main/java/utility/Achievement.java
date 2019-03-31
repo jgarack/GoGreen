@@ -14,16 +14,21 @@ public class Achievement {
      */
     private boolean achieved;
 
+    /**
+     * Description of the achievement.
+     */
     private String description;
-
 
 
     /**
      * Constructs an achievment.
+     *
      * @param nameAcheived name of the achievement
-     * @param isAchieved state of achievement
+     * @param isAchieved   state of achievement
+     * @param descr        the descrption
+     *                     of the achievement.
      */
-    public Achievement(String nameAcheived, boolean isAchieved, String descr) {
+    public Achievement(final String nameAcheived, final boolean isAchieved, final String descr) {
         this.name = nameAcheived;
         this.achieved = isAchieved;
         this.description = descr;
@@ -31,6 +36,7 @@ public class Achievement {
 
     /**
      * Checks if achievement is achieved.
+     *
      * @return true iff achievement is achieved.
      */
     public boolean isAchieved() {
@@ -39,14 +45,16 @@ public class Achievement {
 
     /**
      * Sets achieved to the achievement.
-     * @param achieved the boolean to be set.
+     *
+     * @param isAchieved the boolean to be set.
      */
-    public void setAchieved(boolean achieved) {
-        this.achieved = achieved;
+    public void setAchieved(boolean isAchieved) {
+        this.achieved = isAchieved;
     }
 
     /**
      * Gets the name of the achievement.
+     *
      * @return the name.
      */
     public String getName() {
@@ -55,14 +63,16 @@ public class Achievement {
 
     /**
      * Sets a name to the achievement.
-     * @param name the name to be set.
+     *
+     * @param achName the name to be set.
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String achName) {
+        this.name = achName;
     }
 
     /**
      * Returns the description of an achievement.
+     *
      * @return the description
      */
     public String getDescription() {
@@ -71,10 +81,23 @@ public class Achievement {
 
     /**
      * Sets a new description.
-     * @param description to be set.
+     *
+     * @param achDescription to be set.
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String achDescription) {
+        this.description = achDescription;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        Achievement that = (Achievement) object;
+        return achieved == that.achieved && name.equals(that.name)
+                && description.equals(that.description);
+    }
 }

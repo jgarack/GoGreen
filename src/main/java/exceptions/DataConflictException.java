@@ -1,4 +1,5 @@
 package exceptions;
+
 /**
  * Unchecked Exception that should be thrown when the back-end data structure
  * can't handle the input.

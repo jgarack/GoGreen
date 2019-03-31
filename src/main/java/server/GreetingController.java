@@ -1,7 +1,5 @@
 package server;
 
-import java.net.URI;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-//native imports
 import utility.DbAdaptor;
 import utility.LoginCredentials;
 import utility.RegisterCredentials;
-import utility.UpdateRequest;
+
+import java.net.URI;
 
 /**
  * Class that maps route requests made to the server.
@@ -88,5 +86,15 @@ public class GreetingController {
         return new ResponseEntity("Your account could not be created",
                     HttpStatus.INTERNAL_SERVER_ERROR);
 
+    }
+
+    @PostMapping("/changepass")
+    public ResponseEntity changepass(@RequestBody final String[] creds) {
+        String user = creds[1];
+        String newpass = creds[2];
+
+        DB_ADAPTOR.changepass(user, newpass);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

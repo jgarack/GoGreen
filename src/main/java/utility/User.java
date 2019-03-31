@@ -91,7 +91,7 @@ public class User {
      * Checks if the username has been instantiated.
      * @return true iff the username is not null;
      */
-    public boolean hasUsername(){
+    public boolean hasUsername() {
         return this.username != null;
     }
 

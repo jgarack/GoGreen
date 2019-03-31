@@ -3,11 +3,10 @@ package utility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exceptions.ServerStatusException;
 
-
 import java.io.BufferedReader;
-import java.io.OutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -139,8 +138,7 @@ public class HttpRequestHandler {
      * @author awjvanvugt
      * @param con connection to the server
      * @return BufferedReader containing the response from the server
-     * @throws ServerStatusException If the status code
-     * is other than HTTP OK (200)
+     * @throws ServerStatusException If the status code is other than HTTP OK (200)
      * @throws IOException at readRes
      */
     private BufferedReader readRes(final HttpURLConnection con)
@@ -150,6 +148,7 @@ public class HttpRequestHandler {
             return new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
         }
+
         throw new ServerStatusException(con.getURL().toString(), responsecode);
     }
 

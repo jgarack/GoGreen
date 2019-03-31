@@ -30,6 +30,12 @@ public class MainController {
      */
     private static final double POINT_EIGHT = 0.8;
 
+    /**
+     * The fond size.
+     * {@value}
+     */
+    private static final int FSIZE = 20;
+
 
 
 
@@ -72,7 +78,7 @@ public class MainController {
         this.greetingsText
                 .setGraphic(GlyphFontRegistry
                         .font("FontAwesome")
-                        .create(FontAwesome.Glyph.USER).size(20));
+                        .create(FontAwesome.Glyph.USER).size(FSIZE));
 
     }
 
@@ -102,6 +108,7 @@ public class MainController {
             throws IOException {
         loadScene("howToPlay");
     }
+
     /**
      * Loads home screen.
      * @throws IOException when FXMLLoader cannot load properly.
@@ -144,6 +151,10 @@ public class MainController {
         loadScene("friendsList");
     }
 
+    /**
+     * Loads achievements scene.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
     @FXML
     protected void loadAchievementsScene() throws IOException {
         loadScene("achievements");
@@ -153,8 +164,7 @@ public class MainController {
     /**
      * Loads a scene based on the given string.
      * @param scene The scene that needs to be loaded.
-     * @throws IOException Thrown if
-     * the FXMLLoader encounters an error
+     * @throws IOException Thrown if the FXMLLoader encounters an error
      */
     private void loadScene(final String scene)
             throws IOException {
@@ -163,9 +173,11 @@ public class MainController {
         Parent newScene = fxmlLoader.load();
         new FadeInUp(newScene).play();
         if (scene.equals("personalInfo")) {
-            ((personalInfoController) fxmlLoader.getController()).setMainController(this);
+            ((PersonalInfoController) fxmlLoader.getController())
+                    .setMainController(this);
         } else if (scene.equals("friendsList")) {
-            ((FriendsController)fxmlLoader.getController()).setMainController(this);
+            ((FriendsController) fxmlLoader.getController())
+                    .setMainController(this);
         }
         root.setCenter(newScene);
     }

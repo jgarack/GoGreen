@@ -1,21 +1,28 @@
 package gui;
 
-
-
-
 import animatefx.animation.ZoomInRight;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -125,7 +132,9 @@ public class FriendsController {
     }
 
 
-
+    /**
+     * Construct the leaderboard as table view.
+     */
     private void constructTableFriends() {
 
 
@@ -184,6 +193,7 @@ public class FriendsController {
 
 
     }
+
     /**
      * Constructs the list view
      * with pending requests.
@@ -194,8 +204,7 @@ public class FriendsController {
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
             for (String friend : pendingRequests) {
-                HBox currFriend = new HBox();
-                Label sender = new Label(friend + " sent you a request!");
+
 
                 Button acceptBtn = new Button("Accept");
                 acceptBtn.setStyle("-fx-font-family: 'FontAwesome'");
@@ -217,13 +226,16 @@ public class FriendsController {
                     }
                 });
 
-
                 Button declineBtn = new Button("Block user");
                 declineBtn.setStyle("-fx-font-family: 'FontAwesome'");
                 declineBtn
                         .setGraphic(GlyphFontRegistry
                                 .font("FontAwesome")
                                 .create(FontAwesome.Glyph.TIMES_CIRCLE_ALT));
+
+                HBox currFriend = new HBox();
+                Label sender = new Label(friend + " sent you a request!");
+
                 declineBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
@@ -267,7 +279,7 @@ public class FriendsController {
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
                 String recipient =
-                        ((User)row.getItem()).getUsername();
+                        ((User) row.getItem()).getUsername();
                 dbAdaptor.considerRequest(sender, recipient, false);
                 dbAdaptor.considerRequest(recipient, sender, false);
                 reloadPage();
@@ -282,7 +294,7 @@ public class FriendsController {
     /**
      * Attaches add friend pop over.
      *
-     * @param box the row where the pop over is attached.
+     * @param row the row where the pop over is attached.
      */
     private void attachAddFriendPopOver(final TableRow row) {
 
@@ -293,7 +305,7 @@ public class FriendsController {
             public void handle(final MouseEvent event) {
                 String sender = MainHandler.username;
                 String recipient =
-                        ((User)row.getItem()).getUsername();
+                        ((User) row.getItem()).getUsername();
                 dbAdaptor.sendFriendReq(sender, recipient);
                 reloadPage();
             }
@@ -304,10 +316,13 @@ public class FriendsController {
         popOver.show(row);
     }
 
+    /**
+     * Used to reload the page.
+     */
     private void reloadPage() {
-        try{
+        try {
             mainController.loadFriendsListScene();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             alertBuilder.displayException(ex);
         }
     }
@@ -328,7 +343,6 @@ public class FriendsController {
                     .formEntryWarning("search bar",
                             "There is no user with this username");
         } else {
-            //TODO: add searched user.
             //friendsListView.getItems().clear();
             showSearchedFriend(searchedUser);
         }
@@ -338,9 +352,9 @@ public class FriendsController {
 
     /**
      * Shows searched friend.
-     * @param searchedUser
+     * @param searchedUser User Object
      */
-    private void showSearchedFriend(User searchedUser) {
+    private void showSearchedFriend(final User searchedUser) {
         friendsTable.getItems().clear();
         friendsTable.getItems()
                 .add(searchedUser);
@@ -348,10 +362,10 @@ public class FriendsController {
 
     /**
      * Sets a new main controller.
-     * @param mainController the controller to be set.
+     * @param main the controller to be set.
      */
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    public void setMainController(final MainController main) {
+        this.mainController = main;
     }
 
 

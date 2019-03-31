@@ -1,7 +1,6 @@
 package utility;
 
 import gui.AlertBuilder;
-import javafx.scene.control.Alert;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -56,7 +55,7 @@ public class DbAdaptor {
     private final int eight = 8;
 
 
-    private enum FRIEND_STATUS {
+    private enum FriendStatus {
         PENDING,
         ACCEPTED,
         DECLINED
@@ -75,8 +74,6 @@ public class DbAdaptor {
      * Password for the DB.
      */
     private String password;
-
-    private AlertBuilder alertBuilder = new AlertBuilder();
 
     /**
      * Initial connection.
@@ -117,7 +114,6 @@ public class DbAdaptor {
         try {
             conn = DriverManager.getConnection(jdbUrl, username, password);
         } catch (SQLException e) {
-            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -135,7 +131,6 @@ public class DbAdaptor {
             }
 
         } catch (SQLException e) {
-            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -187,8 +182,6 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -239,25 +232,22 @@ public class DbAdaptor {
      * @param name of the user
      * @param avatarUrl url of the picture.
      */
-    public void updateAvatarUrl(final String name, final String avatarUrl) {
+    public boolean updateAvatarUrl(final String name, final String avatarUrl) {
         try {
-            if(avatarUrl.startsWith("https://imgur.com")
-                    || avatarUrl.startsWith("/icons/avatar")) {
-                connect();
-                PreparedStatement st = conn
-                        .prepareStatement("UPDATE users"
-                                + " SET image = ? "
-                                + "WHERE username = ?");
-                st.setString(one, avatarUrl);
-                st.setString(two, name);
-                st.executeUpdate();
-                st.close();
-                alertBuilder.showInformationNotification("You changed the avatar.");
-            }
+            connect();
+            PreparedStatement st = conn
+                            .prepareStatement("UPDATE users"
+                                    + " SET image = ? "
+                                    + "WHERE username = ?");
+            st.setString(one, avatarUrl);
+            st.setString(two, name);
+            st.executeUpdate();
+            st.close();
+            return true;
+
 
         } catch (SQLException e) {
-            alertBuilder.showAlert("Avatar", "Couldn't add avatar to the database.");
-            e.printStackTrace();
+            return false;
         } finally {
             disconnect();
         }
@@ -272,34 +262,26 @@ public class DbAdaptor {
 
 
         try {
-
             connect();
             PreparedStatement st = conn.prepareStatement(
                     "SELECT username,"
                             + " password FROM credentials WHERE username = ?");
 
-
             st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
-
             LoginCredentials tempLC = new LoginCredentials(null, null);
-
-
             while (rs.next()) {
                 tempLC.setUsername(rs.getString(one));
                 tempLC.setPassword(rs.getString(two));
             }
-
             if (logCre.equals(tempLC)) {
                 return true;
             }
-
-
+            st.close();
             return false;
 
 
         } catch (SQLException e) {
-            alertBuilder.displayException(e);
             e.printStackTrace();
         } finally {
             disconnect();
@@ -345,7 +327,7 @@ public class DbAdaptor {
 
             return true;
         } catch (SQLException e) {
-            alertBuilder.showAlert("User already exists", "Please chose another username.");
+            // alertBuilder.showAlert("User already exists", "Please chose another username.");
             e.printStackTrace();
         } finally {
             disconnect();
@@ -369,7 +351,6 @@ public class DbAdaptor {
 
             st.setString(1, userName);
             rs = st.executeQuery();
-
             User tempUser = new User(null, 0);
 
             while (rs.next()) {
@@ -378,6 +359,8 @@ public class DbAdaptor {
                 tempUser.setAvatarUrl(rs.getString(three));
                 break;
             }
+
+            st.close();
 
             return tempUser;
 
@@ -416,6 +399,9 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             amount += rs.getInt("amount");
+
+            st.close();
+
             PreparedStatement pst = conn
                     .prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
@@ -483,6 +469,7 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt(one);
+            st.close();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -509,6 +496,7 @@ public class DbAdaptor {
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt("total_score");
+            st.close();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -551,19 +539,19 @@ public class DbAdaptor {
         if (checkIfInDb(fromUser,toUser)) {
             connect();
             try {
-                System.out.println("from: "+ fromUser + "  to:" + toUser);
+                System.out.println("from: " + fromUser + "  to:" + toUser);
 
                 PreparedStatement st = conn.prepareStatement(
                         "INSERT INTO friend_request(from_user, "
                              + "to_user,friend_status) VALUES (?,?, ?::friend_status)");
                 st.setString(1,fromUser);
                 st.setString(2,toUser);
-                st.setString(3,FRIEND_STATUS.PENDING.name());
+                st.setString(3,FriendStatus.PENDING.name());
                 st.executeUpdate();
+                st.close();
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
-                alertBuilder.showAlert("User already added", "Check if you or your friend did not not sent a invitation already.");
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -596,7 +584,7 @@ public class DbAdaptor {
                     + "WHERE from_user = ? AND to_user = ? AND friend_status = ?::friend_status");
             st.setString(2, fromUs);
             st.setString(1, toUs);
-            st.setString(3,FRIEND_STATUS.DECLINED.name());
+            st.setString(3, FriendStatus.DECLINED.name());
             rs = st.executeQuery();
             System.out.println("...");
             if (rs.next() == true) {
@@ -605,11 +593,7 @@ public class DbAdaptor {
                 check = true;
             }
 
-            if(!check) {
-                alertBuilder.showAlert("User already added", "Check if the user did not send a invitation already.");
-            }
-
-
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -633,19 +617,20 @@ public class DbAdaptor {
                     + "SET friend_status = ?::\"friend_status\" WHERE from_user = ? "
                     + "AND to_user = ?");
             if (accepted) {
-                st.setString(1,FRIEND_STATUS.ACCEPTED.name()) ;
+                st.setString(1, FriendStatus.ACCEPTED.name()) ;
             } else {
-                st.setString(1, FRIEND_STATUS.DECLINED.name());
+                st.setString(1, FriendStatus.DECLINED.name());
             }
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
-            if (accepted) {
+            /*if (accepted) {
                 alertBuilder.showInformationNotification("Friend request accepted!");
             } else {
-                alertBuilder.showInformationNotification("Friend request declined!\nUser is now blocked.");
-            }
-
+                alertBuilder.showInformationNotification("Friend request declined!"
+                        + "\nUser is now blocked.");
+            }*/
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -668,12 +653,14 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement("SELECT from_user FROM friend_request"
                     + " WHERE to_user = ? and friend_status = ?::\"friend_status\"");
             st.setString(1, username);
-            st.setString(2,FRIEND_STATUS.PENDING.name());
+            st.setString(2, FriendStatus.PENDING.name());
             rs = st.executeQuery();
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
+            st.close();
             return listOfPending;
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -697,19 +684,22 @@ public class DbAdaptor {
                     + "friend_request WHERE from_user = ? AND friend_status = ?"
                     + "::\"friend_status\"");
             st.setString(1, username);
-            st.setString(2,FRIEND_STATUS.ACCEPTED.name());
+            st.setString(2, FriendStatus.ACCEPTED.name());
             rs = st.executeQuery();
+
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
             st = conn.prepareStatement("SELECT from_user FROM friend_request "
                     + "WHERE to_user = ? AND friend_status = ?::\"friend_status\"");
             st.setString(1, username);
-            st.setString(2,FRIEND_STATUS.ACCEPTED.name());
+            st.setString(2, FriendStatus.ACCEPTED.name());
             rs = st.executeQuery();
+
             while (rs.next()) {
                 listOfPending.add(rs.getString(1));
             }
+            st.close();
             return listOfPending;
 
         } catch (SQLException e) {
@@ -722,19 +712,40 @@ public class DbAdaptor {
     }
 
     /**
-     * updates the date when the user last time used the app.
+     * change password in the database.
+     * @param user of the username
+     * @param newpass of the username
+     */
+    public void changepass(final String user, final String newpass) {
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement(new StringBuilder("UPDATE")
+                    .append(" credentials SET password = ? WHERE username = ?").toString());
+            st.setString(one, newpass);
+            st.setString(two, user);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+    /**
+     * updates the last seen date in user tuple.
      * @param username of the user
-     * @param date to be updated.
+     * @param date when last seen
      */
     public void updateDate(String username, Date date) {
         connect();
         try {
-            PreparedStatement st = conn.prepareStatement("UPDATE users"
-                    + " SET date_last_active = ? WHERE username = ?");
-            System.out.println(st.toString());
+            PreparedStatement st = conn.prepareStatement("UPDATE users SET"
+                    + " date_last_active = ? WHERE username = ?");
             st.setDate(1, date);
             st.setString(2, username);
             st.executeUpdate();
+            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -751,20 +762,26 @@ public class DbAdaptor {
      */
     public Date getDate(String username) {
         connect();
+        Date date = null;
         try {
             PreparedStatement st = conn.prepareStatement("SELECT date_last_active "
                     + "FROM users WHERE username = ?");
             st.setString(1, username);
             rs = st.executeQuery();
+
             if (rs.next()) {
-                return rs.getDate(1);
+                date =  rs.getDate(1);
+                st.close();
+
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+
             disconnect();
         }
-        return null;
+        return date;
     }
 
 
@@ -783,6 +800,7 @@ public class DbAdaptor {
             st.setString(1, username);
             st.setInt(2, id);
             st.executeUpdate();
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -790,6 +808,10 @@ public class DbAdaptor {
         }
     }
 
+    /**
+     * returns list of all achievements.
+     * @return achievement object
+     */
     public List<Achievement> getAllAchievements() {
         connect();
         List<Achievement> temp = new ArrayList<>();
@@ -799,6 +821,7 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             Achievement currAch;
+
             while (rs.next()) {
                 currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
                 temp.add(currAch);
@@ -806,7 +829,7 @@ public class DbAdaptor {
 
             st.close();
         } catch (SQLException e) {
-            alertBuilder.displayException(e);
+            e.printStackTrace();
         } finally {
             disconnect();
         }
@@ -830,10 +853,12 @@ public class DbAdaptor {
             rs = st.executeQuery();
 
             int currId;
+
             while (rs.next()) {
                 currId = rs.getInt(1);
                 temp.add(currId);
             }
+            st.close();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -841,7 +866,5 @@ public class DbAdaptor {
         }
         return temp;
     }
-
-
 
 }

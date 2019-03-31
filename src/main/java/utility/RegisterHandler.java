@@ -1,18 +1,18 @@
 package utility;
 
+import exceptions.ServerStatusException;
 import gui.AlertBuilder;
-import javax.xml.bind.DatatypeConverter;
+
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.xml.bind.DatatypeConverter;
 
 /**
  * Class for handling register forms.
  */
 public class RegisterHandler {
-    /**
-     * The domain on which the server is running.
-     */
-    private String domain;
+
     /**
      * The folder that contains the log files for this class.
      * {@value}
@@ -20,13 +20,19 @@ public class RegisterHandler {
     private static final String LOGFOLDER = null;
 
     /**
-     * The HttpRequestHandler used for this class.
-     */
-    public HttpRequestHandler httpHandler;
-    /**
      * The builder used to build alerts for this handler.
      */
     public AlertBuilder alertBuilder;
+
+    /**
+     * The HttpRequestHandler used for this class.
+     */
+    public HttpRequestHandler httpHandler;
+
+    /**
+     * The domain on which the server is running.
+     */
+    private String domain;
 
     /**
      * Constructor.
@@ -73,14 +79,15 @@ public class RegisterHandler {
             } catch (NoSuchAlgorithmException md5Error) {
                 alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
-            } catch (Exception e) {
-                alertBuilder.displayException(e);
-                return false;
+            } catch (ServerStatusException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } else {
-            return false;
         }
+        return false;
     }
+
     /**
      * Checks whether the filled form
      * has been filled with valid input.
@@ -137,12 +144,12 @@ public class RegisterHandler {
         } else if (secretQ.isEmpty()) {
             alertBuilder.formEntryWarning("Secret Question Field",
                         "You need to fill in your secret question");
-                return false;
+            return false;
         } else if (secretAnswer.isEmpty()) {
-                alertBuilder.formEntryWarning("Secret Answer Field",
+            alertBuilder.formEntryWarning("Secret Answer Field",
                         "You need to fill in your secret answer");
-                return false;
-            }
+            return false;
+        }
 
         return true;
     }

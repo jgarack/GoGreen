@@ -9,22 +9,40 @@ import java.io.IOException;
  * Handler for the main controller.
  */
 public class MainHandler {
+    /**
+     * Username of the user.
+     */
+    public static String username;
 
     /**
      * A private Handler for Http requests.
      */
     private HttpRequestHandler httpHandler;
-    /**
-     * Username of the user.
-     */
-    public static String username;
+
+    private AlertBuilder alertBuilder;
+
+
     /**
      * Constructor.
      * @param domain The host.
      */
     public MainHandler(final String domain) {
         httpHandler = new HttpRequestHandler(domain);
+        alertBuilder = new AlertBuilder();
     }
+
+    public void setHttpHandler(HttpRequestHandler handler) {
+        httpHandler = handler;
+    }
+
+    public HttpRequestHandler getHttpHandler() {
+        return httpHandler;
+    }
+
+    public void setAlertBuilder(AlertBuilder builder) {
+        alertBuilder = builder;
+    }
+
     /**
      * Tries to parse integer.
      *
@@ -40,18 +58,17 @@ public class MainHandler {
         }
     }
 
-    /**
+    /*
      * Checks if the subtracted value
      * is greater than the initial one.
      * @param initVal initial value
      * @param valSubtract value to be subtracted
-     * @return true if
-     * the initial is greater or equal
+     * @return true if the initial is greater or equal
      */
-    public static boolean checkPositiveValues(final int initVal,
+    /*public static boolean checkPositiveValues(final int initVal,
                                               final int valSubtract) {
         return initVal >= valSubtract;
-    }
+    }*/
 
     /**
      * Updates a veg meal.
@@ -106,10 +123,18 @@ public class MainHandler {
             return -1;
         }
     }
+<<<<<<< HEAD
     /**
      * Updates bus consumption.
      * @param amount to be updated
      * @return the new amount
+=======
+
+    /**
+     * updates Bus points.
+     * @param amount which should be added
+     * @return 0 if ok, -1 if exception thrown
+>>>>>>> f3d82b33822227fdba0c8099d0d68ac603991d7e
      */
     public int updateBus(final int amount) {
         try {
@@ -123,23 +148,30 @@ public class MainHandler {
             return -1;
         }
     }
+<<<<<<< HEAD
     /**
      * Updates solar consumption.
      * @param amount to be updated
      * @return the new amount
+=======
+
+    /**
+     * updates solar panels.
+     * @param amount which should be added
+     * @return 0 if ok, -1 if exception thrown
+>>>>>>> f3d82b33822227fdba0c8099d0d68ac603991d7e
      */
     public int updateSolar(final int amount) {
         try {
             String res = httpHandler
-
                     .reqPost("/points",
                             new UpdateRequest(username, 5, amount))
                     .readLine();
-            if(res.equals("false")){
+            if (res.equals("false")) {
                 System.out.println(res);
-                new AlertBuilder().showInformationNotification(
-                        "You have Already "
-                                + "Performed this activity this month");
+                alertBuilder.showInformationNotification(
+                        "You have already "
+                                + "performed this activity this month");
                 return 0;
             }
             return Integer.parseInt(res);
