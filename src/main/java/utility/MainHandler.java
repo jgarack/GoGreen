@@ -123,18 +123,11 @@ public class MainHandler {
             return -1;
         }
     }
-<<<<<<< HEAD
-    /**
-     * Updates bus consumption.
-     * @param amount to be updated
-     * @return the new amount
-=======
 
     /**
      * updates Bus points.
      * @param amount which should be added
      * @return 0 if ok, -1 if exception thrown
->>>>>>> f3d82b33822227fdba0c8099d0d68ac603991d7e
      */
     public int updateBus(final int amount) {
         try {
@@ -148,18 +141,10 @@ public class MainHandler {
             return -1;
         }
     }
-<<<<<<< HEAD
-    /**
-     * Updates solar consumption.
-     * @param amount to be updated
-     * @return the new amount
-=======
-
     /**
      * updates solar panels.
      * @param amount which should be added
      * @return 0 if ok, -1 if exception thrown
->>>>>>> f3d82b33822227fdba0c8099d0d68ac603991d7e
      */
     public int updateSolar(final int amount) {
         try {
