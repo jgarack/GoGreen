@@ -13,26 +13,28 @@
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="gui.AboutController"
           prefHeight="400.0" prefWidth="600.0"
           alignment="center" hgap="10" vgap="10">
 
-    <Label text="About Us" alignment="CENTER" fx:id="howToTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+        <!--fx:controller="gui.AboutController"-->
+
+    <Label text="About Us" alignment="CENTER" fx:id="aboutTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
     <Label fx:id="aboutSceneText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">GoGreen is an app designed with the purpose to make it easier to keep track of eco-friendly decisions and their impact on</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">the world, all whilst providing an engaging experience that will hopefully motivate the user to keep a greener lifestyle.</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">It is our belief that every little action counts, which is our app provides long term tracking of the impact a user's habits have.</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">This app was developed by [OOPP Group 98], composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,</Label>
-    <Label fx:id="aboutSceneText" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Jonathan Garack, Lassie Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.</Label>
+    <Label fx:id="aboutSceneText" GridPane.rowIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Jonathan Garack, Lachezar Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.</Label>
 
     <HBox fx:id="howToImage" GridPane.rowIndex="8" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-    <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
+    <ImageView layoutX="100.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER">
         <image>
             <Image url="/icons/aboutUsDesk.png"/>
         </image>
     </ImageView>
     </HBox>
 
+    <!--
     <Label fx:id="aboutSceneText" text="Did you like the app? Leave your thoughts below." GridPane.rowIndex="9" GridPane.halignment="CENTER"/>
     <TextArea fx:id="reviewArea" GridPane.rowIndex="11" GridPane.columnSpan="3" GridPane.rowSpan="2" promptText="Add your review here..."/>
 
@@ -40,5 +42,6 @@
         <Rating fx:id="ratingBar" orientation="HORIZONTAL" partialRating="true" GridPane.halignment="LEFT" updateOnHover="true"/>
         <Button fx:id="submitReview" text="Submit the review" alignment="BOTTOM_LEFT" GridPane.halignment="LEFT"/>
     </HBox>
+    -->
 
 </GridPane>

@@ -3,6 +3,7 @@ package gui;
 import javafx.scene.control.Alert;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -13,40 +14,43 @@ public class AlertBuilder {
      * Duration of the defaultNotification.
      */
     private final double durationNotification = 1.5;
+
     /**
      * Default constructor.
      */
     public AlertBuilder() {
     }
+
     /**
      * Displays an error message for a thrown exception.
-     * @param e the thrown exception to display
+     * @param exception the thrown exception to display
      */
     public void encryptionExceptionHandler(
-            final NoSuchAlgorithmException e) {
+            final NoSuchAlgorithmException exception) {
         Alert encryptionError = new Alert(Alert.AlertType.ERROR);
         encryptionError.setTitle("Encryption failure:");
         encryptionError.setContentText("The client failed to encrypt your "
                 + "login credentials, and your login attempt was aborted."
                 + "\nPlease try again and contact an administrator if this"
-                + "issue persists.\nException found:\n" + e.getMessage()
+                + "issue persists.\nException found:\n" + exception.getMessage()
                 + "\n see terminal for stacktrace");
-        e.printStackTrace();
+        exception.printStackTrace();
         encryptionError.showAndWait();
     }
 
     /**
      * Displays an error message for a thrown exception.
-     * @param e the thrown exception to display
+     * @param exception the thrown exception to display
      */
-    public void displayException(final Exception e) {
+    public void displayException(final Exception exception) {
         Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
         statusCodeError.setTitle("Access denied!");
         statusCodeError
                 .setContentText("Invalid username and password combination!");
-        e.printStackTrace();
+        exception.printStackTrace();
         statusCodeError.showAndWait();
     }
+
     /**
      * Displays a warning message.
      * @param fieldName the field that was not filled in correctly.
@@ -81,4 +85,27 @@ public class AlertBuilder {
     public void showInformationNotification(final String notificationMsg) {
         formNotification(notificationMsg).showInformation();
     }
+
+    /**
+     * Shows alert notification.
+     * @param notificationMsg the message to be shown.
+     */
+    public void showAlertNotification(final String notificationMsg) {
+        formNotification(notificationMsg).showError();
+    }
+
+    /**
+     * puts an alert to screen with the message.
+     * @param title of the alert
+     * @param msg of the alert
+     */
+    public void showAlert(final String title,
+                          final String msg) {
+        Alert statusCodeError = new Alert(Alert.AlertType.ERROR);
+        statusCodeError.setTitle(title);
+        statusCodeError
+                .setContentText(msg);
+        statusCodeError.showAndWait();
+    }
+
 }

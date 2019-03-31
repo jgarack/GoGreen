@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FeatureTest {
-Feature fea = new Feature("10");
+Feature fea = new Feature(10,1);
     @Test
     void test_getValue() {
         assertEquals(10,fea.getValue());

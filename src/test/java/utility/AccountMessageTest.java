@@ -72,8 +72,17 @@ public class AccountMessageTest {
      * Equals method test when the usernames of objects are different.
      */
     @Test
-    public void equalsDifferentValue() {
-        AccountMessage testAccountMessageDifferent = new AccountMessage("usergdname", "passdfsword");
+    public void equalsDifferentValue_user() {
+        AccountMessage testAccountMessageDifferent = new AccountMessage("usergdname", "password");
+        assertNotEquals(testAccountMessage, testAccountMessageDifferent);
+    }
+
+    /**
+     * Equals method test when the passwords of objects are different.
+     */
+    @Test
+    public void equalsDifferentValue_pass() {
+        AccountMessage testAccountMessageDifferent = new AccountMessage("username", "passdfsword");
         assertNotEquals(testAccountMessage, testAccountMessageDifferent);
     }
 

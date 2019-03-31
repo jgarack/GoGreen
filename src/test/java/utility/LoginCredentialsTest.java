@@ -13,7 +13,7 @@ class LoginCredentialsTest {
     @Test
     void constructorTest() {
 
-        assertEquals(LC1,LC2);
+        assertEquals(LC1, LC2);
 
     }
 
@@ -48,9 +48,17 @@ class LoginCredentialsTest {
     }
 
     @Test
-    void notEquals() {
-        LC2.setPassword("pass");
-        assertNotEquals(LC1, LC2);
+    void notEquals_pass() {
+        LoginCredentials temp = LC2;
+        temp.setPassword("pass");
+        assertFalse(LC1.equals(temp));
+    }
+
+    @Test
+    void notEquals_user() {
+        LoginCredentials temp = LC2;
+        temp.setUsername("user");
+        assertFalse(LC1.equals(temp));
     }
 
     @Test
@@ -59,13 +67,24 @@ class LoginCredentialsTest {
     }
 
     @Test
+    void EqualsSameObj() {
+        assertEquals(LC1, LC1);
+    }
+
+
+    @Test
     void nullEquals() {
-        assertNotEquals(null, LC2);
+        assertFalse(LC1.equals(null));
     }
 
     @Test
     void objectEquals() {
-        assertNotEquals(new Object(), LC2);
+        assertFalse(LC2.equals(new Object()));
     }
-    
+
+    @Test
+    void HashCodeTest() {
+        assertEquals(LC2.hashCode(), 0);
+    }
+
 }

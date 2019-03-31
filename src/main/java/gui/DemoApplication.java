@@ -1,18 +1,19 @@
 package gui;
 
+import animatefx.animation.ZoomIn;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import server.GreetingController;
-
 
 
 /**
@@ -34,19 +35,7 @@ public class DemoApplication extends Application {
      * The number 600.
      */
     private static final int SIXHUNDRED = 600;
-    //A list of files used in this class.
-    /**
-     * Login page fxml file.
-     * {@value}
-     */
 
-    //private final String loginFXML = "src/main/java/gui/loginView.fxml";
-
-    /**
-     * Index page css file.
-     * {@value}
-     */
-    private final String indexCSS = "src/main/java/gui/loginStylesheet.css";
 
     /**
      * The width dimension of the application window: {@value}.
@@ -77,24 +66,24 @@ public class DemoApplication extends Application {
     /**
      * Boots the spring server and loads in the fxml login page
      * Overrides the init() method in Application.
-     * @throws Exception
+     * @throws Exception .
      */
     @Override
     public void init() throws Exception {
         springContext = SpringApplication.run(DemoApplication.class);
-
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(springContext::getBean);
 
         root = fxmlLoader.load(getClass().getResource("/fxml/loginView.fxml"));
 
+        new ZoomIn(root).play();
 
     }
 
     /**
      * Applies css file to stage and starts it.
      * @param primaryStage the stage to start.
-     * @throws Exception
+     * @throws Exception .
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
@@ -110,14 +99,18 @@ public class DemoApplication extends Application {
         primaryStage.setWidth(bounds.getWidth());
         primaryStage.setHeight(bounds.getHeight());
         primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(event -> {
+            springContext.close();
+            System.out.println("Terminated");
+        });
         primaryStage.show();
+
+
     }
-
-
 
     /**
      * Stops the server.
-     * @throws Exception
+     * @throws Exception .
      */
     @Override
     public void stop() {

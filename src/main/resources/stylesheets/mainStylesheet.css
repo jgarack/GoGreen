@@ -13,27 +13,25 @@
 }
 #navBar{
     -fx-background-color: transparent;
-    -fx-padding: 5 5 0 5;
+    -fx-padding: 10 10 10 10;
+
+
 }
-#home,#howToPlay,#aboutUs,#personalInfo{
+#home,#howToPlay,#aboutUs,#personalInfo,#friendsListBtn,#achievementsBtn{
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
-    -fx-background-color: rgb(82, 136, 81);
-    -fx-font-size: 20;
+    -fx-background-color: #a32243;
+    -fx-font-size: 24;
     -fx-fill-height: true;
 }
 
-#review:hover {
-    -fx-background-color: #78c292;
+
+#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover,#friendsListBtn:hover,#achievementsBtn:hover {
+    -fx-background-color: #A0596B;
 }
 
-
-#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover {
-    -fx-background-color: #78c292;
-}
-
-#howToTitle {
+#howToTitle, #homeTitle, #aboutTitle, #editProfileTitle{
     -fx-font-weight: bold;
     -fx-font-size: 55;
     -fx-text-alignment: right;
@@ -42,7 +40,7 @@
     -fx-padding: 30, 0, 30, 0;
 }
 
-#howToText {
+#howToText, #aboutSceneText {
     -fx-font-size: 25;
     -fx-text-alignment: right;
     -fx-text-fill: white;
@@ -52,13 +50,7 @@
 #howToImage {
     -fx-padding: 30, 0, 30, 0;
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
-}
-
-#aboutSceneText {
-    -fx-font-size: 25;
-    -fx-text-alignment: right;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
+    -fx-alignment: CENTER;
 }
 
 .split-pane *.split-pane-divider {
@@ -73,50 +65,121 @@
     -fx-background-color: transparent;
 
 }
-#featuresList .text-field {
-    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
-}
+
 #featuresList .label{
-    -fx-font-weight: bold;
     -fx-font-size: 30;
     -fx-text-alignment: right;
     -fx-text-fill: white;
     -fx-effect: dropshadow( three-pass-box, rgb(41, 41, 41) , 0 , 0 , 0 , 1);
 }
-
-#userSection .label{
+#pointsEarnedLabel{
+    -fx-font-family: "Sans serif";
+    -fx-font-style: italic;
+    -fx-font-size: 30;
+}
+#greetingsText{
     -fx-font-weight: bold;
     -fx-font-style: italic;
     -fx-font-size: 24;
-    -fx-text-fill: lightgreen;
+    -fx-text-fill: #A0596B;
     -fx-effect: dropshadow( three-pass-box, rgb(41, 41, 41) , 0 , 0 , 0 , 1);
+    -fx-padding: 10 0 0 0;
 }
 
-#LeaderBoard {
-    -fx-background-color: #191970;
-}
 
-#featuresIcons {
+#featuresIconVeggie, #featuresIconBike, #featuresIconProduce, #featuresIconBus, #featuresIconSolar, #featuresIconTemps {
     -fx-padding: 30, 0, 30, 0;
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
 }
 
-/**
-#featuresIcons:hover {
+
+#featuresIconVeggie {
+    -fx-image: url("../icons/iconVegetarianMeal.png");
+}
+#featuresIconVeggie:hover {
     -fx-image: url("../icons/iconVegetarianMealText.png");
 }
-**/
 
-#increaseVegetarianMealsBtn, #increaseBicycleUsageBtn{
+
+#featuresIconBike {
+    -fx-image: url("../icons/iconBikeCar.png");
+}
+#featuresIconBike:hover {
+    -fx-image: url("../icons/iconBikeCarText.png");
+}
+
+
+#featuresIconProduce {
+    -fx-image: url("../icons/iconLocalProduce.png");
+}
+#featuresIconProduce:hover {
+    -fx-image: url("../icons/iconLocalProduceText.png");
+}
+
+
+#featuresIconBus {
+    -fx-image: url("../icons/iconBusCar.png");
+}
+#featuresIconBus:hover {
+    -fx-image: url("../icons/iconBusCarText.png");
+}
+
+
+#featuresIconSolar {
+    -fx-image: url("../icons/iconSolarPanels.png");
+}
+#featuresIconSolar:hover {
+    -fx-image: url("../icons/iconSolarPanelsText.png")
+}
+
+
+#featuresIconTemps {
+    -fx-image: url("../icons/iconLowerTemps.png")
+}
+#featuresIconTemps:hover {
+    -fx-image: url("../icons/iconLowerTempsText.png")
+}
+
+
+
+#increaseVegetarianMealsBtn, #increaseBicycleUsageBtn, #increaseLocalProduceBtn, #increaseBusUsageBtn, #increaseSolarPanelsBtn, #increaseLowerTempsBtn{
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
-    -fx-background-color: rgb(82, 136, 81);
+    -fx-background-color: #a32243;
     -fx-font-size: 20;
     -fx-fill-height: true;
-    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 3, 3, 3, 3);
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 1, 2, 2, 2);
 }
 
-#increaseVegetarianMealsBtn:hover, #increaseBicycleUsageBtn:hover {
-    -fx-background-color: #78c292;
+#increaseVegetarianMealsBtn:hover, #increaseBicycleUsageBtn:hover, #increaseLocalProduceBtn:hover, #increaseBusUsageBtn:hover, #increaseSolarPanelsBtn:hover, #increaseLowerTempsBtn:hover{
+    -fx-background-color: #A0596B;
+}
+
+#avatarImageView {
+    -fx-padding: 30, 0, 30, 0;
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 2, 2, 2, 2);
+}
+
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.493);
+}
+
+#infoLabel{
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-background-color: lightgreen;
+    -fx-fill-width: true;
+    -fx-fill-height: true;
+    -fx-text-alignment: left;
+}
+
+#oldPasswordLabel {
+    -fx-padding: 30 0 0 0;
+}
+#dropHereLabel{
+    -fx-font-size: 18;
+    -fx-padding: 10;
+    -fx-text-fill: #a32243;
 }

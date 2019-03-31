@@ -1,0 +1,57 @@
+#leaderBoardTitle,#pendingReqTitle{
+    -fx-font-weight: bold;
+    -fx-font-size: 55;
+    -fx-text-alignment: right;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
+    -fx-padding: 30, 0, 30, 0;
+}
+#friendsTable {
+    -fx-background-color: transparent;
+}
+#friendsTable .table-row-cell {
+     -fx-cell-size: 60px;
+    -fx-background-color: SKYBLUE;
+    -fx-opacity: 0.7;
+    -fx-font-size: 30;
+    -fx-font-weight: bold;
+
+ }
+
+.userBox{
+    -fx-padding: 10 10 5 10;
+}
+#friendsTable{
+    -fx-background-color: transparent;
+}
+#friendsPane{
+    -fx-background-color: transparent;
+}
+#submitSearchBtn{
+    -fx-text-fill: white;
+    -fx-font-family: "Calibri";
+    -fx-font-weight: bold;
+    -fx-background-color: #a32243;
+    -fx-font-size: 20;
+    -fx-fill-height: true;
+    -fx-effect: innershadow(three-pass-box, rgb(41, 41, 41), 1, 2, 2, 2);
+}
+
+#submitSearchBtn:hover{
+    -fx-background-color: #A0596B;
+}
+
+
+#searchBar{
+    -fx-font-size: 18;
+    -fx-fill-height: true;
+    -fx-font-family: "Myriad Pro";
+}
+#infoLabel{
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-background-color: lightgreen;
+    -fx-fill-width: true;
+    -fx-fill-height: true;
+}

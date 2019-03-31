@@ -1,21 +1,19 @@
 package gui;
 
+import animatefx.animation.FadeInUp;
 import animatefx.animation.JackInTheBox;
-import animatefx.animation.ZoomIn;
-import animatefx.animation.SlideInRight;
-import animatefx.animation.FadeInRight;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import utility.MainHandler;
-//import org.controlsfx.glyphfont.FontAwesome;
-//import org.controlsfx.glyphfont.GlyphFont;
-//import org.controlsfx.glyphfont.GlyphFontRegistry;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.controlsfx.glyphfont.GlyphFontRegistry;
+
 import java.io.IOException;
 
 
@@ -32,6 +30,12 @@ public class MainController {
      */
     private static final double POINT_EIGHT = 0.8;
 
+    /**
+     * The fond size.
+     * {@value}
+     */
+    private static final int FSIZE = 20;
+
 
 
 
@@ -40,8 +44,6 @@ public class MainController {
      */
     @FXML
     private BorderPane root;
-
-
 
     /**
      * Bound to the home button on top.
@@ -59,7 +61,11 @@ public class MainController {
     @FXML
     private Label greetingsText;
 
-
+    /**
+     * Bound to the friends list page.
+     */
+    @FXML
+    private Button friendsListBtn;
 
     /**
      * Updates the Greeting in top right corner.
@@ -68,6 +74,12 @@ public class MainController {
 
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
+        this.greetingsText.setStyle("-fx-font-family: 'FontAwesome'");
+        this.greetingsText
+                .setGraphic(GlyphFontRegistry
+                        .font("FontAwesome")
+                        .create(FontAwesome.Glyph.USER).size(FSIZE));
+
     }
 
 
@@ -78,10 +90,6 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        //GlyphFont font = GlyphFontRegistry.font("FontAwesome");
-        //personalInfo.setGraphic(font
-        // .create(FontAwesome.Glyph.PENCIL).size(16));
-
         try {
             loadHomeScene();
         } catch (IOException err) {
@@ -100,6 +108,7 @@ public class MainController {
             throws IOException {
         loadScene("howToPlay");
     }
+
     /**
      * Loads home screen.
      * @throws IOException when FXMLLoader cannot load properly.
@@ -133,26 +142,43 @@ public class MainController {
         loadScene("personalInfo");
     }
 
+    /**
+     * Loads friends list scene.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    @FXML
+    protected void loadFriendsListScene() throws IOException {
+        loadScene("friendsList");
+    }
+
+    /**
+     * Loads achievements scene.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    @FXML
+    protected void loadAchievementsScene() throws IOException {
+        loadScene("achievements");
+    }
+
 
     /**
      * Loads a scene based on the given string.
      * @param scene The scene that needs to be loaded.
-     * @throws IOException Thrown if
-     * the FXMLLoader encounters an error
+     * @throws IOException Thrown if the FXMLLoader encounters an error
      */
     private void loadScene(final String scene)
             throws IOException {
-        Parent newScene = FXMLLoader.load(getClass()
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                 .getResource("/fxml/" + scene + "Scene.fxml"));
-        if (scene.equals("home")) {
-            new ZoomIn(newScene).setSpeed(POINT_EIGHT).play();
-        } else if (scene.equals("howToPlay")) {
-            new SlideInRight(newScene).play();
-        } else if (scene.equals("about")) {
-            new FadeInRight(newScene).play();
+        Parent newScene = fxmlLoader.load();
+        new FadeInUp(newScene).play();
+        if (scene.equals("personalInfo")) {
+            ((PersonalInfoController) fxmlLoader.getController())
+                    .setMainController(this);
+        } else if (scene.equals("friendsList")) {
+            ((FriendsController) fxmlLoader.getController())
+                    .setMainController(this);
         }
-
         root.setCenter(newScene);
     }
-
 }

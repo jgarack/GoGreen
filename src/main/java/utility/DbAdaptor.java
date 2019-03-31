@@ -1,17 +1,19 @@
 package utility;
 
-import features.Feature;
 import gui.AlertBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 /**
@@ -53,6 +55,13 @@ public class DbAdaptor {
     private final int eight = 8;
 
 
+    private enum FriendStatus {
+        PENDING,
+        ACCEPTED,
+        DECLINED
+    }
+
+
     /**
      * Url of the database.
      */
@@ -70,10 +79,7 @@ public class DbAdaptor {
      * Initial connection.
      */
     private Connection conn = null;
-    /**
-     * Initial statement.
-     */
-    private Statement stmt = null;
+
     /**
      * Initial set of results from DB.
      */
@@ -105,12 +111,9 @@ public class DbAdaptor {
      * Connect method.
      */
     public void connect() {
-        System.out.println("connecting to database...");
         try {
             conn = DriverManager.getConnection(jdbUrl, username, password);
-            System.out.println("connected to database");
         } catch (SQLException e) {
-            System.out.println("connection failure");
             e.printStackTrace();
         }
     }
@@ -120,16 +123,12 @@ public class DbAdaptor {
      */
     public void disconnect() {
         try {
-            if (stmt != null) {
-                stmt.close();
-            }
             if (conn != null) {
                 conn.close();
             }
             if (rs != null) {
                 rs.close();
             }
-            System.out.println("Disconnected from Database");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -142,41 +141,24 @@ public class DbAdaptor {
      * @param user object of the user.
      */
     public void insertUser(final User user) {
-        System.out.println("Inserting...");
-
+        connect();
         try {
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO users (username,"
-                            + "total_score)"
-                            + " VALUES(?,?)");
+                            + "total_score,image)"
+                            + " VALUES(?,?,?)");
             st.setString(one, user.getUsername());
             st.setInt(two, user.getTotalScore());
+            st.setString(three,user.getAvatarUrl());
             st.executeUpdate();
             st.close();
-            System.out.println("Inserted");
+
 
         } catch (SQLException e) {
-            System.out.println("Not Inserted");
-            e.printStackTrace();
-        }
 
-    }
-
-    /**
-     * Inserts a habit into the DB.
-     *
-     * @param habitName the habit to be inserted.
-     */
-    public void insertActivity(final String habitName) {
-        try {
-            PreparedStatement st = conn
-                    .prepareStatement("INSERT INTO activity "
-                            + "(name) VALUES (?)");
-            st.setString(1, habitName);
-            st.executeUpdate();
-            st.close();
-        } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
     }
@@ -188,6 +170,7 @@ public class DbAdaptor {
      */
     public void addActivity(final ActivityDb activity) {
         try {
+            connect();
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
                             + "Activities(player, activity_id,"
@@ -199,11 +182,10 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            updateTotalScore(activity.getUsernameAct());
-
-
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
@@ -222,7 +204,6 @@ public class DbAdaptor {
                             + "FROM activities "
                             + "WHERE player = ?");
             st.setString(one, name);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             int score = Integer.parseInt(rs.getString(one));
@@ -234,14 +215,41 @@ public class DbAdaptor {
                             + "WHERE username = ?");
             st.setInt(one, score);
             st.setString(two, name);
-            System.out.println(st.toString());
             st.executeUpdate();
             st.close();
 
-            disconnect();
+
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    /**
+     * updates avatars url in database.
+     * @param name of the user
+     * @param avatarUrl url of the picture.
+     */
+    public boolean updateAvatarUrl(final String name, final String avatarUrl) {
+        try {
+            connect();
+            PreparedStatement st = conn
+                            .prepareStatement("UPDATE users"
+                                    + " SET image = ? "
+                                    + "WHERE username = ?");
+            st.setString(one, avatarUrl);
+            st.setString(two, name);
+            st.executeUpdate();
+            st.close();
+            return true;
+
+
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            disconnect();
         }
     }
 
@@ -254,33 +262,29 @@ public class DbAdaptor {
 
 
         try {
-
-
+            connect();
             PreparedStatement st = conn.prepareStatement(
                     "SELECT username,"
                             + " password FROM credentials WHERE username = ?");
 
-
             st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
-
             LoginCredentials tempLC = new LoginCredentials(null, null);
-
-
             while (rs.next()) {
                 tempLC.setUsername(rs.getString(one));
                 tempLC.setPassword(rs.getString(two));
             }
-
             if (logCre.equals(tempLC)) {
                 return true;
             }
-
+            st.close();
             return false;
 
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
 
@@ -296,8 +300,18 @@ public class DbAdaptor {
     public boolean addNewUser(final RegisterCredentials regCre) {
 
         try {
+            connect();
             PreparedStatement st = conn
                     .prepareStatement("INSERT INTO "
+                            + "users(username, total_score, image) VALUES (?,?,?)");
+            st.setString(one, regCre.getUsername());
+            st.setInt(two, 0);
+            st.setString(three,"/icons/avatar1.png");
+            st.executeUpdate();
+            st.close();
+
+
+            st = conn.prepareStatement("INSERT INTO "
                             + "credentials(username, password,"
                             + " question, answer) VALUES (?,?,?,?)");
             st.setString(one, regCre.getUsername());
@@ -307,28 +321,16 @@ public class DbAdaptor {
             st.executeUpdate();
             st.close();
 
-            st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "users(username, total_score) VALUES (?,?)");
-            st.setString(one, regCre.getUsername());
-            st.setInt(two, 0);
-            st.executeUpdate();
-            st.close();
-
-            st = conn
-                    .prepareStatement("INSERT INTO "
-                            + "activities(activity_id, score, player, amount)"
-                            + " VALUES (?,?,?,?)");
-            st.setInt(one, 1);
-            st.setInt(two, 0);
-            st.setString(three, regCre.getUsername());
-            st.setInt(four, 0);
-            st.executeUpdate();
-            st.close();
+            for (int i = 1; i < 7;i++) {
+                addActivity(new ActivityDb(i,0, 0, regCre.getUsername()));
+            }
 
             return true;
         } catch (SQLException e) {
+            // alertBuilder.showAlert("User already exists", "Please chose another username.");
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
         return false;
@@ -343,24 +345,29 @@ public class DbAdaptor {
     public User getUser(final String userName) {
         try {
 
-
+            connect();
             PreparedStatement st = conn.prepareStatement(
-                    "SELECT * FROM users WHERE username = ?");
+                    "SELECT username, total_score, image FROM users WHERE username = ?");
 
             st.setString(1, userName);
             rs = st.executeQuery();
-
             User tempUser = new User(null, 0);
+
             while (rs.next()) {
                 tempUser.setUsername(rs.getString(one));
                 tempUser.setTotalScore(rs.getInt(two));
+                tempUser.setAvatarUrl(rs.getString(three));
                 break;
             }
+
+            st.close();
 
             return tempUser;
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
 
         return null;
@@ -380,63 +387,72 @@ public class DbAdaptor {
                                   int amount) {
         try {
             connect();
-            PreparedStatement st = conn.prepareStatement(new StringBuilder("SELECT amount FROM")
+
+            PreparedStatement st = conn
+                    .prepareStatement(new StringBuilder("SELECT amount FROM")
                     .append(" activities WHERE player = ?")
                     .append(" AND activity_id = ?")
                     .toString());
             st.setString(one, name);
+
             st.setInt(two, activityID);
-            System.out.println(name);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             amount += rs.getInt("amount");
-            PreparedStatement pst = conn.prepareStatement("UPDATE activities SET amount = ? "
+
+            st.close();
+
+            PreparedStatement pst = conn
+                    .prepareStatement("UPDATE activities SET amount = ? "
                     + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
             pst.setInt(three, activityID);
             pst.executeUpdate();
             pst.close();
-            disconnect();
-            System.out.println(rs.toString());
             calculateScore(name, activityID, amount);
             updateTotalScore(name);
             return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+
             e.printStackTrace();
             return false;
+        } finally {
+            disconnect();
         }
     }
 
+    /**
+     * Calculates score of a given user.
+     * @param username the username of the user.
+     * @param activityID the activity of the user.
+     * @param amount the count of activities.
+     */
     public void calculateScore(final String username, final int activityID,
                                 final int amount) {
         try {
             connect();
-            System.out.println("update vegmeal for amount: " + amount);
             PreparedStatement st = conn.prepareStatement(new StringBuilder(
                     "UPDATE activities SET score = ? WHERE player = ")
                     .append("?").append(" AND activity_id = ")
                     .append("?").toString());
-            int score = new Feature("1").vegmeal_calcScore(amount);
-            System.out.println("score is now " + score);
-            st.setInt(one, score);
+            st.setInt(one, amount);
             st.setString(two, username);
             st.setInt(three, activityID);
             st.executeUpdate();
             st.close();
-            disconnect();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        } finally {
+            disconnect();
         }
     }
 
     /**
      * returns activity amount.
      *
-     * @param name   username whose activity amount should be returned.
+     * @param name username whose activity amount should be returned.
      * @param activityID id of the activity
      * @return amount of given activity of given user
      */
@@ -450,16 +466,17 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
             st.setInt(two, activityID);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt(one);
-            disconnect();
+            st.close();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return -1;
+        } finally {
+            disconnect();
         }
     }
 
@@ -470,24 +487,384 @@ public class DbAdaptor {
      * @return total_score
      */
     public int getTotalScore(final String name) {
+        connect();
+
         try {
-            System.out.println(name);
-            connect();
             String query = "SELECT total_score FROM users WHERE username = ?";
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
-            System.out.println(st.toString());
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt("total_score");
-            disconnect();
+            st.close();
             return ret;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return -1;
+        } finally {
+            disconnect();
         }
     }
 
+    /**
+     * Deletes by username from the DB.
+     * @param username the User that should be deleted.
+     */
+    public void deleteByUsername(final String username) {
+        connect();
+        try {
+
+            PreparedStatement st = conn.prepareStatement(
+                    "DELETE FROM users WHERE username = ?");
+
+            st.setString(1, username);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    /**
+     * send request to be friends method.
+     * @param fromUser from which the invitation is send
+     * @param toUser user to whom you want to send the invitation
+     */
+    public void sendFriendReq(final String fromUser, final String toUser) {
+
+        if (checkIfInDb(fromUser,toUser)) {
+            connect();
+            try {
+                System.out.println("from: " + fromUser + "  to:" + toUser);
+
+                PreparedStatement st = conn.prepareStatement(
+                        "INSERT INTO friend_request(from_user, "
+                             + "to_user,friend_status) VALUES (?,?, ?::friend_status)");
+                st.setString(1,fromUser);
+                st.setString(2,toUser);
+                st.setString(3,FriendStatus.PENDING.name());
+                st.executeUpdate();
+                st.close();
+                //alertBuilder.showInformationNotification("Friend request sent!");
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                disconnect();
+            }
+        }
+
+    }
+
+    /**
+     * Checks if tuple is in the db.
+     * @param fromUs sender
+     * @param toUs recipient
+     * @return true iff the tuple is in the table.
+     */
+    public boolean checkIfInDb(final String fromUs, final String toUs) {
+        boolean check = false;
+        connect();
+        try {
+
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM friend_request "
+                    + "WHERE from_user = ? AND to_user = ?");
+            st.setString(2, fromUs);
+            st.setString(1, toUs);
+            rs = st.executeQuery();
+            if (rs.next() == false) {
+                check = true;
+            }
+
+            st = conn.prepareStatement("SELECT * FROM friend_request "
+                    + "WHERE from_user = ? AND to_user = ? AND friend_status = ?::friend_status");
+            st.setString(2, fromUs);
+            st.setString(1, toUs);
+            st.setString(3, FriendStatus.DECLINED.name());
+            rs = st.executeQuery();
+            System.out.println("...");
+            if (rs.next() == true) {
+                System.out.println("...");
+
+                check = true;
+            }
+
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return check;
+    }
+
+    /**
+     * method to say if you rejected or accepted the invitation.
+     * @param fromUser user who send the inv
+     * @param toUser user who got the inv
+     * @param accepted rejected - false, accepted - true
+     */
+    public void considerRequest(final String fromUser,
+                                final String toUser, final boolean accepted) {
+        connect();
+        try {
+
+            PreparedStatement st = conn.prepareStatement("UPDATE friend_request "
+                    + "SET friend_status = ?::\"friend_status\" WHERE from_user = ? "
+                    + "AND to_user = ?");
+            if (accepted) {
+                st.setString(1, FriendStatus.ACCEPTED.name()) ;
+            } else {
+                st.setString(1, FriendStatus.DECLINED.name());
+            }
+            st.setString(2, fromUser);
+            st.setString(3, toUser);
+            st.executeUpdate();
+            /*if (accepted) {
+                alertBuilder.showInformationNotification("Friend request accepted!");
+            } else {
+                alertBuilder.showInformationNotification("Friend request declined!"
+                        + "\nUser is now blocked.");
+            }*/
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+
+    }
+
+    /**
+     * returns all pending requests.
+     * @param username username who wants the pending requests
+     * @return pending requests
+     */
+    public List<String> getRequest(String username) {
+        connect();
+
+        try {
+            List<String> listOfPending = new ArrayList<>();
+            PreparedStatement st = conn.prepareStatement("SELECT from_user FROM friend_request"
+                    + " WHERE to_user = ? and friend_status = ?::\"friend_status\"");
+            st.setString(1, username);
+            st.setString(2, FriendStatus.PENDING.name());
+            rs = st.executeQuery();
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            st.close();
+            return listOfPending;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+        return null;
+    }
+
+    /**
+     * returns friends of given user.
+     * @param username user who want the friends
+     * @return friends of given user
+     */
+    public List<String> getFriends(String username) {
+        connect();
+        try {
+            List<String> listOfPending = new ArrayList<>();
+            PreparedStatement st = conn.prepareStatement("SELECT to_user FROM "
+                    + "friend_request WHERE from_user = ? AND friend_status = ?"
+                    + "::\"friend_status\"");
+            st.setString(1, username);
+            st.setString(2, FriendStatus.ACCEPTED.name());
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            st = conn.prepareStatement("SELECT from_user FROM friend_request "
+                    + "WHERE to_user = ? AND friend_status = ?::\"friend_status\"");
+            st.setString(1, username);
+            st.setString(2, FriendStatus.ACCEPTED.name());
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                listOfPending.add(rs.getString(1));
+            }
+            st.close();
+            return listOfPending;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+        return null;
+    }
+
+    /**
+     * change password in the database.
+     * @param user of the username
+     * @param newpass of the username
+     */
+    public void changepass(final String user, final String newpass) {
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement(new StringBuilder("UPDATE")
+                    .append(" credentials SET password = ? WHERE username = ?").toString());
+            st.setString(one, newpass);
+            st.setString(two, user);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        disconnect();
+    }
+
+    /**
+     * updates the last seen date in user tuple.
+     * @param username of the user
+     * @param date when last seen
+     */
+    public void updateDate(String username, Date date) {
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement("UPDATE users SET"
+                    + " date_last_active = ? WHERE username = ?");
+            st.setDate(1, date);
+            st.setString(2, username);
+            st.executeUpdate();
+            st.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+
+    }
+
+    /**
+     * returns date when the app was last time launched.
+     * @param username of the user
+     * @return date (java.sql.Date)
+     */
+    public Date getDate(String username) {
+        connect();
+        Date date = null;
+        try {
+            PreparedStatement st = conn.prepareStatement("SELECT date_last_active "
+                    + "FROM users WHERE username = ?");
+            st.setString(1, username);
+            rs = st.executeQuery();
+
+            if (rs.next()) {
+                date =  rs.getDate(1);
+                st.close();
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            disconnect();
+        }
+        return date;
+    }
+
+
+    //Achievements
+
+    /**
+     * adds achievements to user.
+     * @param id of the achievement
+     * @param username of the user
+     */
+    public void addAchievement(int id, String username) {
+        connect();
+        try {
+            PreparedStatement st = conn.prepareStatement("INSERT INTO "
+                    + "achieved(username, achievements) VALUES (?,?)");
+            st.setString(1, username);
+            st.setInt(2, id);
+            st.executeUpdate();
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+    }
+
+    /**
+     * returns list of all achievements.
+     * @return achievement object
+     */
+    public List<Achievement> getAllAchievements() {
+        connect();
+        List<Achievement> temp = new ArrayList<>();
+        try {
+            String sql = "SELECT name,description "
+                    + "FROM achievements ORDER BY id";
+            PreparedStatement st = conn.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            Achievement currAch;
+
+            while (rs.next()) {
+                currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
+                temp.add(currAch);
+            }
+
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return temp;
+    }
+
+    /**
+     * returns list of achievements of the user.
+     * @param username of the user
+     * @return List with Achievements
+     */
+    public List<Integer> getAchievements(String username) {
+        connect();
+        List<Integer> temp = new ArrayList<>();
+        try {
+            PreparedStatement st = conn.prepareStatement("select achievements.id"
+                    + " from achieved,achievements "
+                    + "where achieved.achievements = achievements.id"
+                    + " and achieved.username = ?");
+            st.setString(1, username);
+            rs = st.executeQuery();
+
+            int currId;
+
+            while (rs.next()) {
+                currId = rs.getInt(1);
+                temp.add(currId);
+            }
+            st.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            disconnect();
+        }
+        return temp;
+    }
 
 }

@@ -4,15 +4,19 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.TestInstance;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import resources.AbstractTest;
 import utility.AccountMessage;
 import utility.Activity;
+import utility.DbAdaptor;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 
@@ -41,6 +45,128 @@ public class GreetingControllerTest extends AbstractTest {
     int status;
 
     /**
+     * Registers a user.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void registerTest() throws Exception {
+
+        String random = UUID.randomUUID().toString();
+        uri = "/register";
+        account = new AccountMessage(random, "password");
+        inputJson = super.mapToJson(account);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+        DbAdaptor db = new DbAdaptor();
+        db.deleteByUsername(random);
+    }
+
+    /**
+     * Tests the default Get mapping.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void defaultMappingTest() throws Exception {
+
+        uri = "/";
+
+        mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(301, status);
+    }
+
+    /**
+     * Registers and tries to login with the registered credentials.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void loginTest() throws Exception {
+
+        String random = UUID.randomUUID().toString();
+        uri = "/register";
+        account = new AccountMessage(random, "password");
+        inputJson = super.mapToJson(account);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        uri = "/login";
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+        DbAdaptor db = new DbAdaptor();
+        db.deleteByUsername(random);
+    }
+
+    /**
+     * Registers a user but tries to login with different credentials.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void loginTestWrongDetails() throws Exception {
+
+        String random = UUID.randomUUID().toString();
+        uri = "/register";
+        account = new AccountMessage(random, "password");
+        inputJson = super.mapToJson(account);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+
+        uri = "/login";
+        account = new AccountMessage(random, "passworddsfsda");
+        inputJson = super.mapToJson(account);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(401, status);
+        DbAdaptor db = new DbAdaptor();
+        db.deleteByUsername(random);
+    }
+
+    /**
+     * Tries to change the password of a user.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void changePassTest() throws Exception {
+
+        String random = UUID.randomUUID().toString();
+        uri = "/register";
+        account = new AccountMessage(random, "password");
+        inputJson = super.mapToJson(account);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        uri = "/changepass";
+        String[] testArray = {"0", random, "password1"};
+        inputJson = super.mapToJson(testArray);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+
+        DbAdaptor db = new DbAdaptor();
+        db.deleteByUsername(random);
+    }
+
+
+    /**
      * Sends the server a login request without registering the user first.
      *
      * @throws Exception
@@ -56,7 +182,6 @@ public class GreetingControllerTest extends AbstractTest {
         status = mvcResult.getResponse().getStatus();
         assertEquals(401, status);
     }*/
-
 
     /**
      * Registers the user and then sends the server a login request.
@@ -82,44 +207,26 @@ public class GreetingControllerTest extends AbstractTest {
     */
 
     /**
-     * Registers a user.
-     *
-     * @throws Exception
-     */
-    @Test
-    public void registerTest() throws Exception {
-
-        uri = "/register";
-        account = new AccountMessage(UUID.randomUUID().toString(), "password");
-        inputJson = super.mapToJson(account);
-        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        status = mvcResult.getResponse().getStatus();
-        assertEquals(200, status);
-    }
-
-     /**
      * Tries registering the same user twice.
      *
      * @throws Exception
      */
-     /*
-    @Test
-    public void registerTestTwice() throws Exception {
 
-        uri = "/register";
-        account = new AccountMessage(UUID.randomUUID().toString(), "password");
-        inputJson = super.mapToJson(account);
-        mvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson));
-
-        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        status = mvcResult.getResponse().getStatus();
-        assertEquals(409, status);
-    }*/
+//    @Test
+//    public void registerTestTwice() throws Exception {
+//
+//
+//        assertThrows(SQLException.class, () -> {uri = "/register";
+//        account = new AccountMessage(UUID.randomUUID().toString(), "password");
+//        inputJson = super.mapToJson(account);
+//        mvc.perform(MockMvcRequestBuilders.post(uri)
+//                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson));
+//
+//        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+//                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+//
+//        status = mvcResult.getResponse().getStatus();});
+//    }
 
     /**
      * Tests an activity with ID of 1.
@@ -158,21 +265,4 @@ public class GreetingControllerTest extends AbstractTest {
         status = mvcResult.getResponse().getStatus();
         assertEquals(200, status);
     }*/
-
-    /**
-     * Tests the default Get mapping.
-     * @throws Exception
-     */
-    @Test
-    public void defaultMappingTest() throws Exception {
-
-        uri = "/";
-
-        mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
-                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-
-        status = mvcResult.getResponse().getStatus();
-        assertEquals(301, status);
-    }
-
 }

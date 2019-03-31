@@ -17,6 +17,7 @@ public class Emission {
     public Emission(final String gas) {
         this.decisions = gas;
     }
+
     /**
      * Getter method.
      * @return emission co2 value
@@ -24,6 +25,7 @@ public class Emission {
     public String getEmission() {
         return decisions;
     }
+
     /**Setter method.
      * @param gas emission co2 value
      */
@@ -43,8 +45,7 @@ public class Emission {
     /**
      * Equals method that checks whether this and another object are the same.
      * @param other The object that is compared to this one.
-     * @return Returns true iff the two object are emissions
-     * and they have the same gas decisions.
+     * @return Returns true iff the two object are emissions and they have the same gas decisions.
      */
     @Override
     public boolean equals(final Object other) {

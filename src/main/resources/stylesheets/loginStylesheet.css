@@ -21,11 +21,11 @@
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
-    -fx-background-color: rgb(82, 136, 81);
+    -fx-background-color: #a32243;
     -fx-font-size: 20;
 }
 .button:hover {
-    -fx-background-color: #78c292;
+    -fx-background-color: #A0596B;
 }
 #loginText{
     -fx-font-size: 50;
