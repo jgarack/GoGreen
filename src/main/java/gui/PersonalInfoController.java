@@ -33,7 +33,7 @@ import javax.xml.bind.DatatypeConverter;
 /**
  * Controller for the personal info scene.
  */
-public class personalInfoController {
+public class PersonalInfoController {
 
     /**
      * Localhost domain.

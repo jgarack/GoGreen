@@ -173,7 +173,7 @@ public class MainController {
         Parent newScene = fxmlLoader.load();
         new FadeInUp(newScene).play();
         if (scene.equals("personalInfo")) {
-            ((personalInfoController) fxmlLoader.getController())
+            ((PersonalInfoController) fxmlLoader.getController())
                     .setMainController(this);
         } else if (scene.equals("friendsList")) {
             ((FriendsController) fxmlLoader.getController())
