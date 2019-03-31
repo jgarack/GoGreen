@@ -106,6 +106,11 @@ public class MainHandler {
             return -1;
         }
     }
+    /**
+     * Updates bus consumption.
+     * @param amount to be updated
+     * @return the new amount
+     */
     public int updateBus(final int amount) {
         try {
             return Integer.parseInt(httpHandler
@@ -118,6 +123,11 @@ public class MainHandler {
             return -1;
         }
     }
+    /**
+     * Updates solar consumption.
+     * @param amount to be updated
+     * @return the new amount
+     */
     public int updateSolar(final int amount) {
         try {
             String res = httpHandler
@@ -132,6 +142,20 @@ public class MainHandler {
                                 + "Performed this activity this month");
                 return 0;
             }
+            return Integer.parseInt(res);
+
+
+        } catch (IOException | ServerStatusException e) {
+            new AlertBuilder().displayException(e);
+            return -1;
+        }
+    }public int updateHeating(final int amount) {
+        try {
+            String res = httpHandler
+
+                    .reqPost("/points",
+                            new UpdateRequest(username, 6, amount))
+                    .readLine();
             return Integer.parseInt(res);
 
 

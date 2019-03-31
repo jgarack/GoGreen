@@ -55,10 +55,15 @@ public class HomeController {
     /**
      *Data about the amount of bus rides taken.
      */
-    private int busUsage = 0;/**
-     *Data about the amount of bus rides taken.
+    private int busUsage = 0;
+    /**
+     *Data about the Solar Panel usage.
      */
     private int solarUsage = 0;
+    /**
+     *Data about the amount of degrees reduced.
+     */
+    private int tempRed = 0;
     /**
      * Data about the points of the user.
      */
@@ -89,6 +94,11 @@ public class HomeController {
      */
     @FXML
     private TextField solarPanel;
+    /**
+     * Bound to the text field linked with installing solar panel.
+     */
+    @FXML
+    private TextField lowerTemps;
 
     /**
      * Bound to the label about the vegetarian meals
@@ -325,6 +335,34 @@ public class HomeController {
         } else {
             ALERT_BUILDER
                     .formEntryWarning(localProduce.getText(),
+                            YOU_NEED_TO_FILL_A_NUMBER);
+        }
+
+    }/**
+     * Linked to the button to increase
+     * lowering home temp month.
+     * @param event The event fired
+     *              upon clicking the button
+     */
+    @FXML
+    protected void increaseEff(final ActionEvent event) {
+
+        if (MainHandler.tryParseInt(lowerTemps.getText())) {
+
+            System.out.println(lowerTemps.toString());
+            this.tempRed = handler
+                    .updateHeating(Integer.parseInt(lowerTemps.getText()));
+
+                setPointsEarned();
+                alert();
+
+
+
+            this.lowerTemps.setText("");
+
+        } else {
+            ALERT_BUILDER
+                    .formEntryWarning(lowerTemps.getText(),
                             YOU_NEED_TO_FILL_A_NUMBER);
         }
 

@@ -139,6 +139,9 @@ public class PointsController {
                 DB_ADAPTOR.updateDate(request.getUsername(), today);
                 amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
             }
+        }else if(activityID == 6) {
+            //reducing home temperature according to data from https://www.epa.gov/environmental-economics/environmental-economics-research-strategy
+        amount = amount * 110;
         }
 
             if (!DB_ADAPTOR.updateActivity(username, activityID, amount)) {
