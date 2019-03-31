@@ -593,9 +593,6 @@ public class DbAdaptor {
                 check = true;
             }
 
-            if (!check) {
-            }
-
             st.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -765,6 +762,7 @@ public class DbAdaptor {
      */
     public Date getDate(String username) {
         connect();
+        Date date = null;
         try {
             PreparedStatement st = conn.prepareStatement("SELECT date_last_active "
                     + "FROM users WHERE username = ?");
@@ -772,15 +770,18 @@ public class DbAdaptor {
             rs = st.executeQuery();
 
             if (rs.next()) {
-                return rs.getDate(1);
+                date =  rs.getDate(1);
+                st.close();
+
             }
-            st.close();
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+
             disconnect();
         }
-        return null;
+        return date;
     }
 
 

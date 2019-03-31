@@ -249,6 +249,54 @@ class DbAdaptorTest {
         db.deleteByUsername(random2);
     }
 
+    @Test
+    void addNewUserFalse() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        assertFalse(db.addNewUser(randomUser));
+        db.deleteByUsername(random);
+    }
+
+
+    @Test
+    void getActivityAmountException() {
+        assertEquals(-1, db.getActivityAmount(UUID.randomUUID().toString(),1));
+    }
+
+    @Test
+    void getTotalScoreException() {
+        assertEquals(-1, db.getTotalScore(UUID.randomUUID().toString()));
+    }
+
+    @Test
+    void checkIfInDB() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+
+        db.sendFriendReq(random, random2);
+        assertTrue(db.checkIfInDb(random, random2));
+    }
+
+
+    @Test
+    void getRequestException() {
+        assertEquals(new ArrayList<>(), db.getRequest(UUID.randomUUID().toString()));
+    }
+
+    @Test
+    void getFriendsException() {
+        assertEquals(new ArrayList<>(), db.getFriends(UUID.randomUUID().toString()));
+    }
+
+    @Test
+    void getDateException() {
+        assertEquals(null, db.getDate(UUID.randomUUID().toString()));
+    }
 
 
 }

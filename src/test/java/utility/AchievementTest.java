@@ -61,4 +61,28 @@ class AchievementTest {
         String testString = "test";
         assertFalse(testAchievement.equals(testString));
     }
+
+    @Test
+    void equalsNull() {
+        assertFalse(testAchievement.equals(null));
+    }
+
+
+    @Test
+    void equalsAchievedOther() {
+        Achievement ach = new Achievement("name", false, "descr");
+        assertFalse(testAchievement.equals(ach));
+    }
+
+    @Test
+    void equalsNameAchievedOther() {
+        Achievement ach = new Achievement("1name", false, "descr");
+        assertFalse(testAchievement.equals(ach));
+    }
+
+    @Test
+    void equalsdescAchievedOther() {
+        Achievement ach = new Achievement("name", false, "descr1");
+        assertFalse(testAchievement.equals(ach));
+    }
 }
