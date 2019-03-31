@@ -75,8 +75,6 @@ public class DbAdaptor {
      */
     private String password;
 
-    private AlertBuilder alertBuilder = new AlertBuilder();
-
     /**
      * Initial connection.
      */
@@ -116,7 +114,6 @@ public class DbAdaptor {
         try {
             conn = DriverManager.getConnection(jdbUrl, username, password);
         } catch (SQLException e) {
-            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -134,7 +131,6 @@ public class DbAdaptor {
             }
 
         } catch (SQLException e) {
-            alertBuilder.showAlert("Connection", "Couldn't connect to the database.");
             e.printStackTrace();
         }
     }
@@ -251,7 +247,6 @@ public class DbAdaptor {
 
 
         } catch (SQLException e) {
-            alertBuilder.showAlert("Avatar", "Couldn't add avatar to the database.");
             return false;
         } finally {
             disconnect();
@@ -287,7 +282,6 @@ public class DbAdaptor {
 
 
         } catch (SQLException e) {
-            alertBuilder.displayException(e);
             e.printStackTrace();
         } finally {
             disconnect();
@@ -558,8 +552,6 @@ public class DbAdaptor {
                 //alertBuilder.showInformationNotification("Friend request sent!");
 
             } catch (SQLException e) {
-                alertBuilder.showAlert("User already added", "Check if you or your friend"
-                        + " did not not sent a invitation already.");
                 e.printStackTrace();
             } finally {
                 disconnect();
@@ -602,8 +594,6 @@ public class DbAdaptor {
             }
 
             if (!check) {
-                alertBuilder.showAlert("User already added", "Check if the user did not "
-                        + "send a invitation already.");
             }
 
             st.close();
@@ -838,7 +828,7 @@ public class DbAdaptor {
 
             st.close();
         } catch (SQLException e) {
-            alertBuilder.displayException(e);
+            e.printStackTrace();
         } finally {
             disconnect();
         }

@@ -43,8 +43,8 @@ public class InformationBuilder {
      * @param message the actual message
      */
     public void
-        addInformationIconToSearchBox(Label informativeLabel,
-                                  String message) {
+    addInformationIconToSearchBox(final Label informativeLabel,
+                                  final String message) {
         informativeLabel.setBackground(Background.EMPTY);
         informativeLabel.setStyle("-fx-font-family: 'FontAwesome'");
         informativeLabel
@@ -67,7 +67,7 @@ public class InformationBuilder {
                 });
         informativeLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 popOver.hide();
             }
         });
