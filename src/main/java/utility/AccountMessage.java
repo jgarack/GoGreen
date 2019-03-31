@@ -50,7 +50,8 @@ public class AccountMessage {
     /** Equals method.
      * @author Jonathan
      * @param obj the object to compare
-     * @return true iff obj is an instance of AccountMessage and equal to this object
+     * @return true iff obj is an instance of AccountMessage and equal to this
+     * object
      */
     public boolean equals(final Object obj) {
         if (this == obj) {

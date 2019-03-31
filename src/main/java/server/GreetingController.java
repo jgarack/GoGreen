@@ -88,6 +88,11 @@ public class GreetingController {
 
     }
 
+    /**
+     * Changes the password for the specified username.
+     * @param creds The username and new password.
+     * @return response entity
+     */
     @PostMapping("/changepass")
     public ResponseEntity changepass(@RequestBody final String[] creds) {
         String user = creds[1];
