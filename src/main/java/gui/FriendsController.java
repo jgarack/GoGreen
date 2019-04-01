@@ -122,7 +122,6 @@ public class FriendsController {
                 .getRequest(MainHandler.username);
         friends = (ArrayList<String>) dbAdaptor
                 .getFriends(MainHandler.username);
-
         informationBuilder
                 .addInformationIconToSearchBox(searchInfoLabel,
                         "Right-click on a user to add them");
