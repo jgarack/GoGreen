@@ -138,7 +138,16 @@ public class PointsController {
             }
         }else if(activityID == 6) {
             //reducing home temperature according to data from https://www.epa.gov/environmental-economics/environmental-economics-research-strategy
-        amount = amount * 110;
+
+            if(!dbAdaptor.getAchievements(request.getUsername()).contains(9))
+            if(amount == 5)dbAdaptor.addAchievement(9,
+                    request.getUsername());
+
+            if(!dbAdaptor.getAchievements(request.getUsername()).contains(10))
+            if(amount == 10)dbAdaptor.addAchievement(10,
+                    request.getUsername());
+
+            amount = amount * 110;
         }
 
         if (!dbAdaptor.updateActivity(username, activityID, amount)) {
