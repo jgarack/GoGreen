@@ -414,7 +414,7 @@ public class DbAdaptor {
             calculateScore(name, activityID, amount);
             updateTotalScore(name);
 
-            
+
             return true;
         } catch (SQLException e) {
 
@@ -641,6 +641,30 @@ public class DbAdaptor {
         }
 
 
+    }
+
+    public int getPerformedTimes(String username, int actId) {
+        connect();
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("Select performed_times from activities where player = ? AND activity_id = ? ");
+            st.setString(1,username);
+            st.setInt(2, actId);
+            rs = st.executeQuery();
+            int pt=-1;
+            while(rs.next()) {
+                pt = rs.getInt(1);
+            }
+            st.close();
+            return pt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        finally {
+            disconnect();
+        }
+        return -1;
     }
 
     /**
