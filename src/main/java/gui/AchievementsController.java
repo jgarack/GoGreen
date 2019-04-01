@@ -29,9 +29,9 @@ public class AchievementsController {
     private static final double FULL_OPACITY = 1.0;
 
     /**
-     * Used for half opacity.
+     * Used for lowest opacity.
      */
-    private static final double HALF_OPACITY = 0.5;
+    private static final double LOW_OPACITY = 0.2;
 
     /**
      * To retrieve all the achievements.
@@ -149,8 +149,9 @@ public class AchievementsController {
         if (achievmentIds.contains(achievementCounter + 1)) {
             currImgView.setOpacity(FULL_OPACITY);
         } else {
-            currImgView.setOpacity(HALF_OPACITY);
+            currImgView.setOpacity(LOW_OPACITY);
         }
+
         VBox currVBox = new VBox();
 
         Label currTitle = new Label(achievement.getName());
