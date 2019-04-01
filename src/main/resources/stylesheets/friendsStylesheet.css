@@ -48,10 +48,11 @@
     -fx-font-family: "Myriad Pro";
 }
 #infoLabel{
+    -fx-font-style: italic;
     -fx-padding: 10 10 10 10;
     -fx-font-size: 20;
-    -fx-font-weight: bold;
-    -fx-background-color: lightgreen;
-    -fx-fill-width: true;
-    -fx-fill-height: true;
+    -fx-text-fill: white;
+    -fx-background-color: #a32243;
+    -fx-border-color: #a32243;
+    -fx-border-width: 5px;
 }
