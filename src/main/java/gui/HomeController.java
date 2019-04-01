@@ -353,7 +353,8 @@ public class HomeController {
                             YOU_NEED_TO_FILL_A_NUMBER);
         }
 
-    }/**
+    }
+    /**
      * Linked to the button to increase
      * lowering home temp month.
      * @param event The event fired

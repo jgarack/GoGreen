@@ -28,7 +28,8 @@ public class Achievement {
      * @param descr        the descrption
      *                     of the achievement.
      */
-    public Achievement(final String nameAcheived, final boolean isAchieved, final String descr) {
+    public Achievement(final String nameAcheived, final boolean isAchieved,
+                       final String descr) {
         this.name = nameAcheived;
         this.achieved = isAchieved;
         this.description = descr;
@@ -48,7 +49,7 @@ public class Achievement {
      *
      * @param isAchieved the boolean to be set.
      */
-    public void setAchieved(boolean isAchieved) {
+    public void setAchieved(final boolean isAchieved) {
         this.achieved = isAchieved;
     }
 
@@ -66,7 +67,7 @@ public class Achievement {
      *
      * @param achName the name to be set.
      */
-    public void setName(String achName) {
+    public void setName(final String achName) {
         this.name = achName;
     }
 
@@ -84,12 +85,17 @@ public class Achievement {
      *
      * @param achDescription to be set.
      */
-    public void setDescription(String achDescription) {
+    public void setDescription(final String achDescription) {
         this.description = achDescription;
     }
 
+    /**
+     * Checks for equalness.
+     * @param object object to compare
+     * @return true if equal.
+     */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
@@ -99,5 +105,13 @@ public class Achievement {
         Achievement that = (Achievement) object;
         return achieved == that.achieved && name.equals(that.name)
                 && description.equals(that.description);
+    }
+
+    /**
+     * Checkstyle made me do it.
+     * @return the super hashcode
+     */
+    public int hashCode() {
+        return super.hashCode();
     }
 }

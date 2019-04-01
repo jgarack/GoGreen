@@ -118,7 +118,6 @@ public class AchievementsController {
      */
     @FXML
     public void initialize() {
-        popOver.setId("popOver");
         List<Achievement> allAchievements = dbAdaptor.getAllAchievements();
         int achievementCounter = 0;
         List<Integer> achievementIds =
@@ -163,6 +162,7 @@ public class AchievementsController {
             @Override
             public void handle(final MouseEvent event) {
                 popOver = new PopOver(currDescription);
+                popOver.setId("popOver");
                 popOver.show(currVBox);
             }
         });
