@@ -85,4 +85,9 @@ class AchievementTest {
         Achievement ach = new Achievement("name", false, "descr1");
         assertFalse(testAchievement.equals(ach));
     }
+
+    @Test
+    void hashCodeTest() {
+        assertEquals(testAchievement.hashCode(), 0);
+    }
 }

@@ -112,6 +112,6 @@ public class Achievement {
      * @return the super hashcode
      */
     public int hashCode() {
-        return super.hashCode();
+        return 0;
     }
 }
