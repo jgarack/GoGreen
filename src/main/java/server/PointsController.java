@@ -152,6 +152,19 @@ public class PointsController {
                     httpHandler.reqGet("/automobile_"
                             + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
+            if(!dbAdaptor.getAchievements(
+                    request.getUsername()).contains(3)){
+
+                if (dbAdaptor.getPerformedTimes(
+                        request.getUsername(), FOUR) >= 4)
+                    dbAdaptor.addAchievement(3, request.getUsername());
+            }if(!dbAdaptor.getAchievements(
+                    request.getUsername()).contains(4)){
+
+                if (dbAdaptor.getPerformedTimes(
+                        request.getUsername(), FOUR) >= 50)
+                    dbAdaptor.addAchievement(4, request.getUsername());
+            }
             amount = jsonCon(HttpRequestHandler.resLog(car, null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody, null));
 
@@ -174,6 +187,18 @@ public class PointsController {
                     return new ResponseEntity("false", HttpStatus.OK);
                 }
             } else {
+                if(!dbAdaptor.getAchievements(
+                        request.getUsername()).contains(7)){
+                    
+                        dbAdaptor.addAchievement(7, request.getUsername());
+                }
+                if(!dbAdaptor.getAchievements(
+                        request.getUsername()).contains(8)) {
+
+                    if (dbAdaptor.getPerformedTimes(
+                            request.getUsername(), FIVE) >= 2)
+                        dbAdaptor.addAchievement(8, request.getUsername());
+                }
                 BufferedReader httpBody =
                         httpHandler.reqGet("/electricity_uses.json?"
                                 + "energy=" + (double) amount / THREE_POINT_SIX

@@ -403,8 +403,9 @@ public class DbAdaptor {
             st.close();
 
             PreparedStatement pst = conn
-                    .prepareStatement("UPDATE activities SET amount = ? "
-                    + "WHERE player = ? AND activity_id = ?");
+                    .prepareStatement("UPDATE activities SET amount = ?,"
+                            + " performed_times = performed_times+1 "
+                            + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
             pst.setInt(three, activityID);
@@ -875,9 +876,10 @@ public class DbAdaptor {
      */
     public int getPerformedTimes(String username, int actId) {
         connect();
-        PreparedStatement st = null;
+        PreparedStatement st;
         try {
-            st = conn.prepareStatement("Select performed_times from activities where player = ? AND activity_id = ? ");
+            st = conn.prepareStatement("Select performed_times from activities "
+                    + "where player = ? AND activity_id = ? ");
             st.setString(1,username);
             st.setInt(2, actId);
             rs = st.executeQuery();
