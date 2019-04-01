@@ -867,4 +867,34 @@ public class DbAdaptor {
         return temp;
     }
 
+    /**
+     * Method that gets amount of times an activity has been performed.
+     * @param username users name
+     * @param actId activity identifier
+     * @return number of times activity has been performed
+     */
+    public int getPerformedTimes(String username, int actId) {
+        connect();
+        PreparedStatement st = null;
+        try {
+            st = conn.prepareStatement("Select performed_times from activities where player = ? AND activity_id = ? ");
+            st.setString(1,username);
+            st.setInt(2, actId);
+            rs = st.executeQuery();
+            int pt=-1;
+            while(rs.next()) {
+                pt = rs.getInt(1);
+            }
+            st.close();
+            return pt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        finally {
+            disconnect();
+        }
+        return -1;
+    }
+
 }

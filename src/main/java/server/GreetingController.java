@@ -32,7 +32,23 @@ public class GreetingController {
     /**
      * DB_ADAPTOR connections/ disconnection/ authentication.
      */
-    private static final DbAdaptor DB_ADAPTOR = new DbAdaptor();
+    private static DbAdaptor DB_ADAPTOR = new DbAdaptor();
+
+    /**
+     * Getter.
+     * @return the db adaptor
+     */
+    public static DbAdaptor getDBADAPTOR() {
+        return DB_ADAPTOR;
+    }
+
+    /**
+     * Setter.
+     * @param dba the new db adaptor.
+     */
+    public static void setDBADAPTOR(DbAdaptor dba) {
+        DB_ADAPTOR = dba;
+    }
 
     /**
      * Default mapping for index.
