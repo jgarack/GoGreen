@@ -28,6 +28,52 @@ import java.time.ZoneId;
 public class PointsController {
 
     /**
+     * Number.
+     * {@value}
+     */
+    private static final int SIXTY = 60;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final double THREE_POINT_SIX = 3.6;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int EIGHTYEIGHT = 88;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int THREE = 3;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int FOUR = 4;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int FIVE = 5;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int SIX = 6;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int ONEHUNDREDANDTEN = 110;
+    /**
+     * Number.
+     * {@value}
+     */
+    private static final int ONETHOUSAND = 1000;
+
+    /**
      * api path.
      */
     private static final String BP_API = "http://impact.brighter"
@@ -41,7 +87,7 @@ public class PointsController {
     /**
      * HttpRequestHandler object that can be used for contacting the api.
      */
-    public HttpRequestHandler HTTP_HANDLER_API =
+    public HttpRequestHandler httpHandler =
             new HttpRequestHandler(BP_API);
     /**
      * DB_ADAPTOR connections/ disconnection/ authentication.
@@ -57,69 +103,71 @@ public class PointsController {
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
             @RequestBody final UpdateRequest request)throws Exception {
-        System.out.println(request.getUsername() + request.getActivityID() + request.getAmount());
+        System.out.println(request.getUsername() + request.getActivityID()
+                + request.getAmount());
         String username = request.getUsername();
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
         int activityID = request.getActivityID();
         //veg meal
-        if (activityID == 1) {
+        if (activityID == Integer.parseInt("1")) {
 
             BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/diets."
+                    httpHandler.reqGet("/diets."
                             + "json?size="
                             + amount
                             + "&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
             BufferedReader veg =
-                    HTTP_HANDLER_API.reqGet("/diets."
+                    httpHandler.reqGet("/diets."
                             + "json?size="
                             + amount
                             + "&diet_class=vegetarian"
                             + "&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null))
-                - jsonCon(HttpRequestHandler.resLog(veg,null));
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody, null))
+                - jsonCon(HttpRequestHandler.resLog(veg, null));
 
-        } else if (activityID == 2) {
+        } else if (activityID == Integer.parseInt("2")) {
             //bicycle
 
             BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/automobile_"
-                            + "trips.json?duration=" + amount * 60
+                    httpHandler.reqGet("/automobile_"
+                            + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(httpBody,null));
+            amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
 
-        } else if (activityID == 3) {
+        } else if (activityID == THREE) {
             //local produce
-            amount = amount * 88;
+            amount = amount * EIGHTYEIGHT;
 
-        } else if (activityID == 4) {
+        } else if (activityID == FOUR) {
             //public transport
 
             BufferedReader httpBody =
-                    HTTP_HANDLER_API.reqGet("/bus_"
-                            + "trips.json?duration=" + amount * 60
+                    httpHandler.reqGet("/bus_"
+                            + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
             BufferedReader car =
-                    HTTP_HANDLER_API.reqGet("/automobile_"
-                            + "trips.json?duration=" + amount * 60
+                    httpHandler.reqGet("/automobile_"
+                            + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
-            amount = jsonCon(HttpRequestHandler.resLog(car,null))
-                    - jsonCon(HttpRequestHandler.resLog(httpBody,null));
+            amount = jsonCon(HttpRequestHandler.resLog(car, null))
+                    - jsonCon(HttpRequestHandler.resLog(httpBody, null));
 
-        } else if (activityID == 5 ) {
+        } else if (activityID == FIVE) {
             //solar panels
             if (dbAdaptor.getDate(request.getUsername()) != null) {
-                ZoneId zone = ZoneId.of( "Europe/Amsterdam" );
-                LocalDate today = LocalDate.now( zone );
+                ZoneId zone = ZoneId.of("Europe/Amsterdam");
+                LocalDate today = LocalDate.now(zone);
                 java.util.Date conv = new java.util.Date(dbAdaptor.getDate(
                         request.getUsername()).getTime());
                 LocalDate lastAdded =
                         conv.toInstant()
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate();
-                LocalDate oneMonthLater = lastAdded.plusMonths( 1 );
+                LocalDate oneMonthLater = lastAdded
+                        .plusMonths(Integer.parseInt("1"));
 
                 if (oneMonthLater.getMonthValue() > today.getMonthValue()) {
                     System.out.println("you are here");
@@ -127,8 +175,8 @@ public class PointsController {
                 }
             } else {
                 BufferedReader httpBody =
-                        HTTP_HANDLER_API.reqGet("/electricity_uses.json?"
-                                + "energy=" + (double) amount / 3.6
+                        httpHandler.reqGet("/electricity_uses.json?"
+                                + "energy=" + (double) amount / THREE_POINT_SIX
                                 + "&timeframe=2019-01-01%2F2019-02-01"
                                 + BP_KEY);
 
@@ -136,8 +184,10 @@ public class PointsController {
                 dbAdaptor.updateDate(request.getUsername(), today);
                 amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
             }
-        }else if(activityID == 6) {
-            //reducing home temperature according to data from https://www.epa.gov/environmental-economics/environmental-economics-research-strategy
+        } else if (activityID == SIX) {
+            //reducing home temperature according to data from
+            // https://www.epa.gov/environmental-economics
+            // /environmental-economics-research-strategy
 
             if(!dbAdaptor.getAchievements(request.getUsername()).contains(9))
             if(amount == 5)dbAdaptor.addAchievement(9,
@@ -146,8 +196,8 @@ public class PointsController {
             if(!dbAdaptor.getAchievements(request.getUsername()).contains(10))
             if(amount == 10)dbAdaptor.addAchievement(10,
                     request.getUsername());
+            amount = amount * ONEHUNDREDANDTEN;
 
-            amount = amount * 110;
         }
 
         if (!dbAdaptor.updateActivity(username, activityID, amount)) {
@@ -186,7 +236,7 @@ public class PointsController {
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
         Double ret = em.get("decisions")
-                .get("carbon").get("object").get("value").asDouble() * 1000;
+                .get("carbon").get("object").get("value").asDouble() * ONETHOUSAND;
         //multiply by 1000 to convert to grams
         return ret.intValue();
     }

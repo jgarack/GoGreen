@@ -1,14 +1,11 @@
 package server;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
-import org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -56,10 +53,10 @@ public class PointsControllerTest extends AbstractTest {
     }
     @BeforeEach
     public void setMocks() throws Exception {
-        controller.HTTP_HANDLER_API = Mockito.mock(HttpRequestHandler.class);
+        controller.httpHandler = Mockito.mock(HttpRequestHandler.class);
         controller.dbAdaptor = Mockito.mock(DbAdaptor.class);
         for(String s : httpmockcalls) {
-            when(controller.HTTP_HANDLER_API.reqGet(s))
+            when(controller.httpHandler.reqGet(s))
                     .thenReturn(new BufferedReader(new StringReader(JSON)));
         }
         when(controller.dbAdaptor.updateActivity(
