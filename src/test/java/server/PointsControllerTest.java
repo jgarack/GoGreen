@@ -131,7 +131,7 @@ public class PointsControllerTest extends AbstractTest {
         assertEquals(200, mvcResult.getResponse().getStatus());
     }
     @Test
-    public void update_publicTransport() throws Exception {
+    public void update_publicTransport1() throws Exception {
         route = "/points";
         json_req = super.mapToJson(fabricate(4));
         mvcResult = mvc.perform(MockMvcRequestBuilders.post(route)
