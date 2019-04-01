@@ -1,7 +1,5 @@
 package utility;
 
-import gui.AlertBuilder;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -123,9 +121,9 @@ public class DbAdaptor {
      */
     public void disconnect() {
         try {
-            if (conn != null) {
-                conn.close();
-            }
+
+            conn.close();
+
             if (rs != null) {
                 rs.close();
             }
@@ -361,16 +359,15 @@ public class DbAdaptor {
             }
 
             st.close();
-
+            disconnect();
             return tempUser;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return  null;
         } finally {
             disconnect();
         }
-
-        return null;
     }
 
     /**
@@ -558,7 +555,6 @@ public class DbAdaptor {
                 disconnect();
             }
         }
-
     }
 
     /**
@@ -883,17 +879,17 @@ public class DbAdaptor {
             st.setString(1,username);
             st.setInt(2, actId);
             rs = st.executeQuery();
-            int pt=-1;
-            while(rs.next()) {
+            int pt = -1;
+            while (rs.next()) {
                 pt = rs.getInt(1);
             }
             st.close();
+            disconnect();
             return pt;
         } catch (SQLException e) {
             e.printStackTrace();
 
-        }
-        finally {
+        } finally {
             disconnect();
         }
         return -1;

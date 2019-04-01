@@ -118,6 +118,30 @@ class DbAdaptorTest {
     }
 
     @Test
+    void checkIfInDbTest2() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        System.out.println(random+"   :::  "+random2);
+        db.sendFriendReq(random,random2);
+        db.considerRequest(random, random2, false);
+        db.sendFriendReq(random2,random);
+        db.considerRequest(random2,random,true);
+
+        List<String> l= new ArrayList<>();
+        l.add(random2);
+        assertEquals(db.getFriends(random), l);
+
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+
+    }
+
+
+    @Test
     void sendRequestTest() {
         String random = UUID.randomUUID().toString();
         RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
@@ -298,5 +322,51 @@ class DbAdaptorTest {
         assertEquals(null, db.getDate(UUID.randomUUID().toString()));
     }
 
+    @Test
+    void getPerfomredTimesTest() {
+        String random = UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "pass", "que", "ans"));
+        db.updateActivity(random, 1,1 );
+        assertEquals(1, db.getPerformedTimes(random, 1));
+        db.deleteByUsername(random);
+    }
+
+    @Test
+    void getPerfomredTimesNoUserTest() {
+        String random = "q";
+
+        assertEquals(-1, db.getPerformedTimes(random, 1));
+    }
+
+
+    @Test
+    void getNoUserTest() {
+        String a = UUID.randomUUID().toString();
+        assertEquals(null, db.getUser(a).getUsername());
+    }
+
+    @Test
+    void compareCredentialsTest(){
+        String random = UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "pass", "que", "ans"));
+        assertEquals(false,db.comparecredentials(new LoginCredentials(random, "p")));
+        db.deleteByUsername(random);
+    }
+
+    @Test
+    void sendFriendReqAlreadyexists() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        db.sendFriendReq(random2,random);
+        db.sendFriendReq(random,random2);
+
+        assertEquals(db.getRequest(random).size(), 1);
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+    }
 
 }
