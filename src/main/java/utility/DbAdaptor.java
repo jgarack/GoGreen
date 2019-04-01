@@ -2,6 +2,7 @@ package utility;
 
 import gui.AlertBuilder;
 
+import javax.swing.text.html.HTMLDocument;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -403,7 +404,7 @@ public class DbAdaptor {
             st.close();
 
             PreparedStatement pst = conn
-                    .prepareStatement("UPDATE activities SET amount = ? "
+                    .prepareStatement("UPDATE activities SET amount = ?, performed_times = performed_times+1"
                     + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
@@ -412,6 +413,8 @@ public class DbAdaptor {
             pst.close();
             calculateScore(name, activityID, amount);
             updateTotalScore(name);
+
+            
             return true;
         } catch (SQLException e) {
 
