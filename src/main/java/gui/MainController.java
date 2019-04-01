@@ -75,11 +75,6 @@ public class MainController {
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
         this.greetingsText.setStyle("-fx-font-family: 'FontAwesome'");
-        this.greetingsText
-                .setGraphic(GlyphFontRegistry
-                        .font("FontAwesome")
-                        .create(FontAwesome.Glyph.USER).size(FSIZE));
-
     }
 
 

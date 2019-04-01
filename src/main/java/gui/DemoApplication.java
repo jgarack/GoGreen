@@ -87,7 +87,7 @@ public class DemoApplication extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        primaryStage.setTitle("FXML Tryout");
+        primaryStage.setTitle("Clima Mutatio Dolus");
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(
                 (getClass().getResource("/stylesheets/loginStylesheet.css"))

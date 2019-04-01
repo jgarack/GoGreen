@@ -21,7 +21,7 @@
     <!--</HBox>-->
 
     <HBox alignment="CENTER">
-        <Label text="GoGreen98" fx:id="homeTitle"/>
+        <Label text="Clima Mutatio Dolus" fx:id="homeTitle"/>
 
     </HBox>
     <GridPane alignment="center" hgap="150" vgap="50">

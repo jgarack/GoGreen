@@ -307,7 +307,8 @@ public class PointsController {
                 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         JsonNode em = mapper.readValue(con, JsonNode.class);
         Double ret = em.get("decisions")
-                .get("carbon").get("object").get("value").asDouble() * ONETHOUSAND;
+                .get("carbon").get("object").get("value").asDouble()
+                * ONETHOUSAND;
         //multiply by 1000 to convert to grams
         return ret.intValue();
     }

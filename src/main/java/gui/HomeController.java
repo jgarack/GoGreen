@@ -443,7 +443,7 @@ public class HomeController {
                 .showInformationNotification(
                         "Good job! Keep on going greener!");
 
-        onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+        onUpdatePointsEarnedLabel(Color.WHITE, Color.DARKRED);
 
     }
 }

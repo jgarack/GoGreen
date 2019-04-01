@@ -124,7 +124,8 @@ public class FriendsController {
                 .getFriends(MainHandler.username);
         informationBuilder
                 .addInformationIconToSearchBox(searchInfoLabel,
-                        "Right-click on a user to add them");
+                        "Right-click on a\n"
+                                + "user to add them");
 
         constructTableFriends();
         constructPendingListView();
