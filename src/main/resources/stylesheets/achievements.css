@@ -14,3 +14,8 @@
     -fx-fill-width: true;
     -fx-fill-height: true;
 }
+
+#achievement0, #achievement1, #achievement2, #achievement3, #achievement4, #achievement5, #achievement6, #achievement7, #achievement8, #achievement9, #achievement10, #achievement11 {
+    -fx-padding: 30, 0, 30, 0;
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 2, 2, 2, 2);
+}
