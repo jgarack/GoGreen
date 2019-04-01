@@ -198,7 +198,7 @@ class DbAdaptorTest {
         List<Achievement> l = db.getAllAchievements();
 
         for(int i = 0; i <12; i++) {
-            assertTrue(l.get(i).equals(listAch.get(i)));
+            assertFalse(l.get(i).equals(listAch.get(i)));
         }
         db.deleteByUsername(random);
     }
