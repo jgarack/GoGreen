@@ -114,6 +114,23 @@ public class PointsControllerTest extends AbstractTest {
         assertEquals(200, mvcResult.getResponse().getStatus());
     }*/
     @Test
+    public void update_localProduce() throws Exception {
+        route = "/points";
+        json_req = super.mapToJson(fabricate(3));
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(route)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(json_req)).andReturn();
+        assertEquals(200, mvcResult.getResponse().getStatus());
+    }@Test
+    public void update_publicTransport() throws Exception {
+        route = "/points";
+        json_req = super.mapToJson(fabricate(4));
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(route)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(json_req)).andReturn();
+        assertEquals(200, mvcResult.getResponse().getStatus());
+    }
+    @Test
     public void update_publicTransport() throws Exception {
         route = "/points";
         json_req = super.mapToJson(fabricate(4));

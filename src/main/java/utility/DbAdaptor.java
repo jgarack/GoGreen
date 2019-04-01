@@ -2,7 +2,6 @@ package utility;
 
 import gui.AlertBuilder;
 
-import javax.swing.text.html.HTMLDocument;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -404,8 +403,9 @@ public class DbAdaptor {
             st.close();
 
             PreparedStatement pst = conn
-                    .prepareStatement("UPDATE activities SET amount = ?, performed_times = performed_times+1"
-                    + "WHERE player = ? AND activity_id = ?");
+                    .prepareStatement("UPDATE activities SET amount = ?,"
+                            + " performed_times = performed_times+1 "
+                            + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
             pst.setInt(three, activityID);
@@ -413,8 +413,6 @@ public class DbAdaptor {
             pst.close();
             calculateScore(name, activityID, amount);
             updateTotalScore(name);
-
-
             return true;
         } catch (SQLException e) {
 
@@ -643,30 +641,6 @@ public class DbAdaptor {
 
     }
 
-    public int getPerformedTimes(String username, int actId) {
-        connect();
-        PreparedStatement st = null;
-        try {
-            st = conn.prepareStatement("Select performed_times from activities where player = ? AND activity_id = ? ");
-            st.setString(1,username);
-            st.setInt(2, actId);
-            rs = st.executeQuery();
-            int pt=-1;
-            while(rs.next()) {
-                pt = rs.getInt(1);
-            }
-            st.close();
-            return pt;
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-        }
-        finally {
-            disconnect();
-        }
-        return -1;
-    }
-
     /**
      * returns all pending requests.
      * @param username username who wants the pending requests
@@ -892,6 +866,37 @@ public class DbAdaptor {
             disconnect();
         }
         return temp;
+    }
+
+    /**
+     * Method that gets amount of times an activity has been performed.
+     * @param username users name
+     * @param actId activity identifier
+     * @return number of times activity has been performed
+     */
+    public int getPerformedTimes(String username, int actId) {
+        connect();
+        PreparedStatement st;
+        try {
+            st = conn.prepareStatement("Select performed_times from activities "
+                    + "where player = ? AND activity_id = ? ");
+            st.setString(1,username);
+            st.setInt(2, actId);
+            rs = st.executeQuery();
+            int pt=-1;
+            while(rs.next()) {
+                pt = rs.getInt(1);
+            }
+            st.close();
+            return pt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
+        finally {
+            disconnect();
+        }
+        return -1;
     }
 
 }
