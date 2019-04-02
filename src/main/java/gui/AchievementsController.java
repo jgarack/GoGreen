@@ -44,68 +44,12 @@ public class AchievementsController {
     private GridPane grid;
 
     /**
-     * Bound to the achievement.
+     * The user
+     * whose achievements are requested.
      */
-    @FXML
-    private ImageView achievement1;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement2;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement3;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement4;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement5;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement6;
+    private String username;
 
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement7;
 
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement8;
-
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement9;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement10;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement11;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement12;
 
     /**
      * Used to show useful information to the user.
@@ -118,10 +62,13 @@ public class AchievementsController {
      */
     @FXML
     public void initialize() {
+        if (username == null) {
+            setUsername(MainHandler.username);
+        }
         List<Achievement> allAchievements = dbAdaptor.getAllAchievements();
         int achievementCounter = 0;
         List<Integer> achievementIds =
-                dbAdaptor.getAchievements(MainHandler.username);
+                dbAdaptor.getAchievements(username);
         for (Achievement currAch : allAchievements) {
             createVBoxAchievement(currAch,
                     achievementCounter, achievementIds);
@@ -180,5 +127,12 @@ public class AchievementsController {
 
     }
 
+    /**
+     * Sets the current user.
+     * @param username the current user.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
 }
