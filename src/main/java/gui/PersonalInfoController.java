@@ -232,10 +232,16 @@ public class PersonalInfoController {
                         avatarImageView.setImage(db.getImage());
                         new BounceIn(avatarImageBox).play();
                         event.setDropCompleted(true);
-                    } else {
+                    } else if (!db.hasUrl() && avatarUrl.startsWith("/icons/avatar")) {
+                        avatarImageView.setImage(db.getImage());
+                        new BounceIn(avatarImageBox).play();
+                        event.setDropCompleted(true);
+                    }
+                    else {
                         alertBuilder.showAlertNotification(
                                 "Avatar update failed."
                                 + "\nTry dragging another image.");
+                        event.setDropCompleted(false);
                     }
                 } else {
                     event.setDropCompleted(false);
@@ -304,7 +310,6 @@ public class PersonalInfoController {
                 content.putImage(sourceImage);
                 db.setContent(content);
                 avatarUrl = "/icons/avatar" + numOfAvatar + ".png";
-                System.out.println(avatarUrl + "DRAGDETECTED");
                 popOver.hide();
                 event.consume();
             }
