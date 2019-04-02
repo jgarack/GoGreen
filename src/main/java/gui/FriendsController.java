@@ -299,7 +299,7 @@ public class FriendsController {
         VBox removeFriendBox = new VBox();
         removeFriendBtn.setMaxWidth(Double.MAX_VALUE);
         removeFriendBox.getChildren().addAll(showAchievementsBtn,removeFriendBtn);
-        
+
 
         popOver = new PopOver(removeFriendBox);
         popOver.show(row);
