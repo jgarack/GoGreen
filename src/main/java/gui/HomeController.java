@@ -63,7 +63,7 @@ public class HomeController {
     /**
      * Handler for handling main operations.
      */
-    public MainHandler handler = new MainHandler("http://localhost:8080");
+    public MainHandler handler = new MainHandler("https://go-green-db.herokuapp.com");
 
     /**
      * Data about vegetarian meals consumed

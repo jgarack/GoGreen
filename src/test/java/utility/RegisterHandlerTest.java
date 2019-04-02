@@ -21,7 +21,7 @@ public class RegisterHandlerTest {
     private static final String SECRETANSWER = "Baby, don't hurt me";
     private static final String ADDITION = "123";
     private static final String PASS_TOMD5 = "1A1DC91C907325C69271DDF0C944BC72";
-    private static final String DOMAIN = "http://localhost:8080";
+    private static final String DOMAIN = "https://go-green-db.herokuapp.com";
 
     private static final RegisterHandler testObject = new RegisterHandler(DOMAIN);
 

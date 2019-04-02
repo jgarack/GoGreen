@@ -22,7 +22,7 @@ public class RegisterController {
     /**
      * Domain for the connection.
      */
-    private static final String DOMAIN = "http://localhost:8080";
+    private static final String DOMAIN = "https://go-green-db.herokuapp.com";
 
     /**
      * The width of the stage.
