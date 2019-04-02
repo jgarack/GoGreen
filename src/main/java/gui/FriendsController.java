@@ -1,12 +1,15 @@
 package gui;
 
+import animatefx.animation.FadeInUp;
 import animatefx.animation.ZoomInRight;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -19,10 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -282,11 +282,25 @@ public class FriendsController {
                         ((User) row.getItem()).getUsername();
                 dbAdaptor.considerRequest(sender, recipient, false);
                 dbAdaptor.considerRequest(recipient, sender, false);
+                popOver.hide();
                 reloadPage();
             }
         });
+        Button showAchievementsBtn = new Button();
+        showAchievementsBtn.setText("Show achievements");
+        showAchievementsBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String user = ((User) row.getItem()).getUsername();
+                showAchievementsOfFriend(user);
+                popOver.hide();
+            }
+        });
         VBox removeFriendBox = new VBox();
-        removeFriendBox.getChildren().add(removeFriendBtn);
+        removeFriendBtn.setMaxWidth(Double.MAX_VALUE);
+        removeFriendBox.getChildren().addAll(showAchievementsBtn,removeFriendBtn);
+        
+
         popOver = new PopOver(removeFriendBox);
         popOver.show(row);
     }
@@ -307,6 +321,7 @@ public class FriendsController {
                 String recipient =
                         ((User) row.getItem()).getUsername();
                 dbAdaptor.sendFriendReq(sender, recipient);
+                popOver.hide();
                 reloadPage();
             }
         });
@@ -348,6 +363,14 @@ public class FriendsController {
         }
         searchBar.setText("");
 
+    }
+
+    private void showAchievementsOfFriend(final String username) {
+        try {
+            mainController.loadAchievementsScene(username);
+        } catch (IOException ex) {
+            alertBuilder.displayException(ex);
+        }
     }
 
     /**

@@ -5,6 +5,12 @@
     -fx-text-fill: white;
     -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
 }
+#header{
+    -fx-font-weight: bold;
+    -fx-font-size: 56;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(three-pass-box, rgb(41, 41, 41), 0, 0, 0, 3);
+}
 .achDescription{
     -fx-font-style: italic;
     -fx-padding: 10 10 10 10;

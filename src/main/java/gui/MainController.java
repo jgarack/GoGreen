@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
+import utility.MainHandler;
 
 import java.io.IOException;
 
@@ -61,11 +62,7 @@ public class MainController {
     @FXML
     private Label greetingsText;
 
-    /**
-     * Bound to the friends list page.
-     */
-    @FXML
-    private Button friendsListBtn;
+    private String achievementsUser;
 
     /**
      * Updates the Greeting in top right corner.
@@ -152,6 +149,7 @@ public class MainController {
      */
     @FXML
     protected void loadAchievementsScene() throws IOException {
+        MainHandler.achievementsUsername = null;
         loadScene("achievements");
     }
 
@@ -175,5 +173,15 @@ public class MainController {
                     .setMainController(this);
         }
         root.setCenter(newScene);
+    }
+
+    /**
+     * Loads achievements scene for a friend.
+     * @param username the friend.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    void loadAchievementsScene(String username) throws IOException {
+        MainHandler.achievementsUsername =  username;
+        loadScene("achievements");
     }
 }

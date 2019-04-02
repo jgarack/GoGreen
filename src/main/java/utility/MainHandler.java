@@ -15,6 +15,11 @@ public class MainHandler {
     public static String username;
 
     /**
+     * Username of friend for achievements page.
+     */
+    public static String achievementsUsername;
+
+    /**
      * A private Handler for Http requests.
      */
     private HttpRequestHandler httpHandler;

@@ -2,6 +2,7 @@ package gui;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -57,23 +58,36 @@ public class AchievementsController {
     @FXML
     private PopOver popOver;
 
+
     /**
      * Triggered upon loading of scene.
      */
     @FXML
     public void initialize() {
-        if (username == null) {
+        if (MainHandler.achievementsUsername == null) {
+            System.out.println("username is null");
             setUsername(MainHandler.username);
+        } else {
+            setUsername(MainHandler.achievementsUsername);
         }
         List<Achievement> allAchievements = dbAdaptor.getAllAchievements();
         int achievementCounter = 0;
         List<Integer> achievementIds =
                 dbAdaptor.getAchievements(username);
+        createHeader(username);
         for (Achievement currAch : allAchievements) {
             createVBoxAchievement(currAch,
                     achievementCounter, achievementIds);
             achievementCounter++;
         }
+    }
+
+    private void createHeader(String username) {
+        String title = "Achievements of " + username;
+        Label header = new Label(title);
+        header.setId("header");
+        grid.add(header,0,0,4,1);
+        GridPane.setHalignment(header, HPos.CENTER);
     }
 
     /**
@@ -123,7 +137,7 @@ public class AchievementsController {
         currVBox.setAlignment(Pos.CENTER);
         grid.add(currVBox,
                 achievementCounter  %  COLS,
-                achievementCounter / COLS);
+                (achievementCounter / COLS) + 1);
 
     }
 
