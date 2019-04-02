@@ -55,7 +55,7 @@ public class PersonalInfoController {
      * Localhost domain.
      * {@value}
      */
-    private static final String LOCALHOST = "http://localhost:8080";
+    private static final String LOCALHOST = "https://go-green-db.herokuapp.com";
 
     /**
      * The parent controller.

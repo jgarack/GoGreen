@@ -18,7 +18,7 @@ public class LoginHandlerTest {
     private static final String USER = "user";
     private static final String PASS = "pass";
     private static final String PASS_TOMD5 = "1A1DC91C907325C69271DDF0C944BC72";
-    private static final String DOMAIN = "http://localhost:8080";
+    private static final String DOMAIN = "https://go-green-db.herokuapp.com";
 
     private static final LoginHandler testObject = new LoginHandler(DOMAIN);
 

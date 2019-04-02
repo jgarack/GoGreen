@@ -43,7 +43,7 @@ public final class LoginController {
     /**
      * LoginHandler used for handling login requests.
      */
-    private LoginHandler handler = new LoginHandler("http://localhost:8080");
+    private LoginHandler handler = new LoginHandler("https://go-green-db.herokuapp.com");
 
 
     /**
