@@ -5,12 +5,16 @@ import animatefx.animation.JackInTheBox;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
 import utility.MainHandler;
@@ -56,6 +60,14 @@ public class MainController {
      */
     @FXML
     private Button personalInfo;
+
+    /**
+     * Bound to the home button on top.
+     */
+    @FXML
+    private Button friendsListBtn;
+
+
     /**
      * Bound to the greetings label on top.
      */
@@ -84,12 +96,27 @@ public class MainController {
     public void initialize() {
         try {
             loadHomeScene();
+            loadFriendNotification(5);
         } catch (IOException err) {
             err.printStackTrace();
         }
     }
 
+    private void loadFriendNotification(int notificationCount) {
+        friendsListBtn.setGraphic(createNotification(String.valueOf(notificationCount)));
+    }
 
+    private Node createNotification(String number) {
+        StackPane pane = new StackPane();
+        Label lab = new Label(number);
+        lab.setStyle("-fx-text-fill:white");
+        Circle cercle = new Circle(10, Color.rgb(5, 200, 0, .9));
+        cercle.setStrokeWidth(2.0);
+        cercle.setStyle("-fx-background-insets: 0 0 -1 0, 0, 1, 2;");
+        cercle.setSmooth(true);
+        pane.getChildren().addAll(cercle, lab);
+        return pane;
+    }
 
     /**
      * Loads how to play screen.
