@@ -184,3 +184,9 @@
     -fx-text-fill: #a32243;
     -fx-background-color: red;
 }
+
+#notificationReq{
+    -fx-font-size: 10;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}

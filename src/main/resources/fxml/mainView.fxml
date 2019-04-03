@@ -6,6 +6,9 @@
 
 <?import java.net.URL?>
 
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <BorderPane fx:id="root"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -25,7 +28,22 @@
             <HBox alignment="TOP_RIGHT" fx:id="userSection" spacing="15">
                 <Label fx:id="greetingsText" text="Greetings, User!" HBox.hgrow="ALWAYS"/>
                 <Button fx:id="achievementsBtn" text="🏆 Achievements" HBox.hgrow="ALWAYS" onAction="#loadAchievementsScene"/>
-                <Button fx:id="friendsListBtn" text="🖂 Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
+                <StackPane>
+                    <Button fx:id="friendsListBtn" text="🖂 Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
+                    <StackPane alignment="TOP_RIGHT">
+                            <Circle radius="8" stroke="black">
+                                <fill>
+                                    <RadialGradient centerX="0.5" centerY="0.5" radius="0.8">
+                                        <stops>
+                                            <Stop color="beige"/>
+                                            <Stop color="green"/>
+                                        </stops>
+                                    </RadialGradient>
+                                </fill>
+                            </Circle>
+                            <Label text="5" fx:id="notificationReq"/>
+                    </StackPane>
+                </StackPane>
                 <Button fx:id="personalInfo" text="👤 Edit Your Profile" onAction="#loadPersonalInfoScene"/>
             </HBox>
         </SplitPane>
