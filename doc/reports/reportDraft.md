@@ -90,3 +90,17 @@ Overall, I really liked this course, because not only did I get to improve my co
 ---------------
 
 
+Jonathan Garack
+
+I am satisfied with the progress I did during this quarter while working on the project. I think our whole group worked very efficient. I had a lot of opportunities to improve my programing skills and I think I used each of them. Each time I had a problem my team or our TA were really helpful. 
+
+I mainly focused on the Database part of the project. I created and designed the postgresql database, during this time I finally found useful lectures from previous quarters. I also learned how to connect the database part of the project with the application. The most difficult part of my work, was testing, but finally i managed to do them. 
+
+Of course I had few problems doing the project, but the communication between each of the team members was really good. Each time I had a problem someone helped me.
+
+At the beginning of the project definitely one of my weak points was that I have never used most programs that the teaching team asked us to use. I had a lot of problems with gitlab and sourcetree, especially source but after few weeks i got used to this and it was fine.
+
+I am happy with the teams dynamic and I hope there will be more projects like this one in the next quarters.
+
+
+
