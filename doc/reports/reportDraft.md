@@ -1,4 +1,4 @@
-1.	General information about the project
+1.General information about the project
 
 No big project consisting of 7 people would go well without planning, collaboration, proper job division and communication. In group 98, we dedicated a lot of time to make sure everyone in the group was up to date with current updates/changes to our program, either with weekly meetings and reviews, or concise but clear commit messages.
 
@@ -9,9 +9,9 @@ During the first weeks of the project, we encountered problems with job division
 Another problem that we encountered was miscommunications. There have been a few cases, mostly in the early weeks, where the same task would be done simultaneously by more than one person, making the other person’s work obsolete. After one particularly big case of this (one person did 3-4 hours of work for nothing), we made sure that this never happens again and started dividing work very clearly as well as improving real-time communication while working on something.
 
 Our communications were done by a few means:
-●	Weekly issues and goals were posted on our scrumboard; 
-●	Minor issues and quick questions/decisions were discussed in our WhatsApp group; 
-●	Major decisions, merge requests and big problems were solved during our weekly meetings.
+* Weekly issues and goals were posted on our scrumboard; 
+* Minor issues and quick questions/decisions were discussed in our WhatsApp group; 
+* Major decisions, merge requests and big problems were solved during our weekly meetings.
 
 It might be worthy to note that to keep up with the schedule, we not only made use of the mandatory Monday meetings, but organized additional programming meetups in the TU Delft library.
 
@@ -69,6 +69,22 @@ Admittedly, my performance during the first two weeks was lackluster. Neverthele
 Much to my surprise, aside from the work delineation mishap at the start, which was resolved with more abundant and clearer communication, there were no other notable conflict between the team members. The greatest testament to how our group functioned like a well-oiled machine and with an uncanny lack of conflict is that we finished the app two weeks in advance of the deadline, which allowed us to further work on extra features and polish out the existing ones. 
 
 In conclusion, my greatest shortcoming during the project was, in my opinion, my lack of ambition at the start, where as I consider my strong point to be my decent communication skills and creativity. 
+
+
+---------------
+
+
+Vidas Bacevičius
+
+
+For this project, I was responsible for the testing/general help on the project. At first I was tasked to work on the server with Alexander and Omar, but quickly realized that I couldn't pick up on all the new material so quickly, and my work would have to be done by someome else to keep up with the schedule, so I started to stick with what I had experience in and could help with - testing and quality. The first quarter of CSE, the OOP course in particular really helped here, since, during it I learned about unit testing and could apply and expand my knowledge here.
+
+Since I started to work on testing, my contribution to the project increased vastly. I also continued communicating with Alexander, helping him if he needed it, and asking for help and advice myself. I also liked that everyone was very enthusiastic about the project, which increased my morale and made the work on this project more enjoyable. 
+
+At the start of the project I had some problems with Git, which stemmed mostly from inexperience with version control system. Thankfully, my teammates helped me when I encountered any issues, for which I am very thankful. 
+
+Overall, I really liked this course, because not only did I get to improve my computer science/programming and version control skills, but also see how a project of this scale is executed and how important planning and communications are.
+
 
 
 ---------------
