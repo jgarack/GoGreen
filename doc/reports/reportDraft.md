@@ -1,4 +1,4 @@
-1.General information about the project
+1.	General information about the project
 
 No big project consisting of 7 people would go well without planning, collaboration, proper job division and communication. In group 98, we dedicated a lot of time to make sure everyone in the group was up to date with current updates/changes to our program, either with weekly meetings and reviews, or concise but clear commit messages.
 
@@ -9,10 +9,9 @@ During the first weeks of the project, we encountered problems with job division
 Another problem that we encountered was miscommunications. There have been a few cases, mostly in the early weeks, where the same task would be done simultaneously by more than one person, making the other person’s work obsolete. After one particularly big case of this (one person did 3-4 hours of work for nothing), we made sure that this never happens again and started dividing work very clearly as well as improving real-time communication while working on something.
 
 Our communications were done by a few means:
-1. ●	Weekly issues and goals were posted on our scrumboard; 
-1. ●	Minor issues and quick questions/decisions were discussed in our WhatsApp group; 
-1. ●	Major decisions, merge requests and big problems were solved during our weekly meetings.
-
+●	Weekly issues and goals were posted on our scrumboard; 
+●	Minor issues and quick questions/decisions were discussed in our WhatsApp group; 
+●	Major decisions, merge requests and big problems were solved during our weekly meetings.
 
 It might be worthy to note that to keep up with the schedule, we not only made use of the mandatory Monday meetings, but organized additional programming meetups in the TU Delft library.
 
@@ -24,28 +23,26 @@ Moreover, in addition to learning how to use Git, everybody had to program somet
 
 To sum up, this project was very challenging, but at the end very rewarding, since every single one of us learned something new and improved their skills in multiple areas of computer science.
 
-
-
 2.Design decisions: 
-
 
 One of the major decisions that we made as a team, was that at the start of the group project, we split the work on the application into groups. We decided that Omar, Alex and Vidas will be working on the server-side, Alvaro and Jonathan – on the databases, and Lachezar and Berry will design the GUI.... 
 
-Concerning the technological choices that the team made, firstly, we researched the frameworks and libraries that we were going to need to build the application. The team then decided to build the server using the Spring boot framework(//TO_ALEX: add why?) and to make the data retrievals using the ORM framework - Hibernate. Concerning the GUI, we chose JavaFX, because it is easier to implement than Swing and AWT. Furthermore, more than 70 libraries are implemented for JavaFX and thus, it was going to be much easier to design the application. The images were created on Adobe Illustrator, because we decided that we are going to have an unique interface of the application.  
-
-
+Concerning the technological choices that the team made, firstly, we researched the frameworks and libraries that we were going to need to build the application. The team then decided to build the server using the Spring boot framework, because of several reasons. First of all our TA had good experiences with it and recommended it to us as well. Furthermore, this framework is very well documented, including step by step guides. This helped us a lot on getting started, and with the build in ObjectMapper class, sending and retrieving JSON objects becomes really easy. On the client side we used the java HttpUrlConnection class to build our own handler class, because it's very simple and flexible. Concerning the GUI, we chose JavaFX, because it is easier to implement than Swing and AWT while it offers everything we needed. Furthermore, more than 70 libraries are implemented for JavaFX and thus, it was going to be much easier to design the application. The images were created on Adobe Illustrator, because we decided that we are going to have an unique interface of the application.
+The server hosting is done on Heroku, we pretty much followed up on the course staff's recommendations there because it's free and has great support for data storage (through pgAdmin for example). The database is hosted on Heroku through pgAdmin, since we have experience with it, and it has integration with Heroku. We preferred to use MongoDB at first, but sadly this was not possible in combination with Heroku.  
 
 3.Points for improvement: 
 
+There is much space for improvement in the software that we designed. For example, the GUI can be made even more advanced, e.g. background animations can be added to the main screen and the quality of the front-end code can be improved.
+There is especially much room for improvement regarding testing: by using integration testing, end-to-end testing and TestFX for the GUI - whereas now we only have JUnit 5 tests, and sort-of integration testing on the database.
+Apart from points for improvement, there are also things that have improved a lot over the course of the project. We have seen eachother grow, both individually and as a team.
+To name a few things: The usage of git, work ethics, division of work, coding style, overall coding performance and especially communication.
+The last bit I want to point out here is the part of knowing what is required part, because this has been and is still our biggest issue in my opinion.
+I feel it could have made a big difference had we took a look in the rubrik more often and, sadly, I haven't seen much improvement on this point.
 
-There is much space for improvement in the software that we designed. For example, the GUI can be made even more advanced, e.g. background animations can be added to the main screen and the quality of the front-end code can be improved. Furthermore, the GUI itself can be tested using TestFX (JavaFX test framework). 
-
-As a whole, the making of the project itself could have been improved by the team members. Although the team synced well, the planning did not go as expected and we had to create a new thoroughly thought plan in the middle of the timespan of the project.
+As a whole, the making of the project itself could have been improved by the team members. Although the team synced well after a few weeks, the planning did not go as expected and we had to create a new thoroughly thought plan in the middle of the timespan of the project.
 
 
-
-4.Individual feedback:
-
+4.Individual feedback
 
 Lachezar Lesichkov 
  
@@ -77,13 +74,3 @@ In conclusion, my greatest shortcoming during the project was, in my opinion, my
 ---------------
 
 
-Vidas Bacevičius
-
-
-For this project, I was responsible for the testing/general help on the project. At first I was tasked to work on the server with Alexander and Omar, but quickly realized that I couldn't pick up on all the new material so quickly, and my work would have to be done by someome else to keep up with the schedule, so I started to stick with what I had experience in and could help with - testing and quality. The first quarter of CSE, the OOP course in particular really helped here, since, during it I learned about unit testing and could apply and expand my knowledge here.
-
-Since I started to work on testing, my contribution to the project increased vastly. I also continued communicating with Alexander, helping him if he needed it, and asking for help and advice myself. I also liked that everyone was very enthusiastic about the project, which increased my morale and made the work on this project more enjoyable. 
-
-At the start of the project I had some problems with Git, which stemmed mostly from inexperience with version control system. Thankfully, my teammates helped me when I encountered any issues, for which I am very thankful. 
-
-Overall, I really liked this course, because not only did I get to improve my computer science/programming and version control skills, but also see how a project of this scale is executed and how important planning and communications are.
