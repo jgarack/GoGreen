@@ -131,4 +131,20 @@ I would say communication was one of our strong points at the end of the project
 
 I wouldn't say I had any downfalls during the development of the application, but on a few occasions especially during the first 3 weeks of the application if I felt that other team members weren't putting enough work I would slack off myself. This was not the right approach to such a problem, but better communication between us and delegation of work helped offset this issue.
  
-On the other hand, I had established a general idea of how the app should work very early on which made the tasks that had been assigned to me easier to do as I did not need to research that much as I had previous knowledge on most aspects.
+On the other hand I had established a general idea of how the app should work very early on which made the tasks that had been assigned to me easier to do as I did not need to research that much as I had previous knowledge on most aspects.,
+
+----------------
+Alexander van Vugt
+
+I started the project very motivated an full of energy, but as the end came near my motivation started declining,
+which is probably mostly because I'm not feeling well overall and important exams closing in, so more of a personal issue
+rather than project related. This also caused me to fall back into my procrastination habits.
+
+Throughout the project, I believe my stronger points were overview and coordination, as well as dedication, all be it weaker towards the end.
+I didn't have major conflicts during the project, at most some "healthy irritation" at some points.
+However, most of those cases were easily solved with some settling, coordination or a little talk.
+A few weeks into the project, the unbalanced division of work started to spark a conflict, but we quickly talked it down and solved
+the issue. Another issue was that not everybody had a clear overview on the repository and the project in general.
+An extra meeting was called in, during which we went through the entire repository on a conceptual level.
+This helped everyone gain back a clear overview, whilst also making us revise the structure of the repository.
+This reviewed structure was very useful in the weeks after that, and there was a more clear separation between modules.
