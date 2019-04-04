@@ -1,4 +1,4 @@
-1.General information about the project
+﻿1.General information about the project
 
 No big project consisting of 7 people would go well without planning, collaboration, proper job division and communication. In group 98, we dedicated a lot of time to make sure everyone in the group was up to date with current updates/changes to our program, either with weekly meetings and reviews, or concise but clear commit messages.
 
@@ -121,3 +121,14 @@ I didn't work as much as I'd liked with the code: the only work I did with it wa
 The only problem I had with my team is that when I created 2 submodules to work on the server-side and client-side separately we had issues due to the fact that some classes were needed both in the server and client side. To fix this I moved my work to a new repository and I worked on it on my own to create an independent server-side module.
 
 As a conclusion I would say that I really enjoyed the project and I found the weekly meetings very interesting, seeing our TA Tijmen asking more from us felt as if we were doing an actual job and my teammates took it really professionally, worked really hard and asked a lot from me so I'm really glad I got to work with them.
+
+---------------
+Omar Hussein
+
+Through out this project I would say I had consistent contribution, I mainly worked on backend for client and server but also helped with other fields. I have completed all the tasks assigned to me on time, and I have also asked for extra work on some occasions. Working with my team was enjoyable as we had a high level of positive communication, which was hard to achieve at the beginning but as we got more accustomed to each others working styles it became easier.
+
+I would say communication was one of our strong points at the end of the project as we'd always work together whenever an issue was raised and it would, usually, be solved quickly. Each team member became used to a specific aspect in the application although we all had general knowledge of its internal working which also sped up the completion of tasks.
+
+I wouldn't say I had any downfalls during the development of the application, but on a few occasions especially during the first 3 weeks of the application if I felt that other team members weren't putting enough work I would slack off myself. This was not the right approach to such a problem, but better communication between us and delegation of work helped offset this issue.
+ 
+On the other hand, I had established a general idea of how the app should work very early on which made the tasks that had been assigned to me easier to do as I did not need to research that much as I had previous knowledge on most aspects.
