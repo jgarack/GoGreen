@@ -1,4 +1,28 @@
-﻿
+1.	General information about the project
+
+No big project consisting of 7 people would go well without planning, collaboration, proper job division and communication. In group 98, we dedicated a lot of time to make sure everyone in the group was up to date with current updates/changes to our program, either with weekly meetings and reviews, or concise but clear commit messages.
+
+At the start of every week we would have a meeting to discuss the previous weeks’ achievements and encountered challenges. Every member of the team would update the team on what he did that week, what went well, what did not, and any improvements and comments he would have. After that, we would create an agenda for next week, divide our workload and start programming.
+
+During the first weeks of the project, we encountered problems with job division - some people would get a significant portion of the workload while others would only have a chance to contribute less. This affected the morale of some team members, but it was quickly brought up in the next weekly meeting and it was made sure that every member gets their fair share of work.
+
+Another problem that we encountered was miscommunications. There have been a few cases, mostly in the early weeks, where the same task would be done simultaneously by more than one person, making the other person’s work obsolete. After one particularly big case of this (one person did 3-4 hours of work for nothing), we made sure that this never happens again and started dividing work very clearly as well as improving real-time communication while working on something.
+
+Our communications were done by a few means:
+●	Weekly issues and goals were posted on our scrumboard; 
+●	Minor issues and quick questions/decisions were discussed in our WhatsApp group; 
+●	Major decisions, merge requests and big problems were solved during our weekly meetings.
+
+It might be worthy to note that to keep up with the schedule, we not only made use of the mandatory Monday meetings, but organized additional programming meetups in the TU Delft library.
+
+Generally, as the project went on, everybody in their team started to understand what their responsibilities are, and how to approach them best. It might have helped that at the start of the project everybody divided their part of the work (two people for GUI, three people for server/database, and two people for testing/general problems), and sticked to this schedule through the rest of the project. 
+
+It is fair to say that at the end of this project everyone on our team improved in some way. It is obvious that we saw how important planning and communications are in a project of this scale, and, based on how serious problems were encountered less and less as the project went on, it is safe to say that we learned how to work in a team and improved our planning and communications skills.
+
+Moreover, in addition to learning how to use Git, everybody had to program something they have never encountered before. Whether it was server, GUI or database, every member of the team gained important programming knowledge in an area they haven’t encountered before
+
+To sum up, this project was very challenging, but at the end very rewarding, since every single one of us learned something new and improved their skills in multiple areas of computer science.
+
 2.Design decisions: 
 
 One of the major decisions that we made as a team, was that at the start of the group project, we split the work on the application into groups. We decided that Omar, Alex and Vidas will be working on the server-side, Alvaro and Jonathan – on the databases, and Lachezar and Berry will design the GUI.... 
