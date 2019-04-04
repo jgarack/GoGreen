@@ -1,3 +1,19 @@
+﻿
+2.Design decisions: 
+
+One of the major decisions that we made as a team, was that at the start of the group project, we split the work on the application into groups. We decided that Omar, Alex and Vidas will be working on the server-side, Alvaro and Jonathan – on the databases, and Lachezar and Berry will design the GUI.... 
+
+Concerning the technological choices that the team made, firstly, we researched the frameworks and libraries that we were going to need to build the application. The team then decided to build the server using the Spring boot framework(//TO_ALEX: add why?) and to make the data retrievals using the ORM framework - Hibernate. Concerning the GUI, we chose JavaFX, because it is easier to implement than Swing and AWT. Furthermore, more than 70 libraries are implemented for JavaFX and thus, it was going to be much easier to design the application. The images were created on Adobe Illustrator, because we decided that we are going to have an unique interface of the application.  
+
+3.Points for improvement: 
+
+There is much space for improvement in the software that we designed. For example, the GUI can be made even more advanced, e.g. background animations can be added to the main screen and the quality of the front-end code can be improved. Furthermore, the GUI itself can be tested using TestFX (JavaFX test framework). 
+
+As a whole, the making of the project itself could have been improved by the team members. Although the team synced well, the planning did not go as expected and we had to create a new thoroughly thought plan in the middle of the timespan of the project.
+
+
+4.Individual feedback
+
 Lachezar Lesichkov 
  
 
