@@ -207,4 +207,5 @@ public class MainHandler {
                         .reqPost("/total", username)
                         .readLine());
     }
+
 }

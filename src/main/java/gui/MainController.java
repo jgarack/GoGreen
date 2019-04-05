@@ -16,6 +16,8 @@ import javafx.scene.layout.*;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import org.controlsfx.control.PopOver;
+import utility.DbAdaptor;
 import utility.MainHandler;
 
 import java.io.IOException;
@@ -73,7 +75,12 @@ public class MainController {
     @FXML
     private Label greetingsText;
 
-    private static final int pendingReq = 0;
+    /**
+     * Count of the pending requests.
+     */
+    private int pendingReq = 0;
+
+    private DbAdaptor dbAdaptor = new DbAdaptor();
 
     /**
      * Updates the Greeting in top right corner.
@@ -127,6 +134,7 @@ public class MainController {
      */
     @FXML
     public void initialize() {
+        pendingReq = dbAdaptor.retrieveCount(MainHandler.username);
         try {
             loadHomeScene();
             if (pendingReq > 0) {
@@ -137,15 +145,29 @@ public class MainController {
         }
     }
 
+    /**
+     * Sets the pending request notification on top.
+     * @param notificationCount the number of pending requests.
+     */
     private void loadFriendNotification(int notificationCount) {
         friendsListBtn.setGraphic(createNotification(String.valueOf(notificationCount)));
     }
 
+    /**
+     * Creates the notification bubble.
+     * @param number the number of pending requests
+     * @return returns a fancy bubble with a number inside
+     */
     private Node createNotification(String number) {
         StackPane pane = new StackPane();
+        String infoMsg = "You have " +
+                pendingReq +
+                "pending friend requests";
+        InformationBuilder informationBuilder = new InformationBuilder();
+        informationBuilder.addInformativePopOverToNode(pane,infoMsg, PopOver.ArrowLocation.TOP_CENTER);
         Label lab = new Label(number);
         lab.setStyle("-fx-text-fill:white");
-        Circle cercle = new Circle(10, Color.rgb(5, 200, 0, .9));
+        Circle cercle = new Circle(10, Color.rgb(5, 200, 50, .9));
         cercle.setStrokeWidth(2.0);
         cercle.setStyle("-fx-background-insets: 0 0 -1 0, 0, 1, 2;");
         cercle.setSmooth(true);
