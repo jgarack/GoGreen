@@ -251,14 +251,14 @@ public class PointsController {
             // /environmental-economics-research-strategy
 
             if (!dbAdaptor.getAchievements(request.getUsername()).contains(9)) {
-                if (amount == 5) {
+                if (amount >= 5) {
                     dbAdaptor.addAchievement(9,
                             request.getUsername());
                 }
             }
 
             if (!dbAdaptor.getAchievements(request.getUsername()).contains(10)) {
-                if (amount == 10) {
+                if (amount >= 10) {
                     dbAdaptor.addAchievement(10,
                             request.getUsername());
                     if (!dbAdaptor.getAchievements(
@@ -289,15 +289,15 @@ public class PointsController {
      */
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
-        //todo: add achievements
-        //        if(dbAdaptor.getTotalScore(username) >= 1000000
-        //                && !dbAdaptor.getAchievements(username).contains(12)){
-        //            dbAdaptor.addAchievement(12,username);
-        //        }
-        //        if(dbAdaptor.getFriends(username).size()>=10
-        //                && !dbAdaptor.getAchievements(username).contains(11)){
-        //            dbAdaptor.addAchievement(11,username);
-        //        }
+       // todo: add achievements
+                if(dbAdaptor.getTotalScore(username) >= 1000000
+                        && !dbAdaptor.getAchievements(username).contains(12)){
+                    dbAdaptor.addAchievement(12,username);
+                }
+                if(dbAdaptor.getFriends(username).size()>=10
+                        && !dbAdaptor.getAchievements(username).contains(11)){
+                    dbAdaptor.addAchievement(11,username);
+                }
         return new ResponseEntity(dbAdaptor
                 .getTotalScore(username
                         .replace('"', ' ').trim()),

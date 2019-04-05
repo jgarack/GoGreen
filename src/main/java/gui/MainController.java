@@ -10,10 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import utility.MainHandler;
@@ -83,6 +83,40 @@ public class MainController {
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
         this.greetingsText.setStyle("-fx-font-family: 'FontAwesome'");
+    }
+
+    /**
+     * Methods for updating background dynamically.
+     * @param score userScore.
+     */
+
+    public void changeBackground(int score) {
+
+        BackgroundImage phazes;
+
+        if (score >= 50000) {
+            phazes = new BackgroundImage(new Image("../icons/backgroundPhase2_blur.png"),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(phazes));
+        }
+
+        else if (score >= 100000) {
+            phazes = new BackgroundImage(new Image("../icons/backgroundPhase3_blur.png"),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(phazes));
+        }
+
+        else if (score >= 300000) {
+            phazes = new BackgroundImage(new Image("../icons/backgroundPhase4_blur.png"),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(phazes));
+        }
+
+        else if (score >= 500000) {
+            phazes = new BackgroundImage(new Image("../icons/backgroundFinal_blur.png"),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(phazes));
+        }
     }
 
 

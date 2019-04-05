@@ -2,7 +2,10 @@ package gui;
 
 import animatefx.animation.Pulse;
 import animatefx.animation.ZoomInLeft;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -10,12 +13,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import utility.LoginHandler;
 import utility.MainHandler;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Controller for the login window.
@@ -29,6 +38,11 @@ public final class LoginController {
      * The HEIGHT of the stage.
      */
     private static final int HEIGHT = 600;
+    /**
+     * The root of the FXML page.
+     */
+    @FXML
+    private BorderPane root;
     /**
      * Bound to the text field where the user enters his username.
      */
@@ -50,7 +64,11 @@ public final class LoginController {
      * Initialize method.
      */
     @FXML
-    protected void initialize() { }
+    protected void initialize() {
+
+//        this.cyclingBackground();
+
+    }
 
 
 
@@ -124,4 +142,27 @@ public final class LoginController {
         }
 
     }
+
+//    public void cyclingBackground() {
+//
+//        BackgroundImage phazes;
+//
+//        for(int i = 1; i <= 5; i++) {
+//            phazes = new BackgroundImage(new Image("../resources/icons/backgroundPhase" + i +".png"),
+//                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+//            root.setBackground(new Background(phazes));
+//            if (i == 5) {
+//                i = 1;
+//
+//
+//            }
+//            try {
+//                TimeUnit.SECONDS.sleep(1);
+//            }
+//            catch(InterruptedException ex){
+//            }
+//        }
+//
+//    }
 }
+
