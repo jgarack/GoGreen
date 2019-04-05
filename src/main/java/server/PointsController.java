@@ -108,9 +108,9 @@ public class PointsController {
         String username = request.getUsername();
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
-        int activityID = request.getActivityID();
+        int activityId = request.getActivityID();
         //veg meal
-        if (activityID == Integer.parseInt("1")) {
+        if (activityId == Integer.parseInt("1")) {
 
             BufferedReader httpBody =
                     httpHandler.reqGet("/diets."
@@ -145,7 +145,7 @@ public class PointsController {
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null))
                 - jsonCon(HttpRequestHandler.resLog(veg, null));
 
-        } else if (activityID == Integer.parseInt("2")) {
+        } else if (activityId == Integer.parseInt("2")) {
             //bicycle
             BufferedReader httpBody =
                     httpHandler.reqGet("/automobile_"
@@ -169,11 +169,11 @@ public class PointsController {
 
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
 
-        } else if (activityID == THREE) {
+        } else if (activityId == THREE) {
             //local produce
             amount = amount * EIGHTYEIGHT;
 
-        } else if (activityID == FOUR) {
+        } else if (activityId == FOUR) {
             //public transport
 
             BufferedReader httpBody =
@@ -203,7 +203,7 @@ public class PointsController {
             amount = jsonCon(HttpRequestHandler.resLog(car, null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody, null));
 
-        } else if (activityID == FIVE) {
+        } else if (activityId == FIVE) {
             //solar panels
             if (dbAdaptor.getDate(request.getUsername()) != null) {
                 ZoneId zone = ZoneId.of("Europe/Amsterdam");
@@ -245,7 +245,7 @@ public class PointsController {
                 dbAdaptor.updateDate(request.getUsername(), today);
                 amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
             }
-        } else if (activityID == SIX) {
+        } else if (activityId == SIX) {
             //reducing home temperature according to data from
             // https://www.epa.gov/environmental-economics
             // /environmental-economics-research-strategy
@@ -273,11 +273,11 @@ public class PointsController {
 
         }
 
-        if (!dbAdaptor.updateActivity(username, activityID, amount)) {
+        if (!dbAdaptor.updateActivity(username, activityId, amount)) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity(dbAdaptor
-                .getActivityAmount(username, activityID), HttpStatus.OK);
+                .getActivityAmount(username, activityId), HttpStatus.OK);
     }
 
     /**
