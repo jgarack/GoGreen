@@ -146,6 +146,7 @@ public class MainHandler {
             return -1;
         }
     }
+
     /**
      * updates solar panels.
      * @param amount which should be added
@@ -171,7 +172,14 @@ public class MainHandler {
             new AlertBuilder().displayException(e);
             return -1;
         }
-    }public int updateHeating(final int amount) {
+    }
+
+    /**
+     * updates heating.
+     * @param amount which should be added
+     * @return 0 if ok, -1 if exception thrown
+     */
+    public int updateHeating(final int amount) {
         try {
             String res = httpHandler
 

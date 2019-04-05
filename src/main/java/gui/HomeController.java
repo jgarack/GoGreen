@@ -354,6 +354,7 @@ public class HomeController {
         }
 
     }
+
     /**
      * Linked to the button to increase
      * lowering home temp month.
@@ -369,8 +370,8 @@ public class HomeController {
             this.tempRed = handler
                     .updateHeating(Integer.parseInt(lowerTemps.getText()));
 
-                setPointsEarned();
-                alert();
+            setPointsEarned();
+            alert();
 
 
 

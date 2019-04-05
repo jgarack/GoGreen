@@ -43,7 +43,7 @@ public class InformationBuilder {
      * @param message the actual message
      */
     public void
-    addInformationIconToSearchBox(final Label informativeLabel,
+        addInformationIconToSearchBox(final Label informativeLabel,
                                   final String message) {
         informativeLabel.setBackground(Background.EMPTY);
         informativeLabel.setStyle("-fx-font-family: 'FontAwesome'");

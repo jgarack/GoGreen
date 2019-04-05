@@ -89,7 +89,8 @@ public class DemoApplication extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
         primaryStage.setTitle("Clima Mutatio Dolus");
-        primaryStage.getIcons().add(new Image(DemoApplication.class.getResourceAsStream("/icons/iconApp.png")));
+        primaryStage.getIcons().add(new Image(DemoApplication.class
+                .getResourceAsStream("/icons/iconApp.png")));
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(
                 (getClass().getResource("/stylesheets/loginStylesheet.css"))

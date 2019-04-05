@@ -64,9 +64,9 @@ public class UpdateRequest {
             return false;
         } else {
             UpdateRequest that = (UpdateRequest) other;
-//            return username.equals(that.username)
-//                    && activityID == that.activityID
-//                    && amount == that.amount;
+            //            return username.equals(that.username)
+            //                    && activityID == that.activityID
+            //                    && amount == that.amount;
             return true;
         }
     }

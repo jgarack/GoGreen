@@ -5,18 +5,13 @@ import animatefx.animation.JackInTheBox;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.GlyphFontRegistry;
+
 import utility.MainHandler;
 
 import java.io.IOException;
@@ -168,6 +163,15 @@ public class MainController {
         loadScene("achievements");
     }
 
+    /**
+     * Loads achievements scene for a friend.
+     * @param username the friend.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    void loadAchievementsScene(String username) throws IOException {
+        MainHandler.achievementsUsername =  username;
+        loadScene("achievements");
+    }
 
     /**
      * Loads a scene based on the given string.
@@ -190,13 +194,5 @@ public class MainController {
         root.setCenter(newScene);
     }
 
-    /**
-     * Loads achievements scene for a friend.
-     * @param username the friend.
-     * @throws IOException when FXMLLoader cannot load properly.
-     */
-    void loadAchievementsScene(String username) throws IOException {
-        MainHandler.achievementsUsername =  username;
-        loadScene("achievements");
-    }
+
 }

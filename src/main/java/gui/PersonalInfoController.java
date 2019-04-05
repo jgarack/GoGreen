@@ -35,6 +35,10 @@ import javax.xml.bind.DatatypeConverter;
  */
 public class PersonalInfoController {
     /**
+     * Dimensions for the scene.
+     */
+    private static final int DIMENSIONS = 120;
+    /**
      * Zero.
      */
     private static final int ZERO = 0;
@@ -144,12 +148,6 @@ public class PersonalInfoController {
     private Image img = new Image(dbAdaptor.getUser(MainHandler.username)
             .getAvatarUrl());
 
-    /**
-     * Dimensions for the scene.
-     */
-    private static final int DIMENSIONS = 120;
-
-
 
     /**
      * Executed upon initialization.
@@ -236,8 +234,7 @@ public class PersonalInfoController {
                         avatarImageView.setImage(db.getImage());
                         new BounceIn(avatarImageBox).play();
                         event.setDropCompleted(true);
-                    }
-                    else {
+                    } else {
                         alertBuilder.showAlertNotification(
                                 "Avatar update failed."
                                 + "\nTry dragging another image.");
