@@ -83,7 +83,12 @@ public class AchievementsController {
     }
 
     private void createHeader(String username) {
-        String title = "Achievements of " + username;
+        String title = "";
+        if (username.equals(MainHandler.username)) {
+            title = "Your achievements";
+        } else {
+            title = "Achievements of " + username;
+        }
         Label header = new Label(title);
         header.setId("header");
         grid.add(header,0,0,4,1);

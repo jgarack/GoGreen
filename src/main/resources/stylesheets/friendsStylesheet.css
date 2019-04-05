@@ -56,3 +56,30 @@
     -fx-border-color: #a32243;
     -fx-border-width: 5px;
 }
+#pendingReqList{
+    -fx-background-color: transparent;
+
+}
+#pendingReqList .list-cell{
+    -fx-border-color: transparent transparent black transparent;
+    -fx-font-weight: bold;
+   -fx-font-size: 18;
+    -fx-background-color:  	#7FFFD4;
+    -fx-opacity: 0.7;
+}
+#pendingReqList .list-cell .label {
+
+}
+.declineBtn{
+    -fx-background-color: crimson;
+}
+.declineBtn:hover{
+    -fx-opacity: 0.8;
+}
+.acceptBtn{
+    -fx-background-color: lime;
+}
+.acceptBtn:hover{
+    -fx-opacity: 0.8;
+}
+

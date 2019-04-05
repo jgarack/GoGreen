@@ -19,10 +19,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -207,11 +204,13 @@ public class FriendsController {
 
 
                 Button acceptBtn = new Button("Accept");
+                acceptBtn.getStyleClass().add("acceptBtn");
                 acceptBtn.setStyle("-fx-font-family: 'FontAwesome'");
                 acceptBtn
                         .setGraphic(GlyphFontRegistry
                                 .font("FontAwesome")
-                                .create(FontAwesome.Glyph.CHECK_CIRCLE_ALT));
+                                .create(FontAwesome.Glyph.CHECK_CIRCLE_ALT)
+                                .size(24));
                 acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
@@ -227,15 +226,17 @@ public class FriendsController {
                 });
 
                 Button declineBtn = new Button("Block user");
+                declineBtn.getStyleClass().add("declineBtn");
                 declineBtn.setStyle("-fx-font-family: 'FontAwesome'");
                 declineBtn
                         .setGraphic(GlyphFontRegistry
                                 .font("FontAwesome")
-                                .create(FontAwesome.Glyph.TIMES_CIRCLE_ALT));
+                                .create(FontAwesome.Glyph.TIMES_CIRCLE_ALT)
+                                .size(24));
 
                 HBox currFriend = new HBox();
                 Label sender = new Label(friend + " sent you a request!");
-
+                sender.setMaxWidth(Region.USE_PREF_SIZE);
                 declineBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
@@ -253,7 +254,7 @@ public class FriendsController {
                 currFriend.getChildren().addAll(sender, acceptBtn, declineBtn);
                 currFriend.setAlignment(Pos.CENTER);
                 currFriend.setSpacing(SPACING_VAL);
-
+                listOfPendingReq.setId("pendingReqList");
                 listOfPendingReq.getItems().add(currFriend);
             }
             ColumnConstraints columnConstraints = new ColumnConstraints();

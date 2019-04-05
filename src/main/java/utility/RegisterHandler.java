@@ -80,7 +80,12 @@ public class RegisterHandler {
                 alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                e.printStackTrace();
+                int statusCode = e.getHttpStatusCode();
+                if (statusCode == 500) {
+                    alertBuilder.showAlert("Username already taken!",
+                            "This username is already taken. Please choose another one."
+                            );
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
