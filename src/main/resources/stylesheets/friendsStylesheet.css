@@ -39,6 +39,7 @@
 
 #submitSearchBtn:hover{
     -fx-background-color: #A0596B;
+    -fx-cursor: hand;
 }
 
 
@@ -75,11 +76,16 @@
 }
 .declineBtn:hover{
     -fx-opacity: 0.8;
+    -fx-cursor: hand;
 }
 .acceptBtn{
     -fx-background-color: lime;
+    -fx-cursor: hand;
 }
 .acceptBtn:hover{
     -fx-opacity: 0.8;
+    -fx-cursor: hand;
 }
+
+
 
