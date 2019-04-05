@@ -29,6 +29,7 @@
 
 #home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover,#friendsListBtn:hover,#achievementsBtn:hover {
     -fx-background-color: #A0596B;
+    -fx-cursor: hand;
 }
 
 #howToTitle, #homeTitle, #aboutTitle, #editProfileTitle{
@@ -154,6 +155,7 @@
 
 #increaseVegetarianMealsBtn:hover, #increaseBicycleUsageBtn:hover, #increaseLocalProduceBtn:hover, #increaseBusUsageBtn:hover, #increaseSolarPanelsBtn:hover, #increaseLowerTempsBtn:hover{
     -fx-background-color: #A0596B;
+    -fx-cursor: hand;
 }
 
 #avatarImageView {

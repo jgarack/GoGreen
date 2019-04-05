@@ -25,6 +25,7 @@
     -fx-font-size: 20;
 }
 .button:hover {
+    -fx-cursor: hand;
     -fx-background-color: #A0596B;
 }
 #loginText{
