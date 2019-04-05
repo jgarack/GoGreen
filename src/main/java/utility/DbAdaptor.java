@@ -533,7 +533,7 @@ public class DbAdaptor {
      * @param fromUser from which the invitation is send
      * @param toUser user to whom you want to send the invitation
      */
-    public void sendFriendReq(final String fromUser, final String toUser) {
+    public boolean sendFriendReq(final String fromUser, final String toUser) {
 
         if (checkIfInDb(fromUser,toUser)) {
             connect();
@@ -549,13 +549,16 @@ public class DbAdaptor {
                 st.executeUpdate();
                 st.close();
                 //alertBuilder.showInformationNotification("Friend request sent!");
+                return true;
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             } finally {
                 disconnect();
             }
         }
+        return false;
     }
 
     /**
@@ -606,7 +609,7 @@ public class DbAdaptor {
      * @param toUser user who got the inv
      * @param accepted rejected - false, accepted - true
      */
-    public void considerRequest(final String fromUser,
+    public boolean considerRequest(final String fromUser,
                                 final String toUser, final boolean accepted) {
         connect();
         try {
@@ -622,15 +625,11 @@ public class DbAdaptor {
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
-            /*if (accepted) {
-                alertBuilder.showInformationNotification("Friend request accepted!");
-            } else {
-                alertBuilder.showInformationNotification("Friend request declined!"
-                        + "\nUser is now blocked.");
-            }*/
             st.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         } finally {
             disconnect();
         }

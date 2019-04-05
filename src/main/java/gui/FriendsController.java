@@ -214,14 +214,21 @@ public class FriendsController {
                 acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
-                        dbAdaptor
+                        if (dbAdaptor
                                 .considerRequest(friend,
-                                        MainHandler.username, true);
-                        try {
-                            mainController.loadFriendsListScene();
-                        } catch (IOException err) {
-                            err.getMessage();
+                                        MainHandler.username, true)) {
+                            alertBuilder
+                                    .showInformationNotification(
+                                            "Friend added to the leaderboard!");
+                            try {
+                                mainController.loadFriendsListScene();
+                            } catch (IOException err) {
+                                err.getMessage();
+                            }
+                        } else {
+                            alertBuilder.showAlertNotification("Friend could not be added!");
                         }
+
                     }
                 });
 
@@ -240,14 +247,20 @@ public class FriendsController {
                 declineBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
-                        dbAdaptor
+                        if (dbAdaptor
                                 .considerRequest(friend,
-                                        MainHandler.username, false);
-                        try {
-                            mainController.loadFriendsListScene();
-                        } catch (IOException err) {
-                            err.getMessage();
+                                        MainHandler.username, false)) {
+                            alertBuilder
+                                    .showInformationNotification("User blocked!");
+                            try {
+                                mainController.loadFriendsListScene();
+                            } catch (IOException err) {
+                                err.getMessage();
+                            }
+                        } else {
+                            alertBuilder.showAlertNotification("User could not be blocked!");
                         }
+
                     }
                 });
 
@@ -281,8 +294,12 @@ public class FriendsController {
                 String sender = MainHandler.username;
                 String recipient =
                         ((User) row.getItem()).getUsername();
-                dbAdaptor.considerRequest(sender, recipient, false);
-                dbAdaptor.considerRequest(recipient, sender, false);
+                if (dbAdaptor.considerRequest(sender, recipient, false) ||
+                dbAdaptor.considerRequest(recipient, sender, false)) {
+                    alertBuilder.showInformationNotification("User blocked!");
+                } else {
+                    alertBuilder.showInformationNotification("User could not be blocked!");
+                }
                 popOver.hide();
                 reloadPage();
             }
@@ -321,7 +338,14 @@ public class FriendsController {
                 String sender = MainHandler.username;
                 String recipient =
                         ((User) row.getItem()).getUsername();
-                dbAdaptor.sendFriendReq(sender, recipient);
+                if (dbAdaptor.sendFriendReq(sender, recipient)) {
+                    alertBuilder
+                            .showInformationNotification("Friend request sent!");
+                } else {
+                    alertBuilder
+                            .showAlertNotification("Friend request cannot"
+                                    + " be sent to this user!");
+                }
                 popOver.hide();
                 reloadPage();
             }
