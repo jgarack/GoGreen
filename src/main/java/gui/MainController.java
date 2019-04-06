@@ -78,7 +78,7 @@ public class MainController {
     /**
      * Count of the pending requests.
      */
-    private int pendingReq = 0;
+    int pendingReq = 0;
 
     private DbAdaptor dbAdaptor = new DbAdaptor();
 
@@ -134,14 +134,20 @@ public class MainController {
      */
     @FXML
     public void initialize() {
-        pendingReq = dbAdaptor.retrieveCount(MainHandler.username);
         try {
             loadHomeScene();
-            if (pendingReq > 0) {
-                loadFriendNotification(pendingReq);
-            }
+            updatePendingRequests();
         } catch (IOException err) {
             err.printStackTrace();
+        }
+    }
+
+    void updatePendingRequests() {
+        pendingReq = dbAdaptor.retrieveCount(MainHandler.username);
+        if (pendingReq > 0) {
+            loadFriendNotification(pendingReq);
+        } else {
+            friendsListBtn.setGraphic(null);
         }
     }
 

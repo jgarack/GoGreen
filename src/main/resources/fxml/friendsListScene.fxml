@@ -13,15 +13,17 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="gui.FriendsController"
           fx:id="friendsPane" alignment="CENTER">
-    <Label fx:id="leaderBoardTitle" text="Leaderboard" GridPane.valignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0"
+    <VBox fx:id="leaderBoardVBox" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="3">
+        <Label fx:id="leaderBoardTitle" text="Leaderboard" GridPane.valignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0"
            GridPane.columnIndex="1"/>
-    <HBox fx:id="searchBox" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="15">
-        <TextField fx:id="searchBar" promptText="Username" GridPane.columnIndex="1" HBox.hgrow="ALWAYS"/>
-        <Label fx:id="searchInfoLabel"/>
-        <Button fx:id="submitSearchBtn" text="🔍 Search" onAction="#submitSearch" GridPane.columnIndex="1" defaultButton="true"/>
-    </HBox>
-    <!--<ListView fx:id="friendsListView" GridPane.rowIndex="2" GridPane.columnIndex="1"/>-->
-    <TableView fx:id="friendsTable" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+        <HBox fx:id="searchBox" GridPane.rowIndex="1" GridPane.columnIndex="1" spacing="15">
+            <TextField fx:id="searchBar" promptText="Username" GridPane.columnIndex="1" HBox.hgrow="ALWAYS"/>
+            <Label fx:id="searchInfoLabel"/>
+            <Button fx:id="submitSearchBtn" text="🔍 Search" onAction="#submitSearch" GridPane.columnIndex="1" defaultButton="true"/>
+        </HBox>
+        <!--<ListView fx:id="friendsListView" GridPane.rowIndex="2" GridPane.columnIndex="1"/>-->
+        <TableView fx:id="friendsTable" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </VBox>
     <stylesheets>
         <URL value="@../stylesheets/friendsStylesheet.css"/>
     </stylesheets>

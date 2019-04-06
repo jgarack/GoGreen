@@ -1,6 +1,8 @@
 package gui;
 
+import animatefx.animation.ZoomInLeft;
 import animatefx.animation.ZoomInRight;
+import animatefx.util.ParallelAnimationFX;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -63,11 +65,6 @@ public class FriendsController {
     @FXML
     private TextField searchBar;
     /**
-     * Table for listing friends.
-     */
-    @FXML
-    private ListView friendsListView;
-    /**
      * Bound to the search box.
      */
     @FXML
@@ -100,6 +97,11 @@ public class FriendsController {
      * For notifications.
      */
     private InformationBuilder informationBuilder = new InformationBuilder();
+    /**
+     * Bound to the leaderboard container.
+     */
+    @FXML
+    private VBox leaderBoardVBox;
 
     /**
      * For reloading the page.
@@ -186,7 +188,7 @@ public class FriendsController {
         });
 
         friendsTable.getItems().addAll(friendsList);
-        new ZoomInRight(friendsTable).play();
+        new ZoomInRight(leaderBoardVBox).play();
 
 
     }
@@ -197,6 +199,7 @@ public class FriendsController {
      */
     private void constructPendingListView() {
         if (!pendingRequests.isEmpty()) {
+            VBox pendingListVbox = new VBox();
             Label pendingReqTitle = new Label("Pending Requests");
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
@@ -220,10 +223,12 @@ public class FriendsController {
                             alertBuilder
                                     .showInformationNotification(
                                             "Friend added to the leaderboard!");
+                            mainController.pendingReq--;
+                            mainController.updatePendingRequests();
                             try {
                                 mainController.loadFriendsListScene();
                             } catch (IOException err) {
-                                err.getMessage();
+                                err.printStackTrace();
                             }
                         } else {
                             alertBuilder.showAlertNotification("Friend could not be added!");
@@ -275,8 +280,13 @@ public class FriendsController {
             columnConstraints.setHalignment(HPos.CENTER);
             friendsPane.getColumnConstraints().add(columnConstraints);
             friendsPane.setHgap(HGAP_VAL);
-            friendsPane.add(pendingReqTitle, 0, 0);
-            friendsPane.add(listOfPendingReq, 0, 2);
+            pendingListVbox.getChildren().addAll(pendingReqTitle,listOfPendingReq);
+            GridPane.setRowIndex(pendingReqTitle,0);
+            GridPane.setRowIndex(listOfPendingReq,2);
+            GridPane.setColumnIndex(pendingReqTitle,0);
+            GridPane.setColumnIndex(listOfPendingReq,0);
+            friendsPane.add(pendingListVbox,0,0,1,3);
+            new ZoomInLeft(pendingListVbox).play();
         }
     }
 
