@@ -289,7 +289,7 @@ public class PointsController {
      */
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
-       // todo: add achievements
+        // todo: add achievements
                 if(dbAdaptor.getTotalScore(username) >= 1000000
                         && !dbAdaptor.getAchievements(username).contains(12)){
                     dbAdaptor.addAchievement(12,username);

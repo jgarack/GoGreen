@@ -181,10 +181,13 @@
     -fx-padding: 30 0 0 0;
 }
 #dropHereLabel{
-    -fx-font-size: 18;
-    -fx-padding: 10;
-    -fx-text-fill: #a32243;
-    -fx-background-color: red;
+    -fx-font-style: italic;
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 20;
+    -fx-text-fill: white;
+    -fx-background-color: #a32243;
+    -fx-border-color: #a32243;
+    -fx-border-width: 5px;
 }
 
 #notificationReq{

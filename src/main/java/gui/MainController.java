@@ -1,7 +1,7 @@
 package gui;
 
 import animatefx.animation.FadeInUp;
-import animatefx.animation.JackInTheBox;
+import animatefx.animation.Pulse;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -168,12 +168,12 @@ public class MainController {
         StackPane pane = new StackPane();
         String infoMsg = "You have " +
                 pendingReq +
-                "pending friend requests";
+                " pending\n" + "friend requests";
         InformationBuilder informationBuilder = new InformationBuilder();
         informationBuilder.addInformativePopOverToNode(pane,infoMsg, PopOver.ArrowLocation.TOP_CENTER);
         Label lab = new Label(number);
         lab.setStyle("-fx-text-fill:white");
-        Circle cercle = new Circle(10, Color.rgb(5, 200, 50, .9));
+        Circle cercle = new Circle(12, Color.rgb(41, 41, 41, .8));
         cercle.setStrokeWidth(2.0);
         cercle.setStyle("-fx-background-insets: 0 0 -1 0, 0, 1, 2;");
         cercle.setSmooth(true);
@@ -201,7 +201,7 @@ public class MainController {
         home.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
-                new JackInTheBox(home).setResetOnFinished(true).play();
+                new Pulse(home).setResetOnFinished(true).play();
             }
         });
         loadScene("home");

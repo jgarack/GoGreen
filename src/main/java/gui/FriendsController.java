@@ -1,7 +1,7 @@
 package gui;
 
-import animatefx.animation.ZoomInLeft;
-import animatefx.animation.ZoomInRight;
+import animatefx.animation.FadeInRight;
+import animatefx.animation.FadeInUp;
 import animatefx.util.ParallelAnimationFX;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -188,7 +188,7 @@ public class FriendsController {
         });
 
         friendsTable.getItems().addAll(friendsList);
-        new ZoomInRight(leaderBoardVBox).play();
+        new FadeInUp(leaderBoardVBox).play();
 
 
     }
@@ -286,7 +286,7 @@ public class FriendsController {
             GridPane.setColumnIndex(pendingReqTitle,0);
             GridPane.setColumnIndex(listOfPendingReq,0);
             friendsPane.add(pendingListVbox,0,0,1,3);
-            new ZoomInLeft(pendingListVbox).play();
+            new FadeInUp(pendingListVbox).play();
         }
     }
 
