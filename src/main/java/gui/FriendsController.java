@@ -1,8 +1,6 @@
 package gui;
 
-import animatefx.animation.FadeInRight;
 import animatefx.animation.FadeInUp;
-import animatefx.util.ParallelAnimationFX;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,8 +18,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
 import org.controlsfx.glyphfont.GlyphFontRegistry;
@@ -304,8 +305,8 @@ public class FriendsController {
                 String sender = MainHandler.username;
                 String recipient =
                         ((User) row.getItem()).getUsername();
-                if (dbAdaptor.considerRequest(sender, recipient, false) ||
-                dbAdaptor.considerRequest(recipient, sender, false)) {
+                if (dbAdaptor.considerRequest(sender, recipient, false)
+                        || dbAdaptor.considerRequest(recipient, sender, false)) {
                     alertBuilder.showInformationNotification("User blocked!");
                 } else {
                     alertBuilder.showInformationNotification("User could not be blocked!");

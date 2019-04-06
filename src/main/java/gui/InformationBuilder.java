@@ -53,12 +53,18 @@ public class InformationBuilder {
                         .font("FontAwesome")
                         .create(FontAwesome.Glyph.INFO_CIRCLE)
                         .size(FONT_SIZE));
-       addInformativePopOverToNode(informativeLabel,message, PopOver.ArrowLocation.LEFT_CENTER);
+        addInformativePopOverToNode(informativeLabel,message, PopOver.ArrowLocation.LEFT_CENTER);
 
     }
 
-
-    public void addInformativePopOverToNode(Node node,String message,PopOver.ArrowLocation arrowLocation){
+    /**
+     * adds information pop over to node.
+     * @param node given
+     * @param message to show
+     * @param arrowLocation where
+     */
+    public void addInformativePopOverToNode(Node node,String message,
+                                            PopOver.ArrowLocation arrowLocation) {
         node.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {

@@ -12,7 +12,14 @@ import javafx.scene.control.Label;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -29,8 +36,6 @@ import java.io.IOException;
  */
 public class MainController {
 
-
-
     /**
      * Magic number 0.8.
      */
@@ -42,7 +47,10 @@ public class MainController {
      */
     private static final int FSIZE = 20;
 
-
+    /**
+     * Count of the pending requests.
+     */
+    int pendingReq = 0;
 
 
     /**
@@ -75,10 +83,7 @@ public class MainController {
     @FXML
     private Label greetingsText;
 
-    /**
-     * Count of the pending requests.
-     */
-    int pendingReq = 0;
+
 
     private DbAdaptor dbAdaptor = new DbAdaptor();
 
@@ -103,25 +108,23 @@ public class MainController {
 
         if (score >= 50000) {
             phazes = new BackgroundImage(new Image("../icons/backgroundPhase2_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
             root.setBackground(new Background(phazes));
-        }
-
-        else if (score >= 100000) {
+        } else if (score >= 100000) {
             phazes = new BackgroundImage(new Image("../icons/backgroundPhase3_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
             root.setBackground(new Background(phazes));
-        }
-
-        else if (score >= 300000) {
+        } else if (score >= 300000) {
             phazes = new BackgroundImage(new Image("../icons/backgroundPhase4_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT);
             root.setBackground(new Background(phazes));
-        }
-
-        else if (score >= 500000) {
+        } else if (score >= 500000) {
             phazes = new BackgroundImage(new Image("../icons/backgroundFinal_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             root.setBackground(new Background(phazes));
         }
     }
@@ -166,11 +169,12 @@ public class MainController {
      */
     private Node createNotification(String number) {
         StackPane pane = new StackPane();
-        String infoMsg = "You have " +
-                pendingReq +
-                " pending\n" + "friend requests";
+        String infoMsg = "You have "
+                + pendingReq
+                + " pending\n" + "friend requests";
         InformationBuilder informationBuilder = new InformationBuilder();
-        informationBuilder.addInformativePopOverToNode(pane,infoMsg, PopOver.ArrowLocation.TOP_CENTER);
+        informationBuilder.addInformativePopOverToNode(pane,infoMsg,
+                PopOver.ArrowLocation.TOP_CENTER);
         Label lab = new Label(number);
         lab.setStyle("-fx-text-fill:white");
         Circle cercle = new Circle(12, Color.rgb(41, 41, 41, .8));

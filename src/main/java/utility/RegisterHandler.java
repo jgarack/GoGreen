@@ -83,8 +83,7 @@ public class RegisterHandler {
                 int statusCode = e.getHttpStatusCode();
                 if (statusCode == 500) {
                     alertBuilder.showAlert("Username already taken!",
-                            "This username is already taken. Please choose another one."
-                            );
+                            "This username is already taken. Please choose another one.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

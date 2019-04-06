@@ -103,79 +103,52 @@ public class PointsController {
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
             @RequestBody final UpdateRequest request)throws Exception {
-        System.out.println(request.getUsername() + request.getActivityID()
-                + request.getAmount());
+        System.out.println(request.getUsername() + request.getActivityID() + request.getAmount());
         String username = request.getUsername();
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
         int activityId = request.getActivityID();
-        //veg meal
         if (activityId == Integer.parseInt("1")) {
-
-            BufferedReader httpBody =
-                    httpHandler.reqGet("/diets."
-                            + "json?size="
-                            + amount
-                            + "&timeframe=2019-01-01%2F2019-01-02"
-                            + BP_KEY);
-            BufferedReader veg =
-                    httpHandler.reqGet("/diets."
-                            + "json?size="
-                            + amount
-                            + "&diet_class=vegetarian"
-                            + "&timeframe=2019-01-01%2F2019-01-02"
-                            + BP_KEY);
+            //veg
+            BufferedReader httpBody = httpHandler.reqGet("/diets." + "json?size=" + amount
+                            + "&timeframe=2019-01-01%2F2019-01-02" + BP_KEY);
+            BufferedReader veg = httpHandler.reqGet("/diets." + "json?size=" + amount
+                    + "&diet_class=vegetarian" + "&timeframe=2019-01-01%2F2019-01-02" + BP_KEY);
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(5)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 1) >= 4) {
+                if (dbAdaptor.getPerformedTimes(request.getUsername(), 1) >= 4) {
                     dbAdaptor.addAchievement(5, request.getUsername());
                 }
             }
-            if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(6)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 1) >= 5) {
+            if (!dbAdaptor.getAchievements(request.getUsername()).contains(6)) {
+                if (dbAdaptor.getPerformedTimes(request.getUsername(), 1) >= 5) {
                     dbAdaptor.addAchievement(6, request.getUsername());
                 }
-
             }
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null))
                 - jsonCon(HttpRequestHandler.resLog(veg, null));
-
         } else if (activityId == Integer.parseInt("2")) {
             //bicycle
             BufferedReader httpBody =
                     httpHandler.reqGet("/automobile_"
                             + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
-            if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(1)) {
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 2) >= 4) {
+            if (!dbAdaptor.getAchievements(request.getUsername()).contains(1)) {
+                if (dbAdaptor.getPerformedTimes(request.getUsername(), 2) >= 4) {
                     dbAdaptor.addAchievement(1, request.getUsername());
                 }
             }
-            if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(2)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 2) >= 49) {
+            if (!dbAdaptor.getAchievements(request.getUsername()).contains(2)) {
+                if (dbAdaptor.getPerformedTimes(request.getUsername(), 2) >= 49) {
                     dbAdaptor.addAchievement(2, request.getUsername());
                 }
             }
-
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
-
         } else if (activityId == THREE) {
             //local produce
             amount = amount * EIGHTYEIGHT;
-
         } else if (activityId == FOUR) {
             //public transport
-
             BufferedReader httpBody =
                     httpHandler.reqGet("/bus_"
                             + "trips.json?duration=" + amount * SIXTY
@@ -290,18 +263,16 @@ public class PointsController {
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
         // todo: add achievements
-                if(dbAdaptor.getTotalScore(username) >= 1000000
-                        && !dbAdaptor.getAchievements(username).contains(12)){
-                    dbAdaptor.addAchievement(12,username);
-                }
-                if(dbAdaptor.getFriends(username).size()>=10
-                        && !dbAdaptor.getAchievements(username).contains(11)){
-                    dbAdaptor.addAchievement(11,username);
-                }
-        return new ResponseEntity(dbAdaptor
-                .getTotalScore(username
-                        .replace('"', ' ').trim()),
-                HttpStatus.OK);
+        if (dbAdaptor.getTotalScore(username) >= 1000000
+                        && !dbAdaptor.getAchievements(username).contains(12)) {
+            dbAdaptor.addAchievement(12,username);
+        }
+        if (dbAdaptor.getFriends(username).size() >= 10
+                        && !dbAdaptor.getAchievements(username).contains(11)) {
+            dbAdaptor.addAchievement(11, username);
+        }
+        return new ResponseEntity(dbAdaptor.getTotalScore(username.replace(
+                '"', ' ').trim()), HttpStatus.OK);
     }
 
     /**

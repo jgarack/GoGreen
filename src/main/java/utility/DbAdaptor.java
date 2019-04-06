@@ -642,10 +642,11 @@ public class DbAdaptor {
      * @param username the current user
      * @return count of pending friend requests
      */
-    public int retrieveCount(String username){
+    public int retrieveCount(String username) {
         connect();
         int result = -1;
-        String sql = "select count(from_user) from friend_request where to_user = ? and friend_status = ?::\"friend_status\"";
+        String sql = "select count(from_user) from friend_request "
+                + "where to_user = ? and friend_status = ?::\"friend_status\"";
         try {
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1,username);
