@@ -345,7 +345,7 @@ public class PersonalInfoController {
         String confirmNewPassStr = confirmNewPass
                 .getText().trim();
 
-        if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(null)
+        if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(LOCALHOST)
                 .loginSubmit(MainHandler.username, oldPassStr)) {
             try {
                 MessageDigest md5 = MessageDigest.getInstance("MD5");

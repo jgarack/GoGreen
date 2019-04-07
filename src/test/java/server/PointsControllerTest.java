@@ -117,6 +117,7 @@ public class PointsControllerTest extends AbstractTest {
     public void update_localProduce() throws Exception {
         route = "/points";
         json_req = super.mapToJson(fabricate(3));
+        System.out.println(json_req);
         mvcResult = mvc.perform(MockMvcRequestBuilders.post(route)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(json_req)).andReturn();

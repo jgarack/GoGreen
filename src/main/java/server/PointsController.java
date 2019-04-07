@@ -245,6 +245,10 @@ public class PointsController {
             amount = amount * ONEHUNDREDANDTEN;
 
         }
+        System.out.println("TEST DEBUG");
+        System.out.println(username);
+        System.out.println(activityId);
+        System.out.println(amount);
 
         if (!dbAdaptor.updateActivity(username, activityId, amount)) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

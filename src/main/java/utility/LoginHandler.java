@@ -79,8 +79,7 @@ public final class LoginHandler {
                             + "\nPlease register before you continue.");
                 }
             } catch (IOException e) {
-                alertBuilder.showAlert("IO exception",
-                        "Try again in a bit.");
+                alertBuilder.displayException(e);
             }
         }
         return false;
