@@ -95,17 +95,11 @@ public class DemoApplication extends Application {
         scene.getStylesheets().add(
                 (getClass().getResource("/stylesheets/loginStylesheet.css"))
                         .toExternalForm());
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight());
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(event -> {
             springContext.close();
-            System.out.println("Terminated");
         });
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
 
