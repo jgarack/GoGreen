@@ -116,6 +116,6 @@ public class GreetingController {
 
         DB_ADAPTOR.changepass(user, newpass);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity("Your password was changed successfully", HttpStatus.OK);
     }
 }
