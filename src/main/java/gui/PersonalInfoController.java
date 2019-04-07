@@ -360,6 +360,9 @@ public class PersonalInfoController {
             } catch (ServerStatusException | IOException exception) {
                 alertBuilder.displayException(exception);
             }
+        } else if (!newPassStr.equals(confirmNewPassStr)) {
+            alertBuilder.showAlert("Passwords do not match",
+                    "The new password do not match the confirmed password.");
         }
     }
 }

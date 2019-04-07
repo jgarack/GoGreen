@@ -85,8 +85,10 @@ public class RegisterHandler {
                     alertBuilder.showAlert("Username already taken!",
                             "This username is already taken. Please choose another one.");
                 }
+                return false;
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
         }
         return false;
