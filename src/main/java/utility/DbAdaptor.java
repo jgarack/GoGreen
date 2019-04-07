@@ -493,6 +493,7 @@ public class DbAdaptor {
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
             rs = st.executeQuery();
+            rs.next();
             System.out.println(rs.next());
             int ret = rs.getInt("total_score");
             st.close();
