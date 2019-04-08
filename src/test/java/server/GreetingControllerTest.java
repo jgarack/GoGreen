@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mockito;
-import org.postgresql.util.PSQLException;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -19,7 +18,6 @@ import utility.Activity;
 import utility.DbAdaptor;
 import utility.RegisterCredentials;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 
@@ -173,8 +171,8 @@ public class GreetingControllerTest extends AbstractTest {
      */
     @Test
     public void registerFailure() throws Exception {
-        GreetingController.setDBADAPTOR(Mockito.mock(DbAdaptor.class));
-        when(GreetingController.getDBADAPTOR().addNewUser(
+        GreetingController.setdbadaptor(Mockito.mock(DbAdaptor.class));
+        when(GreetingController.getdbadaptor().addNewUser(
                 new RegisterCredentials("user", "pass",
                         "question", "answer")))
                 .thenReturn(false);

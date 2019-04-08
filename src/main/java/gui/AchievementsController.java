@@ -22,6 +22,9 @@ import java.util.List;
  */
 public class AchievementsController {
 
+    /**
+     * Columns constant.
+     */
     private static final int COLS = 4;
 
     /**
@@ -82,16 +85,20 @@ public class AchievementsController {
         }
     }
 
-    private void createHeader(String username) {
+    /**
+     * Creates a header for the user.
+     * @param user the searched user.
+     */
+    private void createHeader(final String user) {
         String title = "";
-        if (username.equals(MainHandler.username)) {
+        if (user.equals(MainHandler.username)) {
             title = "Your achievements";
         } else {
-            title = "Achievements of " + username;
+            title = "Achievements of " + user;
         }
         Label header = new Label(title);
         header.setId("header");
-        grid.add(header,0,0,4,1);
+        grid.add(header, 0, 0, COLS, 1);
         GridPane.setHalignment(header, HPos.CENTER);
     }
 
@@ -148,10 +155,10 @@ public class AchievementsController {
 
     /**
      * Sets the current user.
-     * @param username the current user.
+     * @param user the current user.
      */
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(final String user) {
+        this.username = user;
     }
 
 }

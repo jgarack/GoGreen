@@ -103,11 +103,11 @@ public class PointsController {
     @PostMapping("/points")
     public ResponseEntity pointsResponse(
             @RequestBody final UpdateRequest request)throws Exception {
-        System.out.println(request.getUsername() + request.getActivityID() + request.getAmount());
+        System.out.println(request.getUsername() + request.getactivityid() + request.getAmount());
         String username = request.getUsername();
         int amount = request.getAmount();
         System.out.println("amount on server:" + amount);
-        int activityId = request.getActivityID();
+        int activityId = request.getactivityid();
         if (activityId == Integer.parseInt("1")) {
             //veg
             BufferedReader httpBody = httpHandler.reqGet("/diets." + "json?size=" + amount
@@ -151,15 +151,12 @@ public class PointsController {
             //public transport
             BufferedReader httpBody =
                     httpHandler.reqGet("/bus_"
-                            + "trips.json?duration=" + amount * SIXTY
-                            + BP_KEY);
+                            + "trips.json?duration=" + amount * SIXTY + BP_KEY);
             BufferedReader car =
                     httpHandler.reqGet("/automobile_"
-                            + "trips.json?duration=" + amount * SIXTY
-                            + BP_KEY);
+                            + "trips.json?duration=" + amount * SIXTY + BP_KEY);
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(3)) {
-
                 if (dbAdaptor.getPerformedTimes(
                         request.getUsername(), FOUR) >= 4) {
                     dbAdaptor.addAchievement(3, request.getUsername());
@@ -167,7 +164,6 @@ public class PointsController {
             }
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(4)) {
-
                 if (dbAdaptor.getPerformedTimes(
                         request.getUsername(), FOUR) >= 49) {
                     dbAdaptor.addAchievement(4, request.getUsername());
@@ -175,7 +171,6 @@ public class PointsController {
             }
             amount = jsonCon(HttpRequestHandler.resLog(car, null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody, null));
-
         } else if (activityId == FIVE) {
             //solar panels
             if (dbAdaptor.getDate(request.getUsername()) != null) {
@@ -222,14 +217,12 @@ public class PointsController {
             //reducing home temperature according to data from
             // https://www.epa.gov/environmental-economics
             // /environmental-economics-research-strategy
-
             if (!dbAdaptor.getAchievements(request.getUsername()).contains(9)) {
                 if (amount >= 5) {
                     dbAdaptor.addAchievement(9,
                             request.getUsername());
                 }
             }
-
             if (!dbAdaptor.getAchievements(request.getUsername()).contains(10)) {
                 if (amount >= 10) {
                     dbAdaptor.addAchievement(10,
@@ -245,11 +238,6 @@ public class PointsController {
             amount = amount * ONEHUNDREDANDTEN;
 
         }
-        System.out.println("TEST DEBUG");
-        System.out.println(username);
-        System.out.println(activityId);
-        System.out.println(amount);
-
         if (!dbAdaptor.updateActivity(username, activityId, amount)) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

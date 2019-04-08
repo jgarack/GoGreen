@@ -818,7 +818,7 @@ public class DbAdaptor {
      * @param id of the achievement
      * @param username of the user
      */
-    public void addAchievement(int id, String username) {
+    public void addAchievement(final int id, final String username) {
         connect();
         try {
             PreparedStatement st = conn.prepareStatement("INSERT INTO "
@@ -849,7 +849,10 @@ public class DbAdaptor {
             Achievement currAch;
 
             while (rs.next()) {
-                currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
+                currAch = new Achievement(rs.getString(1)
+                        .replace("_",  "  "),
+                        false,
+                        rs.getString(2));
                 temp.add(currAch);
             }
 
@@ -867,7 +870,7 @@ public class DbAdaptor {
      * @param username of the user
      * @return List with Achievements
      */
-    public List<Integer> getAchievements(String username) {
+    public List<Integer> getAchievements(final String username) {
         connect();
         List<Integer> temp = new ArrayList<>();
         try {
@@ -899,7 +902,7 @@ public class DbAdaptor {
      * @param actId activity identifier
      * @return number of times activity has been performed
      */
-    public int getPerformedTimes(String username, int actId) {
+    public int getPerformedTimes(final String username, final int actId) {
         connect();
         PreparedStatement st;
         try {

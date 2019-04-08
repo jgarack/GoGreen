@@ -4,6 +4,7 @@ import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
@@ -81,9 +82,10 @@ public class RegisterHandler {
                 return false;
             } catch (ServerStatusException e) {
                 int statusCode = e.getHttpStatusCode();
-                if (statusCode == 500) {
+                if (statusCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
                     alertBuilder.showAlert("Username already taken!",
-                            "This username is already taken. Please choose another one.");
+                            "This username is already taken."
+                                    + " Please choose another one.");
                 }
                 return false;
             } catch (IOException e) {

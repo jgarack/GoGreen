@@ -36,14 +36,26 @@ public class MainHandler {
         alertBuilder = new AlertBuilder();
     }
 
+    /**
+     * Sets up a new handler.
+     * @param handler the handler to be set.
+     */
     public void setHttpHandler(HttpRequestHandler handler) {
         httpHandler = handler;
     }
 
+    /**
+     * Gets the http handler.
+     * @return the http handler.
+     */
     public HttpRequestHandler getHttpHandler() {
         return httpHandler;
     }
 
+    /**
+     * Sets a new alert builder.
+     * @param builder the builder to be set.
+     */
     public void setAlertBuilder(AlertBuilder builder) {
         alertBuilder = builder;
     }
