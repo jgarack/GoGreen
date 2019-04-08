@@ -64,18 +64,26 @@ public class RegisterHandlerTest {
                 PASS, SECRETQUESTION, NULL),
                 "Handler allowed register without secret answer.");
     }
-    /**
     @Test
     public void regFailure() throws Exception{
         when(testObject.httpHandler.reqPost("/register",
-                new AccountMessage(USER, PASS_TOMD5))).thenThrow(
-                new ServerStatusException(401));
+                new RegisterCredentials(USER, PASS_TOMD5, SECRETQUESTION, SECRETANSWER))).thenThrow(
+                new ServerStatusException(409));
         boolean result = testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER);
         verify(testObject.httpHandler).reqPost("/register",
-                new AccountMessage(USER, PASS_TOMD5));
+                new RegisterCredentials(USER, PASS_TOMD5, SECRETQUESTION, SECRETANSWER));
         assertFalse(result);
     }
-     */
+    @Test
+    public void regFailure_InternalServerError() throws Exception{
+        when(testObject.httpHandler.reqPost("/register",
+                new RegisterCredentials(USER, PASS_TOMD5, SECRETQUESTION, SECRETANSWER))).thenThrow(
+                new ServerStatusException(500));
+        boolean result = testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER);
+        verify(testObject.httpHandler).reqPost("/register",
+                new RegisterCredentials(USER, PASS_TOMD5, SECRETQUESTION, SECRETANSWER));
+        assertFalse(result);
+    }
     @Test
     public void regSucceed() {
         assertTrue(testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER),

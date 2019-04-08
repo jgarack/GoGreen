@@ -74,7 +74,6 @@ public class DemoApplication extends Application {
         fxmlLoader.setControllerFactory(springContext::getBean);
 
         root = fxmlLoader.load(getClass().getResource("/fxml/loginView.fxml"));
-
         new ZoomIn(root).play();
 
     }

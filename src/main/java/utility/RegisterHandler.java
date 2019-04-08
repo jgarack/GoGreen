@@ -73,6 +73,7 @@ public class RegisterHandler {
 
                 httpHandler.reqPost("/register",
                         registerCredentials);
+                System.out.println("reqpost did not throw exception");
                 alertBuilder
                         .showInformationNotification(
                                 "You have registered successfully!");
@@ -82,7 +83,7 @@ public class RegisterHandler {
                 return false;
             } catch (ServerStatusException e) {
                 int statusCode = e.getHttpStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                if (statusCode == HttpURLConnection.HTTP_CONFLICT) {
                     alertBuilder.showAlert("Username already taken!",
                             "This username is already taken."
                                     + " Please choose another one.");
@@ -147,15 +148,6 @@ public class RegisterHandler {
         } else if (passFieldEntry.isEmpty()) {
             alertBuilder.formEntryWarning("Password",
                     "You need to fill in your password");
-
-            return false;
-        } else if (secretQ.isEmpty()) {
-            alertBuilder.formEntryWarning("Secret Question Field",
-                        "You need to fill in your secret question");
-            return false;
-        } else if (secretAnswer.isEmpty()) {
-            alertBuilder.formEntryWarning("Secret Answer Field",
-                        "You need to fill in your secret answer");
             return false;
         }
 
