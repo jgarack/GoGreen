@@ -11,13 +11,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 
-import javafx.scene.layout.BorderPane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
 import utility.MainHandler;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Controller for the login window.
@@ -35,7 +38,7 @@ public final class LoginController {
      * The root of the FXML page.
      */
     @FXML
-    private BorderPane root;
+    private GridPane grid;
     /**
      * Bound to the text field where the user enters his username.
      */
@@ -59,10 +62,9 @@ public final class LoginController {
     @FXML
     protected void initialize() {
 
-    //        this.cyclingBackground();
+//        this.cyclingBackground();
 
     }
-
 
 
     /**
@@ -93,9 +95,10 @@ public final class LoginController {
     /**
      * Redirects the user from login screen
      * to main screen by setting up a new scene.
+     *
      * @param event The event fired
-     * @param view The view to where the user should be redirected.
-     *            When the user clicks the button from the login button.
+     * @param view  The view to where the user should be redirected.
+     *              When the user clicks the button from the login button.
      */
     private void redirectToView(final ActionEvent event, final String view) {
         Stage stage = (Stage) ((Node) event.getSource())
@@ -112,7 +115,6 @@ public final class LoginController {
 
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-
 
 
             if (view.equals("register")) {
@@ -136,28 +138,46 @@ public final class LoginController {
 
     }
 
-    //    public void cyclingBackground() {
-    //
-    //        BackgroundImage phazes;
-    //
-    //        for(int i = 1; i <= 5; i++) {
-    //            phazes = new BackgroundImage(new Image("../resources/icons
-    //            /backgroundPhase" + i +".png"),
-    //                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-    //                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-    //            root.setBackground(new Background(phazes));
-    //            if (i == 5) {
-    //                i = 1;
-    //
-    //
-    //            }
-    //            try {
-    //                TimeUnit.SECONDS.sleep(1);
-    //            }
-    //            catch(InterruptedException ex){
-    //            }
-    //        }
-    //
-    //    }
+    private void cyclingBackground() {
+
+        for (int i = 1; i <= 5; i++) {
+
+            if (i == 1) {
+                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase1.png')");
+                System.out.println(1);
+            } else if (i == 2) {
+                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase2.png')");
+                System.out.println(2);
+            } else if (i == 3) {
+                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase3.png')");
+                System.out.println(3);
+            } else if (i == 4) {
+                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase4.png')");
+                System.out.println(4);
+            } else {
+                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase5.png')");
+                System.out.println(5);
+                i = 0;
+            }
+
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            }
+            catch (InterruptedException ex) {
+            }
+        }
+
+    }
+
 }
 
+
+
+//            BackgroundImage phases;
+//            phases = new BackgroundImage(
+//                    new Image("file:icons/backgroundPhase5.png", 100.0, 100.0, true, true),
+//                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+//                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+//            grid.setStyle("-fx-background-image: url('/icons/backgroundPhase5.png')");
+////            grid.setBackground(new Background(phases));
+//

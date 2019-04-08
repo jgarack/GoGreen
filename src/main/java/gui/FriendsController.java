@@ -48,7 +48,7 @@ public class FriendsController {
      * Constant for width.
      * {@value}
      */
-    private static final int PERC_WIDTH_VAL = 35;
+    private static final int PERC_WIDTH_VAL = 24;
     /**
      * Constant for hgap.
      * {@value}
@@ -136,8 +136,6 @@ public class FriendsController {
      * Construct the leaderboard as table view.
      */
     private void constructTableFriends() {
-
-
         TableColumn usernameCol = new TableColumn("Username");
         usernameCol
                 .setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -201,20 +199,14 @@ public class FriendsController {
     private void constructPendingListView() {
         if (!pendingRequests.isEmpty()) {
 
-            Label pendingReqTitle = new Label("Pending Requests");
+            Label pendingReqTitle = new Label("Pending");
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
             for (String friend : pendingRequests) {
 
 
-                Button acceptBtn = new Button("Accept");
+                Button acceptBtn = new Button("✓");
                 acceptBtn.getStyleClass().add("acceptBtn");
-                acceptBtn.setStyle("-fx-font-family: 'FontAwesome'");
-                acceptBtn
-                        .setGraphic(GlyphFontRegistry
-                                .font("FontAwesome")
-                                .create(FontAwesome.Glyph.CHECK_CIRCLE_ALT)
-                                .size(24));
                 acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
@@ -238,14 +230,8 @@ public class FriendsController {
                     }
                 });
 
-                Button declineBtn = new Button("Block user");
+                Button declineBtn = new Button("❌");
                 declineBtn.getStyleClass().add("declineBtn");
-                declineBtn.setStyle("-fx-font-family: 'FontAwesome'");
-                declineBtn
-                        .setGraphic(GlyphFontRegistry
-                                .font("FontAwesome")
-                                .create(FontAwesome.Glyph.TIMES_CIRCLE_ALT)
-                                .size(24));
 
                 HBox currFriend = new HBox();
                 Label sender = new Label(friend + " sent you a request!");
@@ -283,6 +269,7 @@ public class FriendsController {
             friendsPane.setHgap(HGAP_VAL);
             VBox pendingListVbox = new VBox();
             pendingListVbox.getChildren().addAll(pendingReqTitle,listOfPendingReq);
+            pendingListVbox.setAlignment(Pos.CENTER);
             GridPane.setRowIndex(pendingReqTitle,0);
             GridPane.setRowIndex(listOfPendingReq,2);
             GridPane.setColumnIndex(pendingReqTitle,0);
