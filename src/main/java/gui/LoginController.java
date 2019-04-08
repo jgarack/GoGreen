@@ -60,7 +60,7 @@ public class LoginController {
      */
     @FXML
     public void initialize() {
-      //  cyclingBackground();
+//        this.cyclingBackground();
     }
 
 
@@ -129,30 +129,54 @@ public class LoginController {
     }
 
         public void cyclingBackground() {
-        System.out.println("here");
 
-            BackgroundImage phazes;
+                for (int i = 1; i <= 5; i++) {
 
-            for (int i = 1; i <= 5; i++) {
-                phazes = new BackgroundImage(
-                        new Image(getClass()
-                                .getResource("/icons/backgroundPhase" + i + ".png").toExternalForm()),
-                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                        BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-                grid.setBackground(new Background(phazes));
-                if (i == 5) {
-                    i = 1;
+                    if (i == 1) {
+                        grid.setStyle("-fx-background-image: url('/icons/backgroundPhase1.png')");
+                        System.out.println(1);
+                    } else if (i == 2) {
+                        grid.setStyle("-fx-background-image: url('/icons/backgroundPhase2.png')");
+                        System.out.println(2);
+                    } else if (i == 3) {
+                        grid.setStyle("-fx-background-image: url('/icons/backgroundPhase3.png')");
+                        System.out.println(3);
+                    } else if (i == 4) {
+                        grid.setStyle("-fx-background-image: url('/icons/backgroundPhase4.png')");
+                        System.out.println(4);
+                    } else {
+                        grid.setStyle("-fx-background-image: url('/icons/backgroundPhase5.png')");
+                        System.out.println(5);
+                        i = 0;
+                    }
 
-
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                    catch (InterruptedException ex) {
+                    }
                 }
-                try {
-                    TimeUnit.SECONDS.sleep(1);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
+
             }
 
-        }
+
+//            BackgroundImage phazes;
+//
+//            for (int i = 1; i <= 5; i++) {
+//                phazes = new BackgroundImage(
+//                        new Image(getClass()
+//                                .getResource("/icons/backgroundPhase" + i + ".png").toExternalForm()),
+//                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+//                        BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+//                grid.setBackground(new Background(phazes));
+//                if (i == 5) {
+//                    i = 1;
+//
+//
+//                }
+//            }
+
+
 
     /**
      * Enters fullScreen mode.
