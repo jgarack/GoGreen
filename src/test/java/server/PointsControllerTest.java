@@ -66,7 +66,7 @@ public class PointsControllerTest extends AbstractTest {
         when(controller.dbAdaptor.updateActivity(
                 "user", 2, 1000)).thenReturn(true);
         when(controller.dbAdaptor.updateActivity(
-                "user", 3, 1000)).thenReturn(true);
+                "user", 3, 88)).thenReturn(true);
         when(controller.dbAdaptor.getActivityAmount("user", 1))
                 .thenReturn(1);
         when(controller.dbAdaptor.getActivityAmount("user", 2))
