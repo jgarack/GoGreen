@@ -200,7 +200,7 @@ public class FriendsController {
      */
     private void constructPendingListView() {
         if (!pendingRequests.isEmpty()) {
-            VBox pendingListVbox = new VBox();
+
             Label pendingReqTitle = new Label("Pending Requests");
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
@@ -281,6 +281,7 @@ public class FriendsController {
             columnConstraints.setHalignment(HPos.CENTER);
             friendsPane.getColumnConstraints().add(columnConstraints);
             friendsPane.setHgap(HGAP_VAL);
+            VBox pendingListVbox = new VBox();
             pendingListVbox.getChildren().addAll(pendingReqTitle,listOfPendingReq);
             GridPane.setRowIndex(pendingReqTitle,0);
             GridPane.setRowIndex(listOfPendingReq,2);

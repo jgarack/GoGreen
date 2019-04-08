@@ -38,7 +38,7 @@ public class GreetingController {
      * Getter.
      * @return the db adaptor
      */
-    public static DbAdaptor getDBADAPTOR() {
+    public static DbAdaptor getdbadaptor() {
         return DB_ADAPTOR;
     }
 
@@ -46,7 +46,7 @@ public class GreetingController {
      * Setter.
      * @param dba the new db adaptor.
      */
-    public static void setDBADAPTOR(DbAdaptor dba) {
+    public static void setdbadaptor(DbAdaptor dba) {
         DB_ADAPTOR = dba;
     }
 
@@ -116,6 +116,6 @@ public class GreetingController {
 
         DB_ADAPTOR.changepass(user, newpass);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity("Your password was changed successfully", HttpStatus.OK);
     }
 }

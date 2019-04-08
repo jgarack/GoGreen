@@ -15,7 +15,7 @@ class UpdateRequestTest {
 
     @Test
     void getActivityID() {
-        assertEquals(test.getActivityID(), 1);
+        assertEquals(test.getactivityid(), 1);
     }
 
     @Test

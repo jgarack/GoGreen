@@ -12,6 +12,9 @@ public class UpdateRequest {
      * Activity and amount.
      */
     private int activityId;
+    /**
+     * Amount of the Request.
+     */
     private int amount;
 
     /**
@@ -40,7 +43,7 @@ public class UpdateRequest {
      * Gets id of acitivity.
      * @return id of activity.
      */
-    public int getActivityID() {
+    public int getactivityid() {
         return activityId;
     }
 
@@ -57,7 +60,7 @@ public class UpdateRequest {
      * @param other object to compare to this
      * @return true if equal, false if true
      */
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (this == other) {
             return true;
         } else if (!(other instanceof UpdateRequest)) {

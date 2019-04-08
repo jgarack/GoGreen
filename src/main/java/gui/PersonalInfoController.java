@@ -345,20 +345,32 @@ public class PersonalInfoController {
         String confirmNewPassStr = confirmNewPass
                 .getText().trim();
 
-        if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(LOCALHOST)
-                .loginSubmit(MainHandler.username, oldPassStr)) {
-            try {
-                MessageDigest md5 = MessageDigest.getInstance("MD5");
-                newPassStr = DatatypeConverter.printHexBinary(
-                        md5.digest(newPassStr.getBytes()));
-            } catch (NoSuchAlgorithmException e) {
-                alertBuilder.displayException(e);
-            }
-            try {
-                new HttpRequestHandler(LOCALHOST).reqPost("/changepass",
-                        new String[]{MainHandler.username, newPassStr});
-            } catch (ServerStatusException | IOException exception) {
-                alertBuilder.displayException(exception);
+        if (newPassStr.equals(oldPassStr)) {
+            alertBuilder.showAlert("Invalid input",
+                    "New password cannot be the same as old password.");
+        } else {
+            if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(LOCALHOST)
+                    .loginSubmit(MainHandler.username, oldPassStr)) {
+                try {
+                    MessageDigest md5 = MessageDigest.getInstance("MD5");
+                    newPassStr = DatatypeConverter.printHexBinary(
+                            md5.digest(newPassStr.getBytes()));
+                } catch (NoSuchAlgorithmException e) {
+                    alertBuilder.displayException(e);
+                }
+                try {
+                    new HttpRequestHandler(LOCALHOST).reqPost("/changepass",
+                            new String[]{MainHandler.username, newPassStr});
+                    alertBuilder.showInformationNotification("Password changed successfully!");
+                    oldPass.setText("");
+                    newPass.setText("");
+                    confirmNewPass.setText("");
+                } catch (ServerStatusException | IOException exception) {
+                    alertBuilder.showAlertNotification("Password could not be changed.");
+                }
+            } else if (!newPassStr.equals(confirmNewPassStr)) {
+                alertBuilder.showAlert("Passwords do not match",
+                        "The new password do not match the confirmed password.");
             }
         }
     }
