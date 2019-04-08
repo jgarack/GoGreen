@@ -53,4 +53,42 @@ class RegisterCredentialsTest {
         RC1.setPassword("pass");
         assertEquals("pass", RC1.getPassword());
     }
+
+    @Test
+    void equals_True() {
+        RegisterCredentials RC2 = new RegisterCredentials(RC1.getUsername(),
+                RC1.getPassword(), RC1.getQuestion(), RC1.getAnswer());
+        assertTrue(RC1.equals(RC2));
+    }
+    @Test
+    void equals_Self() {
+        assertTrue(RC1.equals(RC1));
+    }
+    @Test
+    void equals_False_Type() {
+        assertFalse(RC1.equals(new Object()));
+    }
+    @Test
+    void equals_False_User() {
+        RegisterCredentials RC2 = new RegisterCredentials("random",
+                RC1.getPassword(), RC1.getQuestion(), RC1.getAnswer());
+        assertFalse(RC1.equals(RC2));
+    }
+    @Test
+    void equals_False_Pass() {
+        RegisterCredentials RC2 = new RegisterCredentials(RC1.getUsername(),
+                "random", RC1.getQuestion(), RC1.getAnswer());
+        assertFalse(RC1.equals(RC2));
+    }
+    @Test
+    void equals_False_Question() {
+        RegisterCredentials RC2 = new RegisterCredentials(RC1.getUsername(),
+                RC1.getPassword(), "random", RC1.getAnswer());
+        assertFalse(RC1.equals(RC2));
+    }
+    @Test
+    void equals_False_Answer() {
+        RegisterCredentials RC2 = new RegisterCredentials(RC1.getUsername(),
+                RC1.getPassword(), RC1.getQuestion(), "random");
+    }
 }
