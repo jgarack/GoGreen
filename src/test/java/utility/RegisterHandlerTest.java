@@ -52,6 +52,7 @@ public class RegisterHandlerTest {
                 PASS + SECRETANSWER, SECRETQUESTION, SECRETANSWER), "Handler allowed register"
                 + "when passwords didn't match");
     }
+    /*
     @Test
     public void regSecretQuestionNull(){
         assertFalse(testObject.registerSubmit(USER, PASS,
@@ -63,7 +64,7 @@ public class RegisterHandlerTest {
         assertFalse(testObject.registerSubmit(USER, PASS,
                 PASS, SECRETQUESTION, NULL),
                 "Handler allowed register without secret answer.");
-    }
+    }*/
     @Test
     public void regFailure() throws Exception{
         when(testObject.httpHandler.reqPost("/register",
