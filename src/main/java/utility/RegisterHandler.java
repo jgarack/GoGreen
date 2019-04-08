@@ -148,7 +148,6 @@ public class RegisterHandler {
         } else if (passFieldEntry.isEmpty()) {
             alertBuilder.formEntryWarning("Password",
                     "You need to fill in your password");
-
             return false;
         }
 
