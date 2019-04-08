@@ -75,6 +75,16 @@ public class RegisterHandlerTest {
         assertFalse(result);
     }
     @Test
+    public void regFailure_InternalServerError() throws Exception{
+        when(testObject.httpHandler.reqPost("/register",
+                new RegisterCredentials(USER, PASS_TOMD5, SECRETQUESTION, SECRETANSWER))).thenThrow(
+                new ServerStatusException(500));
+        boolean result = testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER);
+        verify(testObject.httpHandler).reqPost("/register",
+                new RegisterCredentials(USER, PASS_TOMD5, SECRETQUESTION, SECRETANSWER));
+        assertFalse(result);
+    }
+    @Test
     public void regSucceed() {
         assertTrue(testObject.registerSubmit(USER, PASS, PASS, SECRETQUESTION, SECRETANSWER),
                 "Valid login credentials were rejected.");

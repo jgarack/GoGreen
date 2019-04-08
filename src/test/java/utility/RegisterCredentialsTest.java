@@ -90,5 +90,10 @@ class RegisterCredentialsTest {
     void equals_False_Answer() {
         RegisterCredentials RC2 = new RegisterCredentials(RC1.getUsername(),
                 RC1.getPassword(), RC1.getQuestion(), "random");
+        assertFalse(RC1.equals(RC2));
+    }
+    @Test
+    void equalse_False_Null() {
+        assertFalse(RC1.equals(null));
     }
 }
