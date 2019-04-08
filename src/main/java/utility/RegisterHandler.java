@@ -148,15 +148,6 @@ public class RegisterHandler {
         } else if (passFieldEntry.isEmpty()) {
             alertBuilder.formEntryWarning("Password",
                     "You need to fill in your password");
-
-            return false;
-        } else if (secretQ.isEmpty()) {
-            alertBuilder.formEntryWarning("Secret Question Field",
-                        "You need to fill in your secret question");
-            return false;
-        } else if (secretAnswer.isEmpty()) {
-            alertBuilder.formEntryWarning("Secret Answer Field",
-                        "You need to fill in your secret answer");
             return false;
         }
 

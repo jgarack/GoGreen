@@ -21,20 +21,13 @@
     <Label text="Confirm password" GridPane.rowIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <PasswordField fx:id="confirmPass" GridPane.rowIndex="6"/>
 
-    <Label text="Enter a secret question:" GridPane.rowIndex="9" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-    <TextField fx:id="secretQuestion" GridPane.rowIndex="10" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-
-    <Label text="Answer:" GridPane.rowIndex="11" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-    <TextField fx:id="secretAnswer" GridPane.rowIndex="12" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
-
-    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="13">
+    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="8">
         <Button text="Register" onAction="#handleRegisterButtonAction" defaultButton="true"/>
     </HBox>
-    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="14">
+    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="9">
         <Button text="Back" onAction="#handleBackButtonAction" cancelButton="true"/>
     </HBox>
 
-    <Text fx:id="actionTarget" GridPane.rowIndex="8" />
     <stylesheets>
         <URL value="@../stylesheets/loginStylesheet.css"/>
     </stylesheets>
