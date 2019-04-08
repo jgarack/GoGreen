@@ -1,5 +1,7 @@
 package utility;
 
+import java.util.Objects;
+
 /**
  * Credentials for the secret question.
  */
@@ -94,6 +96,21 @@ public class RegisterCredentials {
      */
     public void setPassword(final String pass) {
         this.password = pass;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        RegisterCredentials that = (RegisterCredentials) o;
+
+        return Objects.equals(username, that.username) &&
+                Objects.equals(password, that.password) &&
+                Objects.equals(question, that.question) &&
+                Objects.equals(answer, that.answer);
     }
 
 }
