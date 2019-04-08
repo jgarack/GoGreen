@@ -178,7 +178,7 @@ public class MainController {
         informationBuilder.addInformativePopOverToNode(pane,infoMsg,
                 PopOver.ArrowLocation.TOP_CENTER);
         Label lab = new Label(number);
-        lab.setStyle("-fx-text-fill:white");
+        lab.setStyle("-fx-text-fill:white; -fx-font-size: 18");
         Circle cercle = new Circle(12, Color.rgb(41, 41, 41, .8));
         cercle.setStrokeWidth(2.0);
         cercle.setStyle("-fx-background-insets: 0 0 -1 0, 0, 1, 2;");

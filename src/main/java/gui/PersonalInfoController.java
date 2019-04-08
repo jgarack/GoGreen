@@ -268,6 +268,7 @@ public class PersonalInfoController {
         }
         popOver = new PopOver(gridPane);
         popOver.show(selectAvatar);
+        popOver.setCornerRadius(15);
     }
 
 
@@ -292,6 +293,7 @@ public class PersonalInfoController {
         //                popOver.hide();
         //            }
         //        });
+
         avatar.setOnDragDetected(new EventHandler<MouseEvent>() {
 
             @Override

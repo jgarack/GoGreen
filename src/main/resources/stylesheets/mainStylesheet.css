@@ -26,6 +26,10 @@
     -fx-fill-height: true;
 }
 
+#fullScreen {
+    -fx-opacity: 0.5;
+}
+
 
 #home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover,#friendsListBtn:hover,#achievementsBtn:hover,#fullScreen:hover {
     -fx-background-color: #A0596B;
