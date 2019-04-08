@@ -60,8 +60,7 @@ public class RegisterHandler {
                                          final String confirmPass,
                                          final String secretQuestion,
                                          final String secretAnswer) {
-        if (checkForm(username, pass, confirmPass,
-                secretQuestion, secretAnswer)) {
+        if (checkForm(username, pass, confirmPass)) {
             try {
 
                 MessageDigest md5 = MessageDigest.getInstance("MD5");
@@ -73,6 +72,7 @@ public class RegisterHandler {
 
                 httpHandler.reqPost("/register",
                         registerCredentials);
+                System.out.println("reqpost did not throw exception");
                 alertBuilder
                         .showInformationNotification(
                                 "You have registered successfully!");
@@ -82,7 +82,7 @@ public class RegisterHandler {
                 return false;
             } catch (ServerStatusException e) {
                 int statusCode = e.getHttpStatusCode();
-                if (statusCode == HttpURLConnection.HTTP_INTERNAL_ERROR) {
+                if (statusCode == HttpURLConnection.HTTP_CONFLICT) {
                     alertBuilder.showAlert("Username already taken!",
                             "This username is already taken."
                                     + " Please choose another one.");
@@ -103,17 +103,12 @@ public class RegisterHandler {
      * @param passFieldEntry The received input for the password.
      * @param confirmPassFieldEntry The received
      *                              input for the confirmed password.
-     * @param secretQuestion The received secret question.
-     * @param secretAnswer The received secret answer.
      * @return true iff the input is in the correct format.
      */
     private boolean checkForm(final String userFieldEntry,
                                      final String passFieldEntry,
-                                     final String confirmPassFieldEntry,
-                                     final String secretQuestion,
-                                     final String secretAnswer) {
-        if (emptyFields(userFieldEntry, passFieldEntry,
-                secretQuestion, secretAnswer)) {
+                                     final String confirmPassFieldEntry) {
+        if (emptyFields(userFieldEntry, passFieldEntry)) {
             if (confirmPassFieldEntry.equals(passFieldEntry)) {
                 return true;
             } else {
@@ -131,14 +126,10 @@ public class RegisterHandler {
      * Checks the given values whether they are empty.
      * @param userFieldEntry Value for username.
      * @param passFieldEntry Value for password.
-     * @param secretQ Value for secret question.
-     * @param secretAnswer Value for secret answer.
      * @return true iff none of the fields is empty.
      */
     private boolean emptyFields(final String userFieldEntry,
-                                      final String passFieldEntry,
-                                      final String secretQ,
-                                      final String secretAnswer) {
+                                      final String passFieldEntry) {
         if (userFieldEntry.isEmpty()) {
 
             alertBuilder.formEntryWarning("Username",
@@ -147,15 +138,6 @@ public class RegisterHandler {
         } else if (passFieldEntry.isEmpty()) {
             alertBuilder.formEntryWarning("Password",
                     "You need to fill in your password");
-
-            return false;
-        } else if (secretQ.isEmpty()) {
-            alertBuilder.formEntryWarning("Secret Question Field",
-                        "You need to fill in your secret question");
-            return false;
-        } else if (secretAnswer.isEmpty()) {
-            alertBuilder.formEntryWarning("Secret Answer Field",
-                        "You need to fill in your secret answer");
             return false;
         }
 

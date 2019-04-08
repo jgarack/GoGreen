@@ -69,6 +69,7 @@ public class HttpRequestHandler {
      */
     public BufferedReader reqGet(final String route) throws
             ServerStatusException, IOException {
+        System.out.println("first reqGet");
         return reqGet(route, USER_AGENT);
     }
 
@@ -84,8 +85,10 @@ public class HttpRequestHandler {
     public BufferedReader reqGet(final String route,
                                 final String userAgent)
                                 throws ServerStatusException, IOException {
+        System.out.println("reqGet");
         URL inputUrl = new URL(domain + route);
         HttpURLConnection con = (HttpURLConnection) inputUrl.openConnection();
+        System.out.println(con);
         con.setRequestMethod("GET");
         con.setRequestProperty("User-Agent", userAgent);
         System.out.println(inputUrl);
@@ -164,6 +167,7 @@ public class HttpRequestHandler {
         try {
             String line;
             StringBuilder logtxt = new StringBuilder();
+            System.out.println(message);
             while ((line = message.readLine()) != null) {
                 logtxt.append(line);
             }

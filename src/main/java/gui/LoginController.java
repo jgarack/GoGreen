@@ -13,7 +13,10 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+<<<<<<< HEAD
 import javafx.scene.paint.Color;
+=======
+>>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
@@ -25,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Controller for the login window.
  */
-public final class LoginController {
+public class LoginController {
     /**
      * The WIDTH of the stage.
      */
@@ -60,10 +63,15 @@ public final class LoginController {
      * Initialize method.
      */
     @FXML
+<<<<<<< HEAD
     protected void initialize() {
 
 //        this.cyclingBackground();
 
+=======
+    public void initialize() {
+      //  cyclingBackground();
+>>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
     }
 
 
@@ -104,19 +112,17 @@ public final class LoginController {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();
         try {
-
-            System.out.println(1);
             MainHandler.username = username.getText().trim();
-            System.out.println(MainHandler.username);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                     .getResource("/fxml/" + view + "View.fxml"));
             Parent root = fxmlLoader.load();
-
-
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
             if (view.equals("register")) {
                 new Pulse(root).play();
             } else {
@@ -138,6 +144,7 @@ public final class LoginController {
 
     }
 
+<<<<<<< HEAD
     private void cyclingBackground() {
 
         for (int i = 1; i <= 5; i++) {
@@ -167,6 +174,45 @@ public final class LoginController {
             }
         }
 
+=======
+        public void cyclingBackground() {
+        System.out.println("here");
+
+            BackgroundImage phazes;
+
+            for (int i = 1; i <= 5; i++) {
+                phazes = new BackgroundImage(
+                        new Image(getClass()
+                                .getResource("/icons/backgroundPhase" + i + ".png").toExternalForm()),
+                        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                        BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                grid.setBackground(new Background(phazes));
+                if (i == 5) {
+                    i = 1;
+
+
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+        }
+
+    /**
+     * Enters fullScreen mode.
+     * @param actionEvent
+     */
+    @FXML
+    public void enterFullscreen(final ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource())
+                .getScene().getWindow();
+        if (!stage.isFullScreen()) {
+            stage.setFullScreen(true);
+        } else stage.setFullScreen(false);
+>>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
     }
 
 }

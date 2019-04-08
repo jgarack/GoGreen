@@ -27,6 +27,10 @@
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="7">
         <Button fx:id="submitRegistration" text="🖉 Register" onAction="#handleRegisterButtonAction" />
     </HBox>
+
+    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="10">
+        <Button text="Enter Full Screen" onAction="#enterFullscreen" />
+    </HBox>
     <Text fx:id="actionTarget" GridPane.rowIndex="8" />
     <stylesheets>
         <URL value="@../stylesheets/loginStylesheet.css"/>

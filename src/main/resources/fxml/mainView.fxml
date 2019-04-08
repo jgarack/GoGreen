@@ -23,6 +23,7 @@
                     <Button fx:id="home" text="⌂ Home" onAction="#loadHomeScene"/>
                     <Button fx:id="howToPlay" text="¿How to Play?" onAction="#loadHowToPlayScene"/>
                     <Button fx:id="aboutUs" text="🛈 About Us" onAction="#loadAboutScene"/>
+                    <Button fx:id="fullScreen" text="Enter Full Screen" onAction="#enterFullscreen" />
             </HBox>
 
             <HBox alignment="TOP_RIGHT" fx:id="userSection" spacing="15">

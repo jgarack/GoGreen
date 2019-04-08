@@ -2,6 +2,7 @@ package gui;
 
 import animatefx.animation.FadeInUp;
 import animatefx.animation.Pulse;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ import javafx.scene.layout.StackPane;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
 import utility.DbAdaptor;
 import utility.MainHandler;
@@ -279,5 +281,17 @@ public class MainController {
         root.setCenter(newScene);
     }
 
+    /**
+     * Enters fullScreen mode.
+     * @param actionEvent
+     */
+    @FXML
+    public void enterFullscreen(final ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource())
+                .getScene().getWindow();
+        if (!stage.isFullScreen()) {
+            stage.setFullScreen(true);
+        } else stage.setFullScreen(false);
+    }
 
 }
