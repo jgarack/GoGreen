@@ -162,7 +162,9 @@ public class LoginController {
     public void enterFullscreen(final ActionEvent actionEvent) {
         Stage stage = (Stage) ((Node) actionEvent.getSource())
                 .getScene().getWindow();
-        stage.setFullScreen(true);
+        if (!stage.isFullScreen()) {
+            stage.setFullScreen(true);
+        } else stage.setFullScreen(false);
     }
 
 }

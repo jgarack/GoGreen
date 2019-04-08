@@ -17,7 +17,7 @@
 
 
 }
-#home,#howToPlay,#aboutUs,#personalInfo,#friendsListBtn,#achievementsBtn{
+#home,#howToPlay,#aboutUs,#personalInfo,#friendsListBtn,#achievementsBtn,#fullScreen{
     -fx-text-fill: white;
     -fx-font-family: "Calibri";
     -fx-font-weight: bold;
@@ -27,7 +27,7 @@
 }
 
 
-#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover,#friendsListBtn:hover,#achievementsBtn:hover {
+#home:hover, #howToPlay:hover, #aboutUs:hover,#personalInfo:hover,#friendsListBtn:hover,#achievementsBtn:hover,#fullScreen:hover {
     -fx-background-color: #A0596B;
     -fx-cursor: hand;
 }
