@@ -52,6 +52,12 @@ class AchievementTest {
     }
 
     @Test
+    void equalsFalseDescr() {
+        Achievement testAchievementDiff = new Achievement("name", true, "desc");
+        assertFalse(testAchievement.equals(testAchievementDiff));
+    }
+
+    @Test
     void equalsSameObject() {
         assertTrue(testAchievement.equals(testAchievement));
     }
