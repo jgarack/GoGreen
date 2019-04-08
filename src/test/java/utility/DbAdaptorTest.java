@@ -369,4 +369,18 @@ class DbAdaptorTest {
         db.deleteByUsername(random2);
     }
 
+    @Test
+    void retCountTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        db.sendFriendReq(random,random2);
+        assertEquals(db.retrieveCount(random2), 1);
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+    }
+
 }

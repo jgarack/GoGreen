@@ -100,7 +100,7 @@ public class GreetingController {
                     + "You can now log in", HttpStatus.OK);
         }
         return new ResponseEntity("Your account could not be created",
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+                    HttpStatus.CONFLICT);
 
     }
 
