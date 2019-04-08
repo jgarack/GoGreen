@@ -134,8 +134,7 @@ public class PointsController {
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(6)
                     && dbAdaptor.getPerformedTimes(
-                    request.getUsername(), 1) >= 5) {
-
+                    request.getUsername(), 1) >= 49) {
                     dbAdaptor.addAchievement(6, request.getUsername());
             }
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null))
@@ -148,19 +147,16 @@ public class PointsController {
                             + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
             if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(1)) {
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 2) >= 4) {
+                    request.getUsername()).contains(1)
+                    && dbAdaptor.getPerformedTimes(
+                    request.getUsername(), 2) >= 4) {
                     dbAdaptor.addAchievement(1, request.getUsername());
-                }
             }
             if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(2)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 2) >= 49) {
+                    request.getUsername()).contains(2)
+                    && dbAdaptor.getPerformedTimes(
+                    request.getUsername(), 2) >= 49) {
                     dbAdaptor.addAchievement(2, request.getUsername());
-                }
             }
 
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
@@ -181,20 +177,16 @@ public class PointsController {
                             + "trips.json?duration=" + amount * SIXTY
                             + BP_KEY);
             if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(3)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), FOUR) >= 4) {
+                    request.getUsername()).contains(3)
+                    && dbAdaptor.getPerformedTimes(
+                    request.getUsername(), FOUR) >= 4) {
                     dbAdaptor.addAchievement(3, request.getUsername());
-                }
             }
             if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(4)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), FOUR) >= 49) {
+                    request.getUsername()).contains(4)
+                    && dbAdaptor.getPerformedTimes(
+                    request.getUsername(), FOUR) >= 49) {
                     dbAdaptor.addAchievement(4, request.getUsername());
-                }
             }
             amount = jsonCon(HttpRequestHandler.resLog(car, null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody, null));
@@ -224,12 +216,11 @@ public class PointsController {
                     dbAdaptor.addAchievement(7, request.getUsername());
                 }
                 if (!dbAdaptor.getAchievements(
-                        request.getUsername()).contains(8)) {
+                        request.getUsername()).contains(8)
+                        && dbAdaptor.getPerformedTimes(
+                        request.getUsername(), FIVE) >= 2) {
 
-                    if (dbAdaptor.getPerformedTimes(
-                            request.getUsername(), FIVE) >= 2) {
                         dbAdaptor.addAchievement(8, request.getUsername());
-                    }
                 }
                 BufferedReader httpBody =
                         httpHandler.reqGet("/electricity_uses.json?"
@@ -246,24 +237,16 @@ public class PointsController {
             // https://www.epa.gov/environmental-economics
             // /environmental-economics-research-strategy
 
-            if (!dbAdaptor.getAchievements(request.getUsername()).contains(9)) {
-                if (amount == 5) {
+            if (!dbAdaptor.getAchievements(request.getUsername()).contains(9)
+                    && amount >= 5) {
                     dbAdaptor.addAchievement(9,
                             request.getUsername());
-                }
             }
 
-            if (!dbAdaptor.getAchievements(request.getUsername()).contains(10)) {
-                if (amount == 10) {
+            if (!dbAdaptor.getAchievements(request.getUsername()).contains(10)
+                    && amount >= 10) {
                     dbAdaptor.addAchievement(10,
                             request.getUsername());
-                    if (!dbAdaptor.getAchievements(
-                            request.getUsername()).contains(9)) {
-
-                        dbAdaptor.addAchievement(9,
-                                request.getUsername());
-                    }
-                }
             }
             amount = amount * ONEHUNDREDANDTEN;
 
@@ -285,15 +268,15 @@ public class PointsController {
      */
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
-        //todo: add achievements
-        //        if(dbAdaptor.getTotalScore(username) >= 1000000
-        //                && !dbAdaptor.getAchievements(username).contains(12)){
-        //            dbAdaptor.addAchievement(12,username);
-        //        }
-        //        if(dbAdaptor.getFriends(username).size()>=10
-        //                && !dbAdaptor.getAchievements(username).contains(11)){
-        //            dbAdaptor.addAchievement(11,username);
-        //        }
+//        todo: add achievements
+                if(dbAdaptor.getTotalScore(username) >= 1000000
+                        && !dbAdaptor.getAchievements(username).contains(12)){
+                    dbAdaptor.addAchievement(12,username);
+                }
+                if(dbAdaptor.getFriends(username).size()>=10
+                        && !dbAdaptor.getAchievements(username).contains(11)){
+                    dbAdaptor.addAchievement(11,username);
+                }
         return new ResponseEntity(dbAdaptor
                 .getTotalScore(username
                         .replace('"', ' ').trim()),
