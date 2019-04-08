@@ -13,10 +13,6 @@ import javafx.scene.control.TextField;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-<<<<<<< HEAD
-import javafx.scene.paint.Color;
-=======
->>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
@@ -63,16 +59,10 @@ public class LoginController {
      * Initialize method.
      */
     @FXML
-<<<<<<< HEAD
-    protected void initialize() {
-
-//        this.cyclingBackground();
-
-=======
     public void initialize() {
       //  cyclingBackground();
->>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
     }
+
 
 
     /**
@@ -103,10 +93,9 @@ public class LoginController {
     /**
      * Redirects the user from login screen
      * to main screen by setting up a new scene.
-     *
      * @param event The event fired
-     * @param view  The view to where the user should be redirected.
-     *              When the user clicks the button from the login button.
+     * @param view The view to where the user should be redirected.
+     *            When the user clicks the button from the login button.
      */
     private void redirectToView(final ActionEvent event, final String view) {
         Stage stage = (Stage) ((Node) event.getSource())
@@ -118,11 +107,6 @@ public class LoginController {
             Parent root = fxmlLoader.load();
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
             if (view.equals("register")) {
                 new Pulse(root).play();
             } else {
@@ -144,37 +128,6 @@ public class LoginController {
 
     }
 
-<<<<<<< HEAD
-    private void cyclingBackground() {
-
-        for (int i = 1; i <= 5; i++) {
-
-            if (i == 1) {
-                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase1.png')");
-                System.out.println(1);
-            } else if (i == 2) {
-                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase2.png')");
-                System.out.println(2);
-            } else if (i == 3) {
-                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase3.png')");
-                System.out.println(3);
-            } else if (i == 4) {
-                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase4.png')");
-                System.out.println(4);
-            } else {
-                grid.setStyle("-fx-background-image: url('/icons/backgroundPhase5.png')");
-                System.out.println(5);
-                i = 0;
-            }
-
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            }
-            catch (InterruptedException ex) {
-            }
-        }
-
-=======
         public void cyclingBackground() {
         System.out.println("here");
 
@@ -212,18 +165,7 @@ public class LoginController {
         if (!stage.isFullScreen()) {
             stage.setFullScreen(true);
         } else stage.setFullScreen(false);
->>>>>>> 2ade02228a21048ef27177b68856e941fdce005c
     }
 
 }
 
-
-
-//            BackgroundImage phases;
-//            phases = new BackgroundImage(
-//                    new Image("file:icons/backgroundPhase5.png", 100.0, 100.0, true, true),
-//                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-//                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-//            grid.setStyle("-fx-background-image: url('/icons/backgroundPhase5.png')");
-////            grid.setBackground(new Background(phases));
-//
