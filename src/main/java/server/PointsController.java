@@ -126,21 +126,17 @@ public class PointsController {
                             + "&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
             if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(5)) {
-
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 1) >= 4) {
+                    request.getUsername()).contains(5)
+                    && dbAdaptor.getPerformedTimes(
+                    request.getUsername(), 1) >= 4) {
                     dbAdaptor.addAchievement(5, request.getUsername());
-                }
             }
             if (!dbAdaptor.getAchievements(
-                    request.getUsername()).contains(6)) {
+                    request.getUsername()).contains(6)
+                    && dbAdaptor.getPerformedTimes(
+                    request.getUsername(), 1) >= 5) {
 
-                if (dbAdaptor.getPerformedTimes(
-                        request.getUsername(), 1) >= 5) {
                     dbAdaptor.addAchievement(6, request.getUsername());
-                }
-
             }
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null))
                     - jsonCon(HttpRequestHandler.resLog(veg, null));
