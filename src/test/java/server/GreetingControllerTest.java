@@ -183,7 +183,7 @@ public class GreetingControllerTest extends AbstractTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
 
         status = mvcResult.getResponse().getStatus();
-        assertEquals(500, status);
+        assertEquals(409, status);
     }
 
 
