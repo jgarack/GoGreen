@@ -386,6 +386,40 @@ public class PointsControllerTest extends AbstractTest {
         assertEquals(200, mvcResult.getResponse().getStatus());
     }
     @Test
+    public void achievements_Seven_NotAchievedEligible() throws Exception {
+        //stubbing
+        when(controller.dbAdaptor.getDate("user"))
+                .thenReturn(null);
+        List<Integer> listWithZero = new ArrayList<Integer>(1);
+        listWithZero.add(0);
+        when(controller.dbAdaptor.getAchievements("user"))
+                .thenReturn(listWithZero);
+
+        route = "/points";
+        json_req = super.mapToJson(fabricate(5));
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(route)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(json_req)).andReturn();
+        assertEquals(200, mvcResult.getResponse().getStatus());
+    }
+    @Test
+    public void achievements_Seven_Achieved() throws Exception {
+        //stubbing
+        when(controller.dbAdaptor.getDate("user"))
+                .thenReturn(null);
+        List<Integer> listWithSeven = new ArrayList<Integer>(1);
+        listWithSeven.add(7);
+        when(controller.dbAdaptor.getAchievements("user"))
+                .thenReturn(listWithSeven);
+
+        route = "/points";
+        json_req = super.mapToJson(fabricate(5));
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(route)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(json_req)).andReturn();
+        assertEquals(200, mvcResult.getResponse().getStatus());
+    }
+    @Test
     public void update_homeTemperature() throws Exception {
         //extra stubbing for achievements
         List<Integer> listWithNineAndTen = new ArrayList<Integer>(2);
