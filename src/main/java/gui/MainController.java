@@ -109,25 +109,13 @@ public class MainController {
         BackgroundImage phazes;
 
         if (score >= 50000) {
-            phazes = new BackgroundImage(new Image("../icons/backgroundPhase2_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            root.setBackground(new Background(phazes));
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase2_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 100000) {
-            phazes = new BackgroundImage(new Image("../icons/backgroundPhase3_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            root.setBackground(new Background(phazes));
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase3_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 300000) {
-            phazes = new BackgroundImage(new Image("../icons/backgroundPhase4_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                    BackgroundSize.DEFAULT);
-            root.setBackground(new Background(phazes));
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase4_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 500000) {
-            phazes = new BackgroundImage(new Image("../icons/backgroundFinal_blur.png"),
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-            root.setBackground(new Background(phazes));
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase5_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         }
     }
 
@@ -142,6 +130,7 @@ public class MainController {
         try {
             loadHomeScene();
             updatePendingRequests();
+            changeBackground(dbAdaptor.getTotalScore(MainHandler.username));
         } catch (IOException err) {
             err.printStackTrace();
         }
