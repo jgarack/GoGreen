@@ -42,6 +42,10 @@ public class PointsControllerTest extends AbstractTest {
             "/automobile_trips.json?duration=60" + KEY,
             "/automobile_trips.json?duration=1" + KEY,
             "/bus_trips.json?duration=60" + KEY,
+            "/electricity_uses.json?"
+                    + "energy=" + (1.0 / 3.6)
+                    + "&timeframe=2019-01-01%2F2019-02-01"
+                    + KEY
     };
     private String json_req;
     private String route;
@@ -74,6 +78,10 @@ public class PointsControllerTest extends AbstractTest {
                 "user", 2, 1000)).thenReturn(true);
         when(controller.dbAdaptor.updateActivity(
                 "user", 3, 88)).thenReturn(true);
+        when(controller.dbAdaptor.updateActivity(
+                "user", 5, 100)).thenReturn(true);
+        when(controller.dbAdaptor.updateActivity(
+                "user", 5, 1000)).thenReturn(true);
         when(controller.dbAdaptor.updateActivity(
                 "user", 6, 110)).thenReturn(true);
         when(controller.dbAdaptor.updateActivity(
