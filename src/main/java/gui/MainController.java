@@ -135,6 +135,7 @@ public class MainController {
     }
 
     void updatePendingRequests() {
+        dbAdaptor.connect();
         pendingReq = dbAdaptor.retrieveCount(MainHandler.username);
         if (pendingReq > 0) {
             loadFriendNotification(pendingReq);

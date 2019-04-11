@@ -144,6 +144,7 @@ public class HttpRequestHandlerTest {
                 new StringReader("hello"));
         assertEquals("hello", httpHandler.resLog(testReader, null));
     }
+    /*
     @Test
     public void resLogException() throws IOException {
         BufferedReader testReader = new BufferedReader(
@@ -155,5 +156,5 @@ public class HttpRequestHandlerTest {
         httpHandler.resLog(testReader, null);
         System.setOut(console);
         assertTrue(detectPrint.toString().substring(0, 35).equals("IOException occured, check filepath"));
-    }
+    }*/
 }
