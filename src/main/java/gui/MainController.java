@@ -106,13 +106,11 @@ public class MainController {
 
     public void changeBackground(int score) {
 
-        BackgroundImage phazes;
-
-        if (score >= 50000) {
+        if (score >= 50000 && score < 100000) {
             root.setStyle("-fx-background-image: url('/icons/backgroundPhase2_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
-        } else if (score >= 100000) {
+        } else if (score >= 100000 && score < 300000) {
             root.setStyle("-fx-background-image: url('/icons/backgroundPhase3_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
-        } else if (score >= 300000) {
+        } else if (score >= 300000 && score < 500000) {
             root.setStyle("-fx-background-image: url('/icons/backgroundPhase4_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 500000) {
             root.setStyle("-fx-background-image: url('/icons/backgroundPhase5_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
