@@ -157,7 +157,8 @@ public class PersonalInfoController {
         informationBuilder
                 .addInformationIconToSearchBox(infoChangeAvatarLabel,
                         "Drag the desired avatar\n"
-                                + "to save the changes.");
+                                + "to save the changes or\n if you have uploaded\n "
+                                + "an image to imgur\n you can drag it here.");
         setUpAvatar();
         setupDragAndDropTarget(avatarImageBox);
     }
