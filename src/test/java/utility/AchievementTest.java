@@ -52,6 +52,12 @@ class AchievementTest {
     }
 
     @Test
+    void equalsFalseDescr() {
+        Achievement testAchievementDiff = new Achievement("name", true, "desc");
+        assertFalse(testAchievement.equals(testAchievementDiff));
+    }
+
+    @Test
     void equalsSameObject() {
         assertTrue(testAchievement.equals(testAchievement));
     }
@@ -84,5 +90,10 @@ class AchievementTest {
     void equalsdescAchievedOther() {
         Achievement ach = new Achievement("name", false, "descr1");
         assertFalse(testAchievement.equals(ach));
+    }
+
+    @Test
+    void hashCodeTest() {
+        assertEquals(testAchievement.hashCode(), 0);
     }
 }

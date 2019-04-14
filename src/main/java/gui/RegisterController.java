@@ -22,7 +22,7 @@ public class RegisterController {
     /**
      * Domain for the connection.
      */
-    private static final String DOMAIN = "http://localhost:8080";
+    private static final String DOMAIN = "https://go-green-db.herokuapp.com";
 
     /**
      * The width of the stage.
@@ -49,17 +49,6 @@ public class RegisterController {
     @FXML
     private PasswordField confirmPass;
 
-    /**
-     * Bound to the secret question text field.
-     */
-    @FXML
-    private TextField secretQuestion;
-
-    /**
-     * Bound to the secret answer text field.
-     */
-    @FXML
-    private TextField secretAnswer;
 
     /**
      * Handles registration attempt based on the input.
@@ -72,8 +61,8 @@ public class RegisterController {
                 .registerSubmit(username.getText().trim(),
                                 pass.getText().trim(),
                                 confirmPass.getText().trim(),
-                                secretQuestion.getText().trim(),
-                                secretAnswer.getText().trim())) {
+                                "",
+                                "")) {
             redirectToView(event);
         }
     }

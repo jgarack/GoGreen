@@ -2,6 +2,7 @@ package gui;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -21,6 +22,9 @@ import java.util.List;
  */
 public class AchievementsController {
 
+    /**
+     * Columns constant.
+     */
     private static final int COLS = 4;
 
     /**
@@ -29,9 +33,9 @@ public class AchievementsController {
     private static final double FULL_OPACITY = 1.0;
 
     /**
-     * Used for half opacity.
+     * Used for lowest opacity.
      */
-    private static final double HALF_OPACITY = 0.5;
+    private static final double LOW_OPACITY = 0.2;
 
     /**
      * To retrieve all the achievements.
@@ -44,68 +48,12 @@ public class AchievementsController {
     private GridPane grid;
 
     /**
-     * Bound to the achievement.
+     * The user
+     * whose achievements are requested.
      */
-    @FXML
-    private ImageView achievement1;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement2;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement3;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement4;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement5;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement6;
+    private String username;
 
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement7;
 
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement8;
-
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement9;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement10;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement11;
-    /**
-     * Bound to the achievement.
-     */
-    @FXML
-    private ImageView achievement12;
 
     /**
      * Used to show useful information to the user.
@@ -113,20 +61,45 @@ public class AchievementsController {
     @FXML
     private PopOver popOver;
 
+
     /**
      * Triggered upon loading of scene.
      */
     @FXML
     public void initialize() {
+        if (MainHandler.achievementsUsername == null) {
+            System.out.println("username is null");
+            setUsername(MainHandler.username);
+        } else {
+            setUsername(MainHandler.achievementsUsername);
+        }
         List<Achievement> allAchievements = dbAdaptor.getAllAchievements();
         int achievementCounter = 0;
         List<Integer> achievementIds =
-                dbAdaptor.getAchievements(MainHandler.username);
+                dbAdaptor.getAchievements(username);
+        createHeader(username);
         for (Achievement currAch : allAchievements) {
             createVBoxAchievement(currAch,
                     achievementCounter, achievementIds);
             achievementCounter++;
         }
+    }
+
+    /**
+     * Creates a header for the user.
+     * @param user the searched user.
+     */
+    private void createHeader(final String user) {
+        String title = "";
+        if (user.equals(MainHandler.username)) {
+            title = "Your achievements";
+        } else {
+            title = "Achievements of " + user;
+        }
+        Label header = new Label(title);
+        header.setId("header");
+        grid.add(header, 0, 0, COLS, 1);
+        GridPane.setHalignment(header, HPos.CENTER);
     }
 
     /**
@@ -149,8 +122,9 @@ public class AchievementsController {
         if (achievmentIds.contains(achievementCounter + 1)) {
             currImgView.setOpacity(FULL_OPACITY);
         } else {
-            currImgView.setOpacity(HALF_OPACITY);
+            currImgView.setOpacity(LOW_OPACITY);
         }
+
         VBox currVBox = new VBox();
 
         Label currTitle = new Label(achievement.getName());
@@ -175,9 +149,16 @@ public class AchievementsController {
         currVBox.setAlignment(Pos.CENTER);
         grid.add(currVBox,
                 achievementCounter  %  COLS,
-                achievementCounter / COLS);
+                (achievementCounter / COLS) + 1);
 
     }
 
+    /**
+     * Sets the current user.
+     * @param user the current user.
+     */
+    public void setUsername(final String user) {
+        this.username = user;
+    }
 
 }

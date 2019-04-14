@@ -34,13 +34,36 @@ import javax.xml.bind.DatatypeConverter;
  * Controller for the personal info scene.
  */
 public class PersonalInfoController {
+    /**
+     * Dimensions for the scene.
+     */
+    private static final int DIMENSIONS = 120;
+    /**
+     * Zero.
+     */
+    private static final int ZERO = 0;
+    /**
+     * One.
+     */
+    private static final int ONE = 1;
+    /**
+     * Four.
+     */
+    private static final int FOUR = 4;
+    /**
+     * Eight.
+     */
+    private static final int EIGHT = 8;
 
     /**
      * Localhost domain.
      * {@value}
      */
-    private static final String LOCALHOST = "http://localhost:8080";
+    private static final String LOCALHOST = "https://go-green-db.herokuapp.com";
 
+    /**
+     * The parent controller.
+     */
     private MainController mainController;
 
     /**
@@ -91,9 +114,6 @@ public class PersonalInfoController {
     @FXML
     private Button selectAvatar;
 
-    @FXML
-    private Button changeAvatar;
-
     /**
      * Bound to the avatar image view.
      */
@@ -117,10 +137,16 @@ public class PersonalInfoController {
     @FXML
     private InformationBuilder informationBuilder = new InformationBuilder();
 
+    /**
+     * Bound to the dbadaptor class.
+     */
     private DbAdaptor dbAdaptor = new DbAdaptor();
 
-    private Image img = new Image(dbAdaptor.getUser(MainHandler.username).getAvatarUrl());
-
+    /**
+     * The profile picture of the logged in user.
+     */
+    private Image img = new Image(dbAdaptor.getUser(MainHandler.username)
+            .getAvatarUrl());
 
 
     /**
@@ -131,27 +157,33 @@ public class PersonalInfoController {
         informationBuilder
                 .addInformationIconToSearchBox(infoChangeAvatarLabel,
                         "Drag the desired avatar\n"
-                                + "to save the changes.");
+                                + "to save the changes or\n if you have uploaded\n "
+                                + "an image to imgur\n you can drag it here.");
         setUpAvatar();
         setupDragAndDropTarget(avatarImageBox);
     }
 
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
+    /**
+     * Sets the parent controller field.
+     * @param controller the parent controller to assign.
+     */
+    public void setMainController(final MainController controller) {
+        this.mainController = controller;
     }
 
     /**
      * Sets up the avatar of the user.
      */
     private void setUpAvatar() {
-        System.out.println(dbAdaptor.getUser(MainHandler.username).getAvatarUrl());
-        avatarImageBox.setMaxSize(120,120);
-        avatarImageBox.setPrefSize(120,120);
-        avatarImageBox.setMinSize(120,120);
+        System.out.println(dbAdaptor.getUser(MainHandler.username)
+                .getAvatarUrl());
+        avatarImageBox.setMaxSize(DIMENSIONS, DIMENSIONS);
+        avatarImageBox.setPrefSize(DIMENSIONS, DIMENSIONS);
+        avatarImageBox.setMinSize(DIMENSIONS, DIMENSIONS);
         avatarImageView.setPreserveRatio(false);
         avatarImageView.fitWidthProperty().bind(avatarImageBox.widthProperty());
-        avatarImageView.fitHeightProperty().bind(avatarImageBox.heightProperty());
+        avatarImageView.fitHeightProperty().bind(avatarImageBox
+                .heightProperty());
         avatarImageView.setImage(img);
         avatarImageView.setVisible(true);
         System.out.println(avatarImageView.getImage());
@@ -159,13 +191,12 @@ public class PersonalInfoController {
 
     /**
      * Sets up the drag and drop property.
-     * @param avatarImageBox the box
-     *                       where the drop is delivered.
+     * @param avatarBox the box where the drop is delivered.
      */
-    private void setupDragAndDropTarget(HBox avatarImageBox) {
+    private void setupDragAndDropTarget(final HBox avatarBox) {
         grid.setOnDragEntered(new EventHandler<DragEvent>() {
             @Override
-            public void handle(DragEvent event) {
+            public void handle(final DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     Label label = new Label("Drop here");
@@ -177,9 +208,9 @@ public class PersonalInfoController {
                 }
             }
         });
-        avatarImageBox.setOnDragOver(new EventHandler<DragEvent>() {
+        avatarBox.setOnDragOver(new EventHandler<DragEvent>() {
             @Override
-            public void handle(DragEvent event) {
+            public void handle(final DragEvent event) {
                 Dragboard db = event.getDragboard();
 
                 if (db.hasImage()) {
@@ -188,9 +219,9 @@ public class PersonalInfoController {
                 event.consume();
             }
         });
-        avatarImageBox.setOnDragDropped(new EventHandler<DragEvent>() {
+        avatarBox.setOnDragDropped(new EventHandler<DragEvent>() {
             @Override
-            public void handle(DragEvent event) {
+            public void handle(final DragEvent event) {
                 Dragboard db = event.getDragboard();
                 if (db.hasImage()) {
                     if (db.hasUrl() &&  db.getUrl().contains("imgur.com")
@@ -200,9 +231,15 @@ public class PersonalInfoController {
                         avatarImageView.setImage(db.getImage());
                         new BounceIn(avatarImageBox).play();
                         event.setDropCompleted(true);
+                    } else if (!db.hasUrl() && avatarUrl.startsWith("/icons/avatar")) {
+                        avatarImageView.setImage(db.getImage());
+                        new BounceIn(avatarImageBox).play();
+                        event.setDropCompleted(true);
                     } else {
-                        alertBuilder.showAlertNotification("Avatar update failed."
+                        alertBuilder.showAlertNotification(
+                                "Avatar update failed."
                                 + "\nTry dragging another image.");
+                        event.setDropCompleted(false);
                     }
                 } else {
                     event.setDropCompleted(false);
@@ -223,15 +260,16 @@ public class PersonalInfoController {
     public void changeAvatar(final ActionEvent event) {
         GridPane gridPane = new GridPane();
 
-        for (int i = 0 ; i < 8 ; i++) {
-            if (i < 4) {
-                gridPane.add(createAvatar(i + 1), i, 0);
+        for (int i = ZERO; i < EIGHT; i++) {
+            if (i < FOUR) {
+                gridPane.add(createAvatar(i + ONE), i, ZERO);
             } else {
-                gridPane.add(createAvatar(i + 1), i % 4, 1 );
+                gridPane.add(createAvatar(i + ONE), i % FOUR, ONE);
             }
         }
         popOver = new PopOver(gridPane);
         popOver.show(selectAvatar);
+        popOver.setCornerRadius(15);
     }
 
 
@@ -240,7 +278,7 @@ public class PersonalInfoController {
      * @param numOfAvatar the number of the avatar
      * @return returns a button with the image of avatar.
      */
-    private Button createAvatar(int numOfAvatar) {
+    private Button createAvatar(final int numOfAvatar) {
         Button avatar = new Button();
         ImageView avatarIv = new ImageView();
         Image avatarImage = new Image("/icons/avatar" + numOfAvatar + ".png");
@@ -256,10 +294,11 @@ public class PersonalInfoController {
         //                popOver.hide();
         //            }
         //        });
+
         avatar.setOnDragDetected(new EventHandler<MouseEvent>() {
 
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
 
                 /* allow any transfer mode */
                 Dragboard db = avatar.startDragAndDrop(TransferMode.MOVE);
@@ -271,29 +310,36 @@ public class PersonalInfoController {
                 content.putImage(sourceImage);
                 db.setContent(content);
                 avatarUrl = "/icons/avatar" + numOfAvatar + ".png";
-                System.out.println(avatarUrl + "DRAGDETECTED");
                 popOver.hide();
                 event.consume();
             }
         });
         avatar.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 avatar.setCursor(Cursor.OPEN_HAND);
             }
         });
         return avatar;
     }
 
+    /**
+     * Submits new avatar.
+     * @param event event that triggers the method.
+     */
     @FXML
     protected void submitChanges(final ActionEvent event) {
         System.out.println(avatarUrl);
-        if (dbAdaptor.updateAvatarUrl(MainHandler.username,avatarUrl)) {
+        if (dbAdaptor.updateAvatarUrl(MainHandler.username, avatarUrl)) {
             new ZoomIn(avatarImageBox).play();
         }
 
     }
 
+    /**
+     * Submits new password.
+     * @param event event that triggers the method.
+     */
     @FXML
     protected void changePass(final ActionEvent event) {
 
@@ -302,20 +348,32 @@ public class PersonalInfoController {
         String confirmNewPassStr = confirmNewPass
                 .getText().trim();
 
-        if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(null)
-                .loginSubmit(MainHandler.username, oldPassStr)) {
-            try {
-                MessageDigest md5 = MessageDigest.getInstance("MD5");
-                newPassStr = DatatypeConverter.printHexBinary(
-                        md5.digest(newPassStr.getBytes()));
-            } catch (NoSuchAlgorithmException e) {
-                alertBuilder.displayException(e);
-            }
-            try {
-                new HttpRequestHandler(LOCALHOST).reqPost("/changepass",
-                        new String[]{MainHandler.username, newPassStr});
-            } catch (ServerStatusException | IOException exception) {
-                alertBuilder.displayException(exception);
+        if (newPassStr.equals(oldPassStr)) {
+            alertBuilder.showAlert("Invalid input",
+                    "New password cannot be the same as old password.");
+        } else {
+            if (newPassStr.equals(confirmNewPassStr) && new LoginHandler(LOCALHOST)
+                    .loginSubmit(MainHandler.username, oldPassStr)) {
+                try {
+                    MessageDigest md5 = MessageDigest.getInstance("MD5");
+                    newPassStr = DatatypeConverter.printHexBinary(
+                            md5.digest(newPassStr.getBytes()));
+                } catch (NoSuchAlgorithmException e) {
+                    alertBuilder.displayException(e);
+                }
+                try {
+                    new HttpRequestHandler(LOCALHOST).reqPost("/changepass",
+                            new String[]{MainHandler.username, newPassStr});
+                    alertBuilder.showInformationNotification("Password changed successfully!");
+                    oldPass.setText("");
+                    newPass.setText("");
+                    confirmNewPass.setText("");
+                } catch (ServerStatusException | IOException exception) {
+                    alertBuilder.showAlertNotification("Password could not be changed.");
+                }
+            } else if (!newPassStr.equals(confirmNewPassStr)) {
+                alertBuilder.showAlert("Passwords do not match",
+                        "The new password do not match the confirmed password.");
             }
         }
     }

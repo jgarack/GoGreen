@@ -20,7 +20,7 @@
 
     <Label text="About Us" alignment="CENTER" fx:id="aboutTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
-    <Label fx:id="aboutSceneText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">GoGreen is an app designed with the purpose to make it easier to keep track of eco-friendly decisions and their impact on</Label>
+    <Label fx:id="aboutSceneText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Clima Mutatio Dolus is an app designed with the purpose to make it easier to keep track of eco-friendly decisions and their impact on</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">the world, all whilst providing an engaging experience that will hopefully motivate the user to keep a greener lifestyle.</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">It is our belief that every little action counts, which is our app provides long term tracking of the impact a user's habits have.</Label>
     <Label fx:id="aboutSceneText" GridPane.rowIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">This app was developed by [OOPP Group 98], composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,</Label>

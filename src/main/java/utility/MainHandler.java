@@ -15,6 +15,11 @@ public class MainHandler {
     public static String username;
 
     /**
+     * Username of friend for achievements page.
+     */
+    public static String achievementsUsername;
+
+    /**
      * A private Handler for Http requests.
      */
     private HttpRequestHandler httpHandler;
@@ -31,14 +36,26 @@ public class MainHandler {
         alertBuilder = new AlertBuilder();
     }
 
+    /**
+     * Sets up a new handler.
+     * @param handler the handler to be set.
+     */
     public void setHttpHandler(HttpRequestHandler handler) {
         httpHandler = handler;
     }
 
+    /**
+     * Gets the http handler.
+     * @return the http handler.
+     */
     public HttpRequestHandler getHttpHandler() {
         return httpHandler;
     }
 
+    /**
+     * Sets a new alert builder.
+     * @param builder the builder to be set.
+     */
     public void setAlertBuilder(AlertBuilder builder) {
         alertBuilder = builder;
     }
@@ -141,6 +158,7 @@ public class MainHandler {
             return -1;
         }
     }
+
     /**
      * updates solar panels.
      * @param amount which should be added
@@ -166,7 +184,14 @@ public class MainHandler {
             new AlertBuilder().displayException(e);
             return -1;
         }
-    }public int updateHeating(final int amount) {
+    }
+
+    /**
+     * updates heating.
+     * @param amount which should be added
+     * @return 0 if ok, -1 if exception thrown
+     */
+    public int updateHeating(final int amount) {
         try {
             String res = httpHandler
 
@@ -194,4 +219,5 @@ public class MainHandler {
                         .reqPost("/total", username)
                         .readLine());
     }
+
 }

@@ -22,12 +22,16 @@
     <Label text="Password" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <PasswordField fx:id="pass" GridPane.rowIndex="4"/>
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="6">
-        <Button fx:id="submitLogin" text="Sign in" onAction="#handleSubmitButtonAction" defaultButton="true"/>
+        <Button fx:id="submitLogin" text="Sign in ⎆" onAction="#handleSubmitButtonAction" defaultButton="true"/>
     </HBox>
     <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="7">
-        <Button fx:id="submitRegistration" text="Register" onAction="#handleRegisterButtonAction" />
+        <Button fx:id="submitRegistration" text="Register 🖉" onAction="#handleRegisterButtonAction" />
     </HBox>
-    <Text fx:id="actionTarget" GridPane.rowIndex="8" />
+
+    <HBox spacing="10" alignment="BOTTOM_CENTER" GridPane.rowIndex="8">
+        <Button fx:id="fullScreen" text="⛶" onAction="#enterFullscreen" />
+    </HBox>
+    <Text fx:id="actionTarget" GridPane.rowIndex="9" />
     <stylesheets>
         <URL value="@../stylesheets/loginStylesheet.css"/>
     </stylesheets>

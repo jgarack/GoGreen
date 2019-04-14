@@ -1,6 +1,6 @@
 package gui;
 
-import animatefx.animation.ZoomInRight;
+import animatefx.animation.FadeInUp;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -18,10 +18,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
 import org.controlsfx.glyphfont.FontAwesome;
@@ -48,7 +48,7 @@ public class FriendsController {
      * Constant for width.
      * {@value}
      */
-    private static final int PERC_WIDTH_VAL = 35;
+    private static final int PERC_WIDTH_VAL = 24;
     /**
      * Constant for hgap.
      * {@value}
@@ -65,11 +65,6 @@ public class FriendsController {
      */
     @FXML
     private TextField searchBar;
-    /**
-     * Table for listing friends.
-     */
-    @FXML
-    private ListView friendsListView;
     /**
      * Bound to the search box.
      */
@@ -103,6 +98,11 @@ public class FriendsController {
      * For notifications.
      */
     private InformationBuilder informationBuilder = new InformationBuilder();
+    /**
+     * Bound to the leaderboard container.
+     */
+    @FXML
+    private VBox leaderBoardVBox;
 
     /**
      * For reloading the page.
@@ -122,10 +122,10 @@ public class FriendsController {
                 .getRequest(MainHandler.username);
         friends = (ArrayList<String>) dbAdaptor
                 .getFriends(MainHandler.username);
-
         informationBuilder
                 .addInformationIconToSearchBox(searchInfoLabel,
-                        "Right-click on a user to add them");
+                        "Right-click on a\n"
+                                + "user to add them");
 
         constructTableFriends();
         constructPendingListView();
@@ -136,8 +136,6 @@ public class FriendsController {
      * Construct the leaderboard as table view.
      */
     private void constructTableFriends() {
-
-
         TableColumn usernameCol = new TableColumn("Username");
         usernameCol
                 .setCellValueFactory(new PropertyValueFactory<>("username"));
@@ -189,7 +187,7 @@ public class FriendsController {
         });
 
         friendsTable.getItems().addAll(friendsList);
-        new ZoomInRight(friendsTable).play();
+        new FadeInUp(leaderBoardVBox).play();
 
 
     }
@@ -200,60 +198,68 @@ public class FriendsController {
      */
     private void constructPendingListView() {
         if (!pendingRequests.isEmpty()) {
-            Label pendingReqTitle = new Label("Pending Requests");
+
+            Label pendingReqTitle = new Label("Pending");
             pendingReqTitle.setId("pendingReqTitle");
             ListView listOfPendingReq = new ListView();
             for (String friend : pendingRequests) {
 
 
-                Button acceptBtn = new Button("Accept");
-                acceptBtn.setStyle("-fx-font-family: 'FontAwesome'");
-                acceptBtn
-                        .setGraphic(GlyphFontRegistry
-                                .font("FontAwesome")
-                                .create(FontAwesome.Glyph.CHECK_CIRCLE_ALT));
+                Button acceptBtn = new Button("✓");
+                acceptBtn.getStyleClass().add("acceptBtn");
                 acceptBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
-                        dbAdaptor
+                        if (dbAdaptor
                                 .considerRequest(friend,
-                                        MainHandler.username, true);
-                        try {
-                            mainController.loadFriendsListScene();
-                        } catch (IOException err) {
-                            err.getMessage();
+                                        MainHandler.username, true)) {
+                            alertBuilder
+                                    .showInformationNotification(
+                                            "Friend added to the leaderboard!");
+                            mainController.pendingReq--;
+                            mainController.updatePendingRequests();
+                            try {
+                                mainController.loadFriendsListScene();
+                            } catch (IOException err) {
+                                err.printStackTrace();
+                            }
+                        } else {
+                            alertBuilder.showAlertNotification("Friend could not be added!");
                         }
+
                     }
                 });
 
-                Button declineBtn = new Button("Block user");
-                declineBtn.setStyle("-fx-font-family: 'FontAwesome'");
-                declineBtn
-                        .setGraphic(GlyphFontRegistry
-                                .font("FontAwesome")
-                                .create(FontAwesome.Glyph.TIMES_CIRCLE_ALT));
+                Button declineBtn = new Button("❌");
+                declineBtn.getStyleClass().add("declineBtn");
 
                 HBox currFriend = new HBox();
                 Label sender = new Label(friend + " sent you a request!");
-
+                sender.setMaxWidth(Region.USE_PREF_SIZE);
                 declineBtn.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(final ActionEvent event) {
-                        dbAdaptor
+                        if (dbAdaptor
                                 .considerRequest(friend,
-                                        MainHandler.username, false);
-                        try {
-                            mainController.loadFriendsListScene();
-                        } catch (IOException err) {
-                            err.getMessage();
+                                        MainHandler.username, false)) {
+                            alertBuilder
+                                    .showInformationNotification("User blocked!");
+                            try {
+                                mainController.loadFriendsListScene();
+                            } catch (IOException err) {
+                                err.getMessage();
+                            }
+                        } else {
+                            alertBuilder.showAlertNotification("User could not be blocked!");
                         }
+
                     }
                 });
 
                 currFriend.getChildren().addAll(sender, acceptBtn, declineBtn);
                 currFriend.setAlignment(Pos.CENTER);
                 currFriend.setSpacing(SPACING_VAL);
-
+                listOfPendingReq.setId("pendingReqList");
                 listOfPendingReq.getItems().add(currFriend);
             }
             ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -261,8 +267,15 @@ public class FriendsController {
             columnConstraints.setHalignment(HPos.CENTER);
             friendsPane.getColumnConstraints().add(columnConstraints);
             friendsPane.setHgap(HGAP_VAL);
-            friendsPane.add(pendingReqTitle, 0, 0);
-            friendsPane.add(listOfPendingReq, 0, 2);
+            VBox pendingListVbox = new VBox();
+            pendingListVbox.getChildren().addAll(pendingReqTitle,listOfPendingReq);
+            pendingListVbox.setAlignment(Pos.CENTER);
+            GridPane.setRowIndex(pendingReqTitle,0);
+            GridPane.setRowIndex(listOfPendingReq,2);
+            GridPane.setColumnIndex(pendingReqTitle,0);
+            GridPane.setColumnIndex(listOfPendingReq,0);
+            friendsPane.add(pendingListVbox,0,0,1,3);
+            new FadeInUp(pendingListVbox).play();
         }
     }
 
@@ -280,13 +293,31 @@ public class FriendsController {
                 String sender = MainHandler.username;
                 String recipient =
                         ((User) row.getItem()).getUsername();
-                dbAdaptor.considerRequest(sender, recipient, false);
-                dbAdaptor.considerRequest(recipient, sender, false);
+                if (dbAdaptor.considerRequest(sender, recipient, false)
+                        || dbAdaptor.considerRequest(recipient, sender, false)) {
+                    alertBuilder.showInformationNotification("User blocked!");
+                } else {
+                    alertBuilder.showInformationNotification("User could not be blocked!");
+                }
+                popOver.hide();
                 reloadPage();
             }
         });
+        Button showAchievementsBtn = new Button();
+        showAchievementsBtn.setText("Show achievements");
+        showAchievementsBtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                String user = ((User) row.getItem()).getUsername();
+                showAchievementsOfFriend(user);
+                popOver.hide();
+            }
+        });
         VBox removeFriendBox = new VBox();
-        removeFriendBox.getChildren().add(removeFriendBtn);
+        removeFriendBtn.setMaxWidth(Double.MAX_VALUE);
+        removeFriendBox.getChildren().addAll(showAchievementsBtn,removeFriendBtn);
+
+
         popOver = new PopOver(removeFriendBox);
         popOver.show(row);
     }
@@ -306,7 +337,15 @@ public class FriendsController {
                 String sender = MainHandler.username;
                 String recipient =
                         ((User) row.getItem()).getUsername();
-                dbAdaptor.sendFriendReq(sender, recipient);
+                if (dbAdaptor.sendFriendReq(sender, recipient)) {
+                    alertBuilder
+                            .showInformationNotification("Friend request sent!");
+                } else {
+                    alertBuilder
+                            .showAlertNotification("Friend request cannot"
+                                    + " be sent to this user!");
+                }
+                popOver.hide();
                 reloadPage();
             }
         });
@@ -348,6 +387,14 @@ public class FriendsController {
         }
         searchBar.setText("");
 
+    }
+
+    private void showAchievementsOfFriend(final String username) {
+        try {
+            mainController.loadAchievementsScene(username);
+        } catch (IOException ex) {
+            alertBuilder.displayException(ex);
+        }
     }
 
     /**

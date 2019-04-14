@@ -2,6 +2,7 @@ package gui;
 
 import animatefx.animation.Pulse;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -43,7 +44,7 @@ public class InformationBuilder {
      * @param message the actual message
      */
     public void
-    addInformationIconToSearchBox(final Label informativeLabel,
+        addInformationIconToSearchBox(final Label informativeLabel,
                                   final String message) {
         informativeLabel.setBackground(Background.EMPTY);
         informativeLabel.setStyle("-fx-font-family: 'FontAwesome'");
@@ -52,24 +53,37 @@ public class InformationBuilder {
                         .font("FontAwesome")
                         .create(FontAwesome.Glyph.INFO_CIRCLE)
                         .size(FONT_SIZE));
-        informativeLabel
-                .setOnMouseEntered(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(final MouseEvent event) {
-                        Label infoLabel = new Label(message);
-                        infoLabel.setId("infoLabel");
-                        popOver = new PopOver(infoLabel);
-                        popOver.setFadeInDuration(Duration.seconds(DURATION));
-                        popOver.setId("infoPopOver");
-                        popOver.show(informativeLabel);
-                        new Pulse(infoLabel).play();
-                    }
-                });
-        informativeLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
+        addInformativePopOverToNode(informativeLabel,message, PopOver.ArrowLocation.LEFT_CENTER);
+
+    }
+
+    /**
+     * adds information pop over to node.
+     * @param node given
+     * @param message to show
+     * @param arrowLocation where
+     */
+    public void addInformativePopOverToNode(Node node,String message,
+                                            PopOver.ArrowLocation arrowLocation) {
+        node.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Label infoLabel = new Label(message);
+                infoLabel.setId("infoLabel");
+                popOver = new PopOver(infoLabel);
+                popOver.setFadeInDuration(Duration.seconds(DURATION));
+                popOver.setId("infoPopOver");
+                popOver.setArrowLocation(arrowLocation);
+                popOver.show(node);
+                new Pulse(infoLabel).play();
+            }
+        });
+        node.setOnMouseExited(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
                 popOver.hide();
             }
         });
+
     }
 }

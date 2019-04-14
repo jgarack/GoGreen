@@ -6,6 +6,9 @@
 
 <?import java.net.URL?>
 
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <BorderPane fx:id="root"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
@@ -17,15 +20,16 @@
     <top>
         <SplitPane orientation="HORIZONTAL" fx:id="navBar">
             <HBox spacing="15" alignment="TOP_LEFT" fx:id="redirectHBox">
-                    <Button fx:id="home" text="Home" onAction="#loadHomeScene"/>
-                    <Button fx:id="howToPlay" text="How to Play" onAction="#loadHowToPlayScene"/>
-                    <Button fx:id="aboutUs" text="About Us" onAction="#loadAboutScene"/>
+                    <Button fx:id="home" text="⌂ Home" onAction="#loadHomeScene"/>
+                    <Button fx:id="howToPlay" text="¿How to Play?" onAction="#loadHowToPlayScene"/>
+                    <Button fx:id="aboutUs" text="🛈 About Us" onAction="#loadAboutScene"/>
+                    <Button fx:id="fullScreen" text="⛶" onAction="#enterFullscreen" />
             </HBox>
 
             <HBox alignment="TOP_RIGHT" fx:id="userSection" spacing="15">
                 <Label fx:id="greetingsText" text="Greetings, User!" HBox.hgrow="ALWAYS"/>
-                <Button fx:id="achievementsBtn" text="Achievements" HBox.hgrow="ALWAYS" onAction="#loadAchievementsScene"/>
-                <Button fx:id="friendsListBtn" text="✉ Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
+                <Button fx:id="achievementsBtn" text="🏆 Achievements" HBox.hgrow="ALWAYS" onAction="#loadAchievementsScene"/>
+                <Button fx:id="friendsListBtn" text="🖂 Friends List" HBox.hgrow="ALWAYS" onAction="#loadFriendsListScene"/>
                 <Button fx:id="personalInfo" text="👤 Edit Your Profile" onAction="#loadPersonalInfoScene"/>
             </HBox>
         </SplitPane>

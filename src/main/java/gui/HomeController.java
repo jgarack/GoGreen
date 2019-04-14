@@ -63,7 +63,7 @@ public class HomeController {
     /**
      * Handler for handling main operations.
      */
-    public MainHandler handler = new MainHandler("http://localhost:8080");
+    public MainHandler handler = new MainHandler("https://go-green-db.herokuapp.com");
 
     /**
      * Data about vegetarian meals consumed
@@ -353,7 +353,9 @@ public class HomeController {
                             YOU_NEED_TO_FILL_A_NUMBER);
         }
 
-    }/**
+    }
+
+    /**
      * Linked to the button to increase
      * lowering home temp month.
      * @param event The event fired
@@ -368,8 +370,8 @@ public class HomeController {
             this.tempRed = handler
                     .updateHeating(Integer.parseInt(lowerTemps.getText()));
 
-                setPointsEarned();
-                alert();
+            setPointsEarned();
+            alert();
 
 
 
@@ -442,7 +444,7 @@ public class HomeController {
                 .showInformationNotification(
                         "Good job! Keep on going greener!");
 
-        onUpdatePointsEarnedLabel(Color.WHITE, Color.LIGHTGREEN);
+        onUpdatePointsEarnedLabel(Color.WHITE, Color.DARKRED);
 
     }
 }

@@ -1,7 +1,5 @@
 package utility;
 
-import gui.AlertBuilder;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -108,6 +106,24 @@ public class DbAdaptor {
     }
 
     /**
+     * Setter for conn.
+     * @param set the replacement for conn.
+     * @return true if updated succesfully.
+     */
+    public boolean setConn(Connection set) {
+        conn = set;
+        return true;
+    }
+
+    /**
+     * Getter for conn.
+     * @return conn.
+     */
+    public Connection getConn() {
+        return conn;
+    }
+
+    /**
      * Connect method.
      */
     public void connect() {
@@ -123,9 +139,9 @@ public class DbAdaptor {
      */
     public void disconnect() {
         try {
-            if (conn != null) {
-                conn.close();
-            }
+
+            conn.close();
+
             if (rs != null) {
                 rs.close();
             }
@@ -269,12 +285,12 @@ public class DbAdaptor {
 
             st.setString(1, logCre.getUsername());
             rs = st.executeQuery();
-            LoginCredentials tempLC = new LoginCredentials(null, null);
+            LoginCredentials tempLc = new LoginCredentials(null, null);
             while (rs.next()) {
-                tempLC.setUsername(rs.getString(one));
-                tempLC.setPassword(rs.getString(two));
+                tempLc.setUsername(rs.getString(one));
+                tempLc.setPassword(rs.getString(two));
             }
-            if (logCre.equals(tempLC)) {
+            if (logCre.equals(tempLc)) {
                 return true;
             }
             st.close();
@@ -361,29 +377,28 @@ public class DbAdaptor {
             }
 
             st.close();
-
+            disconnect();
             return tempUser;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return  null;
         } finally {
             disconnect();
         }
-
-        return null;
     }
 
     /**
      * updates activity.
      *
      * @param name   whose activity should be updated
-     * @param activityID which activity should be updated
+     * @param activityId which activity should be updated
      * @param amount     by how many should it be updated
      * @return true if worked false if exceptions
 
     */
     public boolean updateActivity(final String name,
-                                  final int activityID,
+                                  final int activityId,
                                   int amount) {
         try {
             connect();
@@ -395,7 +410,7 @@ public class DbAdaptor {
                     .toString());
             st.setString(one, name);
 
-            st.setInt(two, activityID);
+            st.setInt(two, activityId);
             rs = st.executeQuery();
             System.out.println(rs.next());
             amount += rs.getInt("amount");
@@ -403,14 +418,15 @@ public class DbAdaptor {
             st.close();
 
             PreparedStatement pst = conn
-                    .prepareStatement("UPDATE activities SET amount = ? "
-                    + "WHERE player = ? AND activity_id = ?");
+                    .prepareStatement("UPDATE activities SET amount = ?,"
+                            + " performed_times = performed_times+1 "
+                            + "WHERE player = ? AND activity_id = ?");
             pst.setInt(one, amount);
             pst.setString(two, name);
-            pst.setInt(three, activityID);
+            pst.setInt(three, activityId);
             pst.executeUpdate();
             pst.close();
-            calculateScore(name, activityID, amount);
+            calculateScore(name, activityId, amount);
             updateTotalScore(name);
             return true;
         } catch (SQLException e) {
@@ -425,10 +441,10 @@ public class DbAdaptor {
     /**
      * Calculates score of a given user.
      * @param username the username of the user.
-     * @param activityID the activity of the user.
+     * @param activityId the activity of the user.
      * @param amount the count of activities.
      */
-    public void calculateScore(final String username, final int activityID,
+    public void calculateScore(final String username, final int activityId,
                                 final int amount) {
         try {
             connect();
@@ -438,7 +454,7 @@ public class DbAdaptor {
                     .append("?").toString());
             st.setInt(one, amount);
             st.setString(two, username);
-            st.setInt(three, activityID);
+            st.setInt(three, activityId);
             st.executeUpdate();
             st.close();
         } catch (SQLException e) {
@@ -453,10 +469,10 @@ public class DbAdaptor {
      * returns activity amount.
      *
      * @param name username whose activity amount should be returned.
-     * @param activityID id of the activity
+     * @param activityId id of the activity
      * @return amount of given activity of given user
      */
-    public int getActivityAmount(final String name, final int activityID) {
+    public int getActivityAmount(final String name, final int activityId) {
         try {
             connect();
             StringBuilder query = new StringBuilder(
@@ -465,7 +481,7 @@ public class DbAdaptor {
                     .append("?");
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
-            st.setInt(two, activityID);
+            st.setInt(two, activityId);
             rs = st.executeQuery();
             System.out.println(rs.next());
             int ret = rs.getInt(one);
@@ -490,6 +506,7 @@ public class DbAdaptor {
         connect();
 
         try {
+
             String query = "SELECT total_score FROM users WHERE username = ?";
             PreparedStatement st = conn.prepareStatement(query.toString());
             st.setString(one, name);
@@ -534,7 +551,7 @@ public class DbAdaptor {
      * @param fromUser from which the invitation is send
      * @param toUser user to whom you want to send the invitation
      */
-    public void sendFriendReq(final String fromUser, final String toUser) {
+    public boolean sendFriendReq(final String fromUser, final String toUser) {
 
         if (checkIfInDb(fromUser,toUser)) {
             connect();
@@ -550,14 +567,16 @@ public class DbAdaptor {
                 st.executeUpdate();
                 st.close();
                 //alertBuilder.showInformationNotification("Friend request sent!");
+                return true;
 
             } catch (SQLException e) {
                 e.printStackTrace();
+                return false;
             } finally {
                 disconnect();
             }
         }
-
+        return false;
     }
 
     /**
@@ -608,7 +627,7 @@ public class DbAdaptor {
      * @param toUser user who got the inv
      * @param accepted rejected - false, accepted - true
      */
-    public void considerRequest(final String fromUser,
+    public boolean considerRequest(final String fromUser,
                                 final String toUser, final boolean accepted) {
         connect();
         try {
@@ -624,19 +643,43 @@ public class DbAdaptor {
             st.setString(2, fromUser);
             st.setString(3, toUser);
             st.executeUpdate();
-            /*if (accepted) {
-                alertBuilder.showInformationNotification("Friend request accepted!");
-            } else {
-                alertBuilder.showInformationNotification("Friend request declined!"
-                        + "\nUser is now blocked.");
-            }*/
             st.close();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         } finally {
             disconnect();
         }
 
+
+    }
+
+    /**
+     * Retrieves the number of pending friend requests.
+     * @param username the current user
+     * @return count of pending friend requests
+     */
+    public int retrieveCount(String username) {
+        int result = -1;
+        String sql = "select count(from_user) from friend_request "
+                + "where to_user = ? and friend_status = ?::\"friend_status\"";
+        try {
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1,username);
+            statement.setString(2,FriendStatus.PENDING.name());
+            rs = statement.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+            System.out.println("Result is: " + result);
+            return result;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return result;
+        } finally {
+            disconnect();
+        }
 
     }
 
@@ -792,7 +835,7 @@ public class DbAdaptor {
      * @param id of the achievement
      * @param username of the user
      */
-    public void addAchievement(int id, String username) {
+    public void addAchievement(final int id, final String username) {
         connect();
         try {
             PreparedStatement st = conn.prepareStatement("INSERT INTO "
@@ -823,7 +866,10 @@ public class DbAdaptor {
             Achievement currAch;
 
             while (rs.next()) {
-                currAch = new Achievement(rs.getString(1).replace("_", "  "),false,rs.getString(2));
+                currAch = new Achievement(rs.getString(1)
+                        .replace("_",  "  "),
+                        false,
+                        rs.getString(2));
                 temp.add(currAch);
             }
 
@@ -841,7 +887,7 @@ public class DbAdaptor {
      * @param username of the user
      * @return List with Achievements
      */
-    public List<Integer> getAchievements(String username) {
+    public List<Integer> getAchievements(final String username) {
         connect();
         List<Integer> temp = new ArrayList<>();
         try {
@@ -865,6 +911,37 @@ public class DbAdaptor {
             disconnect();
         }
         return temp;
+    }
+
+    /**
+     * Method that gets amount of times an activity has been performed.
+     * @param username users name
+     * @param actId activity identifier
+     * @return number of times activity has been performed
+     */
+    public int getPerformedTimes(final String username, final int actId) {
+        connect();
+        PreparedStatement st;
+        try {
+            st = conn.prepareStatement("Select performed_times from activities "
+                    + "where player = ? AND activity_id = ? ");
+            st.setString(1,username);
+            st.setInt(2, actId);
+            rs = st.executeQuery();
+            int pt = -1;
+            while (rs.next()) {
+                pt = rs.getInt(1);
+            }
+            st.close();
+            disconnect();
+            return pt;
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+            disconnect();
+        }
+        return -1;
     }
 
 }

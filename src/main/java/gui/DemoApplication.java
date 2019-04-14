@@ -3,10 +3,9 @@ package gui;
 import animatefx.animation.ZoomIn;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import org.springframework.boot.SpringApplication;
@@ -75,7 +74,6 @@ public class DemoApplication extends Application {
         fxmlLoader.setControllerFactory(springContext::getBean);
 
         root = fxmlLoader.load(getClass().getResource("/fxml/loginView.fxml"));
-
         new ZoomIn(root).play();
 
     }
@@ -87,22 +85,18 @@ public class DemoApplication extends Application {
      */
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        primaryStage.setTitle("FXML Tryout");
+        primaryStage.setTitle("Clima Mutatio Dolus");
+        primaryStage.getIcons().add(new Image(DemoApplication.class
+                .getResourceAsStream("/icons/iconApp.png")));
         Scene scene = new Scene(root, width, height);
         scene.getStylesheets().add(
                 (getClass().getResource("/stylesheets/loginStylesheet.css"))
                         .toExternalForm());
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-
-        primaryStage.setX(bounds.getMinX());
-        primaryStage.setY(bounds.getMinY());
-        primaryStage.setWidth(bounds.getWidth());
-        primaryStage.setHeight(bounds.getHeight());
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(event -> {
             springContext.close();
-            System.out.println("Terminated");
         });
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
 

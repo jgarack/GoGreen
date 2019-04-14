@@ -1,18 +1,33 @@
 package gui;
 
 import animatefx.animation.FadeInUp;
-import animatefx.animation.JackInTheBox;
+import animatefx.animation.Pulse;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.GlyphFontRegistry;
+import javafx.scene.layout.StackPane;
+
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
+import org.controlsfx.control.PopOver;
+import utility.DbAdaptor;
+import utility.MainHandler;
 
 import java.io.IOException;
 
@@ -22,8 +37,6 @@ import java.io.IOException;
  * Controller for the main window.
  */
 public class MainController {
-
-
 
     /**
      * Magic number 0.8.
@@ -36,7 +49,10 @@ public class MainController {
      */
     private static final int FSIZE = 20;
 
-
+    /**
+     * Count of the pending requests.
+     */
+    int pendingReq = 0;
 
 
     /**
@@ -55,17 +71,23 @@ public class MainController {
      */
     @FXML
     private Button personalInfo;
+
+    /**
+     * Bound to the home button on top.
+     */
+    @FXML
+    private Button friendsListBtn;
+
+
     /**
      * Bound to the greetings label on top.
      */
     @FXML
     private Label greetingsText;
 
-    /**
-     * Bound to the friends list page.
-     */
-    @FXML
-    private Button friendsListBtn;
+
+
+    private DbAdaptor dbAdaptor = new DbAdaptor();
 
     /**
      * Updates the Greeting in top right corner.
@@ -75,11 +97,24 @@ public class MainController {
     public void setGreetingsText(final String greetingstext) {
         this.greetingsText.setText(greetingstext);
         this.greetingsText.setStyle("-fx-font-family: 'FontAwesome'");
-        this.greetingsText
-                .setGraphic(GlyphFontRegistry
-                        .font("FontAwesome")
-                        .create(FontAwesome.Glyph.USER).size(FSIZE));
+    }
 
+    /**
+     * Methods for updating background dynamically.
+     * @param score userScore.
+     */
+
+    public void changeBackground(int score) {
+
+        if (score >= 50000 && score < 100000) {
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase2_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+        } else if (score >= 100000 && score < 300000) {
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase3_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+        } else if (score >= 300000 && score < 500000) {
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase4_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+        } else if (score >= 500000) {
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase5_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+        }
     }
 
 
@@ -92,11 +127,53 @@ public class MainController {
     public void initialize() {
         try {
             loadHomeScene();
+            updatePendingRequests();
+            changeBackground(dbAdaptor.getTotalScore(MainHandler.username));
         } catch (IOException err) {
             err.printStackTrace();
         }
     }
 
+    void updatePendingRequests() {
+        dbAdaptor.connect();
+        pendingReq = dbAdaptor.retrieveCount(MainHandler.username);
+        if (pendingReq > 0) {
+            loadFriendNotification(pendingReq);
+        } else {
+            friendsListBtn.setGraphic(null);
+        }
+    }
+
+    /**
+     * Sets the pending request notification on top.
+     * @param notificationCount the number of pending requests.
+     */
+    private void loadFriendNotification(int notificationCount) {
+        friendsListBtn.setGraphic(createNotification(String.valueOf(notificationCount)));
+    }
+
+    /**
+     * Creates the notification bubble.
+     * @param number the number of pending requests
+     * @return returns a fancy bubble with a number inside
+     */
+    private Node createNotification(String number) {
+        StackPane pane = new StackPane();
+        String infoMsg = "You have "
+                + pendingReq
+                + " pending\n" + "friend requests";
+        InformationBuilder informationBuilder = new InformationBuilder();
+        informationBuilder.addInformativePopOverToNode(pane,infoMsg,
+                PopOver.ArrowLocation.TOP_CENTER);
+        Label lab = new Label(number);
+        lab.setStyle("-fx-text-fill:white; -fx-font-size: 18");
+        Circle cercle = new Circle(12, Color.rgb(41, 41, 41, .8));
+        cercle.setStrokeWidth(2.0);
+        cercle.setStyle("-fx-background-insets: 0 0 -1 0, 0, 1, 2;");
+        cercle.setSmooth(true);
+        pane.getChildren().addAll(cercle, lab);
+        return pane;
+    }
 
 
     /**
@@ -118,7 +195,7 @@ public class MainController {
         home.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(final MouseEvent event) {
-                new JackInTheBox(home).setResetOnFinished(true).play();
+                new Pulse(home).setResetOnFinished(true).play();
             }
         });
         loadScene("home");
@@ -157,9 +234,19 @@ public class MainController {
      */
     @FXML
     protected void loadAchievementsScene() throws IOException {
+        MainHandler.achievementsUsername = null;
         loadScene("achievements");
     }
 
+    /**
+     * Loads achievements scene for a friend.
+     * @param username the friend.
+     * @throws IOException when FXMLLoader cannot load properly.
+     */
+    void loadAchievementsScene(String username) throws IOException {
+        MainHandler.achievementsUsername =  username;
+        loadScene("achievements");
+    }
 
     /**
      * Loads a scene based on the given string.
@@ -181,4 +268,18 @@ public class MainController {
         }
         root.setCenter(newScene);
     }
+
+    /**
+     * Enters fullScreen mode.
+     * @param actionEvent
+     */
+    @FXML
+    public void enterFullscreen(final ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource())
+                .getScene().getWindow();
+        if (!stage.isFullScreen()) {
+            stage.setFullScreen(true);
+        } else stage.setFullScreen(false);
+    }
+
 }

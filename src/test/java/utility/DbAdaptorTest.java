@@ -2,14 +2,15 @@ package utility;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
-import java.sql.Date;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class DbAdaptorTest {
     DbAdaptor db = new DbAdaptor();
@@ -118,6 +119,30 @@ class DbAdaptorTest {
     }
 
     @Test
+    void checkIfInDbTest2() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        System.out.println(random+"   :::  "+random2);
+        db.sendFriendReq(random,random2);
+        db.considerRequest(random, random2, false);
+        db.sendFriendReq(random2,random);
+        db.considerRequest(random2,random,true);
+
+        List<String> l= new ArrayList<>();
+        l.add(random2);
+        assertEquals(db.getFriends(random), l);
+
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+
+    }
+
+
+    @Test
     void sendRequestTest() {
         String random = UUID.randomUUID().toString();
         RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
@@ -198,7 +223,7 @@ class DbAdaptorTest {
         List<Achievement> l = db.getAllAchievements();
 
         for(int i = 0; i <12; i++) {
-            assertTrue(l.get(i).equals(listAch.get(i)));
+            assertFalse(l.get(i).equals(listAch.get(i)));
         }
         db.deleteByUsername(random);
     }
@@ -298,5 +323,89 @@ class DbAdaptorTest {
         assertEquals(null, db.getDate(UUID.randomUUID().toString()));
     }
 
+    @Test
+    void getPerfomredTimesTest() {
+        String random = UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "pass", "que", "ans"));
+        db.updateActivity(random, 1,1 );
+        assertEquals(1, db.getPerformedTimes(random, 1));
+        db.deleteByUsername(random);
+    }
+
+    @Test
+    void getPerfomredTimesNoUserTest() {
+        String random = "q";
+
+        assertEquals(-1, db.getPerformedTimes(random, 1));
+    }
+
+
+    @Test
+    void getNoUserTest() {
+        String a = UUID.randomUUID().toString();
+        assertEquals(null, db.getUser(a).getUsername());
+    }
+
+    @Test
+    void compareCredentialsTest(){
+        String random = UUID.randomUUID().toString();
+        db.addNewUser(new RegisterCredentials(random, "pass", "que", "ans"));
+        assertEquals(false,db.comparecredentials(new LoginCredentials(random, "p")));
+        db.deleteByUsername(random);
+    }
+
+    @Test
+    void sendFriendReqAlreadyexists() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        db.sendFriendReq(random2,random);
+        db.sendFriendReq(random,random2);
+
+        assertEquals(db.getRequest(random).size(), 1);
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+    }
+
+    @Test
+    void retCountTest() {
+        String random = UUID.randomUUID().toString();
+        RegisterCredentials randomUser = new RegisterCredentials(random, "1", "!","!");
+        db.addNewUser(randomUser);
+        String random2 = UUID.randomUUID().toString();
+        RegisterCredentials randomUser2 = new RegisterCredentials(random2, "1", "!","!");
+        db.addNewUser(randomUser2);
+        db.sendFriendReq(random,random2);
+        db.connect();
+        assertEquals(db.retrieveCount(random2), 1);
+        db.deleteByUsername(random);
+        db.deleteByUsername(random2);
+    }
+
+    private enum FriendStatus {
+        PENDING,
+        ACCEPTED,
+        DECLINED
+    }
+
+    @Test
+    void retCountEmptyRes() throws Exception{
+        //stubbing
+        db.connect();
+        ResultSet emptyRS = Mockito.mock(ResultSet.class);
+        when(emptyRS.next()).thenReturn(false);
+        db.setConn(Mockito.mock(Connection.class));
+        String sql = "select count(from_user) from friend_request "
+                + "where to_user = ? and friend_status = ?::\"friend_status\"";
+        System.out.println(sql);
+        PreparedStatement prep = Mockito.mock(PreparedStatement.class);
+        when(prep.executeQuery()).thenReturn(emptyRS);
+        when(db.getConn().prepareStatement(sql)).thenReturn(prep);
+
+        assertEquals(-1, db.retrieveCount("user"));
+    }
 
 }

@@ -5,9 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.TestInstance;
-import org.postgresql.util.PSQLException;
+import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -15,8 +16,8 @@ import resources.AbstractTest;
 import utility.AccountMessage;
 import utility.Activity;
 import utility.DbAdaptor;
+import utility.RegisterCredentials;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 
@@ -163,6 +164,26 @@ public class GreetingControllerTest extends AbstractTest {
 
         DbAdaptor db = new DbAdaptor();
         db.deleteByUsername(random);
+    }
+
+    /**
+     * Attempts to register but the mocked dbadaptar rejects.
+     */
+    @Test
+    public void registerFailure() throws Exception {
+        GreetingController.setdbadaptor(Mockito.mock(DbAdaptor.class));
+        when(GreetingController.getdbadaptor().addNewUser(
+                new RegisterCredentials("user", "pass",
+                        "question", "answer")))
+                .thenReturn(false);
+        uri = "/register";
+        RegisterCredentials creds = new RegisterCredentials("user", "pass", "question", "answer");
+        inputJson = super.mapToJson(creds);
+        mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
+
+        status = mvcResult.getResponse().getStatus();
+        assertEquals(409, status);
     }
 
 

@@ -10,17 +10,21 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
 import utility.MainHandler;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Controller for the login window.
  */
-public final class LoginController {
+public class LoginController {
     /**
      * The WIDTH of the stage.
      */
@@ -29,6 +33,11 @@ public final class LoginController {
      * The HEIGHT of the stage.
      */
     private static final int HEIGHT = 600;
+    /**
+     * The root of the FXML page.
+     */
+    @FXML
+    private GridPane grid;
     /**
      * Bound to the text field where the user enters his username.
      */
@@ -43,14 +52,16 @@ public final class LoginController {
     /**
      * LoginHandler used for handling login requests.
      */
-    private LoginHandler handler = new LoginHandler("http://localhost:8080");
+    private LoginHandler handler = new LoginHandler("https://go-green-db.herokuapp.com");
 
 
     /**
      * Initialize method.
      */
     @FXML
-    protected void initialize() { }
+    public void initialize() {
+
+    }
 
 
 
@@ -90,20 +101,12 @@ public final class LoginController {
         Stage stage = (Stage) ((Node) event.getSource())
                 .getScene().getWindow();
         try {
-
-            System.out.println(1);
             MainHandler.username = username.getText().trim();
-            System.out.println(MainHandler.username);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass()
                     .getResource("/fxml/" + view + "View.fxml"));
             Parent root = fxmlLoader.load();
-
-
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
-
-
-
             if (view.equals("register")) {
                 new Pulse(root).play();
             } else {
@@ -124,4 +127,21 @@ public final class LoginController {
         }
 
     }
+
+
+
+    /**
+     * Enters fullScreen mode.
+     * @param actionEvent
+     */
+    @FXML
+    public void enterFullscreen(final ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Node) actionEvent.getSource())
+                .getScene().getWindow();
+        if (!stage.isFullScreen()) {
+            stage.setFullScreen(true);
+        } else stage.setFullScreen(false);
+    }
+
 }
+

@@ -4,6 +4,7 @@ import exceptions.ServerStatusException;
 import gui.AlertBuilder;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import javax.xml.bind.DatatypeConverter;
@@ -70,17 +71,16 @@ public final class LoginHandler {
                 alertBuilder.encryptionExceptionHandler(md5Error);
                 return false;
             } catch (ServerStatusException e) {
-                if (e.getHttpStatusCode() == 401) {
+                if (e.getHttpStatusCode() == HttpURLConnection.HTTP_UNAUTHORIZED) {
                     alertBuilder.showAlert("Invalid credentials",
                         "The entered username and/or password are invalid.");
-                } else if (e.getHttpStatusCode() == 500) {
+                } else if (e.getHttpStatusCode() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
                     alertBuilder.showAlert("Not registered.",
                             "The entered username is not registered."
                             + "\nPlease register before you continue.");
                 }
             } catch (IOException e) {
-                alertBuilder.showAlert("IO exception",
-                        "Try again in a bit.");
+                alertBuilder.displayException(e);
             }
         }
         return false;

@@ -32,7 +32,23 @@ public class GreetingController {
     /**
      * DB_ADAPTOR connections/ disconnection/ authentication.
      */
-    private static final DbAdaptor DB_ADAPTOR = new DbAdaptor();
+    private static DbAdaptor DB_ADAPTOR = new DbAdaptor();
+
+    /**
+     * Getter.
+     * @return the db adaptor
+     */
+    public static DbAdaptor getdbadaptor() {
+        return DB_ADAPTOR;
+    }
+
+    /**
+     * Setter.
+     * @param dba the new db adaptor.
+     */
+    public static void setdbadaptor(DbAdaptor dba) {
+        DB_ADAPTOR = dba;
+    }
 
     /**
      * Default mapping for index.
@@ -84,10 +100,15 @@ public class GreetingController {
                     + "You can now log in", HttpStatus.OK);
         }
         return new ResponseEntity("Your account could not be created",
-                    HttpStatus.INTERNAL_SERVER_ERROR);
+                    HttpStatus.CONFLICT);
 
     }
 
+    /**
+     * Changes the password for the specified username.
+     * @param creds The username and new password.
+     * @return response entity
+     */
     @PostMapping("/changepass")
     public ResponseEntity changepass(@RequestBody final String[] creds) {
         String user = creds[1];
@@ -95,6 +116,6 @@ public class GreetingController {
 
         DB_ADAPTOR.changepass(user, newpass);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity("Your password was changed successfully", HttpStatus.OK);
     }
 }

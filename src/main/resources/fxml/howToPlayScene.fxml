@@ -18,7 +18,7 @@
 <Label text="How to Play" alignment="CENTER" fx:id="howToTitle" GridPane.rowIndex="0" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
 
-    <Label text="In order to play GoGreen, you need to log your transportation, food, and energy consumption habits on a regular basis." fx:id="howToText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
+    <Label text="In order to play Clima Mutatio Dolus, you need to log your transportation, food, and energy consumption habits on a regular basis." fx:id="howToText" GridPane.rowIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <Label text="Each time you make a 'green-friendly' decision, such as getting to your destination using a bicycle instead of a car," fx:id="howToText" GridPane.rowIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
     <Label text="you can log it in your account, and we will estimate the impact of your actions on the environment in terms of emissions." fx:id="howToText" GridPane.rowIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
 
