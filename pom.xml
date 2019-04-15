@@ -242,11 +242,11 @@
                 <!-- Specifying configuration here will take effect on the execution of "mvn site",
                      but will not take effect on the execution of "mvn checkstyle:checkstyle"  -->
                 <configuration>
-                        <excludes>
+                        <!-- <excludes>
                             <exclude>
                                 src/main/java/gui/**
                             </exclude>
-                        </excludes>
+                        </excludes> -->
                     <configLocation>CSE1105.checkstyle.xml</configLocation>
                 </configuration>
             </plugin>
