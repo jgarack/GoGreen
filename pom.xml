@@ -154,7 +154,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
+            
             <!-- Code Coverage report generation -->
             <plugin>
             <groupId>org.jacoco</groupId>
@@ -242,6 +242,11 @@
                 <!-- Specifying configuration here will take effect on the execution of "mvn site",
                      but will not take effect on the execution of "mvn checkstyle:checkstyle"  -->
                 <configuration>
+                        <excludes>
+                            <exclude>
+                                src/main/java/gui/**
+                            </exclude>
+                        </excludes>
                     <configLocation>CSE1105.checkstyle.xml</configLocation>
                 </configuration>
             </plugin>
