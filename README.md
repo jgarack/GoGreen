@@ -13,7 +13,7 @@
 Clima Mutatio Dolus is an app designed with the purpose to make it easier to keep track of eco-friendly decisions and their impact on
 the world, all whilst providing an engaging experience that will hopefully motivate the user to keep a greener lifestyle.
 It is our belief that every little action counts, which is our app provides long term tracking of the impact a user's habits have.
-This app was developed by [OOPP Group 98], composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,
+This app was developed by: OOPP Group 98, composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,
 Jonathan Garack, Lachezar Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.
 
 
