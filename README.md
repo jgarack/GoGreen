@@ -9,6 +9,14 @@
 * Nobody leaves before 12 o'clock.
 * Be as descriptive as possible both within your code and in your commits.
 
+## About us
+Clima Mutatio Dolus is an app designed with the purpose to make it easier to keep track of eco-friendly decisions and their impact on
+the world, all whilst providing an engaging experience that will hopefully motivate the user to keep a greener lifestyle.
+It is our belief that every little action counts, which is our app provides long term tracking of the impact a user's habits have.
+This app was developed by [OOPP Group 98], composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,
+Jonathan Garack, Lachezar Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.
+
+
 ## For developers
 *Branch structure graph[1]:*
 ![graph](https://nvie.com/img/git-model@2x.png)
@@ -82,4 +90,3 @@ You can download the latest version [here](https://github.com/SERG-Delft/TI1216/
 
 ## Referentials:
 * [1]: "A succesful Git branching model" by *Vincent Driessen*, first published on 05-01-2010, visited on 23-02-2019 at https://nvie.com/posts/a-successful-git-branching-model/
-* [2]: "Car Emissions data - A dataset of over 5000 vehicles and their Emissions" by dananos, last updated Fri Sep 08 2017 16:15:08 GMT+0200, visited on 28-02-2019 at https://www.kaggle.com/dananos/car-emissions-data
