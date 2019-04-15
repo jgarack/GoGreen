@@ -113,29 +113,23 @@ public class PointsController {
         if (activityID == Integer.parseInt("1")) {
 
             BufferedReader httpBody =
-                    httpHandler.reqGet("/diets."
-                            + "json?size="
-                            + amount
-                            + "&timeframe=2019-01-01%2F2019-01-02"
-                            + BP_KEY);
+                    httpHandler.reqGet("/diets." + "json?size=" + amount
+                            + "&timeframe=2019-01-01%2F2019-01-02" + BP_KEY);
             BufferedReader veg =
-                    httpHandler.reqGet("/diets."
-                            + "json?size="
-                            + amount
-                            + "&diet_class=vegetarian"
-                            + "&timeframe=2019-01-01%2F2019-01-02"
+                    httpHandler.reqGet("/diets." + "json?size=" + amount
+                            + "&diet_class=vegetarian" + "&timeframe=2019-01-01%2F2019-01-02"
                             + BP_KEY);
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(5)
                     && dbAdaptor.getPerformedTimes(
                     request.getUsername(), 1) >= 4) {
-                    dbAdaptor.addAchievement(5, request.getUsername());
+                dbAdaptor.addAchievement(5, request.getUsername());
             }
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(6)
                     && dbAdaptor.getPerformedTimes(
                     request.getUsername(), 1) >= 49) {
-                    dbAdaptor.addAchievement(6, request.getUsername());
+                dbAdaptor.addAchievement(6, request.getUsername());
             }
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null))
                     - jsonCon(HttpRequestHandler.resLog(veg, null));
@@ -150,24 +144,19 @@ public class PointsController {
                     request.getUsername()).contains(1)
                     && dbAdaptor.getPerformedTimes(
                     request.getUsername(), 2) >= 4) {
-                    dbAdaptor.addAchievement(1, request.getUsername());
+                dbAdaptor.addAchievement(1, request.getUsername());
             }
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(2)
                     && dbAdaptor.getPerformedTimes(
                     request.getUsername(), 2) >= 49) {
-                    dbAdaptor.addAchievement(2, request.getUsername());
+                dbAdaptor.addAchievement(2, request.getUsername());
             }
 
             amount = jsonCon(HttpRequestHandler.resLog(httpBody, null));
-
         } else if (activityID == THREE) {
-            //local produce
             amount = amount * EIGHTYEIGHT;
-
         } else if (activityID == FOUR) {
-            //public transport
-
             BufferedReader httpBody =
                     httpHandler.reqGet("/bus_"
                             + "trips.json?duration=" + amount * SIXTY
@@ -180,13 +169,13 @@ public class PointsController {
                     request.getUsername()).contains(3)
                     && dbAdaptor.getPerformedTimes(
                     request.getUsername(), FOUR) >= 4) {
-                    dbAdaptor.addAchievement(3, request.getUsername());
+                dbAdaptor.addAchievement(3, request.getUsername());
             }
             if (!dbAdaptor.getAchievements(
                     request.getUsername()).contains(4)
                     && dbAdaptor.getPerformedTimes(
                     request.getUsername(), FOUR) >= 49) {
-                    dbAdaptor.addAchievement(4, request.getUsername());
+                dbAdaptor.addAchievement(4, request.getUsername());
             }
             amount = jsonCon(HttpRequestHandler.resLog(car, null))
                     - jsonCon(HttpRequestHandler.resLog(httpBody, null));
@@ -244,13 +233,13 @@ public class PointsController {
 
             if (!dbAdaptor.getAchievements(request.getUsername()).contains(9)
                     && amount >= 5) {
-                    dbAdaptor.addAchievement(9,
+                dbAdaptor.addAchievement(9,
                             request.getUsername());
             }
 
             if (!dbAdaptor.getAchievements(request.getUsername()).contains(10)
                     && amount >= 10) {
-                    dbAdaptor.addAchievement(10,
+                dbAdaptor.addAchievement(10,
                             request.getUsername());
             }
             amount = amount * ONEHUNDREDANDTEN;
@@ -273,15 +262,7 @@ public class PointsController {
      */
     @PostMapping("/total")
     public ResponseEntity totalScore(@RequestBody final String username) {
-//        todo: add achievements
-//                if(dbAdaptor.getTotalScore(username) >= 1000000
-//                        && !dbAdaptor.getAchievements(username).contains(12)){
-//                    dbAdaptor.addAchievement(12,username);
-//                }
-//                if(dbAdaptor.getFriends(username).size()>=10
-//                        && !dbAdaptor.getAchievements(username).contains(11)){
-//                    dbAdaptor.addAchievement(11,username);
-//                }
+
         return new ResponseEntity(dbAdaptor
                 .getTotalScore(username
                         .replace('"', ' ').trim()),
