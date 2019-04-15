@@ -268,7 +268,7 @@ public class MainController {
 
     /**
      * Enters fullScreen mode.
-     * @param actionEvent
+     * @param actionEvent when the fullscreen button is clicked
      */
     @FXML
     public void enterFullscreen(final ActionEvent actionEvent) {

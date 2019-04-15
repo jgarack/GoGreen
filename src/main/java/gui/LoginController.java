@@ -17,6 +17,7 @@ import utility.LoginHandler;
 import utility.MainHandler;
 
 import java.io.IOException;
+
 /**
  * Controller for the login window.
  */

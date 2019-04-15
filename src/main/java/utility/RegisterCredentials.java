@@ -100,17 +100,21 @@ public class RegisterCredentials {
 
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
 
-        if (o == null || getClass() != o.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
 
-        RegisterCredentials that = (RegisterCredentials) o;
+        RegisterCredentials that = (RegisterCredentials) obj;
 
-        return Objects.equals(username, that.username) &&
-                Objects.equals(password, that.password) &&
-                Objects.equals(question, that.question) &&
-                Objects.equals(answer, that.answer);
+        return Objects.equals(username, that.username)
+                && Objects.equals(password, that.password)
+                && Objects.equals(question, that.question)
+                && Objects.equals(answer, that.answer);
     }
 
 }
