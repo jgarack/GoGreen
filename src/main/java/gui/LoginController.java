@@ -10,17 +10,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import utility.LoginHandler;
 import utility.MainHandler;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
 /**
  * Controller for the login window.
  */
@@ -132,7 +128,7 @@ public class LoginController {
 
     /**
      * Enters fullScreen mode.
-     * @param actionEvent
+     * @param actionEvent the event fired.
      */
     @FXML
     public void enterFullscreen(final ActionEvent actionEvent) {
@@ -140,7 +136,9 @@ public class LoginController {
                 .getScene().getWindow();
         if (!stage.isFullScreen()) {
             stage.setFullScreen(true);
-        } else stage.setFullScreen(false);
+        } else {
+            stage.setFullScreen(false);
+        }
     }
 
 }

@@ -11,14 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -107,13 +100,17 @@ public class MainController {
     public void changeBackground(int score) {
 
         if (score >= 50000 && score < 100000) {
-            root.setStyle("-fx-background-image: url('/icons/backgroundPhase2_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase2_blur.png');"
+                    + "-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 100000 && score < 300000) {
-            root.setStyle("-fx-background-image: url('/icons/backgroundPhase3_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase3_blur.png');"
+                    + "-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 300000 && score < 500000) {
-            root.setStyle("-fx-background-image: url('/icons/backgroundPhase4_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase4_blur.png');"
+                    + "-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         } else if (score >= 500000) {
-            root.setStyle("-fx-background-image: url('/icons/backgroundPhase5_blur.png');-fx-background-size: cover;-fx-background-repeat: no-repeat;");
+            root.setStyle("-fx-background-image: url('/icons/backgroundPhase5_blur.png');"
+                    + "-fx-background-size: cover;-fx-background-repeat: no-repeat;");
         }
     }
 
@@ -279,7 +276,9 @@ public class MainController {
                 .getScene().getWindow();
         if (!stage.isFullScreen()) {
             stage.setFullScreen(true);
-        } else stage.setFullScreen(false);
+        } else {
+            stage.setFullScreen(false);
+        }
     }
 
 }

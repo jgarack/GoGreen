@@ -24,8 +24,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.PopOver;
-import org.controlsfx.glyphfont.FontAwesome;
-import org.controlsfx.glyphfont.GlyphFontRegistry;
 import utility.DbAdaptor;
 import utility.MainHandler;
 import utility.User;
