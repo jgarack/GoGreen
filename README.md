@@ -16,7 +16,7 @@ It is our belief that every little action counts, which is our app provides long
 This app was developed by: OOPP Group 98, composed of: Alexander van Vugt, Álvaro Buj Mancha, Bejruz Domínguez Adilova,
 Jonathan Garack, Lachezar Lesichkov, Omar Mohamed Hosny Hussein, and Vidas Bacevičius.
 
-##How to play
+## How to play
 In order to play Clima Mutatio Dolus, you need to log your transportation, food, and energy consumption habits on a regular basis.
 Each time you make a 'green-friendly' decision, such as getting to your destination using a bicycle instead of a car,
 you can log it in your account, and we will estimate the impact of your actions on the environment in terms of emissions.
